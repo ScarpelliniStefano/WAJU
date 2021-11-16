@@ -2,11 +2,11 @@
     <div id="recDiv">
         <v-container>
             <v-row>
-            <v-col cols="9">
+            <v-col>
                 <v-textarea
                     name="input-7-1"
                     rows="14"
-                    row-height="8"
+                    row-height="7"
                     label="Response"
                     v-model.lazy="recText"
                     hint="Risposta"

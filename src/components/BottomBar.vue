@@ -7,7 +7,11 @@
     <config-c :confV="bottomText.textConf"></config-c> 
     <v-spacer/>
     <backtrack-c v-on:click-back="$emit('click-back-index');"></backtrack-c>
-    <ir-coll-c v-on:click-ir="$emit('click-ir-index');" :irV="bottomText.irTempCol"></ir-coll-c>
+    <ir-coll-c 
+      v-on:click-ir="$emit('click-ir-index');"
+      v-on:click-tc="$emit('click-tc-index');" 
+      :irTreeV="bottomText.textIRTreeCol"
+      :irV="bottomText.textIRCol"></ir-coll-c>
   </div>
 </template>
 <script>

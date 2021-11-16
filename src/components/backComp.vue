@@ -15,9 +15,6 @@
 
     export default {
     name : 'configDiv',
-    data(){
-       
-    },
     props : [ 'confV' ],
      created (){
     },

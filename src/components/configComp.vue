@@ -30,7 +30,7 @@
 
     export default {
     name : 'configDiv',
-    data(){
+    data: function (){
         return {
             expand: false
         }

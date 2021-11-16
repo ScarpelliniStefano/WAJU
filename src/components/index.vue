@@ -18,9 +18,15 @@
         
         <bar-rec :recText="textRec"></bar-rec>
         <bar-send v-on:click-send="sendMsg($event)"></bar-send>
-      </v-col><v-col>
-        <bottom-bar v-on:click-ir-index="sendIRTempCol()" v-on:click-back-index="sendBck()"  :bottomText="received"></bottom-bar>
-        </v-col>
+      </v-col>
+      <v-col>
+        <bottom-bar 
+        v-on:click-ir-index="sendIRList()" 
+        v-on:click-tc-index="sendIRTempCol()" 
+        v-on:click-back-index="sendBck()"  
+        :bottomText="received">
+        </bottom-bar>
+      </v-col>
     </v-row>
   </v-container>
   
@@ -88,7 +94,8 @@ SAVE AS tempmovie@movie;
           textConf : 'Configurazione non presente',
           textLog : '',
           textErrLog : '',
-          textIRTempCol : ''
+          textIRTreeCol : '',
+          textIRCol : []
         }
       }
     },
@@ -103,9 +110,14 @@ SAVE AS tempmovie@movie;
                 this.changeLog('#@LOGS@#'+timeString('ERROR IN JOBS. SEE ERROR LOG')+'\n#@END-LOGS@#')
             }else if(text.includes('##BEGIN-COLLECTION##')){
                 const startE=text.indexOf('##BEGIN-COLLECTION##')+'##BEGIN-COLLECTION##'.length;
-                const endE=text.lastIndexOf('##BEGIN-COLLECTION##');
-                this.changeIRTree('#@TREE-DRAW@#'+ timeString(text.substring(startE,endE))+'#@END-TREE-DRAW@#');
+                const endE=text.lastIndexOf('##END-COLLECTION##');
+                this.changeIRTree('#@TREE-DRAW@#'+ text.substring(startE,endE)+'#@END-TREE-DRAW@#');
                 this.changeLog('#@LOGS@#'+timeString('TREE DREW')+'\n#@END-LOGS@#')
+            }else if(text.includes('##BEGIN-IR-LIST##')){
+                const startE=text.indexOf('##BEGIN-IR-LIST##')+'##BEGIN-IR-LIST##'.length;
+                const endE=text.lastIndexOf('##END-IR-LIST##');
+                this.changeIRList('#@IR-LIST@#'+ text.substring(startE,endE)+'#@END-IR-LIST@#');
+                this.changeLog('#@LOGS@#'+timeString('IR LIST ARRIVED')+'\n#@END-LOGS@#')
             }else if(text.includes('##SUCCESS##')){
                 console.log('successo');
                 this.changeLog('#@LOGS@#'+timeString('JOB DONE')+'\n#@END-LOGS@#')
@@ -167,9 +179,30 @@ SAVE AS tempmovie@movie;
         if(textToChange.startsWith('{')){
           var parseJSON = JSON.parse(textToChange);
           var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
-          this.received.textIRTempCol=JSONInPrettyFormat;
+          this.received.textIRTreeCol=JSONInPrettyFormat;
         }else{
-          this.received.textIRTempCol=textToChange;
+          const startE=textToChange.indexOf('#@TREE-DRAW@#')+'#@TREE-DRAW@#'.length+'"documents" : [{'.length;
+          const endE=textToChange.lastIndexOf('#@END-TREE-DRAW@#')-3;
+          console.log(textToChange.substring(startE,endE));
+          this.received.textIRTreeCol= JSON.parse(textToChange.substring(startE,endE));
+        }
+      },
+      changeIRList(textToChange){
+        if(textToChange.startsWith('{')){
+          var parseJSON = JSON.parse(textToChange);
+          var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
+          this.received.textIRCol=JSONInPrettyFormat;
+        }else{
+          this.received.textIRCol=[];
+          const startE=textToChange.indexOf('#@IR-LIST#')+'#@IR-LIST@#  '.length
+                                                         +'{ 	"total": 2, 	"IRList": '.length;
+          const endE=textToChange.lastIndexOf('#@END-IR-LIST@#')-2;
+          var textChanged=textToChange.substring(startE,endE)
+                                      /*.replace('","','\n')*/;
+          var json_data=JSON.parse(textChanged);
+          console.log(textChanged);
+          for(var i in json_data)
+            this.received.textIRCol.push(json_data [i]);
         }
       },
       changeErrLog(textToChange){
@@ -203,14 +236,31 @@ SAVE AS tempmovie@movie;
       sendIRTempCol(){
             if(isPreDone()){
                 if(isConnected()){
-                        this.connection.send('##GET-IR-COLLECTION##');
+                        this.connection.send('##GET-TEMPORARY-COLLECTION##');
                         sended=true;
                 }else{
                     this.connection.close();
                     this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
                     if(!sended){
                       this.connection.onopen = () => {
-                        this.connection.send('##GET-IR-COLLECTION##');
+                        this.connection.send('##GET-TEMPORARY-COLLECTION##');
+                        sended=true;
+                      }
+                    }
+                }
+            }
+      },
+      sendIRList(){
+            if(isPreDone()){
+                if(isConnected()){
+                        this.connection.send('##GET-IR-LIST##');
+                        sended=true;
+                }else{
+                    this.connection.close();
+                    this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
+                    if(!sended){
+                      this.connection.onopen = () => {
+                        this.connection.send('##GET-IR-LIST##');
                         sended=true;
                       }
                     }
