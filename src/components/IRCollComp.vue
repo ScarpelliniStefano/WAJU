@@ -1,5 +1,6 @@
 <template>
     <div id="IRDiv"> 
+      <div id="btnIRState">
          <v-tooltip bottom color="blue">
         <template v-slot:activator="{on,attrs}">
         <v-btn fab v-bind="attrs" v-on="on" @click="irPressed=true; $emit('click-ir');">
@@ -8,18 +9,14 @@
         </template>
         <span>INSPECT STATE</span>
          </v-tooltip>
-         <v-tooltip bottom color="grey">
-        <template v-slot:activator="{on,attrs}">
-        <v-btn fab :disabled=(!irPressed) v-bind="attrs" v-on="on" @click="expand = !expand; $emit('click-tc');">
-         <v-icon x-large color="grey">mdi-sitemap-outline</v-icon>
-      </v-btn>
-        </template>
-        <span>SHOW TC</span>
-         </v-tooltip>
+      </div>
+      
          <template>
-           <v-row>
+           
+           <v-row dense>
+             <div id="List">
              <v-col>
-            <v-list dense width="300px">
+            <v-list dense width="210px">
               <v-subheader>IR LIST</v-subheader>
                <v-list-item-group
                 v-model="selectedItem"
@@ -37,11 +34,19 @@
                     </v-list-item-content>
                   </v-list-item>
                   </v-list-item-group>
-          </v-list>{{selectedItem}}
-             </v-col><v-col>
+          </v-list>
+             </v-col></div><div id="btnGeneral"><v-col>
+         <v-tooltip bottom color="grey">
+        <template v-slot:activator="{on,attrs}">
+        <v-btn fab :disabled=(!irPressed) v-bind="attrs" v-on="on" @click="expand = !expand; $emit('click-tc');">
+         <v-icon x-large color="grey">mdi-sitemap-outline</v-icon>
+        </v-btn>
+        </template>
+        <span>SHOW TC</span>
+         </v-tooltip>
                 <v-tooltip bottom color="grey">
                   <template v-slot:activator="{on,attrs}">
-                  <v-btn fab :disabled=(!irPressed) v-bind="attrs" v-on="on" @click="expand = !expand; $emit('click-tc');">
+                  <v-btn fab :disabled=(!irPressed) v-bind="attrs" v-on="on" @click="expand = !expand; $emit('click-irc',selectedItem);">
                 <v-icon x-large color="grey">mdi-sitemap-outline</v-icon>
                 </v-btn>
                  </template>
@@ -49,10 +54,35 @@
                </v-tooltip>
                
               </v-col>
+              </div>
            </v-row>
          </template>
-         <template>
-          <json-view :data="irTreeV"/>
+         <template v-if="isDisable">
+           <div id="treeView">
+             <v-row><v-col>
+             <json-view min-height="300px" max-height="300px" align="left" :maxDepth="numDepth" :data="irTreeV"/>
+             </v-col><v-col>
+             <div id="treeViewBtn" align="left">
+             <v-tooltip bottom color="grey">
+                  <template v-slot:activator="{on,attrs}">
+                  <v-btn fab :disabled=(!irPressed) v-bind="attrs" v-on="on" @click="download('TreeColl',irTreeV);">
+                <v-icon x-large color="grey">mdi-content-save-outline</v-icon>
+                </v-btn>
+                 </template>
+                <span>SAVE</span>
+               </v-tooltip>
+               <v-tooltip bottom color="grey">
+                  <template v-slot:activator="{on,attrs}">
+                  <v-btn fab :disabled=(!irPressed) v-bind="attrs" v-on="on" @click="changeDepth">
+                <v-icon x-large color="grey">mdi-circle-expand</v-icon>
+                </v-btn>
+                 </template>
+                <span>EXPAND</span>
+               </v-tooltip>
+               </div>
+               </v-col>
+               </v-row>
+           </div>
          </template>
     </div>
 </template>
@@ -60,18 +90,42 @@
 import { JSONView } from "vue-json-component";
 
     export default {
-    name : 'configDiv',
+    name : 'IRComp',
     components: { "json-view": JSONView },
     data: function (){
         return {
             expand: false,
             irPressed: false,
             selectedItem: -1,
+            numDepth: 1
         }
     },
      props : [ 'irV' , 'irTreeV'],
      created (){
     },
+    computed: {
+        isDisable() {
+            return this.irTreeV.length> 0;
+        },
+        
+    },
+    methods:{
+        changeDepth() {
+            this.numDepth=this.numDepth<2 ? 3 : 1;
+        },
+        download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:application/json,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        } 
+    }, 
     filters: {
     
   }

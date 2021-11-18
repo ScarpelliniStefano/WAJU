@@ -14,7 +14,7 @@
 <script>
 
     export default {
-    name : 'configDiv',
+    name : 'backComp',
     props : [ 'confV' ],
      created (){
     },

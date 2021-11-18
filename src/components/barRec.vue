@@ -15,13 +15,17 @@
             </v-col>
             </v-row>
         </v-container>
+        <template v-if="isDisable">
+            <v-btn depressed elevation="2" raised @click="download('script',recText)"> Save </v-btn>
+        </template>
+
     </div>
 </template>
 <script>
 
     export default {
     name : 'barRec',
-   
+    
     props : {
         recText : String
     },
@@ -29,6 +33,28 @@
          //eventBus.$on('cambioText',(v)=>{this.textRec += v;});
          
          //vm.$on('receivedData',(v)=>{this.textR+=v;})
-    }
+    },
+    computed: {
+        isDisable() {
+            return this.recText.length> 0;
+        }
+    },
+    methods:{
+        download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        } 
+    } 
+
 }
+
+
 </script>

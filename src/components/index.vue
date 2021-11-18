@@ -17,12 +17,13 @@
       <v-col class="mb-4">
         
         <bar-rec :recText="textRec"></bar-rec>
-        <bar-send v-on:click-send="sendMsg($event)"></bar-send>
+        <bar-send :disable="disBtn" v-on:click-send="sendMsg($event)"></bar-send>
       </v-col>
       <v-col>
         <bottom-bar 
         v-on:click-ir-index="sendIRList()" 
-        v-on:click-tc-index="sendIRTempCol()" 
+        v-on:click-tc-index="sendIRTempCol()"
+        v-on:click-irc-index="sendIRSelCol($event)" 
         v-on:click-back-index="sendBck()"  
         :bottomText="received">
         </bottom-bar>
@@ -90,6 +91,7 @@ SAVE AS tempmovie@movie;
       return {
         connection : null,
         textRec : '',
+        disBtn : false,
         received: {
           textConf : 'Configurazione non presente',
           textLog : '',
@@ -108,6 +110,9 @@ SAVE AS tempmovie@movie;
                 const endE=text.lastIndexOf('##END-ERROR##');
                 this.changeErrLog('#@ERR-LOGS@#'+ timeString(text.substring(startE,endE))+'#@END-ERR-LOGS@#');
                 this.changeLog('#@LOGS@#'+timeString('ERROR IN JOBS. SEE ERROR LOG')+'\n#@END-LOGS@#')
+            }else if(text.includes('##ACK##')){
+                console.log('ACK');
+                this.changeLog('#@LOGS@#'+timeString('BACKTRACK DONE')+'\n#@END-LOGS@#')
             }else if(text.includes('##BEGIN-COLLECTION##')){
                 const startE=text.indexOf('##BEGIN-COLLECTION##')+'##BEGIN-COLLECTION##'.length;
                 const endE=text.lastIndexOf('##END-COLLECTION##');
@@ -123,9 +128,10 @@ SAVE AS tempmovie@movie;
                 this.changeLog('#@LOGS@#'+timeString('JOB DONE')+'\n#@END-LOGS@#')
             }else if(text.includes('##BEGIN-PROCESS##')){
                 console.log('end messages');
-                const startP=text.indexOf('##BEGIN-PROCESS##')+'##BEGIN-PROCESS##'.length;
+                const startP=text.indexOf('##BEGIN-PROCESS##')+'##BEGIN-PROCESS##'.length+1;
                 const endP=text.indexOf('##END-PROCESS##');
                 this.textRec=text.substring(startP,endP);
+                this.disBtn=false;
                 //disconnect();
             }else if(text.includes('##BEGIN-SERVER-CONF##')){
                 const startE=text.indexOf('##BEGIN-SERVER-CONF##')+'##BEGIN-SERVER-CONF##'.length;
@@ -250,6 +256,23 @@ SAVE AS tempmovie@movie;
                 }
             }
       },
+      sendIRSelCol(selectedIndex){
+            if(isPreDone() && selectedIndex>-1){
+                if(isConnected()){
+                        this.connection.send('##GET-IR-COLLECTION##\n'+this.received.textIRCol[selectedIndex]+"\n##END-IR-COLLECTION##");
+                        sended=true;
+                }else{
+                    this.connection.close();
+                    this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
+                    if(!sended){
+                      this.connection.onopen = () => {
+                        this.connection.send('##GET-IR-COLLECTION##\n'+this.received.textIRCol[selectedIndex]+"\n##END-IR-COLLECTION##");
+                        sended=true;
+                      }
+                    }
+                }
+            }
+      },
       sendIRList(){
             if(isPreDone()){
                 if(isConnected()){
@@ -269,6 +292,7 @@ SAVE AS tempmovie@movie;
       },
       sendMsg(textSend){
             if(isPreDone() && textSend.length>0){
+
                 if(isConnected()){
                     
                         console.log('onopen send');

@@ -8,7 +8,6 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-Vue.config.productionTip = false
 
 /*/
 Vue.use(VueNativeSock, 'ws://'+process.env.VUE_APP_ENGINE_SERVER,{

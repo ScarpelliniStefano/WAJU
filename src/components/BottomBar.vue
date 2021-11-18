@@ -9,7 +9,8 @@
     <backtrack-c v-on:click-back="$emit('click-back-index');"></backtrack-c>
     <ir-coll-c 
       v-on:click-ir="$emit('click-ir-index');"
-      v-on:click-tc="$emit('click-tc-index');" 
+      v-on:click-tc="$emit('click-tc-index');"
+      v-on:click-irc="$emit('click-irc-index',$event);" 
       :irTreeV="bottomText.textIRTreeCol"
       :irV="bottomText.textIRCol"></ir-coll-c>
   </div>
@@ -21,7 +22,7 @@ import LogC from './logComp.vue';
 import BacktrackC from './backComp.vue';
 import IrCollC from './IRCollComp.vue';
     export default {
-    name : 'barRec',
+    name : 'bottomBar',
     components : {
       ConfigC,
       ErrLogC,
