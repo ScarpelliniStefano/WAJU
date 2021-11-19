@@ -60,7 +60,7 @@
          <template v-if="isDisable">
            <div id="treeView">
              <v-row><v-col>
-            <json-view min-height="300px" max-height="300px" align="left" :max-depth=numDepth :data="irTreeV"/>
+            <json-view min-height="300px" max-height="300px" align="left" :key="numDepth" :max-depth=numDepth :data="irTreeV"/>
              {{numDepth}}
              </v-col><v-col>
              <div id="treeViewBtn" align="left">
@@ -114,7 +114,7 @@ import { JSONView } from "vue-json-component";
     },
     methods:{
         setDepth() {
-            this.numDepth=3;
+            this.numDepth=this.numDepth<2 ? 10 : 1;
         },
         download(filename) {
             var element = document.createElement('a');
