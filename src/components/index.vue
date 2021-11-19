@@ -110,7 +110,6 @@ SAVE AS tempmovie@movie;
                 const endE=text.lastIndexOf('##END-ERROR##');
                 this.changeLog('#@LOGS@#'+timeString('ERROR IN JOBS. SEE ERROR LOG BELOW')+'\n#@END-LOGS@#');
                 this.changeErrLog('#@ERR-LOGS@#'+ timeString(text.substring(startE,endE))+'#@END-ERR-LOGS@#');
-                
             }else if(text.includes('##ACK##')){
                 console.log('ACK');
                 this.changeLog('#@LOGS@#'+timeString('BACKTRACK DONE')+'\n#@END-LOGS@#')
@@ -190,9 +189,12 @@ SAVE AS tempmovie@movie;
         }else{
           const startE=textToChange.indexOf('#@TREE-DRAW@#')+'#@TREE-DRAW@#'.length+'{ "documents" : '.length;
           const endE=textToChange.lastIndexOf('#@END-TREE-DRAW@#')-3;
-          //console.log(textToChange.substring(startE,endE));
+          console.log(textToChange);
+          let textConv=textToChange.substring(startE,endE);
+          textConv=textConv.replace(/POINT /g,'{\n\t\t"type" : "POINT",\n\t\t"coordinates":"').replaceAll(")",')"\n\t}');
+          console.log(textConv);
          // console.log('[\n { \n } , \n'+textToChange.substring(startE,endE));
-          this.received.textIRTreeCol= JSON.parse(/*'[\n { \n } , \n'+*/textToChange.substring(startE,endE));
+          this.received.textIRTreeCol= JSON.parse(/*'[\n { \n } , \n'+*/textConv);
         }
       },
       changeIRList(textToChange){
