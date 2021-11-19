@@ -2,8 +2,6 @@
   <div>
     <log-c :logV="bottomText.textLog"></log-c>
     <v-spacer/>
-    <err-log-c :errV="bottomText.textErrLog"></err-log-c>
-    <v-spacer/>
     <config-c :confV="bottomText.textConf"></config-c> 
     <v-spacer/>
     <backtrack-c v-on:click-back="$emit('click-back-index');"></backtrack-c>
@@ -17,7 +15,6 @@
 </template>
 <script>
 import ConfigC from './configComp.vue';
-import ErrLogC from './errLogComp.vue';
 import LogC from './logComp.vue';
 import BacktrackC from './backComp.vue';
 import IrCollC from './IRCollComp.vue';
@@ -25,7 +22,6 @@ import IrCollC from './IRCollComp.vue';
     name : 'bottomBar',
     components : {
       ConfigC,
-      ErrLogC,
       LogC,
       BacktrackC,
       IrCollC,
