@@ -108,8 +108,9 @@ SAVE AS tempmovie@movie;
             if(text.includes('##BEGIN-ERROR##')){
                 const startE=text.indexOf('##BEGIN-ERROR##')+'##BEGIN-ERROR##'.length;
                 const endE=text.lastIndexOf('##END-ERROR##');
+                this.changeLog('#@LOGS@#'+timeString('ERROR IN JOBS. SEE ERROR LOG BELOW')+'\n#@END-LOGS@#');
                 this.changeErrLog('#@ERR-LOGS@#'+ timeString(text.substring(startE,endE))+'#@END-ERR-LOGS@#');
-                this.changeLog('#@LOGS@#'+timeString('ERROR IN JOBS. SEE ERROR LOG')+'\n#@END-LOGS@#')
+                
             }else if(text.includes('##ACK##')){
                 console.log('ACK');
                 this.changeLog('#@LOGS@#'+timeString('BACKTRACK DONE')+'\n#@END-LOGS@#')
@@ -134,7 +135,7 @@ SAVE AS tempmovie@movie;
                 this.disBtn=false;
                 //disconnect();
             }else if(text.includes('##BEGIN-SERVER-CONF##')){
-                const startE=text.indexOf('##BEGIN-SERVER-CONF##')+'##BEGIN-SERVER-CONF##'.length;
+                const startE=text.indexOf('##BEGIN-SERVER-CONF##')+'##BEGIN-SERVER-CONF##'.length+1;
                 const endE=text.lastIndexOf('##END-SERVER-CONF##');
                 this.changeConfig(text.substring(startE,endE));
                 console.log('config');
@@ -187,10 +188,11 @@ SAVE AS tempmovie@movie;
           var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
           this.received.textIRTreeCol=JSONInPrettyFormat;
         }else{
-          const startE=textToChange.indexOf('#@TREE-DRAW@#')+'#@TREE-DRAW@#'.length+'"documents" : [{'.length;
+          const startE=textToChange.indexOf('#@TREE-DRAW@#')+'#@TREE-DRAW@#'.length+'{ "documents" : '.length;
           const endE=textToChange.lastIndexOf('#@END-TREE-DRAW@#')-3;
-          console.log(textToChange.substring(startE,endE));
-          this.received.textIRTreeCol= JSON.parse(textToChange.substring(startE,endE));
+          //console.log(textToChange.substring(startE,endE));
+         // console.log('[\n { \n } , \n'+textToChange.substring(startE,endE));
+          this.received.textIRTreeCol= JSON.parse(/*'[\n { \n } , \n'+*/textToChange.substring(startE,endE));
         }
       },
       changeIRList(textToChange){
@@ -206,7 +208,6 @@ SAVE AS tempmovie@movie;
           var textChanged=textToChange.substring(startE,endE)
                                       /*.replace('","','\n')*/;
           var json_data=JSON.parse(textChanged);
-          console.log(textChanged);
           for(var i in json_data)
             this.received.textIRCol.push(json_data [i]);
         }
@@ -214,7 +215,7 @@ SAVE AS tempmovie@movie;
       changeErrLog(textToChange){
         const startE=textToChange.indexOf('#@ERR-LOGS@#')+'#@ERR-LOGS@#'.length;
         const endE=textToChange.lastIndexOf('#@END-ERR-LOGS@#');
-        this.received.textErrLog+= textToChange.substring(startE,endE);
+        this.received.textLog+= textToChange.substring(startE,endE);
         alert(textToChange.substring(startE,endE));
       },
       changeLog(textToChange){

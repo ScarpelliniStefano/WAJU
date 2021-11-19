@@ -8,7 +8,7 @@
           row-height="7"
           hint="Inserisci il comando"
             id="ta_send" placeholder="Comando"></v-textarea>
-        <v-btn depressed elevation="2" :disabled=disable raised @click="disable=!disable; $emit('click-send', textSend);"> Send data </v-btn>
+        <v-btn depressed elevation="2" :key=(disable) :disabled=(disBtn) @click="disable=!disable; $emit('click-send', textSend);"> Send data </v-btn>
     </div>
 </template>
 <script>
@@ -18,10 +18,11 @@ export default {
     
     data(){
         return{
-            textSend: ''
+            textSend: '',
+            disBtn : this.disable
         }
     },
-   props : {
+    props : {
         disable : Boolean
     },
    

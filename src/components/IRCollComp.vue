@@ -60,8 +60,7 @@
          <template v-if="isDisable">
            <div id="treeView">
              <v-row><v-col>
-            <json-view min-height="300px" max-height="300px" align="left" :key="numDepth" :max-depth=numDepth :data="irTreeV"/>
-             {{numDepth}}
+            <json-view rootKey="documents" align="left" :key="numDepth" :max-depth=numDepth :data="irTreeV"/>
              </v-col><v-col>
              <div id="treeViewBtn" align="left">
              <v-tooltip bottom color="grey">
@@ -118,7 +117,7 @@ import { JSONView } from "vue-json-component";
         },
         download(filename) {
             var element = document.createElement('a');
-            element.setAttribute('href', 'data:application/json,' + encodeURIComponent(JSON.stringify(this.irTreeV, null, '\t')));
+            element.setAttribute('href', 'data:application/json,' + encodeURIComponent('{ \n "documents" : \n ' + JSON.stringify( this.irTreeV , null, '\t') + '\n}'));
             element.setAttribute('download', filename);
 
             element.style.display = 'none';
