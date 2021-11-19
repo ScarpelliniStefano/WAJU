@@ -114,7 +114,7 @@ SAVE AS tempmovie@movie;
                 console.log('ACK');
                 this.changeLog('#@LOGS@#'+timeString('BACKTRACK DONE')+'\n#@END-LOGS@#')
             }else if(text.includes('##BEGIN-COLLECTION##')){
-                const startE=text.indexOf('##BEGIN-COLLECTION##')+'##BEGIN-COLLECTION##'.length;
+                const startE=text.indexOf('##BEGIN-COLLECTION##')+'##BEGIN-COLLECTION##'.length+1;
                 const endE=text.lastIndexOf('##END-COLLECTION##');
                 this.changeIRTree('#@TREE-DRAW@#'+ text.substring(startE,endE)+'#@END-TREE-DRAW@#');
                 this.changeLog('#@LOGS@#'+timeString('TREE DREW')+'\n#@END-LOGS@#')

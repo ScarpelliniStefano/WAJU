@@ -60,7 +60,8 @@
          <template v-if="isDisable">
            <div id="treeView">
              <v-row><v-col>
-             <json-view min-height="300px" max-height="300px" align="left" :maxDepth="numDepth" :data="irTreeV"/>
+            <json-view min-height="300px" max-height="300px" align="left" :max-depth=numDepth :data="irTreeV"/>
+             {{numDepth}}
              </v-col><v-col>
              <div id="treeViewBtn" align="left">
              <v-tooltip bottom color="grey">
@@ -73,7 +74,7 @@
                </v-tooltip>
                <v-tooltip bottom color="grey">
                   <template v-slot:activator="{on,attrs}">
-                  <v-btn fab :disabled=(!irPressed) v-bind="attrs" v-on="on" @click="changeDepth">
+                  <v-btn fab :disabled=(!irPressed) v-bind="attrs" v-on="on" @click=setDepth()>
                 <v-icon x-large color="grey">mdi-circle-expand</v-icon>
                 </v-btn>
                  </template>
@@ -107,15 +108,17 @@ import { JSONView } from "vue-json-component";
         isDisable() {
             return this.irTreeV.length> 0;
         },
+    },
+    watch:{
         
     },
     methods:{
-        changeDepth() {
-            this.numDepth=this.numDepth<2 ? 3 : 1;
+        setDepth() {
+            this.numDepth=3;
         },
-        download(filename, text) {
+        download(filename) {
             var element = document.createElement('a');
-            element.setAttribute('href', 'data:application/json,' + encodeURIComponent(text));
+            element.setAttribute('href', 'data:application/json,' + encodeURIComponent(JSON.stringify(this.irTreeV, null, '\t')));
             element.setAttribute('download', filename);
 
             element.style.display = 'none';
