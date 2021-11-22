@@ -1,9 +1,4 @@
 <template>
-  <div id="body">
-    <div class="divheader">
-        <p id="title" class="display-2 font-weight-bold mb-3 mt-4">JCOUIweb</p>
-        <v-icon flex id="settings" class="mt-1" x-large color="white">mdi-cog-outline</v-icon>
-    </div>
       <v-container id="main-container" class="divcontent grey lighten-5" fluid>
         <v-row class="text-center grow" align="center" justify="center">
           <v-col :key="1" cols="12" :sm="11" :md="6" :lg="4" :xl="6">
@@ -23,20 +18,11 @@
           </v-col>
         </v-row>
       </v-container>
-  
-  </div>
+
 </template>
 
 <style scoped>
-  #body{
-    display: flex;
-    flex-flow: column;
-    height: 100%;
-  }
-  #body .divheader{
-    flex: 0 1 auto;
-  }
-
+ 
   #body .divcontent{
     flex: 1 0 auto;
   }
@@ -351,19 +337,3 @@ SAVE AS tempmovie@movie;
 
 
 </script>
-
-<style scoped>
-  #title{
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 8px;
-    color: white;
-  }
-  #settings{
-    text-align: right;
-  }
-  #body{
-    background-color: navy;
-  }
-
-</style>
