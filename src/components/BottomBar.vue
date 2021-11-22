@@ -1,6 +1,6 @@
 <template>
 <div id="btmDiv">
-  <v-container fluid>
+  <v-container>
     <v-row class="grow" align="center" justify="center">
       <v-col cols="12" sm="10" md="10" lg="12" xl="12">
         <!--<v-card id="card" elevation="2" class="pa-3 fill-height" flat>-->
@@ -39,34 +39,42 @@
             placeholder="Log">
           </v-textarea>
           <div v-if="ispectstate" v-bind:style={height:heightMax}>
-            <v-list dense width="210px">
+
               <v-subheader>IR LIST</v-subheader>
-              <v-list-item-group v-model="selectedItem" color="primary">
-                <v-list-item v-for="item in irV" :key="item">
-                  <v-list-item-icon>
-                    <v-icon>mdi-file-outline</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title v-text="item"></v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
+              <v-select
+                v-model="selectedItem"
+                :items="bottomText.listIRCol"
+                label="IR collections"
+                dense
+                solo
+                width="210px"></v-select>
+            
+           
             <div id="treeView">
               <v-row>
+                
                 <v-col cols="12" sm="10" md="10" lg="12" xl="12">
-                  <json-view rootKey="documents" align="left" :key="numDepth" :max-depth=numDepth :data="irTreeV"/>
+                  <div class="box">
+                  <json-view 
+                          rootKey="documents" 
+                          align="left" 
+                          :key="numDepth" 
+                          :max-depth=numDepth 
+                          :data="bottomText.textIRTreeCol"
+                          />
+                  </div>
                 </v-col>
+                
                 <v-col cols="12" sm="2" md="2" lg="12" xl="12">
                   <div id="treeViewBtn" align="center">
                     <ul class="list_inside">
                       <li>
-                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled=(!irPressed) v-bind="attrs" v-on="on" @click="download('TreeColl',irTreeV);">
+                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled=(!irPressed) @click="download('TreeColl',irTreeV);">
                           <v-icon color="grey">mdi-content-save-outline</v-icon>
                         </v-btn>
                       </li>
                       <li>
-                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled=(!irPressed) v-bind="attrs" v-on="on" @click=setDepth()>
+                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled=(!irPressed) @click=setDepth()>
                           <v-icon color="grey">mdi-circle-expand</v-icon>
                         </v-btn>
                       </li>
@@ -137,7 +145,6 @@ import { JSONView } from "vue-json-component";
   },
   props : {
       bottomText : Object,
-      irV: [],
       irTreeV: Array
   },
   data: () => ({
@@ -149,7 +156,7 @@ import { JSONView } from "vue-json-component";
     ispectstate: false,
     expand: false,
     irPressed: false,
-    selectedItem: -1,
+    selectedItem: "",
     numDepth: 1
   }),
   computed: {
@@ -310,6 +317,13 @@ import { JSONView } from "vue-json-component";
     background-color: white;
   }
 
+  div.box
+  {
+    height:178px !important; height /**/: 200px;
+    padding: 4px;
+    overflow:auto;
+}
+
   #btn_upload{
     position: absolute;
     margin-left: -15px;
@@ -332,5 +346,5 @@ import { JSONView } from "vue-json-component";
     border-color: navy;
     border-width: 1px;
   }
-
+  
 </style>

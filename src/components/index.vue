@@ -6,13 +6,13 @@
     </div>
       <v-container id="main-container" class="divcontent grey lighten-5" fluid>
         <v-row class="text-center grow" align="center" justify="center">
-          <v-col :key="1" cols="12" :sm="11" :md="6" :lg="4" :xl="3">
+          <v-col :key="1" cols="12" :sm="11" :md="6" :lg="4" :xl="6">
               <bar-rec :recText="textRec" v-on:click-back-index="sendBck()"></bar-rec>
           </v-col>
-          <v-col :key="2" cols="12" :sm="11" :md="6" :lg="4" :xl="3">
+          <v-col :key="2" cols="12" :sm="11" :md="6" :lg="4" :xl="6">
               <bar-send :disable="disBtn" v-on:click-send="sendMsg($event)"></bar-send>
           </v-col>
-          <v-col id="third" :key="3" cols="12" :sm="11" :md="12" :lg="4" :xl="3">
+          <v-col id="third" :key="3" cols="12" :sm="11" :md="12" :lg="4" :xl="12">
               <bottom-bar v-on:file-upload-index="sendConfigFile($event)" 
                 v-on:click-ir="sendIRList()" 
                 v-on:click-tc="sendIRTempCol()"
@@ -107,7 +107,7 @@ SAVE AS tempmovie@movie;
           textLog : '',
           textErrLog : '',
           textIRTreeCol : '',
-          textIRCol : []
+          listIRCol : []
         }
       }
     },
@@ -199,10 +199,8 @@ SAVE AS tempmovie@movie;
         }else{
           const startE=textToChange.indexOf('#@TREE-DRAW@#')+'#@TREE-DRAW@#'.length+'{ "documents" : '.length;
           const endE=textToChange.lastIndexOf('#@END-TREE-DRAW@#')-3;
-          console.log(textToChange);
           let textConv=textToChange.substring(startE,endE);
           textConv=textConv.replace(/POINT /g,'{\n\t\t"type" : "POINT",\n\t\t"coordinates":"').replaceAll(")",')"\n\t}');
-          console.log(textConv);
          // console.log('[\n { \n } , \n'+textToChange.substring(startE,endE));
           this.received.textIRTreeCol= JSON.parse(/*'[\n { \n } , \n'+*/textConv);
         }
@@ -211,17 +209,18 @@ SAVE AS tempmovie@movie;
         if(textToChange.startsWith('{')){
           var parseJSON = JSON.parse(textToChange);
           var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
-          this.received.textIRCol=JSONInPrettyFormat;
+          this.received.listIRCol=JSONInPrettyFormat;
         }else{
           this.received.textIRCol=[];
-          const startE=textToChange.indexOf('#@IR-LIST#')+'#@IR-LIST@#  '.length
-                                                         +'{ 	"total": 2, 	"IRList": '.length;
-          const endE=textToChange.lastIndexOf('#@END-IR-LIST@#')-2;
+          const startE=textToChange.indexOf('#@IR-LIST#')+'#@IR-LIST@#  '.length;                          
+          const endE=textToChange.lastIndexOf('#@END-IR-LIST@#')-1;
+         
           var textChanged=textToChange.substring(startE,endE)
                                       /*.replace('","','\n')*/;
           var json_data=JSON.parse(textChanged);
+          json_data=json_data.IRList;
           for(var i in json_data)
-            this.received.textIRCol.push(json_data [i]);
+            this.received.listIRCol.push(json_data[i]);
         }
       },
       changeErrLog(textToChange){
@@ -290,17 +289,17 @@ SAVE AS tempmovie@movie;
                 }
             }
       },
-      sendIRSelCol(selectedIndex){
-            if(isPreDone() && selectedIndex>-1){
+      sendIRSelCol(selectedItem){
+            if(isPreDone() && selectedItem!==""){
                 if(isConnected()){
-                        this.connection.send('##GET-IR-COLLECTION##\n'+this.received.textIRCol[selectedIndex]+"\n##END-IR-COLLECTION##");
+                        this.connection.send('##GET-IR-COLLECTION##\n'+selectedItem+"\n##END-IR-COLLECTION##");
                         sended=true;
                 }else{
                     this.connection.close();
                     this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
                     if(!sended){
                       this.connection.onopen = () => {
-                        this.connection.send('##GET-IR-COLLECTION##\n'+this.received.textIRCol[selectedIndex]+"\n##END-IR-COLLECTION##");
+                        this.connection.send('##GET-IR-COLLECTION##\n'+selectedItem+"\n##END-IR-COLLECTION##");
                         sended=true;
                       }
                     }
