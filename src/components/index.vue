@@ -1,45 +1,55 @@
 <template>
   <div id="body">
-    <center><h1 class="display-2 font-weight-bold mb-3">
-            JCOUIweb 
-     </h1></center>
-  <v-container>
-    <v-row class="text-center">
-      <!--<v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="100"
-        />
-      </v-col> -->
-      
-      <v-col class="mb-4">
-        
-        <bar-rec :recText="textRec"></bar-rec>
-        <bar-send :disable="disBtn" v-on:click-send="sendMsg($event)"></bar-send>
-      </v-col>
-      <v-col>
-        <bottom-bar 
-        v-on:click-ir-index="sendIRList()" 
-        v-on:click-tc-index="sendIRTempCol()"
-        v-on:click-irc-index="sendIRSelCol($event)" 
-        v-on:click-back-index="sendBck()"  
-        :bottomText="received">
-        </bottom-bar>
-      </v-col>
-    </v-row>
-  </v-container>
+    <div class="divheader">
+        <p id="title" class="display-2 font-weight-bold mb-3 mt-4">JCOUIweb</p>
+        <v-icon id="settings" class="mt-1" x-large color="white">mdi-cog-outline</v-icon>
+    </div>
+      <v-container id="main-container" class="divcontent grey lighten-5" fluid>
+        <v-row class="text-center grow" align="center" justify="center">
+          <v-col :key="1" cols="12" :sm="11" :md="6" :lg="4" :xl="3">
+              <bar-rec :recText="textRec" v-on:click-back-index="sendBck()"></bar-rec>
+          </v-col>
+          <v-col :key="2" cols="12" :sm="11" :md="6" :lg="4" :xl="3">
+              <bar-send :disable="disBtn" v-on:click-send="sendMsg($event)"></bar-send>
+          </v-col>
+          <v-col id="third" :key="3" cols="12" :sm="11" :md="12" :lg="4" :xl="3">
+              <bottom-bar v-on:file-upload-index="sendConfigFile($event)" 
+                v-on:click-ir="sendIRList()" 
+                v-on:click-tc="sendIRTempCol()"
+                v-on:click-irc="sendIRSelCol($event)" 
+                v-on:click-back-index="sendBck()" 
+                :bottomText="received">
+              </bottom-bar>
+          </v-col>
+        </v-row>
+      </v-container>
   
   </div>
 </template>
+
+<style scoped>
+  #body{
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+  }
+  #body .divheader{
+    flex: 0 1 auto;
+  }
+
+  #body .divcontent{
+    flex: 1 0 auto;
+  }
+  #third{
+    position: relative;
+  }
+</style>
 
 <script>
 
 //import Vue from 'vue'
 import { timeString } from '../functions/functionTools';
 var sended=false;
-
 
 //const vm = new Vue();
 var connected=false;
@@ -225,22 +235,43 @@ SAVE AS tempmovie@movie;
         const endE=textToChange.lastIndexOf('#@END-LOGS@#');
         this.received.textLog+= textToChange.substring(startE,endE);
       },
-       sendBck(){
-            if(isPreDone()){
-                if(isConnected()){
-                        this.connection.send('##BACKTRACK##');
-                        sended=true;
-                }else{
-                    this.connection.close();
-                    this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
-                    if(!sended){
-                      this.connection.onopen = () => {
-                        this.connection.send('##BACKTRACK##');
-                        sended=true;
-                      }
-                    }
-                }
+      sendConfigFile(textSend){
+        if(isPreDone() && textSend.length>0){
+          if(isConnected()){
+            console.log('onopen send');
+            console.log('Sending data');
+            this.connection.send('##ADD-SERVER-CONF##\n'+textSend+'\n##ADD-SERVER-CONF##');
+            sended=true;
+          }else{
+            this.connection.close();
+            this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
+            if(!sended){
+              this.connection.onopen = () => {
+                console.log('onopen send');
+                console.log('Sending data');
+                this.connection.send('##ADD-SERVER-CONF##\n'+textSend+'\n##ADD-SERVER-CONF##');
+                sended=true;
+              }
             }
+          }
+        }
+      },
+      sendBck(){
+        if(isPreDone()){
+          if(isConnected()){
+            this.connection.send('##BACKTRACK##');
+            sended=true;
+          }else{
+            this.connection.close();
+            this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
+            if(!sended){
+              this.connection.onopen = () => {
+                this.connection.send('##BACKTRACK##');
+                sended=true;
+              }
+            }
+          }
+        }
       },
       sendIRTempCol(){
             if(isPreDone()){
@@ -295,7 +326,6 @@ SAVE AS tempmovie@movie;
       },
       sendMsg(textSend){
             if(isPreDone() && textSend.length>0){
-
                 if(isConnected()){
                     
                         console.log('onopen send');
@@ -322,3 +352,19 @@ SAVE AS tempmovie@movie;
 
 
 </script>
+
+<style scoped>
+  #title{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+    color: white;
+  }
+  #settings{
+    text-align: right;
+  }
+  #body{
+    background-color: navy;
+  }
+
+</style>

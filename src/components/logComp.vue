@@ -1,26 +1,15 @@
 <template>
     <div id="LogDiv">   
-      
-      <v-expand-transition>
-        <v-textarea 
-            v-show="expand"
-            filled
-            name="input-7-4"
-            rows="8"
-            row-height="2"
-            label="Logs"
-            v-model.lazy="logV"
-            hint="Log"
-            id="ta_log" placeholder="Log" readonly>
+        <v-textarea v-show="expand" filled name="input-7-4" rows="8"
+            row-height="2" label="Logs" v-model.lazy="logV" hint="Log" id="ta_log" placeholder="Log" readonly>
         </v-textarea>
-      </v-expand-transition>
         <v-tooltip bottom>
-        <template v-slot:activator="{on,attrs}">
-        <v-btn fab v-bind="attrs" v-on="on" class="black--text" @click="expand = !expand">
-         <v-icon x-large>mdi-code-tags</v-icon> 
-      </v-btn> 
-        </template>
-        <span>LOG</span>
+            <template v-slot:activator="{on,attrs}">
+                <v-btn fab v-bind="attrs" v-on="on" class="black--text" @click="expand = !expand">
+                    <v-icon x-large>mdi-code-tags</v-icon> 
+                </v-btn> 
+            </template>
+            <span>LOG</span>
         </v-tooltip>
 
 

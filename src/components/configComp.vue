@@ -1,8 +1,8 @@
 <template>
     <div id="ConfigDiv"> 
       <v-expand-transition>
-        <div id="configGen" v-show="expand">
         <v-textarea
+            v-show="expand"
             filled
             name="input-7-4"
             rows="8"
@@ -12,26 +12,15 @@
             hint="Configurazione"
             id="ta_conf" placeholder="Configurazione" readonly>
         </v-textarea>
-        
-        <v-tooltip bottom>
-        <template v-slot:activator="{on,attrs}">
-        <v-btn fab v-bind="attrs" v-on="on" @click="$emit('add-conf');">
-         
-         <v-icon x-large>mdi-history</v-icon>
-        </v-btn>
-        </template>
-        <span>INSERT CONFIGURATION</span>
-        </v-tooltip>
-        </div>
       </v-expand-transition>
-         <v-tooltip bottom color="blue">
+      <v-tooltip bottom color="blue">
         <template v-slot:activator="{on,attrs}">
-        <v-btn fab v-bind="attrs" v-on="on" @click="expand = !expand">
-         <v-icon x-large color="blue">mdi-wrench-outline</v-icon>
-      </v-btn>
+          <v-btn fab v-bind="attrs" v-on="on" @click="expand = !expand">
+            <v-icon x-large color="blue">mdi-wrench-outline</v-icon>
+          </v-btn>
         </template>
         <span>CONFIGURATION</span>
-         </v-tooltip>
+      </v-tooltip>
 
      
         
@@ -41,7 +30,7 @@
 
     export default {
     name : 'configDiv',
-    data: function (){
+    data(){
         return {
             expand: false
         }
