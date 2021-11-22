@@ -30,13 +30,13 @@
                 :xl="12">
                 <v-row align="center" justify="center" class="text-center">
                         <v-col>
-                            <v-btn id="btn_save" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" tile disabled="isDisable" fab large depressed elevation="2" raised @click="download('script',recText)">
+                            <v-btn id="btn_save" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" tile :disabled=(!isDisable) fab large depressed elevation="2" raised @click="download('script',recText)">
                                 <v-icon large>mdi-content-save-outline</v-icon>
                                 <span>SAVE</span>
                             </v-btn>
                         </v-col>
                         <v-col>
-                            <v-btn id="btn_back" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" tile disabled="isDisable" fab large @click="$emit('click-back-index');">
+                            <v-btn id="btn_back" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" tile :disabled=(!isDisable) fab large @click="$emit('click-back-index');">
                                 <v-icon large>mdi-history</v-icon>
                                 <span>BACK</span>
                             </v-btn>

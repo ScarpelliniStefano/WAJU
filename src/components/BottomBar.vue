@@ -70,18 +70,18 @@
                     <ul class="list_inside">
                       
                       <li>
-                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_tc" fab tile :disabled=(!irPressed) @click="expand = !expand; $emit('click-tc');">
+                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_tc" fab tile :disabled=(!irPressed||isEmptyList) @click="numDepth=1; $emit('click-tc');">
                           <v-icon color="grey">mdi-page-last</v-icon>
                         </v-btn>
                       </li>
                       <li>
-                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_irc" fab tile :disabled=(!irPressed) @click="expand = !expand; $emit('click-irc',selectedItem);">
+                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_irc" fab tile :disabled=(!irPressed||!isSelected) @click="numDepth=1; $emit('click-irc',selectedItem);">
                           <v-icon color="grey">mdi-sitemap-outline</v-icon>
                         </v-btn>
                       </li>
-                       <template v-if="isDisable">
+                       <template v-if="!isDisable">
                       <li>
-                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled=(!irPressed) @click="download('TreeColl',irTreeV);">
+                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled=(!irPressed) @click="download('TreeColl',bottomText.textIRTreeCol);">
                           <v-icon color="grey">mdi-content-save-outline</v-icon>
                         </v-btn>
                       </li>
@@ -142,7 +142,7 @@
 <script>
 import { JSONView } from "vue-json-component";
   export default {
-  name : 'barRec',
+  name : 'bottomBar',
   components : {
     "json-view": JSONView
   },
@@ -156,14 +156,19 @@ import { JSONView } from "vue-json-component";
     error: false,
     conf: false,
     ispectstate: false,
-    expand: false,
     irPressed: false,
     selectedItem: "",
     numDepth: 1
   }),
   computed: {
     isDisable() {
-      return this.bottomText.textIRTreeCol.length> 0;
+      return this.bottomText.textIRTreeCol==='';
+    },
+    isEmptyList() {
+      return this.bottomText.listIRCol.length<1;
+    },
+    isSelected() {
+      return this.selectedItem!=="";
     },
   },
   methods: {
