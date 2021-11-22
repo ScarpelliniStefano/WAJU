@@ -68,6 +68,18 @@
                 <v-col cols="12" sm="2" md="2" lg="12" xl="12">
                   <div id="treeViewBtn" align="center">
                     <ul class="list_inside">
+                      
+                      <li>
+                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_tc" fab tile :disabled=(!irPressed) @click="expand = !expand; $emit('click-tc');">
+                          <v-icon color="grey">mdi-page-last</v-icon>
+                        </v-btn>
+                      </li>
+                      <li>
+                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_irc" fab tile :disabled=(!irPressed) @click="expand = !expand; $emit('click-irc',selectedItem);">
+                          <v-icon color="grey">mdi-sitemap-outline</v-icon>
+                        </v-btn>
+                      </li>
+                       <template v-if="isDisable">
                       <li>
                         <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled=(!irPressed) @click="download('TreeColl',irTreeV);">
                           <v-icon color="grey">mdi-content-save-outline</v-icon>
@@ -78,16 +90,7 @@
                           <v-icon color="grey">mdi-circle-expand</v-icon>
                         </v-btn>
                       </li>
-                      <li>
-                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_tc" fab tile :disabled=(!irPressed) @click="expand = !expand; $emit('click-tc');">
-                          <v-icon color="grey">mdi-sitemap-outline</v-icon>
-                        </v-btn>
-                      </li>
-                      <li>
-                        <v-btn elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_irc" fab tile :disabled=(!irPressed) @click="expand = !expand; $emit('click-irc',selectedItem);">
-                          <v-icon color="grey">mdi-sitemap-outline</v-icon>
-                        </v-btn>
-                      </li>
+                       </template>
                     </ul>
                   </div>
                </v-col>
@@ -144,8 +147,7 @@ import { JSONView } from "vue-json-component";
     "json-view": JSONView
   },
   props : {
-      bottomText : Object,
-      irTreeV: Array
+      bottomText : Object
   },
   data: () => ({
     value: 1, 
@@ -161,7 +163,7 @@ import { JSONView } from "vue-json-component";
   }),
   computed: {
     isDisable() {
-      return this.irTreeV.length> 0;
+      return this.bottomText.textIRTreeCol.length> 0;
     },
   },
   methods: {
