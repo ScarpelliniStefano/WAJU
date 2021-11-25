@@ -2,9 +2,10 @@
 <div class="divstyle" id="btmDiv">
   <v-container class="containerstyle" style="border-radius: 3px;" fluid>
     <v-row align="center" justify="center">
-      <v-col cols="12" sm="10" md="10" lg="12" xl="12">
+      <v-col cols="12" sm="10" md="10" lg="12" xl="9">
 
         <div v-if="log" id="boxLog" class="containerstyle">
+          <center><h2>CONSOLE</h2></center>
           <ul class="list" readonly style="font-size: 16px;" height="100%" name="log-text" label="Logs" id="ul_send">
             <li class="containerstyle" :key="log.id" v-for="log in arrayLog.logs">
               <div v-if="log.type == 'LOG'" style="background-color: #ffffff; color: blue;">
@@ -59,19 +60,20 @@
             placeholder="Log">
           </v-textarea>
           <div v-if="ispectstate" v-bind:style={height:heightMax}>
-
-              <v-subheader>IR LIST</v-subheader>
-              <v-select
+          <div id="choice">
+          <div class="allinea"> <v-subheader>IR LIST</v-subheader></div>
+          <div class="allinea">
+            <v-select
                 v-model="selectedItem"
                 :items="bottomText.listIRCol"
                 label="IR collections"
                 dense
                 solo
-                width="210px"></v-select>
-            
-           
+                width="300px"></v-select>
+          </div>
+          </div>
             <div id="treeView">
-              <v-row>
+              <v-row >
                 
                 <v-col cols="12" sm="12" md="12" lg="12" xl="12">
                   <div class="box">
@@ -89,31 +91,29 @@
                     <ul class="list_inside">
                       
                       <li>
-                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_tc" fab tile :disabled="!this.irPressed||this.isEmptyList()" @click="numDepth=1; $emit('click-tc');">
+                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px;" id="btn_tc" fab tile :disabled="!this.irPressed||this.bottomText.listIRCol.length<1||this.bottomText.listIRCol==undefined" @click="numDepth=1; $emit('click-tc');">
                           <v-icon color="grey">mdi-page-last</v-icon>
                           <span class="tooltiptext">TC Collection</span>
                         </v-btn>
                       </li>
                       <li>
-                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" id="btn_irc" fab tile :disabled="!this.irPressed||!this.isSelected()" @click="numDepth=1; $emit('click-irc',selectedItem);">
+                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px;" id="btn_irc" fab tile :disabled="!this.irPressed||this.selectedItem==''" @click="numDepth=1; $emit('click-irc',selectedItem);">
                           <v-icon color="grey">mdi-sitemap-outline</v-icon>
                           <span class="tooltiptext">IR Collection</span>
                         </v-btn>
                       </li>
-                       <template v-if="!isDisable">
-                      <li>
-                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled="!this.irPressed" @click="download('TreeColl',bottomText.textIRTreeCol);">
+                      <li v-if="!(this.bottomText.textIRTreeCol=='' || this.bottomText.textIRTreeCol == undefined)">
+                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px;" fab tile :disabled="!this.irPressed" @click="download('TreeColl',bottomText.textIRTreeCol);">
                           <v-icon color="grey">mdi-content-save-outline</v-icon>
                           <span class="tooltiptext">Save Tree...</span>
                         </v-btn>
                       </li>
-                      <li>
-                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" fab tile :disabled="!this.irPressed" @click=setDepth()>
+                      <li v-if="!(this.bottomText.textIRTreeCol=='' || this.bottomText.textIRTreeCol == undefined)">
+                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px;" fab tile :disabled="!this.irPressed" @click=setDepth()>
                           <v-icon color="grey">mdi-circle-expand</v-icon>
                           <span class="tooltiptext">Expand</span>
                         </v-btn>
                       </li>
-                       </template>
                     </ul>
                   </div>
                </v-col>
@@ -122,7 +122,7 @@
           </div>
         <!--</v-card>-->
       </v-col>
-      <v-col cols="12" sm="2" md="2" lg="12" xl="12">
+      <v-col cols="12" sm="2" md="2" lg="12" xl="3">
         <v-row >
           <ul class="list">
             <li>
@@ -152,7 +152,7 @@
             <li>
               <div>
                 
-                <v-btn class="tooltip btnstyle" elevation="2" id="btn_ir" tile large fab @click="irPressed=true; setIR(); $emit('click-ir');">
+                <v-btn class="tooltip btnstyle" elevation="2" id="btn_ir" tile large fab @click="setIR(); $emit('click-ir');">
                   <v-icon large>mdi-file-find-outline</v-icon>
                   <span class="tooltiptext">IR Request</span>
                 </v-btn>
@@ -187,7 +187,9 @@ import { JSONView } from "vue-json-component";
     ispectstate: false,
     expand: false,
     irPressed: false,
-    selectedItem: -1,
+    selectedItem: "",
+    listEmpty:true,
+    textTreeEmpty:true,
     numDepth: 1
   }),
   created(){
@@ -200,22 +202,25 @@ import { JSONView } from "vue-json-component";
     this.isEmptyList();
     this.isSelected();*/
   },
+ watch:{
+    bottomText:function(newVal, oldVal){
+      if(newVal.listIRCol!=oldVal.listIRCol){
+        if(newVal.listIRCol.length<1 || newVal.listIRCol == undefined){
+          this.listEmpty=true;
+        }else{
+          this.listEmpty=false;
+        }
+      }
+      if(newVal.textIRTreeCol!=oldVal.textIRTreeCol){
+        if(newVal.textIRTreeCol=='' || newVal.textIRTreeCol == undefined){
+          this.textTreeEmpty=true;
+        }else{
+          this.textTreeEmpty=false;
+        }
+      }
+    }
+  },
   methods: {
-    isDisable() {
-      if(this.bottomText.textIRTreeCol == undefined){
-        return true;
-      }
-      return this.bottomText.textIRTreeCol == '';
-    },
-    isEmptyList() {
-      if(this.bottomText.listIRCol == undefined){
-        return true;
-      }
-      return this.bottomText.listIRCol.length < 1;
-    },
-    isSelected() {
-      return this.selectedItem!=="";
-    },
     getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array
       var cookieArr = document.cookie.split(";");
@@ -293,6 +298,7 @@ import { JSONView } from "vue-json-component";
         this.error = false,
         this.conf = false,
         this.ispectstate = true
+        this.irPressed=true;
       }
     },
     uploadConf(){
@@ -396,6 +402,17 @@ import { JSONView } from "vue-json-component";
     .list_inside li { width: 100%; }*/
   }
 
+  @media screen and (min-width: 1904px){
+    /* (C1) ALLOW LIST ITEMS TO WRAP TO NEW ROW */
+    .list { flex-wrap: wrap; margin-top: -122px;} 
+    /* (C2) 2 ITEMS PER ROW */
+    .list li { width: 100%; }
+
+    /*.list_inside { flex-wrap: wrap; margin-top: -10px;} 
+
+    .list_inside li { width: 100%; }*/
+  }
+
   .tarea-bottom{
     background-color: white;
   }
@@ -433,6 +450,8 @@ import { JSONView } from "vue-json-component";
     border-width: 1px;
   }
 
-
+  div.allinea { float:left; margin-left:10px; }
+  #colore1 {color:#003366; font-size:20px;}
+  #colore2 {color:#940F04; font-size:20px;}
 
 </style>

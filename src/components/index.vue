@@ -44,7 +44,7 @@
 
 //import Vue from 'vue'
 import { timeString } from '../functions/functionTools';
-import Settings from '../components/Settings.vue'
+import Settings from '../components/Settings.vue';
 
 class LogMessage{
   constructor(Msg, tMsg, idMsg){
@@ -139,7 +139,7 @@ SAVE AS tempmovie@movie;
           textLog : '',
           textErrLog : '',
           textIRTreeCol : '',
-          textIRCol : []
+          listIRCol : []
         },
         themeColor: "",
         mainColor: "",
@@ -315,17 +315,18 @@ SAVE AS tempmovie@movie;
         if(textToChange.startsWith('{')){
           var parseJSON = JSON.parse(textToChange);
           var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
-          this.received.textIRCol=JSONInPrettyFormat;
+          this.received.listIRCol=JSONInPrettyFormat;
         }else{
-          this.received.textIRCol=[];
-          const startE=textToChange.indexOf('#@IR-LIST#')+'#@IR-LIST@#  '.length
-                                                         +'{ 	"total": 2, 	"IRList": '.length;
-          const endE=textToChange.lastIndexOf('#@END-IR-LIST@#')-2;
-          var textChanged=textToChange.substring(startE,endE)
-                                      /*.replace('","','\n')*/;
+          this.received.listIRCol=[];
+          const startE=textToChange.indexOf('#@IR-LIST#')+'#@IR-LIST@#  '.length;
+          const endE=textToChange.lastIndexOf('#@END-IR-LIST@#')-1;
+          var textChanged=textToChange.substring(startE,endE);
+                                      /*.replace('","','\n'):*/
+                                      
           var json_data=JSON.parse(textChanged);
+          json_data=json_data.IRList;
           for(var i in json_data)
-            this.received.textIRCol.push(json_data [i]);
+            this.received.listIRCol.push(json_data [i]);
         }
       },
       changeErrLog(textToChange){
@@ -396,17 +397,17 @@ SAVE AS tempmovie@movie;
                 }
             }
       },
-      sendIRSelCol(selectedIndex){
-            if(isPreDone() && selectedIndex>-1){
+      sendIRSelCol(selectedItem){
+            if(isPreDone() && selectedItem!=""){
                 if(isConnected()){
-                        this.connection.send('##GET-IR-COLLECTION##\n'+this.received.textIRCol[selectedIndex]+"\n##END-IR-COLLECTION##");
+                        this.connection.send('##GET-IR-COLLECTION##\n'+selectedItem+"\n##END-IR-COLLECTION##");
                         sended=true;
                 }else{
                     this.connection.close();
                     this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
                     if(!sended){
                       this.connection.onopen = () => {
-                        this.connection.send('##GET-IR-COLLECTION##\n'+this.received.textIRCol[selectedIndex]+"\n##END-IR-COLLECTION##");
+                        this.connection.send('##GET-IR-COLLECTION##\n'+selectedItem+"\n##END-IR-COLLECTION##");
                         sended=true;
                       }
                     }

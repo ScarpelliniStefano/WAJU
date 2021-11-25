@@ -1,25 +1,6 @@
 <template>
   <v-app id="body">
-    <v-app-bar 
-    class="divheader" 
-      color="#000080"
-      dense
-      >
-        <p id="title" class="display-2 font-weight-bold mb-3 mt-4">JCOUIweb</p>
-        <v-btn
-          class="ma-2"
-          text
-          icon
-          color="white"
-          id="settings">
-          <v-icon flex  class="mt-1" x-large color="white">mdi-cog-outline</v-icon>
-        </v-btn>
-      
-
-      <v-spacer></v-spacer>
-
-      
-    </v-app-bar>
+  
 
     <v-main>
       <router-view/>
@@ -60,7 +41,7 @@ export default {
     padding: 10px;
   }
   #body{
-    background-color: navy;
+    background-color: white;
   }
   #body{
     display: flex;

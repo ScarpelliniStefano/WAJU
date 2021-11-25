@@ -28,8 +28,9 @@
                 </v-col>
                 <v-col :key="1.2" cols="12" :sm="2" :md="12" :lg="12" :xl="12">
                     <v-row align="center" justify="center" class="text-center">
+
                         <v-col>
-                            <v-btn class="tooltip btnstyle" tile style="border-radius: 4px; border-style: solid; border-width: 1px; " fab large depressed elevation="2" raised @click="$emit('click-send', textSend);">
+                            <v-btn class="tooltip btnstyle" tile  style="border-radius: 4px; border-style: solid; border-width: 1px; " fab large depressed elevation="2" raised @click="$emit('click-send', textSend);">
                                 <v-icon large>mdi-play</v-icon>
                                 <span class="tooltiptext">Execute command</span>
                             </v-btn>
@@ -89,6 +90,10 @@ export default {
         border-radius: 4px;
         border-style: solid;
         border-width: 1px;
+    }
+
+    #sendBTN[disabled]{
+        background-color: #D32F2F;
     }
 
 </style>

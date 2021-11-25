@@ -31,13 +31,13 @@
                 :xl="12">
                 <v-row align="center" justify="center" class="text-center">
                         <v-col>
-                            <v-btn class="tooltip btnstyle" id="btn_save" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" tile :disabled="this.isDisabled" fab large depressed elevation="2" raised @click="download('script',recText)">
+                            <v-btn class="tooltip btnstyle" id="btn_save" style="border-radius: 4px; border-style: solid; border-width: 1px;" tile :disabled="this.isDisabled" fab large depressed elevation="2" raised @click="download('script',recText)">
                                 <v-icon large>mdi-content-save-outline</v-icon>
                                 <span class="tooltiptext">Save the response</span>
                             </v-btn>
                         </v-col>
                         <v-col>
-                            <v-btn class="tooltip btnstyle" id="btn_back" style="border-radius: 4px; border-style: solid; border-width: 1px; border-color: navy;" tile :disabled="this.isDisabled" fab large @click="$emit('click-back-index');">
+                            <v-btn class="tooltip btnstyle" id="btn_back" style="border-radius: 4px; border-style: solid; border-width: 1px;" tile :disabled="this.isDisabled" fab large @click="$emit('click-back-index');">
                                 <v-icon large>mdi-history</v-icon>
                                 <span class="tooltiptext">Backtrack</span>
                             </v-btn>

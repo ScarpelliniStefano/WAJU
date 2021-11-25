@@ -1,5 +1,7 @@
-dist
+.DS_Store
 node_modules
+/dist
+gitattributes
 
 # local env files
 .env.local
