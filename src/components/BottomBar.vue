@@ -60,9 +60,7 @@
             placeholder="Log">
           </v-textarea>
           <div v-if="ispectstate" v-bind:style={height:heightMax}>
-          <div id="choice">
-          <div class="allinea"> <v-subheader>IR LIST</v-subheader></div>
-          <div class="allinea">
+          
             <v-select
                 v-model="selectedItem"
                 :items="bottomText.listIRCol"
@@ -70,13 +68,12 @@
                 dense
                 solo
                 width="300px"></v-select>
-          </div>
-          </div>
+          
             <div id="treeView">
               <v-row >
                 
                 <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-                  <div class="box">
+                  <div class="box" align="left" justify="left">
                   <json-view 
                           rootKey="documents" 
                           :key="numDepth" 
