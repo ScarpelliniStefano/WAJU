@@ -71,18 +71,6 @@
           
             <div id="treeView">
               <v-row >
-                
-                <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-                  <div class="box" align="left" justify="left">
-                  <json-view 
-                          rootKey="documents" 
-                          :key="numDepth" 
-                          :max-depth=numDepth 
-                          :data="bottomText.textIRTreeCol"
-                          />
-                  </div>
-                </v-col>
-                
                 <v-col cols="12" sm="12" md="12" lg="12" xl="12">
                   <div id="treeViewBtn" align="center">
                     <ul class="list_inside">
@@ -99,18 +87,7 @@
                           <span class="tooltiptext">IR Collection</span>
                         </v-btn>
                       </li>
-                      <li v-if="!(this.bottomText.textIRTreeCol=='' || this.bottomText.textIRTreeCol == undefined)">
-                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px;" fab tile :disabled="!this.irPressed" @click="download('TreeColl',bottomText.textIRTreeCol);">
-                          <v-icon color="grey">mdi-content-save-outline</v-icon>
-                          <span class="tooltiptext">Save Tree...</span>
-                        </v-btn>
-                      </li>
-                      <li v-if="!(this.bottomText.textIRTreeCol=='' || this.bottomText.textIRTreeCol == undefined)">
-                        <v-btn class="tooltip btnstyle" elevation="0" style="border-radius: 4px; border-style: solid; border-width: 1px;" fab tile :disabled="!this.irPressed" @click=setDepth()>
-                          <v-icon color="grey">mdi-circle-expand</v-icon>
-                          <span class="tooltiptext">Expand</span>
-                        </v-btn>
-                      </li>
+                      
                     </ul>
                   </div>
                </v-col>
@@ -164,13 +141,9 @@
 </template>
 
 <script>
-import { JSONView } from "vue-json-component";
 
   export default {
   name : 'barRec',
-  components : {
-    "json-view": JSONView
-  },
   props : {
       arrayLog: Object,
       bottomText : Object
@@ -182,12 +155,9 @@ import { JSONView } from "vue-json-component";
     error: false,
     conf: false,
     ispectstate: false,
-    expand: false,
     irPressed: false,
     selectedItem: "",
     listEmpty:true,
-    textTreeEmpty:true,
-    numDepth: 1
   }),
   created(){
     /*this.isDisable();
@@ -206,13 +176,6 @@ import { JSONView } from "vue-json-component";
           this.listEmpty=true;
         }else{
           this.listEmpty=false;
-        }
-      }
-      if(newVal.textIRTreeCol!=oldVal.textIRTreeCol){
-        if(newVal.textIRTreeCol=='' || newVal.textIRTreeCol == undefined){
-          this.textTreeEmpty=true;
-        }else{
-          this.textTreeEmpty=false;
         }
       }
     }
@@ -234,9 +197,7 @@ import { JSONView } from "vue-json-component";
       // Return null if not found
       return null;
     },
-    setDepth() {
-      this.numDepth=this.numDepth<2 ? 10 : 1;
-    },
+    
     async loadFile(){
       var file = document.getElementById("file_config").files[0];
       if(file){
@@ -248,18 +209,6 @@ import { JSONView } from "vue-json-component";
         }
       }
     },
-    download(filename) {
-      var element = document.createElement('a');
-      element.setAttribute('href', 'data:application/json,' + encodeURIComponent('{ \n "documents" : \n ' + JSON.stringify( this.irTreeV , null, '\t') + '\n}'));
-      element.setAttribute('download', filename);
-
-      element.style.display = 'none';
-      document.body.appendChild(element);
-
-      element.click();
-
-      document.body.removeChild(element);
-    }, 
     sendFileConf(filetext){
       this.$emit('file-upload-index', filetext);
     },
@@ -307,6 +256,9 @@ import { JSONView } from "vue-json-component";
 </script>
 
 <style scoped>
+  #treeView{
+     height: 349px;
+  }
   #btmDiv{
     height: 100%;
     background-color: white;

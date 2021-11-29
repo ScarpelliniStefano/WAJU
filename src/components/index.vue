@@ -299,17 +299,29 @@ SAVE AS tempmovie@movie;
         if(textToChange.startsWith('{')){
           var parseJSON = JSON.parse(textToChange);
           var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
-          this.received.textIRTreeCol=JSONInPrettyFormat;
+          this.generatePage(JSONInPrettyFormat);
         }else{
-          const startE=textToChange.indexOf('#@TREE-DRAW@#')+'#@TREE-DRAW@#'.length+'{ "documents" : '.length;
-          const endE=textToChange.lastIndexOf('#@END-TREE-DRAW@#')-3;
           console.log(textToChange);
+          let startE=textToChange.indexOf('#@TREE-DRAW@#')+'#@TREE-DRAW@#'.length;
+          let endE=textToChange.indexOf('###')
+          let title=textToChange.substring(startE,endE);
+          if(title=="Filter") title="Temporary Collection";
+          startE=endE+'  { "documents" : '.length;
+          endE=textToChange.lastIndexOf('#@END-TREE-DRAW@#')-3;
           let textConv=textToChange.substring(startE,endE);
-          textConv=textConv.replace(/POINT /g,'{\n\t\t"type" : "POINT",\n\t\t"coordinates":"').replaceAll(")",')"\n\t}');
           console.log(textConv);
-         // console.log('[\n { \n } , \n'+textToChange.substring(startE,endE));
-          this.received.textIRTreeCol= JSON.parse(/*'[\n { \n } , \n'+*/textConv);
+          textConv=textConv.replace(/POINT /g,'{\n\t\t"type" : "POINT",\n\t\t"coordinates":"').replaceAll(")",')"\n\t}');
+          this.generatePage(title,textConv);          
         }
+      },
+      generatePage(title,textToSend){
+        let dateGen=new Date();
+        let millis=dateGen.getTime();
+        console.log(millis)
+        localStorage.setItem("textTree_"+millis,JSON.stringify({datetime: dateGen.toISOString(),name:title,tree:textToSend}))
+        let routeData = this.$router.resolve({name: 'StaticTree',query:{id:millis}});
+        console.log(routeData);
+        window.open(routeData.href, '_blank');
       },
       changeIRList(textToChange){
         if(textToChange.startsWith('{')){
