@@ -111,6 +111,7 @@ export var isPreDone = () => {
 import BarRec from './barRec.vue'
 import BarSend from './barSend.vue'
 import BottomBar from './BottomBar.vue'
+
   export default {
     name: 'PaginaPrincipale',
     
@@ -130,6 +131,7 @@ SAVE AS tempmovie@movie;
     data() {
       return {
         connection : null,
+        connectionPage : null,
         textRec : '',
         disBtn : false,
         arrayLog: new ArrayLogMessage(),
@@ -314,11 +316,15 @@ SAVE AS tempmovie@movie;
           this.generatePage(title,textConv);          
         }
       },
+
       generatePage(title,textToSend){
         let dateGen=new Date();
         let millis=dateGen.getTime();
-        console.log(millis)
-        localStorage.setItem("textTree_"+millis,JSON.stringify({datetime: dateGen.toISOString(),name:title,tree:textToSend}))
+        this.connectionPage=new WebSocket('ws://localhost:3000');
+        this.connectionPage.onopen = () => {
+          this.connectionPage.send('SAVE###'+"textTree_"+millis+"###"+JSON.stringify({datetime: dateGen.toISOString(),name:title,tree:textToSend}));
+        }
+        localStorage.setItem("textTree_"+millis,JSON.stringify({datetime: dateGen.toISOString(),name:title}))
         let routeData = this.$router.resolve({name: 'StaticTree',query:{id:millis}});
         console.log(routeData);
         window.open(routeData.href, '_blank');

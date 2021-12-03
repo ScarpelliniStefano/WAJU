@@ -6,7 +6,7 @@
   import PageTree from '../components/PageTree.vue'
 
   export default {
-    name: 'Static page',
+    name: 'StaticPage',
 
     components: {
       PageTree,

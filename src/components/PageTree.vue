@@ -5,6 +5,8 @@
                   <div class="box" align="left" justify="left">
                     <center> <h1>{{this.title}}</h1></center>
                    <center> <h3>{{new Date(this.datetime).toLocaleString()}}</h3></center>
+                    <br>
+                   <center> <h5>Total item:{{this.valTotal}} - Initial document: {{this.valInitial}} - Final document: {{this.valFinal}}</h5></center>
                   </div>
                 </v-col> 
                 <v-col cols="12" sm="12" md="12" lg="12" xl="12">
@@ -50,7 +52,11 @@ import { JSONView } from "vue-json-component";
             numDepth: 1,
             textIRTreeCol:'',
             datetime:'',
-            title:''
+            title:'',
+            valInitial:0,
+            valFinal:0,
+            valTotal:0,
+            connectionPage:null,
         }
     },
     watch:{
@@ -71,13 +77,27 @@ import { JSONView } from "vue-json-component";
     },
     mounted(){
       if(localStorage.getItem("textTree_"+this.$route.query.id)){
-        let jsonData=JSON.parse(localStorage.getItem("textTree_"+this.$route.query.id));
-        this.datetime=jsonData.datetime;
-        this.title=jsonData.name;
-        this.textIRTreeCol=JSON.parse(jsonData.tree);
+        this.connectionPage=new WebSocket('ws://localhost:3000');
+        this.connectionPage.onopen = () => {
+          this.connectionPage.send('OPEN###'+"textTree_"+this.$route.query.id+"###0,100000");
+          
+        }
+        let jsonData='';
+        this.connectionPage.onmessage = (message) => {
+          jsonData=JSON.parse(message.data);
+          this.datetime=jsonData.datetime;
+          this.title=jsonData.name;
+          this.valTotal=jsonData.tot;
+          this.valInitial=jsonData.initial;
+          this.valFinal=jsonData.final;
+          console.log(jsonData.tree);
+          this.textIRTreeCol=jsonData.tree;
+        }
+        
       }
     },
     methods:{
+        
          setDepth() {
             this.numDepth=this.numDepth<2 ? 10 : 1;
           },
