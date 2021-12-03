@@ -141,7 +141,8 @@ SAVE AS tempmovie@movie;
           textLog : '',
           textErrLog : '',
           textIRTreeCol : '',
-          listIRCol : []
+          listIRCol : [],
+          errorConfig:''
         },
         themeColor: "",
         mainColor: "",
@@ -321,16 +322,28 @@ SAVE AS tempmovie@movie;
         let dateGen=new Date();
         let millis=dateGen.getTime();
         this.connectionPage=new WebSocket('ws://localhost:3000');
-        this.connectionPage.onopen = () => {
-          this.connectionPage.send('SAVE###'+"textTree_"+millis+"###"+JSON.stringify({datetime: dateGen.toISOString(),name:title,tree:textToSend}));
+        this.connectionPage.onerror=()=>{
+          this.received.errorConfig="no server available"
         }
-        localStorage.setItem("textTree_"+millis,JSON.stringify({datetime: dateGen.toISOString(),name:title}))
-        let routeData = this.$router.resolve({name: 'StaticTree',query:{id:millis}});
-        console.log(routeData);
-        window.open(routeData.href, '_blank');
-      },
-      changeIRList(textToChange){
-        if(textToChange.startsWith('{')){
+        this.connectionPage.onclose = () => {
+            this.received.errorConfig="server save/open closed"
+        }
+        this.connectionPage.onopen = () => {
+            console.log(this.connectionPage.readyState)
+            this.connectionPage.send('SAVE###'+"textTree_"+millis+"###"+JSON.stringify({datetime: dateGen.toISOString(),name:title,tree:textToSend}));
+            this.received.errorConfig=""
+            localStorage.setItem("textTree_"+millis,JSON.stringify({datetime: dateGen.toISOString(),name:title}))
+            let routeData = this.$router.resolve({name: 'StaticTree',query:{id:millis}});
+            console.log(routeData);
+            setTimeout(function() {
+              window.open(routeData.href, '_blank');
+            },1000);
+          }
+          
+          
+        },
+        changeIRList(textToChange){
+          if(textToChange.startsWith('{')){
           var parseJSON = JSON.parse(textToChange);
           var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
           this.received.listIRCol=JSONInPrettyFormat;

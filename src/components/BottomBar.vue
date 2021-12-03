@@ -60,7 +60,9 @@
             placeholder="Log">
           </v-textarea>
           <div v-if="ispectstate" v-bind:style={height:heightMax}>
-          
+            <div v-if="this.bottomText.errorConfig!=''">
+              <center> <span class="label danger">{{this.bottomText.errorConfig}}</span> </center>
+            </div>
             <v-select
                 v-model="selectedItem"
                 :items="bottomText.listIRCol"
@@ -71,6 +73,7 @@
           
             <div id="treeView">
               <v-row >
+                
                 <v-col cols="12" sm="12" md="12" lg="12" xl="12">
                   <div id="treeViewBtn" align="center">
                     <ul class="list_inside">
@@ -90,6 +93,7 @@
                       
                     </ul>
                   </div>
+                   
                </v-col>
               </v-row>
             </div>
@@ -143,7 +147,7 @@
 <script>
 
   export default {
-  name : 'barRec',
+  name : 'barBottom',
   props : {
       arrayLog: Object,
       bottomText : Object
@@ -256,6 +260,17 @@
 </script>
 
 <style scoped>
+
+.label {
+  color: white;
+  padding: 8px;
+}
+
+.success {background-color: #04AA6D;} /* Green */
+.info {background-color: #2196F3;} /* Blue */
+.warning {background-color: #ff9800;} /* Orange */
+.danger {background-color: #f44336;} /* Red */
+.other {background-color: #e7e7e7; color: black;} /* Gray */
   #treeView{
      height: 349px;
   }

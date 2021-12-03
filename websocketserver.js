@@ -2,6 +2,8 @@ const WebSocket = require("ws");
 const wss = new WebSocket.Server({port: 3000});
 const fs = require('fs');
 
+console.log("started on port 3000")
+
 wss.on('connection', function connection(ws){
     console.log("connesso")
 
@@ -14,47 +16,53 @@ wss.on('connection', function connection(ws){
     });
 
     ws.on("message", (data, isBinary) => {
-        console.log(data);
-            let textStr = new TextDecoder().decode(new Uint8Array(data));
-            console.log("service")
-            let command=textStr.split('###')[0];
-            if(command=="SAVE"){
-                console.log("save")
-                let title=textStr.split('###')[1];
-                let text=textStr.split('###')[2];
-                fs.writeFile(title+'.txt', text, error => {
-                    if (error) {
-                        console.error(error);
-                        return;
+        var command=data.split('###')[0];
+        if(command=="SAVE"){
+            var title=data.split('###')[1];
+            var text=data.split('###')[2];
+            fs.writeFile(`./src/temp/${title}.txt`, text, error => {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+            })
+        }else if(command=="OPEN"){
+            let title=data.split('###')[1];
+            let page=Number(data.split('###')[2].split(',')[0]);
+            let size=Number(data.split('###')[2].split(',')[1]);
+            fs.readFile(`./src/temp/${title}.txt`, (error, dataRes) => {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+                let textStr = new TextDecoder().decode(new Uint8Array(dataRes));
+                let jsonData=JSON.parse(textStr);
+                let total=Object.keys(JSON.parse(jsonData.tree)).length;
+                let valI=page*size;
+                let valF=0;
+                    if(total-(page*size)<size)
+                        valF=total-(page*size)
+                    else
+                        valF=(page*size)+size
+                let jsonInterval=JSON.parse(jsonData.tree).slice(valI,valF);
+                wss.clients.forEach( (client) => {
+                    if(client === ws && client.readyState === WebSocket.OPEN){
+                        client.send(JSON.stringify({datetime:jsonData.datetime,name:jsonData.name,tot:total,initial:valI,final:valF,tree:jsonInterval}),{binary: isBinary});
                     }
-                })
-            }else if(command=="OPEN"){
-                console.log("open")
-                let title=textStr.split('###')[1];
-                let page=Number(textStr.split('###')[2].split(',')[0]);
-                let size=Number(textStr.split('###')[2].split(',')[1]);
-                console.log(page+ " " + size);
-                fs.readFile(title+'.txt', (error, data) => {
-                    if (error) {
-                        console.error(error);
-                        return;
-                    }
-                    let textStr = new TextDecoder().decode(new Uint8Array(data));
-                    let jsonData=JSON.parse(textStr);
-                    let total=Object.keys(jsonData.tree).length;
-                    let valI=page*size;
-                    let valF=(page*size)+size;
-                    let jsonInterval=JSON.parse(jsonData.tree).slice(valI,valF);
-                    wss.clients.forEach( (client) => {
-                        if(client === ws && client.readyState === WebSocket.OPEN){
-                            console.log("send")
-                            
-                            client.send(JSON.stringify({datetime:jsonData.datetime,name:jsonData.name,tot:total,initial:valI,final:valF,tree:jsonInterval}),{binary: isBinary});
-                        }
-                    });
-                })
-            }
+                });
+            })
+        }
             
     });
 
 });
+const fsExtra = require('fs-extra')
+process.on('SIGINT', function() {
+      fsExtra.emptyDirSync("./src/temp");
+      wss.clients.forEach( (client) => {
+        if(client.readyState === WebSocket.OPEN){
+            client.send("SERVER CLOSED");
+        }
+    });
+      process.exit(0);
+  });
