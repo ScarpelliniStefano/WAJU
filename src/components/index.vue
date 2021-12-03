@@ -6,13 +6,25 @@
           <h1 id="title" class="display-2 font-weight-bold mb-3 mt-4">JCOUIweb</h1>
         </v-col>
         <v-col cols="2">
-          <v-icon style="float:right; margin-right:20px;" id="settings" class="mt-1" x-large color="white" v-on:click="settings = true">mdi-cog-outline</v-icon>
-          <v-overlay opacity="1" :value="settings" color="white">
-            <Settings v-on:set-main-color="this.setMainColor" v-on:set-theme-color="this.setThemeColor"/>
-            <v-btn color="orange lighten-2" v-on:click="settings = false">
+          
+           <v-dialog
+              v-model="settings"
+              scrollable
+              max-width="400px"
+              max-height="400px"
+            >
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon  v-bind="attrs" v-on="on" style="float:right; margin-right:20px;" id="settings" class="mt-1" x-large color="white">mdi-cog-outline</v-icon>
+            </template>
+            <v-container>
+              <Settings v-on:set-main-color="this.setMainColor" v-on:set-theme-color="this.setThemeColor"/>
+               <div align="right">
+              <v-btn align="right" max-width="200px" color="orange lighten-2" v-on:click="settings = false">
                 Chiudi Impostazioni
-            </v-btn>
-          </v-overlay>
+              </v-btn>
+              </div>
+              </v-container>
+          </v-dialog>
         </v-col>
       </v-row>
     </container>

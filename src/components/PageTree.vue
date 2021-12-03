@@ -2,22 +2,8 @@
 <template>
 
 <div id="treeView">
-  <container name="c1" class="divheader">
-      <v-row align="center">
-        <v-col cols="10" align-self="left">
-          <h1 id="title" class="display-2 font-weight-bold mb-3 mt-4">JCOUIweb</h1>
-        </v-col>
-        <v-col cols="2">
-          <v-icon style="float:right; margin-right:20px;" id="settings" class="mt-1" x-large color="white" v-on:click="settings = true">mdi-cog-outline</v-icon>
-          <v-overlay opacity="1" :value="settings" color="white">
-            <Settings v-on:set-main-color="this.setMainColor" v-on:set-theme-color="this.setThemeColor"/>
-            <v-btn color="orange lighten-2" v-on:click="settings = false">
-                Chiudi Impostazioni
-            </v-btn>
-          </v-overlay>
-        </v-col>
-      </v-row>
-    </container>
+                    
+ 
   <v-overlay  :value="overlay">
     <v-progress-circular
         indeterminate
@@ -61,25 +47,12 @@
                       </v-col>
                       <v-spacer></v-spacer>
                    </v-row>
-                   <div v-if="this.error!=''">
-                  <center> <span class="label danger">{{this.error}}</span> </center>
+                   <v-row>
+                   <div v-if="this.error!=''"><center> <span class="label danger">{{this.error}}</span> </center>
                    </div>
-                  </div>
-                </v-col> 
-                
-                <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-                  <div class="box" align="left" justify="left">
-                       
-                  <json-view 
-                          rootKey="documents" 
-                          :key="numDepth" 
-                          :max-depth=numDepth 
-                          :data="this.textIRTreeCol"
-                          />
-                  </div>
-                </v-col>
-                
-                <v-col cols="12" sm="12" md="12" lg="12" xl="12">
+                     </v-row>
+                     <v-row>
+                     <v-col cols="12" sm="12" md="12" lg="12" xl="12">
                   <div id="treeViewBtn" align="center">
                     <ul class="list_inside">
                       <li v-if="!(this.textIRTreeCol=='' || this.textIRTreeCol == undefined)">
@@ -97,15 +70,33 @@
                     </ul>
                   </div>
                </v-col>
+                     </v-row>
+                  </div>
+                </v-col> 
+                <v-col cols="12" sm="12" md="12" lg="12" xl="12">
+                  <div class="box" align="left" justify="left">  
+                  <json-view 
+                         
+                          rootKey="documents" 
+                          :key="numDepth" 
+                          :max-depth=numDepth 
+                          :data="this.textIRTreeCol"
+                          />
+                        
+                  </div>
+
+                </v-col>
+                
+                
               </v-row>
             </div>
 </template>
 <script>
 import { JSONView } from "vue-json-component";
-import Settings from '../components/Settings.vue';
+//import Settings from '../components/Settings.vue';
     export default {
     name : 'IRCompTree',
-    components: { "json-view": JSONView , Settings},
+    components: { "json-view": JSONView },
     data: function (){
         return {
             expand: false,
@@ -325,13 +316,11 @@ import Settings from '../components/Settings.vue';
     width: 100%; /* Auto spacing */
   }
 
-  div.box{
-    border-style:solid;
-    border-color:cadetblue;
-  }
+  
 
   div.boxInfo{
     border-style:double;
+    border-width: 7px;
     border-color:cyan;
   }
 
@@ -503,6 +492,7 @@ import Settings from '../components/Settings.vue';
     display: flex;
     flex-flow: column;
     height: 100%;
+
   }
   #body .divheader{
     flex: 0 1 auto;
@@ -564,5 +554,21 @@ import Settings from '../components/Settings.vue';
   .containerstyle{
     background-color: var(--bg-div-color);
   }
+.box {
+  overflow-y: scroll; /* Add the ability to scroll */
+  height: 70vh;
+  border-style:solid;
+  border-color:cadetblue;
+}
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.box::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.box {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 </style>

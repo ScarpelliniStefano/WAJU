@@ -1,6 +1,6 @@
 <template>
-    <v-container>
-        <v-card>
+    <v-container >
+        <v-card dark>
             <v-card-title>
                 Main Color
             </v-card-title>
@@ -33,7 +33,7 @@
                 </v-container>
             </v-card-actions>
         </v-card>
-        <v-card>
+        <v-card dark>
             <v-card-title>
                 Theme Color
             </v-card-title>
@@ -43,7 +43,7 @@
                 <v-btn class="theme-btn blue darken-4" fab small v-on:click="setThemeColor('theme-blue')"></v-btn>
             </v-card-actions>
         </v-card>
-        <v-card>
+        <v-card dark>
             <v-card-title>
                 Font Size
             </v-card-title>
