@@ -1,11 +1,11 @@
 <template>
-    <v-container >
-        <v-card dark>
+    <v-container>
+        <v-card>
             <v-card-title>
                 Main Color
             </v-card-title>
             <v-card-actions>
-                <v-container fluid>
+                <v-container>
                     <v-col>
                 <v-btn class="theme-btn red" fab small color="#D32F2F" v-on:click="setMainColor('red')"></v-btn>
                 <v-btn class="theme-btn pink" fab small color="#C2185B" v-on:click="setMainColor('pink')"></v-btn>
@@ -33,7 +33,7 @@
                 </v-container>
             </v-card-actions>
         </v-card>
-        <v-card dark>
+        <v-card>
             <v-card-title>
                 Theme Color
             </v-card-title>
@@ -43,7 +43,7 @@
                 <v-btn class="theme-btn blue darken-4" fab small v-on:click="setThemeColor('theme-blue')"></v-btn>
             </v-card-actions>
         </v-card>
-        <v-card dark>
+        <v-card>
             <v-card-title>
                 Font Size
             </v-card-title>
@@ -59,6 +59,16 @@
                     <v-btn>SAVE</v-btn>
             </v-card-actions>
         </v-card>
+        <v-card>
+            <v-card-title>
+                Set Order Of Components
+            </v-card-title>
+            <v-container style="height: 10px;"></v-container>
+            <v-card-actions>
+                <v-select>
+                </v-select>
+            </v-card-actions>
+        </v-card>
     </v-container>
 </template>
 
@@ -68,7 +78,13 @@ export default {
     data(){
         return{
             slider: 0,
-            preColor: "",
+            orderComponent:[
+                "1. Execute 2. Rec 3. Other",
+                "1. Execute 2. Other 3. Rec",
+                "1. Rec 2. Execute 3. Other",
+                "1. Rec 2. Execute"
+            ]
+            /*preColor: "",
             classMainColor: ["red","pink","purple","deep-purple","indigo", "blue",
                             "light-blue","cyal","teal","green","light-green","lime",
                             "yellow","amber","orange","deep-orange","brown","blue-grey"],
@@ -81,7 +97,7 @@ export default {
                             "fs-31", "fs-32", "fs-33", "fs-34", "fs-35",
                             "fs-36", "fs-37", "fs-38", "fs-39", "fs-40",
                             "fs-41", "fs-42", "fs-43", "fs-44", "fs-45",
-                            "fs-46", "fs-47", "fs-48", "fs-49", "fs-50"]
+                            "fs-46", "fs-47", "fs-48", "fs-49", "fs-50"]*/
         }
     },
     methods: {
@@ -97,7 +113,7 @@ export default {
         if(typeof daysToLive === "number") {
             /* Sets the max-age attribute so that the cookie expires
             after the specified number of days */
-            cookie += "; max-age=" + (daysToLive*24*60*60);
+            cookie += "; secure; max-age=" + (daysToLive*24*60*60);
             document.cookie = cookie;
           }
       },

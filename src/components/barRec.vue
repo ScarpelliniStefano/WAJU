@@ -1,26 +1,31 @@
 <template>
     <div id="recDiv" class="divstyle" >
+        <div class="topbar" @click="$emit('set-z-click', 'rec')">
+            <h4 class="noselect" style="float:left; margin-left: 5px">Response</h4>
+            <v-icon color="white" style="float: right;" v-on:click="closeWindow()">mdi-close</v-icon>
+        </div>
         <v-container class="containerstyle" style="border-radius: 3px;" fluid>
-            <v-row align="center" class="grow">
+            <v-row align="center" >
             <v-col
+            class="py-0"
                 :key="1.1"
                 cols="12"
                 :sm="10"
                 :md="12"
                 :lg="12"
-                :xl="12"
-                >
+                :xl="12">
                 <v-textarea
-                    class="tastyle"
+                    class="tastyle pt-0 mt-0"
                     no-resize
                     name="input-7-1"
-                    rows="13"
-                    row-height="8"
-                    label="Response"
-                    v-model.lazy="recText"
-                    hint="Risposta"
-                    id="ta_rec" placeholder="Response" readonly>
+                    :rows="parseInt((height-134)/28)"
+                    v-model="recText"
+                    color="black"
+                    id="ta_rec" >
                 </v-textarea>
+            </v-col>
+            <v-col class="py-0">
+                <v-sheet elevation="0" color="white" :height="(height-134) - parseInt((height-134)/28) * 28 + 5"></v-sheet>
             </v-col>
             <v-col
                 :key="1.2"
@@ -29,16 +34,16 @@
                 :md="12"
                 :lg="12"
                 :xl="12">
-                <v-row align="center" justify="center" class="text-center">
-                        <v-col>
-                            <v-btn class="tooltip btnstyle" id="btn_save" style="border-radius: 4px; border-style: solid; border-width: 1px;" tile :disabled="this.isDisabled" fab large depressed elevation="2" raised @click="download('script',recText)">
-                                <v-icon large>mdi-content-save-outline</v-icon>
+                <v-row align="center" class="text-center" >
+                        <v-col cols="6" :sm="12" :md="6" :lg="6" :xl="6">
+                            <v-btn class="tooltip btnstyle" id="btn_save" style="border-radius: 4px; border-style: solid; border-width: 1px;" tile :disabled="this.isDisabled" fab depressed elevation="2" raised @click="download('script',recText)">
+                                <v-icon>mdi-content-save-outline</v-icon>
                                 <span class="tooltiptext">Save the response</span>
                             </v-btn>
                         </v-col>
-                        <v-col>
-                            <v-btn class="tooltip btnstyle" id="btn_back" style="border-radius: 4px; border-style: solid; border-width: 1px;" tile :disabled="this.isDisabled" fab large @click="$emit('click-back-index');">
-                                <v-icon large>mdi-history</v-icon>
+                        <v-col cols="6" :sm="12" :md="6" :lg="6" :xl="6">
+                            <v-btn class="tooltip btnstyle" id="btn_back" style="border-radius: 4px; border-style: solid; border-width: 1px;" tile :disabled="this.isDisabled" fab  @click="$emit('click-back-index');">
+                                <v-icon>mdi-history</v-icon>
                                 <span class="tooltiptext">Backtrack</span>
                             </v-btn>
                         </v-col>
@@ -56,7 +61,9 @@
         isDisabled: true
     }),
     props : {
-        recText : String
+        recText : String,
+        height: Number,
+        width: Number
     },
     watch: {
         recText: function(oldVal, newVal){
@@ -86,6 +93,9 @@
             // Return null if not found
             return null;
         },
+        closeWindow(){
+          this.$emit('close-rec');
+        },
         Enabled(){
             this.isDisabled = true;
         },
@@ -103,7 +113,7 @@
             element.click();
 
             document.body.removeChild(element);
-        } 
+        },
     } 
 }
 </script>
