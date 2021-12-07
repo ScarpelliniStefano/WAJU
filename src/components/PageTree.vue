@@ -157,6 +157,7 @@ export default {
       fontColor: '',
       fontSize: 0,
       error: '',
+      promise: null
     }
   },
   watch: {
@@ -168,6 +169,9 @@ export default {
         } else {
           this.textTreeEmpty = false
           this.overlay = false
+          //console.log("pulisci");
+          //clearTimeout(this.promise);
+          //console.log(this.promise)
         }
       }
     },
@@ -287,6 +291,12 @@ export default {
             }
             console.log(jsonData.tree)
             this.textIRTreeCol = jsonData.tree
+
+            /*setTimeout(() => {
+              console.log("finito!");
+              this.overlay = false;
+              alert("Request failed for long time");
+            }, 10000);*/
           }
         }
       }
