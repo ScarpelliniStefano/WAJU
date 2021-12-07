@@ -2,6 +2,7 @@
 node_modules
 /dist
 gitattributes
+/src/temp
 
 # local env files
 .env.local
