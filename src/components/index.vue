@@ -789,33 +789,23 @@ export default {
         }
       }
     },
-    sendIRSelCol(selectedIndex) {
-      if (isPreDone() && selectedIndex > -1) {
-        if (isConnected()) {
-          this.connection.send(
-            "##GET-IR-COLLECTION##\n" +
-              this.received.listIRCol[selectedIndex] +
-              "\n##END-IR-COLLECTION##"
-          );
-          sended = true;
-        } else {
-          this.connection.close();
-          this.connection = new WebSocket(
-            "ws://" + process.env.VUE_APP_ENGINE_SERVER
-          );
-          if (!sended) {
-            this.connection.onopen = () => {
-              this.connection.send(
-                "##GET-IR-COLLECTION##\n" +
-                  this.received.listIRCol[selectedIndex] +
-                  "\n##END-IR-COLLECTION##"
-              );
-              sended = true;
-            };
-          }
-        }
-      }
-    },
+    sendIRSelCol(selectedItem){
+            if(isPreDone() && selectedItem!=""){
+                if(isConnected()){
+                        this.connection.send('##GET-IR-COLLECTION##\n'+selectedItem+"\n##END-IR-COLLECTION##");
+                        sended=true;
+                }else{
+                    this.connection.close();
+                    this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
+                    if(!sended){
+                      this.connection.onopen = () => {
+                        this.connection.send('##GET-IR-COLLECTION##\n'+selectedItem+"\n##END-IR-COLLECTION##");
+                        sended=true;
+                      }
+                    }
+                }
+            }
+      },
     sendIRList() {
       if (isPreDone()) {
         if (isConnected()) {
@@ -1156,7 +1146,7 @@ vdr {
   cursor: ne-resize;
 }
 .handle-ml {
-  width: 3;
+  width: 3px;
   height: 50px;
   top: 50%;
   margin-top: -25px;
@@ -1164,7 +1154,7 @@ vdr {
   cursor: w-resize;
 }
 .handle-mr {
-  width: 3;
+  width: 3px;
   height: 50px;
   top: 50%;
   margin-top: -25px;

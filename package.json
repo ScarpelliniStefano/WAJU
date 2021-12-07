@@ -14,6 +14,7 @@
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-auto-complete-textarea": "^0.1.71",
+    "vue-draggable-resizable": "^2.3.0",
     "vue-json-component": "^0.4.1",
     "vue-native-websocket": "^2.0.15",
     "vue-native-websocket-es5": "^2.0.14",

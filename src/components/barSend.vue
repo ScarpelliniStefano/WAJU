@@ -21,7 +21,7 @@
                             style="background-color: #aaaaaa; overflow-y: auto; position: relative">
                         </div>
                     </v-sheet>
-                    <!--<v-textarea
+                    <v-textarea
                     text-narrow
                         class="tastyle pt-0 mt-0"
                         style="font-size: 16px;"
@@ -31,7 +31,7 @@
                         color="black"
                         v-model.lazy="textSend"
                         id="ta_send" >
-                    </v-textarea>-->
+                    </v-textarea>
                 </v-col>
                 <v-col :key="1.2" cols="12" :sm="2" :md="12" :lg="12" :xl="12">
                     <v-row align="center" class="text-center">

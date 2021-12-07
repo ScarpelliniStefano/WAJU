@@ -118,7 +118,7 @@
                             this.bottomText.listIRCol == undefined
                           "
                           @click="
-                            numDepth = 1
+                            numDepth = 1;
                             $emit('click-tc')
                           "
                         >
@@ -141,8 +141,8 @@
                           tile
                           :disabled="!this.irPressed||this.selectedItem==''"
                           @click="
-                            numDepth = 1
-                            $emit('click-irc', selectedItem)
+                            numDepth = 1;
+                            $emit('click-irc', selectedItem);
                           "
                         >
                           <v-icon color="grey">mdi-sitemap-outline</v-icon>
