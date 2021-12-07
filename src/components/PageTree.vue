@@ -133,6 +133,8 @@
 <script>
 import { JSONView } from 'vue-json-component'
 //import Settings from '../components/Settings.vue';
+
+
 export default {
   name: 'IRCompTree',
   components: { 'json-view': JSONView },
@@ -156,8 +158,8 @@ export default {
       mainColor: '',
       fontColor: '',
       fontSize: 0,
-      error: '',
-      promise: null
+      error: '', 
+      //promise: ''
     }
   },
   watch: {
@@ -169,9 +171,9 @@ export default {
         } else {
           this.textTreeEmpty = false
           this.overlay = false
-          //console.log("pulisci");
-          //clearTimeout(this.promise);
-          //console.log(this.promise)
+         /* console.log("pulisci");
+          clearInterval(this.promise);
+          console.log(this.promise)*/
         }
       }
     },
@@ -292,7 +294,7 @@ export default {
             console.log(jsonData.tree)
             this.textIRTreeCol = jsonData.tree
 
-            /*setTimeout(() => {
+            /*this.promise=setInterval(() => {
               console.log("finito!");
               this.overlay = false;
               alert("Request failed for long time");
