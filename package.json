@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "servevuepage": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "startvuepage": "vue-cli-service serve --open",
-    "startwithserverpages" : "node websocketserver.js",
     "start": "concurrently \"npm run startvuepage\" \"node websocketserver.js\"",
+    "serve": "concurrently \"npm run servevuepage\" \"node websocketserver.js\"",
     "startdebug": "node --inspect ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve"
   },
   "dependencies": {
