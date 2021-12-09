@@ -36,7 +36,7 @@
                 label="Size"
                 type="number"
                 min="0"
-                :max="this.valTotal"
+                :max="maxDimSize()"
               ></v-text-field>
             </v-col>
             <v-col cols="1">
@@ -253,6 +253,10 @@ export default {
       }
       // Return null if not found
       return null
+    },
+    maxDimSize(){
+      if(this.valTotal>1000) return 1000;
+      else return this.valTotal;
     },
     changeDimension() {
       console.log(this.page + ' ' + this.size)
