@@ -15,6 +15,7 @@
                 <v-btn class="theme-btn blue" fab small color="#1976D2" v-on:click="setMainColor('blue')"></v-btn>
                     </v-col>
                     <v-col>
+                <v-btn class="theme-btn document-color" fab small color="#0b77b8" v-on:click="setMainColor('document-color')"></v-btn>
                 <v-btn class="theme-btn light-blue" fab small color="#0288D1" v-on:click="setMainColor('light-blue')"></v-btn>
                 <v-btn class="theme-btn cyan" fab small color="#0097A7" v-on:click="setMainColor('cyan')"></v-btn>
                 <v-btn class="theme-btn teal" fab small color="#00796B" v-on:click="setMainColor('teal')"></v-btn>

@@ -18,7 +18,7 @@ const routes = [
     component: StaticTree
   },
   {
-    path: '/model',
+    path: '/wizard',
     name: 'Wizard',
     component: Wizard
   }

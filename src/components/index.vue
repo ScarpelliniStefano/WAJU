@@ -976,6 +976,12 @@ export default {
   --textarea-color: indigo;
 }
 
+:root.document-color {
+  --border-color: #0b77b8;
+  --bg-color: #0b77b8;
+  --textarea-color: blue;
+}
+
 :root.blue {
   --border-color: #1976d2;
   --bg-color: #1976d2;

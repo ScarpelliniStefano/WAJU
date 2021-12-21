@@ -1,7 +1,12 @@
 <template>
   <v-sheet>
           <v-row>
-          <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col><v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" label="db" v-model="db"/></v-col><v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" label="alias" v-model="alias"/></v-col>
+          <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col></v-row>
+          <v-row>
+            <v-col><v-checkbox color="var(--bg-color)" v-model="saveInDB" label="vuoi salvare in un database la collezione?"></v-checkbox></v-col>
+          </v-row>
+          <v-row>
+            <v-col><v-text-field :rules="[rules.required]" v-if="saveInDB" label="db" v-model="db"/></v-col>
           </v-row>
   </v-sheet>
 </template>
@@ -14,12 +19,22 @@ export default {
         alias:'',
         collection:'',
         db:'',
+        saveInDB:false,
         rules: {
           required: value => !!value || 'Required.'
         }
       }
     },
     watch:{
+        saveInDB:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(!newVal){
+                    this.db="";
+                    this.valueString=this.valueString.substring(0,this.collection.indexOf("@"));
+                }
+                
+            }
+        },
         alias:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.valueString="";
@@ -27,8 +42,6 @@ export default {
                     this.valueString=" "+this.collection;
                     if(this.db!="")
                         this.valueString+="@"+this.db;
-                    if(this.alias!="")
-                        this.valueString+=" AS "+newVal;
                 }
                 this.valueString+=";"
                 this.$emit('changeValue', this.valueString);
@@ -41,8 +54,6 @@ export default {
                     this.valueString=" "+newVal
                     if(this.db!="")
                         this.valueString+="@"+this.db;
-                    if(this.alias!="")
-                        this.valueString+=" AS "+this.alias;
                 }
                 this.valueString+=";";
                 this.$emit('changeValue', this.valueString);
@@ -55,8 +66,6 @@ export default {
                     this.valueString=" "+this.collection
                     if(this.db!="")
                         this.valueString+="@"+newVal;
-                    if(this.alias!="")
-                        this.valueString+=" AS "+this.alias;
                 }
                 this.valueString+=";";
                 this.$emit('changeValue', this.valueString);

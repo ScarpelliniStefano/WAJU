@@ -1,12 +1,12 @@
 <template>
   <v-sheet>
-      <v-checkbox v-model="fromWeb" label="dal web?"></v-checkbox>
+      <v-checkbox color="var(--bg-color)" v-model="fromWeb" label="dal web?"></v-checkbox>
       <v-sheet v-if="fromWeb">
-          <v-text-field v-model="url"/>
+          <v-text-field :rules="[rules.required]" v-model="url" label="url"/>
       </v-sheet>
       <v-sheet v-if="!fromWeb">
           <v-row>
-          <v-col><v-text-field v-model="collection" label="collection"/></v-col><v-col><v-text-field v-if="collection!=''" label="db" v-model="db"/></v-col>
+          <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col><v-col><v-text-field v-if="collection!=''" label="db" v-model="db"/></v-col>
           </v-row>
       </v-sheet>
   </v-sheet>
@@ -20,7 +20,10 @@ export default {
         fromWeb: false,
         url:'',
         collection:'',
-        db:''
+        db:'',
+        rules: {
+          required: value => !!value || 'Required.'
+        }
       }
     },
     watch:{
