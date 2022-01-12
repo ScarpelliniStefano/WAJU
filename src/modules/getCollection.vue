@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-      <v-checkbox color="var(--bg-color)" v-model="fromWeb" label="dal web?"></v-checkbox>
+      <v-checkbox color="var(--bg-color)" v-model="fromWeb" label="From web?"></v-checkbox>
       <v-sheet v-if="fromWeb">
           <v-text-field :rules="[rules.required]" v-model="url" label="url"/>
       </v-sheet>

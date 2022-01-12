@@ -27,7 +27,7 @@
                     mdi-minus
                 </v-icon>
                 </v-btn>
-            <v-checkbox v-model="removeDup" color="var(--bg-color)" label="rimuovere i duplicati?"></v-checkbox>
+            <v-checkbox v-model="removeDup" color="var(--bg-color)" label="remove duplicates?"></v-checkbox>
   </v-sheet>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
     <div id="sendDiv" class="divstyle">
         <div class="topbar" v-on:click="$emit('set-z-click', 'send')">
-            <h4 class="noselect" style="float:left; margin-left: 5px">Comando</h4>
+            <h4 class="noselect" style="float:left; margin-left: 5px">Command</h4>
             <v-icon color="white" style="float: right;" v-on:click="closeWindow()">mdi-close</v-icon>
         </div>
         <v-container class="containerstyle" style="border-radius: 3px;" fluid>
@@ -15,11 +15,11 @@
                     :lg="12"
                     :xl="12">
                     <v-sheet :height="height-136">
-                        <div 
+                        <v-textarea 
                             id="div_send" 
                             contenteditable="true" 
                             style="background-color: #aaaaaa; overflow-y: auto; position: relative">
-                        </div>
+                        </v-textarea>
                     </v-sheet>
                     <v-textarea
                     text-narrow
@@ -48,7 +48,7 @@
                             </v-btn>
                             <v-overlay absolute opacity="0.9" :value="overlay" color="white">
                                 <v-btn class="btnstyle" color="orange lighten-2" @click="overlay = false">
-                                    Chiudi Wizard
+                                    Close Wizard
                                 </v-btn>
                             </v-overlay>
                         </v-col>

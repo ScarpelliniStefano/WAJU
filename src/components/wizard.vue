@@ -42,13 +42,14 @@ export default {
         }],
         mainColor: "",
         colHex:"",
-        arrayModel : ['USA UN DATABASE',
-                      'PRENDI UNA COLLEZIONE',
-                      'PRENDI UN DIZIONARIO',
-                      'SALVA LOCALMENTE O IN UN DATABASE',
-                      'UNISCI DUE O PIU\' COLLEZIONI',
-                      'INTERSEZIONE DI DUE COLLEZIONI',
-                      'SOTTRAZIONE DI DUE COLLEZIONI'
+        arrayModel : ['USE A DATABASE',
+                      'GET A COLLECTION',
+                      'GET A DICTIONARY',
+                      'SAVE LOCALLY OR IN A DATABASE',
+                      'MERGE TWO OR MORE COLLECTIONS',
+                      'INTERSECT TWO COLLECTIONS',
+                      'SUBTRACT TWO COLLECTIONS',
+                      'FILTER ON FIELD'
                       ],
         valueString : ''
     }),

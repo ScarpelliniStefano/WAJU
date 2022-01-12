@@ -7,6 +7,7 @@
         <intersect-coll v-on:changeValue="changeValue($event)" v-if="this.valueString=='INTERSECT COLLECTIONS'"/>
         <subtract-coll v-on:changeValue="changeValue($event)" v-if="this.valueString=='SUBTRACT COLLECTIONS'"/>
         <use-db :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='USE DB'"/>
+        <filter-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='FILTER'"/>
     </v-sheet>
 </template>
 
@@ -18,6 +19,8 @@ import mergeColl from "./mergeCollections.vue";
 import intersectColl from "./intersectCollections.vue";
 import subtractColl from "./subtractCollections.vue";
 import useDb from "./useDB.vue";
+import filterClause from "./filter.vue";
+
 export default {
     data:()=>({
         valueString:''
@@ -34,32 +37,36 @@ export default {
         mergeColl,
         intersectColl,
         subtractColl,
-        useDb
+        useDb,
+        filterClause
     },
     watch:{
         select:function(newVal, oldVal){
             if(newVal!=oldVal){
                 switch (newVal) {
-                    case "PRENDI UNA COLLEZIONE":
+                    case "GET A COLLECTION":
                         this.valueString="GET COLLECTION"
                         break;
-                    case "PRENDI UN DIZIONARIO":
+                    case "GET A DICTIONARY":
                         this.valueString="GET DICTIONARY"
                         break;
-                    case "SALVA LOCALMENTE O IN UN DATABASE":
+                    case "SAVE LOCALLY OR IN A DATABASE":
                         this.valueString="SAVE AS"
                         break;
-                    case "UNISCI DUE O PIU' COLLEZIONI":
+                    case "MERGE TWO OR MORE COLLECTIONS":
                         this.valueString="MERGE COLLECTIONS"
                         break;
-                    case "INTERSEZIONE DI DUE COLLEZIONI":
+                    case "INTERSECT TWO COLLECTIONS":
                         this.valueString="INTERSECT COLLECTIONS"
                         break;
-                    case "SOTTRAZIONE DI DUE COLLEZIONI":
+                    case "SUBTRACT TWO COLLECTIONS":
                         this.valueString="SUBTRACT COLLECTIONS"
                         break;
-                    case "USA UN DATABASE":
+                    case "USE A DATABASE":
                         this.valueString="USE DB"
+                        break;
+                     case "FILTER ON FIELD":
+                        this.valueString="FILTER"
                         break;
                     default:
                         break;
