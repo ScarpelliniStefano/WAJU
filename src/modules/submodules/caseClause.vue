@@ -74,12 +74,12 @@ export default {
             if(newVal!=oldVal){
                 if(newVal=="KEEP OTHERS"){
                     console.log(this.valueString)
-                    this.valueString=this.valueString.substring(0,this.valueString.indexOf("DROP OTHERS"));
-                    this.valueString+="KEEP OTHERS ";
+                    this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nDROP OTHERS"));
+                    this.valueString+="\nKEEP OTHERS ";
                 }else{
                     console.log(this.valueString)
-                    this.valueString=this.valueString.substring(0,this.valueString.indexOf("KEEP OTHERS"));
-                     this.valueString+="DROP OTHERS ";
+                    this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nKEEP OTHERS"));
+                     this.valueString+="\nDROP OTHERS ";
                 }
             }
             this.$emit('changeValue', this.valueString);
@@ -104,20 +104,20 @@ export default {
             let id=Number(str.split("##")[0])-1;
             this.collectionsWhere[id].stringa=str;
             this.valueArr[id]=str.split("##")[1];
-            if(this.valueString.includes("KEEP OTHERS")){
+            if(this.valueString.includes("\nKEEP OTHERS")){
                 this.valueString=" ";
                 this.valueArr.forEach(element => {
                     this.valueString+=element;
                     this.valueString+=" "
                 });
-                this.valueString+="KEEP OTHERS ";
+                this.valueString+="\nKEEP OTHERS ";
             }else{
                 this.valueString=" ";
                 this.valueArr.forEach(element => {
                     this.valueString+=element;
                     this.valueString+=" "
                 });
-                this.valueString+="DROP OTHERS ";
+                this.valueString+="\nDROP OTHERS ";
             }
             this.$emit('changeValue', this.valueString);
         },
@@ -130,7 +130,7 @@ export default {
         
     },
     created(){
-        this.valueString="KEEP OTHERS ";
+        this.valueString="\nKEEP OTHERS ";
         this.$emit('changeValue', this.valueString);
     }
 }
