@@ -32,7 +32,7 @@
                             </v-btn>
                             <v-overlay absolute opacity="0.9" :value="overlay" color="white">
                                 <v-btn class="btnstyle" color="orange lighten-2" @click="overlay = false">
-                                    Chiudi Wizard
+                                    Close Wizard
                                 </v-btn>
                             </v-overlay>
                         </v-col>
@@ -67,7 +67,7 @@
                             </v-btn>
                             <v-overlay absolute opacity="0.9" :value="overlay" color="white">
                                 <v-btn class="btnstyle" color="orange lighten-2" @click="overlay = false">
-                                    Chiudi Wizard
+                                    Close Wizard
                                 </v-btn>
                             </v-overlay>
                         </v-col>
@@ -102,7 +102,7 @@
                             </v-btn>
                             <v-overlay absolute opacity="0.9" :value="overlay" color="white">
                                 <v-btn class="btnstyle" color="orange lighten-2" @click="overlay = false">
-                                    Chiudi Wizard
+                                    Close Wizard
                                 </v-btn>
                             </v-overlay>
                         </v-col>
@@ -133,12 +133,15 @@ export default {
     },
     methods:{
         sendMessage(){
-            this.textSend = ""
+            this.textSend = "";
             var x = document.getElementById("div_send").querySelectorAll("div")
-            for (let i = 0; i < x.length; i++) {
-                this.textSend += x[i].textContent + "\n";
-            }
+            x.forEach(element =>{
+                element.appendChild(document.createTextNode (" "));
+            }); 
+            x = document.getElementById("div_send");
+            this.textSend += x.textContent + "\n\r";
             this.textSend.slice(-1);
+            
             this.$emit('click-send', this.textSend)
         },
         getCookie(name) {

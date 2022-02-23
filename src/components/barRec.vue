@@ -26,51 +26,31 @@
           :lg="12"
           :xl="12"
         >
-            <!-- <v-data-table 
-                    class="tastyle pt-0 mt-0"
-                    no-resize
-                    name="input-7-1"
-                    :rows="parseInt((height-134)/28)"
-                    :items="recArray"
-                    color="black"
-                    id="ta_rec" 
-                    hide-default-header
-                    hide-default-footer
-                    :expanded.sync="expandedOut"
-                    :headers="recHeadersComm"
-                    item-key="commandName"
-                    
-                    show-expand>
-                    
-                    <template v-slot:expanded-item="{ headers, item}">
-                        <td :colspan="headers.length">
-                            <v-data-table 
-                                class="tastyle pt-0 mt-0"
-                                no-resize
-                                name="input-7-1"
-                                :rows="parseInt((height-134)/28)"
-                                :items="item.value"
-                                color="black"
-                                id="ta_rec" 
-                                hide-default-header
-                                hide-default-footer
-                                :expanded.sync="expandedIn"
-                                :headers="recHeaders"
-                                item-key="name"
-                                
-                                show-expand>
-                                
-                                <template v-slot:expanded-item="{ headers, item }">
-                                    <td :colspan="headers.length">
-                                    <v-textarea no-resize v-model="item.value"></v-textarea>
-                                    </td>
-                                </template>
-                            </v-data-table>
-                           
-                        </td>
-                    </template>
-                </v-data-table>-->
-          <v-textarea
+            
+        <v-data-table 
+            class="tastyle pt-0 mt-0"
+            no-resize
+            name="input-7-1"
+            :rows="parseInt((height-134)/28)"
+            :items="recArr"
+            color="black"
+            id="ta_rec" 
+            hide-default-header
+            hide-default-footer
+            :expanded.sync="expanded"
+            :headers="recHeaders"
+            item-key="name"
+            
+            show-expand>
+            
+            <template v-slot:expanded-item="{ headers, item }">
+                <td :colspan="headers.length">
+                <p>{{item.value}}</p>
+                </td>
+            </template>
+        </v-data-table>
+         
+          <!--<v-textarea
             readonly
             class="tastyle pt-0 mt-0"
             no-resize
@@ -84,7 +64,7 @@
             color="black"
             id="ta_rec"
           >
-          </v-textarea>
+          </v-textarea>-->
         </v-col>
         <v-col v-if="!$vuetify.breakpoint.mdOnly" class="py-0">
           <v-sheet
@@ -112,7 +92,7 @@
                   border-width: 1px;
                 "
                 tile
-                :disabled="this.isDisabled"
+                :disabled="this.recArr.length==0"
                 fab
                 depressed
                 elevation="2"
@@ -133,7 +113,7 @@
                   border-width: 1px;
                 "
                 tile
-                :disabled="this.isDisabled"
+                :disabled="this.recArr.length==0"
                 fab
                 @click="$emit('click-back-index')"
               >
@@ -162,7 +142,29 @@
           :lg="10"
           :xl="10"
         >
-          <v-textarea
+        <v-data-table 
+            class="tastyle pt-0 mt-0"
+            no-resize
+            name="input-7-1"
+            :rows="parseInt((height-134)/28)"
+            :items="recArr"
+            color="black"
+            id="ta_rec" 
+            hide-default-header
+            hide-default-footer
+            :expanded.sync="expanded"
+            :headers="recHeaders"
+            item-key="name"
+            
+            show-expand>
+            
+            <template v-slot:expanded-item="{ headers, item }">
+                <td :colspan="headers.length">
+                <p>{{item.value}}</p>
+                </td>
+            </template>
+        </v-data-table>
+          <!--<v-textarea
             readonly
             class="tastyle pt-0 mt-0"
             no-resize
@@ -176,7 +178,7 @@
             color="black"
             id="ta_rec"
           >
-          </v-textarea>
+          </v-textarea>-->
         </v-col>
         <v-col :key="1.21" cols="12" :sm="2" :md="2" :lg="2" :xl="2">
           <v-row align="center" class="text-center">
@@ -191,7 +193,7 @@
                 "
                 tile
                 large
-                :disabled="this.isDisabled"
+                :disabled="this.recArr.length==0"
                 fab
                 depressed
                 elevation="2"
@@ -213,7 +215,7 @@
                 "
                 large
                 tile
-                :disabled="this.isDisabled"
+                :disabled="this.recArr.length==0"
                 fab
                 @click="$emit('click-back-index')"
               >
@@ -264,7 +266,30 @@
           :lg="11"
           :xl="11"
         >
-          <v-textarea
+
+        <v-data-table 
+            class="tastyle pt-0 mt-0"
+            no-resize
+            name="input-7-1"
+            :rows="parseInt((height-134)/28)"
+            :items="recArr"
+            color="black"
+            id="ta_rec" 
+            hide-default-header
+            hide-default-footer
+            :expanded.sync="expanded"
+            :headers="recHeaders"
+            item-key="name"
+            
+            show-expand>
+            
+            <template v-slot:expanded-item="{ headers, item }">
+                <td :colspan="headers.length">
+                <p>{{item.value}}</p>
+                </td>
+            </template>
+        </v-data-table>
+          <!--<v-textarea
             readonly
             class="tastyle pt-0 mt-0"
             no-resize
@@ -278,7 +303,7 @@
             color="black"
             id="ta_rec"
           >
-          </v-textarea>
+          </v-textarea>-->
         </v-col>
         <v-col :key="1.21" cols="12" :sm="1" :md="1" :lg="1" :xl="1">
           <v-row align="center" class="text-center">
@@ -293,7 +318,7 @@
                 "
                 tile
                 x-large
-                :disabled="this.isDisabled"
+                :disabled="this.recArr.length==0"
                 fab
                 depressed
                 elevation="2"
@@ -315,7 +340,7 @@
                 "
                 x-large
                 tile
-                :disabled="this.isDisabled"
+                :disabled="this.recArr.length==0"
                 fab
                 @click="$emit('click-back-index')"
               >
@@ -356,144 +381,24 @@ export default {
   name: "barRec",
   data: () => ({
     isDisabled: true,
-      /*expanded: [],
-        recHeadersComm: [
-          {
-            text: 'COMMAND TYPE',
-            sortable: false,
-            value: 'commandName',
-          }
-        ],
-        recHeaders: [
-          {
-            text: 'ISTRUCTION TYPE',
-            sortable: false,
-            value: 'name',
-          }
-        ],
-        
-        recArray: [
-            { commandName: "Command1",
-              value:[
-                {
-                    name: "USE DB",
-                    header: "USE DB Command1",
-                    value: "USE DB INFORMATION_2021 ON SERVER MongoDB 'http://127.0.0.1:27017';"
-                },
-                {
-                    name: "GET COLLECTION",
-                    header: "GET COLLECTION Command1",
-                    value: "GET COLLECTION FROM WEB 'https://www.dati.lombardia.it/resource/nf78-nj6b.json?$limit=1000000&$where=storico<>'S'';"
-                },
-                {
-                    name: "EXPAND",
-                    header: "EXPAND Command1",
-                    value: "EXPAND\nUNPACK\nWITH ARRAY .data\nARRAY .data\nTO .sensor\nDROP OTHERS ;"
-                },
-                {
-                    name: "FILTER",
-                    header: "FILTER Command1",
-                    value: "FILTER\nCASE"+"\n"+
-                            "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
-                            "AND .sensor.item.provincia = 'MI'"+"\n"+
-                            "AND .sensor.item.tipologia = 'Radiazione Globale'"+"\n"+
-                            "GENERATE {"+"\n"+
-                            ".stationName : .sensor.item.nomestazione ,"+"\n"+
-                            ".province : .sensor.item.provincia ,"+"\n"+
-                            ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
-                            ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
-                            ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
-                            ".sensorId : .sensor.item.idsensore ,"+"\n"+
-                            ".sensorType : 'Global Radiation' ,"+"\n"+
-                            ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
-                            "}"+"\n"+
-                            "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
-                            "AND .sensor.item.provincia = 'MI'"+"\n"+
-                            "AND .sensor.item.tipologia = 'Precipitazione'"+"\n"+
-                            "GENERATE {"+"\n"+
-                            ".stationName : .sensor.item.nomestazione ,"+"\n"+
-                            ".province : .sensor.item.provincia ,"+"\n"+
-                            ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
-                            ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
-                            ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
-                            ".sensorId : .sensor.item.idsensore ,"+"\n"+
-                            ".sensorType : 'Rain Precipitation' ,"+"\n"+
-                            ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
-                            "}"+"\n"+
-                            "DROP OTHERS ;"
-                }
-            ]
-            },{ commandName: "Command2",
-              value:[
-                {
-                    name: "USE DB",
-                    header: "USE DB Command2",
-                    value: "USE DB INFORMATION_2021 ON SERVER MongoDB 'http://127.0.0.1:27017';"
-                },
-                {
-                    name: "GET COLLECTION",
-                    header: "GET COLLECTION Command2",
-                    value: "GET COLLECTION FROM WEB 'https://www.dati.lombardia.it/resource/nf78-nj6b.json?$limit=1000000&$where=storico<>'S'';"
-                },
-                {
-                    name: "EXPAND",
-                    header: "EXPAND Command2",
-                    value: "EXPAND\nUNPACK\nWITH ARRAY .data\nARRAY .data\nTO .sensor\nDROP OTHERS ;"
-                },
-                {
-                    name: "FILTER",
-                    header: "FILTER Command2",
-                    value: "FILTER\nCASE"+"\n"+
-                            "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
-                            "AND .sensor.item.provincia = 'MI'"+"\n"+
-                            "AND .sensor.item.tipologia = 'Radiazione Globale'"+"\n"+
-                            "GENERATE {"+"\n"+
-                            ".stationName : .sensor.item.nomestazione ,"+"\n"+
-                            ".province : .sensor.item.provincia ,"+"\n"+
-                            ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
-                            ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
-                            ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
-                            ".sensorId : .sensor.item.idsensore ,"+"\n"+
-                            ".sensorType : 'Global Radiation' ,"+"\n"+
-                            ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
-                            "}"+"\n"+
-                            "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
-                            "AND .sensor.item.provincia = 'MI'"+"\n"+
-                            "AND .sensor.item.tipologia = 'Precipitazione'"+"\n"+
-                            "GENERATE {"+"\n"+
-                            ".stationName : .sensor.item.nomestazione ,"+"\n"+
-                            ".province : .sensor.item.provincia ,"+"\n"+
-                            ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
-                            ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
-                            ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
-                            ".sensorId : .sensor.item.idsensore ,"+"\n"+
-                            ".sensorType : 'Rain Precipitation' ,"+"\n"+
-                            ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
-                            "}"+"\n"+
-                            "DROP OTHERS ;"
-                }
-            ]
+      expanded:[],
+      recHeaders: [
+        {
+          text: 'ISTRUCTION TYPE',
+          sortable: false,
+          value: 'name',
         }
-        ]*/
+      ]
+       
   }),
   props: {
     recText: String,
+    recArr: Array,
     height: Number,
     width: Number,
     browser: String,
     rapporto: Number,
     bgcolor: String
-  },
-  watch: {
-    recText: function (oldVal, newVal) {
-      if (oldVal != newVal) {
-        if (newVal.length > 0) {
-          this.isDisabled = false;
-        } else {
-          this.isDisabled = true;
-        }
-      }
-    },
   },
   mounted() {
   },

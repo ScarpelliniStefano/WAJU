@@ -226,7 +226,7 @@
               color="orange lighten-2"
               v-on:click="settings = false"
             >
-              Chiudi Impostazioni
+              Close settings
             </v-btn>
           </v-sheet>
         </v-container>
@@ -272,6 +272,7 @@
         :width="rec.width"
         :height="rec.height"
         :recText="textRec"
+        :recArr="arrRec"
         v-on:click-back-index="sendBck()"
         v-on:set-z-click="setZ"
         v-on:close-rec="selRec = !selRec"
@@ -368,6 +369,7 @@
             :width="rec.width"
             :height="rec.height"
             :recText="textRec"
+            :recArr="arrRec"
             v-on:click-back-index="sendBck()"
             v-on:set-z-click="setZ"
             v-on:close-rec="selRec = !selRec"
@@ -504,6 +506,7 @@ export default {
       connection: null,
       connectionPage: null,
       textRec: "",
+      arrRec: [],
       disBtn: false,
       arrayLog: new ArrayLogMessage(),
       settings: false,
@@ -629,6 +632,7 @@ export default {
         );
       } else if (text.includes("##ACK##")) {
         console.log("ACK");
+        this.arrRec.pop();
         this.changeLog(
           "#@LOGS@#" + timeString("BACKTRACK DONE") + "#@END-LOGS@#"
         );
@@ -661,6 +665,9 @@ export default {
           text.indexOf("##BEGIN-PROCESS##") + "##BEGIN-PROCESS##".length + 1;
         const endP = text.indexOf("##END-PROCESS##");
         this.textRec = text.substring(startP, endP);
+        if(text.substring(startP, endP).length>0){
+          this.arrRec=this.fromTextRecToArrRec(text.substring(startP, endP));
+        }
         this.disBtn = false;
         //disconnect();
       } else if (text.includes("##BEGIN-SERVER-CONF##")) {
@@ -708,6 +715,108 @@ export default {
     //vm.$on('receivedData',(v)=>{this.textR+=v;})
   },
   methods: {
+    fromTextRecToArrRec(textReceived){
+      var arrIstr=[];
+      var arrTest=textReceived.split(';');
+      
+      arrTest.forEach(element => {
+        if(element.startsWith("\n")){
+          element=element.slice(1,element.length)
+        }
+          if(element.match(/GET COLLECTION/gi)){
+            arrIstr.push({
+              name: "GET COLLECTION",
+              value: element+";"
+            })
+          }
+          else if(element.match(/SAVE AS/gi)){
+            arrIstr.push({
+              name: "SAVE AS",
+              value: element+";"
+            })
+          }
+          else if(element.match(/SPATIAL JOIN OF COLLECTIONS/gi)){
+            arrIstr.push({
+              name: "SPATIAL JOIN OF COLLECTIONS",
+              value: element+";"
+            })
+          }
+          else if(element.match(/JOIN OF COLLECTIONS/gi)){
+            arrIstr.push({
+              name: "JOIN OF COLLECTIONS",
+              value: element+";"
+            })
+          }
+          else if(element.match(/FILTER/gi)){
+            arrIstr.push({
+              name: "FILTER",
+              value: element+";"
+            })
+          }
+          else if(element.match(/GROUP/gi)){
+            arrIstr.push({
+              name: "GROUP",
+              value: element+";"
+            })
+          }
+          else if(element.match(/EXPAND/gi)){
+            arrIstr.push({
+              name: "EXPAND",
+              value: element+";"
+            })
+          }
+          else if(element.match(/MERGE COLLECTIONS/gi)){
+            arrIstr.push({
+              name: "MERGE COLLECTIONS",
+              value: element+";"
+            })
+          }
+          else if(element.match(/INTERSECT COLLECTIONS/gi)){
+            arrIstr.push({
+              name: "INTERSECT COLLECTIONS",
+              value: element+";"
+            })
+          }
+          else if(element.match(/SUBTRACT COLLECTIONS/gi)){
+            arrIstr.push({
+              name: "SUBTRACT COLLECTIONS",
+              value: element+";"
+            })
+          }
+          else if(element.match(/USE DB/gi)){
+            arrIstr.push({
+              name: "USE DB",
+              value: element+";"
+            })
+          }
+          else if(element.match(/TRAJECTORY MATCHING/gi)){
+            arrIstr.push({
+              name: "TRAJECTORY MATCHING",
+              value: element+";"
+            })
+          }
+          else if(element.match(/CREATE_FO/gi)){
+            arrIstr.push({
+              name: "CREATE FUZZY OPERATOR",
+              value: element+";"
+            })
+          }
+          else if(element.match(/CREATE_JF/gi)){
+            arrIstr.push({
+              name: "CREATE JAVASCRIPT FUNCTION",
+              value: element+";"
+            })
+          }
+          else if(element.match(/GET DICTIONARY/gi)){
+            arrIstr.push({
+              name: "GET DICTIONARY",
+              value: element+";"
+            })
+          }
+      });
+      return arrIstr;
+    },
+
     setZ(tipo) {
       if (tipo === "rec") {
         this.rec.posz = 2;
