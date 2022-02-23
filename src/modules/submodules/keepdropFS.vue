@@ -12,7 +12,7 @@
                         <v-row><v-btn label="NOT" v-on:click="notClick(1)"/><v-btn label="CANC NOT" v-on:click="notClick(0)"/></v-row>
                         <v-row><v-btn label="WITH" v-on:click="withClick(1)"/><v-btn label="CANC WITH" v-on:click="withClick(0)"/></v-row>
                         <v-row><v-btn label="WITHOUT" v-on:click="withoutClick(1)"/><v-btn label="CANC WITHOUT" v-on:click="withoutClick(0)"/></v-row>
-                    </v-col>
+                    </v-col></v-row>
                 </div>
             <v-checkbox color="var(--bg-color)" v-model="generateAct" label="generate actions?"></v-checkbox>
             <v-textarea v-if="generateAct" label="generate actions" rows="4" v-model="generateAction"></v-textarea>
