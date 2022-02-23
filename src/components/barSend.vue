@@ -1,7 +1,7 @@
 <template>
     <div id="sendDiv" class="divstyle">
         <div class="topbar" v-on:click="$emit('set-z-click', 'send')">
-            <h4 class="noselect" style="float:left; margin-left: 5px">Comando</h4>
+            <h4 class="noselect" style="float:left; margin-left: 5px">Command</h4>
             <v-icon color="white" style="float: right;" v-on:click="closeWindow()">mdi-close</v-icon>
             <v-icon color="white" style="float: right;" v-on:click="maximizeWindow()">mdi-window-maximize</v-icon>
         </div>

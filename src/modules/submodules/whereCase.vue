@@ -7,13 +7,13 @@
                 <v-col>
                 <v-textarea label="collections clause" rows="4" v-model="whereClause"></v-textarea>
                 </v-col>
-                <v-col>
+                <!--<v-col>
                     <v-row><v-btn label="OR" v-on:click="orClick(1)">OR</v-btn><v-btn label="CANC OR" v-on:click="orClick(0)">CANC OR</v-btn></v-row>
                     <v-row><v-btn label="AND" v-on:click="andClick(1)">AND</v-btn><v-btn label="CANC AND" v-on:click="andClick(0)">CANC AND</v-btn></v-row>
                     <v-row><v-btn label="NOT" v-on:click="notClick(1)">NOT</v-btn><v-btn label="CANC NOT" v-on:click="notClick(0)">CANC NOT</v-btn></v-row>
                     <v-row><v-btn label="WITH" v-on:click="withClick(1)">WITH</v-btn><v-btn label="CANC WITH" v-on:click="withClick(0)">CAN WITH</v-btn></v-row>
                     <v-row><v-btn label="WITHOUT" v-on:click="withoutClick(1)">WITHOUT</v-btn><v-btn label="CANC WITHOUT" v-on:click="withoutClick(0)">CANC WITHOUT</v-btn></v-row>
-                </v-col>
+                </v-col>-->
             </v-row>
             </v-container>
             <v-checkbox color="var(--bg-color)" v-model="generateAct" label="generate actions?"></v-checkbox>

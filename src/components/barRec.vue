@@ -36,15 +36,37 @@
                     id="ta_rec" 
                     hide-default-header
                     hide-default-footer
-                    :expanded.sync="expanded"
-                    :headers="recHeaders"
-                    item-key="name"
+                    :expanded.sync="expandedOut"
+                    :headers="recHeadersComm"
+                    item-key="commandName"
                     
                     show-expand>
                     
-                    <template v-slot:expanded-item="{ headers, item }">
+                    <template v-slot:expanded-item="{ headers, item}">
                         <td :colspan="headers.length">
-                           <v-textarea no-resize v-model="item.value"></v-textarea>
+                            <v-data-table 
+                                class="tastyle pt-0 mt-0"
+                                no-resize
+                                name="input-7-1"
+                                :rows="parseInt((height-134)/28)"
+                                :items="item.value"
+                                color="black"
+                                id="ta_rec" 
+                                hide-default-header
+                                hide-default-footer
+                                :expanded.sync="expandedIn"
+                                :headers="recHeaders"
+                                item-key="name"
+                                
+                                show-expand>
+                                
+                                <template v-slot:expanded-item="{ headers, item }">
+                                    <td :colspan="headers.length">
+                                    <v-textarea no-resize v-model="item.value"></v-textarea>
+                                    </td>
+                                </template>
+                            </v-data-table>
+                           
                         </td>
                     </template>
                 </v-data-table>-->
@@ -335,6 +357,13 @@ export default {
   data: () => ({
     isDisabled: true,
       /*expanded: [],
+        recHeadersComm: [
+          {
+            text: 'COMMAND TYPE',
+            sortable: false,
+            value: 'commandName',
+          }
+        ],
         recHeaders: [
           {
             text: 'ISTRUCTION TYPE',
@@ -342,50 +371,109 @@ export default {
             value: 'name',
           }
         ],
+        
         recArray: [
-          {
-            name: "USE DB",
-            value: "USE DB INFORMATION_2021 ON SERVER MongoDB 'http://127.0.0.1:27017';"
-          },
-          {
-            name: "GET COLLECTION",
-            value: "GET COLLECTION FROM WEB 'https://www.dati.lombardia.it/resource/nf78-nj6b.json?$limit=1000000&$where=storico<>'S'';"
-          },
-          {
-            name: "EXPAND",
-            value: "EXPAND\nUNPACK\nWITH ARRAY .data\nARRAY .data\nTO .sensor\nDROP OTHERS ;"
-          },
-          {
-            name: "FILTER",
-            value: "FILTER\nCASE"+"\n"+
-                    "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
-                    "AND .sensor.item.provincia = 'MI'"+"\n"+
-                    "AND .sensor.item.tipologia = 'Radiazione Globale'"+"\n"+
-                    "GENERATE {"+"\n"+
-                    ".stationName : .sensor.item.nomestazione ,"+"\n"+
-                    ".province : .sensor.item.provincia ,"+"\n"+
-                    ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
-                    ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
-                    ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
-                    ".sensorId : .sensor.item.idsensore ,"+"\n"+
-                    ".sensorType : 'Global Radiation' ,"+"\n"+
-                    ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
-                    "}"+"\n"+
-                    "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
-                    "AND .sensor.item.provincia = 'MI'"+"\n"+
-                    "AND .sensor.item.tipologia = 'Precipitazione'"+"\n"+
-                    "GENERATE {"+"\n"+
-                    ".stationName : .sensor.item.nomestazione ,"+"\n"+
-                    ".province : .sensor.item.provincia ,"+"\n"+
-                    ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
-                    ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
-                    ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
-                    ".sensorId : .sensor.item.idsensore ,"+"\n"+
-                    ".sensorType : 'Rain Precipitation' ,"+"\n"+
-                    ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
-                    "}"+"\n"+
-                    "DROP OTHERS ;"
-          },
+            { commandName: "Command1",
+              value:[
+                {
+                    name: "USE DB",
+                    header: "USE DB Command1",
+                    value: "USE DB INFORMATION_2021 ON SERVER MongoDB 'http://127.0.0.1:27017';"
+                },
+                {
+                    name: "GET COLLECTION",
+                    header: "GET COLLECTION Command1",
+                    value: "GET COLLECTION FROM WEB 'https://www.dati.lombardia.it/resource/nf78-nj6b.json?$limit=1000000&$where=storico<>'S'';"
+                },
+                {
+                    name: "EXPAND",
+                    header: "EXPAND Command1",
+                    value: "EXPAND\nUNPACK\nWITH ARRAY .data\nARRAY .data\nTO .sensor\nDROP OTHERS ;"
+                },
+                {
+                    name: "FILTER",
+                    header: "FILTER Command1",
+                    value: "FILTER\nCASE"+"\n"+
+                            "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
+                            "AND .sensor.item.provincia = 'MI'"+"\n"+
+                            "AND .sensor.item.tipologia = 'Radiazione Globale'"+"\n"+
+                            "GENERATE {"+"\n"+
+                            ".stationName : .sensor.item.nomestazione ,"+"\n"+
+                            ".province : .sensor.item.provincia ,"+"\n"+
+                            ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
+                            ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
+                            ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
+                            ".sensorId : .sensor.item.idsensore ,"+"\n"+
+                            ".sensorType : 'Global Radiation' ,"+"\n"+
+                            ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
+                            "}"+"\n"+
+                            "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
+                            "AND .sensor.item.provincia = 'MI'"+"\n"+
+                            "AND .sensor.item.tipologia = 'Precipitazione'"+"\n"+
+                            "GENERATE {"+"\n"+
+                            ".stationName : .sensor.item.nomestazione ,"+"\n"+
+                            ".province : .sensor.item.provincia ,"+"\n"+
+                            ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
+                            ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
+                            ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
+                            ".sensorId : .sensor.item.idsensore ,"+"\n"+
+                            ".sensorType : 'Rain Precipitation' ,"+"\n"+
+                            ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
+                            "}"+"\n"+
+                            "DROP OTHERS ;"
+                }
+            ]
+            },{ commandName: "Command2",
+              value:[
+                {
+                    name: "USE DB",
+                    header: "USE DB Command2",
+                    value: "USE DB INFORMATION_2021 ON SERVER MongoDB 'http://127.0.0.1:27017';"
+                },
+                {
+                    name: "GET COLLECTION",
+                    header: "GET COLLECTION Command2",
+                    value: "GET COLLECTION FROM WEB 'https://www.dati.lombardia.it/resource/nf78-nj6b.json?$limit=1000000&$where=storico<>'S'';"
+                },
+                {
+                    name: "EXPAND",
+                    header: "EXPAND Command2",
+                    value: "EXPAND\nUNPACK\nWITH ARRAY .data\nARRAY .data\nTO .sensor\nDROP OTHERS ;"
+                },
+                {
+                    name: "FILTER",
+                    header: "FILTER Command2",
+                    value: "FILTER\nCASE"+"\n"+
+                            "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
+                            "AND .sensor.item.provincia = 'MI'"+"\n"+
+                            "AND .sensor.item.tipologia = 'Radiazione Globale'"+"\n"+
+                            "GENERATE {"+"\n"+
+                            ".stationName : .sensor.item.nomestazione ,"+"\n"+
+                            ".province : .sensor.item.provincia ,"+"\n"+
+                            ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
+                            ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
+                            ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
+                            ".sensorId : .sensor.item.idsensore ,"+"\n"+
+                            ".sensorType : 'Global Radiation' ,"+"\n"+
+                            ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
+                            "}"+"\n"+
+                            "WHERE WITH .sensor.item.idsensore , .sensor.item.provincia , .sensor.item.tipologia"+"\n"+
+                            "AND .sensor.item.provincia = 'MI'"+"\n"+
+                            "AND .sensor.item.tipologia = 'Precipitazione'"+"\n"+
+                            "GENERATE {"+"\n"+
+                            ".stationName : .sensor.item.nomestazione ,"+"\n"+
+                            ".province : .sensor.item.provincia ,"+"\n"+
+                            ".latitude : TO_FLOAT (.sensor.item.lat) ,"+"\n"+
+                            ".longitude : TO_FLOAT (.sensor.item.lng) ,"+"\n"+
+                            ".altitude : TO_FLOAT (.sensor.item.quota) ,"+"\n"+
+                            ".sensorId : .sensor.item.idsensore ,"+"\n"+
+                            ".sensorType : 'Rain Precipitation' ,"+"\n"+
+                            ".sensorUnit : .sensor.item.unit_dimisura"+"\n"+
+                            "}"+"\n"+
+                            "DROP OTHERS ;"
+                }
+            ]
+        }
         ]*/
   }),
   props: {
