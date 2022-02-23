@@ -5,8 +5,8 @@
             <v-icon color="white" style="float: right;" v-on:click="closeWindow()">mdi-close</v-icon>
         </div>
         <v-container class="containerstyle" style="border-radius: 3px;" fluid>
-            <v-row align="center" >
-            <v-col
+          <v-row align="center" >
+          <v-col
             class="py-0"
                 :key="1.1"
                 cols="12"
@@ -65,8 +65,6 @@
               </v-btn>
             </v-col>
           </v-row>
-        </v-col>
-      </v-row>
     </v-container>
     <v-container
       :class="bgcolor"
@@ -349,8 +347,7 @@
                 }
             }
         }
-      }
-    },
+
   },
   mounted() {
   },
