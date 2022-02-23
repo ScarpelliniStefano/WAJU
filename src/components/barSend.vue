@@ -1,7 +1,7 @@
 <template>
     <div id="sendDiv" class="divstyle">
         <div class="topbar" v-on:click="$emit('set-z-click', 'send')">
-            <h4 class="noselect" style="float:left; margin-left: 5px">Comando</h4>
+            <h4 class="noselect" style="float:left; margin-left: 5px">Command</h4>
             <v-icon color="white" style="float: right;" v-on:click="closeWindow()">mdi-close</v-icon>
             <v-icon color="white" style="float: right;" v-on:click="maximizeWindow()">mdi-window-maximize</v-icon>
         </div>
@@ -15,7 +15,24 @@
                     :md="12"
                     :lg="12"
                     :xl="12">
-                    <v-sheet id="div_send" :height="height-136" contenteditable></v-sheet>
+                    <v-sheet :height="height-136">
+                        <v-textarea 
+                            id="div_send" 
+                            contenteditable="true" 
+                            style="background-color: #aaaaaa; overflow-y: auto; position: relative">
+                        </v-textarea>
+                    </v-sheet>
+                    <v-textarea
+                    text-narrow
+                        class="tastyle pt-0 mt-0"
+                        style="font-size: 16px;"
+                        rows="13"
+                        no-resize
+                        name="input-7-2"
+                        color="black"
+                        v-model.lazy="textSend"
+                        id="ta_send" >
+                    </v-textarea>
                 </v-col>
                 <v-col :key="1.2" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
                     <v-row align="center" class="text-center">
@@ -32,7 +49,7 @@
                             </v-btn>
                             <v-overlay absolute opacity="0.9" :value="overlay" color="white">
                                 <v-btn class="btnstyle" color="orange lighten-2" @click="overlay = false">
-                                    Chiudi Wizard
+                                    Close Wizard
                                 </v-btn>
                             </v-overlay>
                         </v-col>

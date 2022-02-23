@@ -25,7 +25,7 @@
                     mdi-minus
                 </v-icon>
                 </v-btn>
-            <v-checkbox color="var(--bg-color)" v-model="defaultServer" label="usare il server di default?"></v-checkbox>
+            <v-checkbox color="var(--bg-color)" v-model="defaultServer" label="Use default server?"></v-checkbox>
             <v-row v-if="!defaultServer">
                 <v-col><v-text-field :rules="[rules.required]" v-model="server" label="server"/></v-col>
                 <v-col><v-text-field v-model="connString" label="connection string"/></v-col>

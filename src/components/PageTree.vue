@@ -47,7 +47,7 @@
                   overlay = !overlay
                 "
               >
-                Aggiorna
+                Update
               </v-btn>
             </v-col>
             <v-spacer></v-spacer>
@@ -81,7 +81,7 @@
                       "
                       fab
                       tile
-                      @click="download('TreeColl', bottomText.textIRTreeCol)"
+                      @click="download('TreeColl')"
                     >
                       <v-icon color="grey">mdi-content-save-outline</v-icon>
                       <span class="tooltiptext">Save Tree...</span>
@@ -317,7 +317,7 @@ export default {
         'data:application/json,' +
           encodeURIComponent(
             '{ \n "documents" : \n ' +
-              JSON.stringify(this.irTreeV, null, '\t') +
+              JSON.stringify(this.textIRTreeCol, null, '\t') +
               '\n}',
           ),
       )

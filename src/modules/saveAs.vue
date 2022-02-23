@@ -3,7 +3,7 @@
           <v-row>
           <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col></v-row>
           <v-row>
-            <v-col><v-checkbox color="var(--bg-color)" v-model="saveInDB" label="vuoi salvare in un database la collezione?"></v-checkbox></v-col>
+            <v-col><v-checkbox color="var(--bg-color)" v-model="saveInDB" label="Do you want to save the collection in a database?"></v-checkbox></v-col>
           </v-row>
           <v-row>
             <v-col><v-text-field :rules="[rules.required]" v-if="saveInDB" label="db" v-model="db"/></v-col>
