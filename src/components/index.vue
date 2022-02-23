@@ -1,10 +1,61 @@
 <template>
-  <div id="body">
+  <v-sheet :color="bgColor" id="body">
     <div name="c1" class="divheader" style="height: 50px; padding-y: 0 25px">
       <h1 id="title" class="display-2 font-weight-bold">JCOUIweb</h1>
+      <!--<v-speed-dial
+        v-if="$vuetify.breakpoint.smAndDown"
+        v-model="fab"
+        direction="bottom"
+        :open-on-hover="false"
+      >
+        <template v-slot:activator>
+          <v-btn
+            v-model="fab"
+            color="blue darken-2"
+            dark
+            fab
+          >
+            <v-icon v-if="fab">
+              mdi-close
+            </v-icon>
+            <v-icon v-else>
+              mdi-account-circle
+            </v-icon>
+          </v-btn>
+        </template>
+        <v-btn
+          fab
+          dark
+          small
+          color="green"
+        >
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="indigo"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="red"
+        >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+      </v-speed-dial>-->
       <v-icon
         id="settings"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        "
         large
         color="white"
         v-on:click="settings = true"
@@ -15,9 +66,38 @@
       </v-icon>
 
       <v-icon
+        v-if="!selBtm"
         @mouseover="tip = 'Other tools'"
         @mouseleave="tip = ''"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        "
+        id="bottom"
+        large
+        color="black"
+        v-on:click="
+          send.posz = 0;
+          rec.posz = 0;
+          btm.posz = 30;
+          selBtm = !selBtm;
+        "
+      >
+        mdi-post-outline
+      </v-icon>
+
+      <v-icon
+        @mouseover="tip = 'Other tools'"
+        @mouseleave="tip = ''"
+        v-if="selBtm"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        "
         id="bottom"
         large
         color="white"
@@ -32,9 +112,37 @@
       </v-icon>
 
       <v-icon
+        v-if="!selRec"
         @mouseover="tip = 'Save & Back'"
         @mouseleave="tip = ''"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        "
+        id="SaveBack"
+        large
+        color="black"
+        v-on:click="
+          send.posz = 0;
+          rec.posz = 30;
+          btm.posz = 0;
+          selRec = !selRec;
+        "
+      >
+        mdi-content-save-outline
+      </v-icon>
+      <v-icon
+        v-if="selRec"
+        @mouseover="tip = 'Save & Back'"
+        @mouseleave="tip = ''"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        "
         id="SaveBack"
         large
         color="white"
@@ -45,13 +153,41 @@
           selRec = !selRec;
         "
       >
-        mdi-content-save-outline
+        mdi-content-save
       </v-icon>
 
       <v-icon
+        v-if="!selSend"
         @mouseover="tip = 'Execute'"
         @mouseleave="tip = ''"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        "
+        id="execute"
+        large
+        color="black"
+        v-on:click="
+          send.posz = 30;
+          rec.posz = 0;
+          btm.posz = 0;
+          selSend = !selSend;
+        "
+      >
+        mdi-play-circle-outline
+      </v-icon>
+      <v-icon
+        v-if="selSend"
+        @mouseover="tip = 'Execute'"
+        @mouseleave="tip = ''"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        "
         id="execute"
         large
         color="white"
@@ -62,10 +198,14 @@
           selSend = !selSend;
         "
       >
-        mdi-play-circle-outline
+        mdi-play-circle
       </v-icon>
 
-      <h4 style="float: right; margin-right: 20px; color: white; margin-top: 12px">{{ this.tip }}</h4>
+      <h4
+        style="float: right; margin-right: 20px; color: white; margin-top: 12px"
+      >
+        {{ this.tip }}
+      </h4>
 
       <v-dialog
         v-model="settings"
@@ -73,11 +213,19 @@
         max-width="400px"
         max-height="400px"
       >
-      
         <v-container>
-          <Settings v-on:set-main-color="this.setMainColor" v-on:set-theme-color="this.setThemeColor" v-on:set-order="this.setOrder"/>
+          <Settings
+            v-on:set-main-color="setMainColor"
+            v-on:set-theme-color="setThemeColor"
+            v-on:set-order="setOrder"
+          />
           <v-sheet align="center" color="transparent">
-            <v-btn align="right" max-width="200px" color="orange lighten-2" v-on:click="settings = false">
+            <v-btn
+              align="right"
+              max-width="200px"
+              color="orange lighten-2"
+              v-on:click="settings = false"
+            >
               Chiudi Impostazioni
             </v-btn>
           </v-sheet>
@@ -96,7 +244,6 @@
       </v-overlay>-->
     </div>
     <VueDragResize
-      
       :key="rec.idRecChange"
       :min-width="400"
       :min-height="400"
@@ -105,12 +252,12 @@
       :z="rec.posz"
       :x="rec.posx"
       :y="rec.posy"
-      v-if="selRec"
+      v-if="selRec && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
       @click="
         rec.posz = 2;
-        send.posz = 0;
+        send.posz = 1;
         btm.posz = 0;
       "
       :onDrag="onDragStopRec"
@@ -119,39 +266,46 @@
       @resizestop="onModRec"
     >
       <bar-rec
+        :bgcolor="contColor"
+        :rapporto="rec.width / rec.height"
+        :browser="browserName"
         :width="rec.width"
         :height="rec.height"
         :recText="textRec"
         v-on:click-back-index="sendBck()"
         v-on:set-z-click="setZ"
         v-on:close-rec="selRec = !selRec"
+        v-on:maximize-rec="maximizeRec"
       ></bar-rec>
     </VueDragResize>
     <VueDragResize
-      id="dragresizesend"
+      :key="send.idSendChange"
       :min-width="400"
       :min-height="400"
-      :w="400"
-      :h="400"
-      style="position: absolute"
+      :w="send.width"
+      :h="send.height"
       :z="send.posz"
-      v-if="selSend"
-      drag-handle=".topbar"
+      :x="send.posx"
+      :y="send.posy"
+      v-if="selSend && $vuetify.breakpoint.mdAndUp"
+      dragHandle=".topbar"
+      style="position: absolute"
       @click="
         rec.posz = 0;
         send.posz = 2;
-        btm.posz = 0;
+        btm.posz = 1;
       "
-      :x="send.posx"
-      :y="send.posy"
       :onDrag="onDragStopSend"
       :onResize="onResizeStopSend"
       @dragstop="onModSend"
       @resizestop="onModSend"
     >
       <bar-send
-        :height="send.height"
+        :bgcolor="contColor"
+        :rapporto="send.width / send.height"
+        :browser="browserName"
         :width="send.width"
+        :height="send.height"
         :disable="disBtn"
         v-on:click-send="sendMsg($event)"
         v-on:set-z-click="setZ"
@@ -161,9 +315,9 @@
     <VueDragResize
       :min-width="400"
       :min-height="400"
-      :w="400"
-      :h="400"
-      v-if="selBtm"
+      :w="btm.width"
+      :h="btm.height"
+      v-if="selBtm && $vuetify.breakpoint.mdAndUp"
       drag-handle=".topbar"
       :z="btm.posz"
       style="position: absolute"
@@ -180,8 +334,11 @@
       @resizestop="onModBtm"
     >
       <bottom-bar
+        :bgcolor="contColor"
+        :browser="browserName"
         :height="btm.height"
         :width="btm.width"
+        :rapporto="btm.width / btm.height"
         v-on:file-upload-index="sendConfigFile($event)"
         v-on:click-ir="sendIRList()"
         v-on:click-tc="sendIRTempCol()"
@@ -195,30 +352,68 @@
       </bottom-bar>
     </VueDragResize>
 
-    <!--<v-container name="c2" id="main-container" class="colcontainer" fluid>
+    <v-container
+      v-if="$vuetify.breakpoint.smAndDown"
+      name="c2"
+      id="main-container"
+      class="colcontainer"
+      fluid
+    >
       <v-row class="text-center" align="center" align-content="center">
-        <v-spacer></v-spacer>
-        <v-col class="2 py-1 px-1" :key="1" :cols="12" :sm="12" :md="dim_md.rec" :lg="dim_lg.rec" :xl="dim_xl.rec">
+        <v-col v-if="selRec" class="" :key="1" :cols="12" :sm="12">
           <bar-rec
+            :bgcolor="contColor"
+            :rapporto="1"
+            :browser="browserName"
+            :width="rec.width"
+            :height="rec.height"
             :recText="textRec"
             v-on:click-back-index="sendBck()"
+            v-on:set-z-click="setZ"
+            v-on:close-rec="selRec = !selRec"
+            v-on:maximize-rec="maximizeRec"
           ></bar-rec>
         </v-col>
-        <v-spacer></v-spacer>
-        <v-col class="first py-1 px-1" :key="2" :cols="12" :sm="12" :md="dim_md.send" :lg="dim_lg.send" :xl="dim_xl.send">
+        <v-col
+          v-if="selSend"
+          class=""
+          :key="2"
+          :cols="12"
+          :sm="12"
+        >
           <bar-send
+            :bgcolor="contColor"
+            :rapporto="1"
+            :browser="browserName"
+            :height="send.height"
+            :width="send.width"
             :disable="disBtn"
             v-on:click-send="sendMsg($event)"
+            v-on:set-z-click="setZ"
+            v-on:close-send="selSend = !selSend"
           ></bar-send>
         </v-col>
-        <v-spacer></v-spacer>
-        <v-col class="last py-1 px-1" id="third" :key="3" :cols="12" :sm="12" :md="dim_md.btm" :lg="dim_lg.btm" :xl="dim_xl.btm">
+        <v-col
+          v-if="selBtm"
+          class=""
+          id="third"
+          :key="3"
+          :cols="12"
+          :sm="12"
+        >
           <bottom-bar
+            :bgcolor="contColor"
+            :browser="browserName"
+            :height="btm.height"
+            :width="btm.width"
+            :rapporto="1"
             v-on:file-upload-index="sendConfigFile($event)"
             v-on:click-ir="sendIRList()"
             v-on:click-tc="sendIRTempCol()"
             v-on:click-irc="sendIRSelCol($event)"
             v-on:click-back-index="sendBck()"
+            v-on:set-z-click="setZ"
+            v-on:close-btm="selBtm = !selBtm"
             :bottomText="received"
             :arrayLog="arrayLog"
           >
@@ -226,8 +421,8 @@
         </v-col>
         <v-spacer></v-spacer>
       </v-row>
-    </v-container>-->
-  </div>
+    </v-container>
+  </v-sheet>
 </template>
 
 <script>
@@ -305,9 +500,10 @@ export default {
   },
   data() {
     return {
+      browserName: "",
       connection: null,
       connectionPage: null,
-      textRec: '',
+      textRec: "",
       disBtn: false,
       arrayLog: new ArrayLogMessage(),
       settings: false,
@@ -317,12 +513,15 @@ export default {
         textErrLog: "",
         textIRTreeCol: "",
         listIRCol: [],
-        errorConfig:''
+        errorConfig: "",
       },
       themeColor: "",
       mainColor: "",
       fontColor: "",
       fontSize: 0,
+
+      bgColor: '',
+      contColor: '',
 
       orderBottom: "last",
       orderSend: "first",
@@ -349,6 +548,7 @@ export default {
         width: 400,
         height: 400,
         posz: 0,
+        idSendChange: 0,
       },
 
       btm: {
@@ -357,6 +557,7 @@ export default {
         width: 400,
         height: 400,
         posz: 0,
+        idBtmChange: 0,
       },
     };
   },
@@ -392,6 +593,21 @@ export default {
     document.documentElement.classList.add(this.fontSize);
   },
   mounted() {
+    let userAgent = navigator.userAgent;
+    if (userAgent.match(/chrome|chromium|crios/i)) {
+      this.browserName = "chrome";
+    } else if (userAgent.match(/firefox|fxios/i)) {
+      this.browserName = "firefox";
+    } else if (userAgent.match(/safari/i)) {
+      this.browserName = "safari";
+    } else if (userAgent.match(/opr\//i)) {
+      this.browserName = "opera";
+    } else if (userAgent.match(/edg/i)) {
+      this.browserName = "edge";
+    } else {
+      this.browserName = "No browser detection";
+    }
+
     this.connection = new WebSocket(
       "ws://" + process.env.VUE_APP_ENGINE_SERVER
     );
@@ -492,9 +708,8 @@ export default {
     //vm.$on('receivedData',(v)=>{this.textR+=v;})
   },
   methods: {
-    setZ(tipo){
-      console.log("Componente attivato di tipo: " + tipo)
-      if(tipo==="rec"){
+    setZ(tipo) {
+      if (tipo === "rec") {
         this.rec.posz = 2;
         this.send.posz = 0;
         this.btm.posz = 0;
@@ -517,14 +732,14 @@ export default {
       this.rec.posy = y;
       this.rec.width = width;
       this.rec.height = height;
-      if(this.rec.posz != 2){
+      if (this.rec.posz != 2) {
         this.setZ("rec");
       }
     },
     onDragStopRec(x, y) {
       this.rec.posx = x;
       this.rec.posy = y;
-      if(this.rec.posz != 2){
+      if (this.rec.posz != 2) {
         this.setZ("rec");
       }
     },
@@ -540,6 +755,12 @@ export default {
         this.rec.posy = y;
       }
     },
+    maximizeRec() {
+      this.rec.posx = 4;
+      this.rec.posy = 60;
+      this.rec.width = window.innerWidth - 24;
+      this.rec.height = window.outerHeight - 50 - 85 - 30;
+    },
 
     onResizeStopSend(handle, x, y, width, height) {
       // eslint-disable-line no-unused-vars
@@ -547,14 +768,14 @@ export default {
       this.send.posy = y;
       this.send.width = width;
       this.send.height = height;
-      if(this.send.posz != 2){
+      if (this.send.posz != 2) {
         this.setZ("send");
       }
     },
     onDragStopSend(x, y) {
       this.send.posx = x;
       this.send.posy = y;
-      if(this.send.posz != 2){
+      if (this.send.posz != 2) {
         this.setZ("send");
       }
     },
@@ -577,14 +798,14 @@ export default {
       this.btm.posy = y;
       this.btm.width = width;
       this.btm.height = height;
-      if(this.btm.posz != 2){
+      if (this.btm.posz != 2) {
         this.setZ("btm");
       }
     },
     onDragStopBtm(x, y) {
       this.btm.posx = x;
       this.btm.posy = y;
-      if(this.btm.posz != 2){
+      if (this.btm.posz != 2) {
         this.setZ("btm");
       }
     },
@@ -614,6 +835,13 @@ export default {
     setThemeColor(theme) {
       document.documentElement.classList.replace(this.themeColor, theme);
       this.themeColor = theme;
+      if(theme == 'theme-dark'){
+        this.bgColor = 'grey darken-4'
+        this.contColor = 'grey darken-3'
+      } else {
+        this.bgColor = 'grey lighten-5'
+        this.contColor = 'white'
+      }
       this.setCookie("theme-color", theme, 30);
     },
 
@@ -652,23 +880,26 @@ export default {
         this.received.textConf = textToChange;
       }
     },
-    changeIRTree(textToChange){
-      if(textToChange.startsWith('{')){
+    changeIRTree(textToChange) {
+      if (textToChange.startsWith("{")) {
         var parseJSON = JSON.parse(textToChange);
         var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
         this.generatePage(JSONInPrettyFormat);
-      }else{
+      } else {
         console.log(textToChange);
-        let startE=textToChange.indexOf('#@TREE-DRAW@#')+'#@TREE-DRAW@#'.length;
-        let endE=textToChange.indexOf('###')
-        let title=textToChange.substring(startE,endE);
-        if(title=="Filter") title="Temporary Collection";
-        startE=endE+'  { "documents" : '.length;
-        endE=textToChange.lastIndexOf('#@END-TREE-DRAW@#')-3;
-        let textConv=textToChange.substring(startE,endE);
+        let startE =
+          textToChange.indexOf("#@TREE-DRAW@#") + "#@TREE-DRAW@#".length;
+        let endE = textToChange.indexOf("###");
+        let title = textToChange.substring(startE, endE);
+        if (title == "Filter") title = "Temporary Collection";
+        startE = endE + '  { "documents" : '.length;
+        endE = textToChange.lastIndexOf("#@END-TREE-DRAW@#") - 3;
+        let textConv = textToChange.substring(startE, endE);
         console.log(textConv);
-        textConv=textConv.replace(/POINT /g,'{\n\t\t"type" : "POINT",\n\t\t"coordinates":"').replaceAll(")",')"\n\t}');
-        this.generatePage(title,textConv);          
+        textConv = textConv
+          .replace(/POINT /g, '{\n\t\t"type" : "POINT",\n\t\t"coordinates":"')
+          .replaceAll(")", ')"\n\t}');
+        this.generatePage(title, textConv);
       }
     },
     changeIRList(textToChange) {
@@ -976,12 +1207,6 @@ export default {
   --textarea-color: indigo;
 }
 
-:root.document-color {
-  --border-color: #0b77b8;
-  --bg-color: #0b77b8;
-  --textarea-color: blue;
-}
-
 :root.blue {
   --border-color: #1976d2;
   --bg-color: #1976d2;
@@ -1141,7 +1366,7 @@ vdr {
   height: 3px;
   top: -3px;
   left: 50%;
-  margin-left:-25px;
+  margin-left: -25px;
   cursor: n-resize;
 }
 .handle-tr {
@@ -1152,7 +1377,7 @@ vdr {
   cursor: ne-resize;
 }
 .handle-ml {
-  width: 3px;
+  width: 3;
   height: 50px;
   top: 50%;
   margin-top: -25px;
@@ -1160,7 +1385,7 @@ vdr {
   cursor: w-resize;
 }
 .handle-mr {
-  width: 3px;
+  width: 3;
   height: 50px;
   top: 50%;
   margin-top: -25px;
@@ -1192,11 +1417,11 @@ vdr {
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 </style>

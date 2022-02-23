@@ -3,12 +3,13 @@
     <div class="topbar" @click="$emit('set-z-click', 'btm')">
       <h4 class="noselect" style="float: left; margin-left: 5px">{{ this.textButton }}</h4>
       <v-icon color="white" style="float: right;" v-on:click="closeWindow()">mdi-close</v-icon>
+      <v-icon color="white" style="float: right;" v-on:click="maximizeWindow()">mdi-window-maximize</v-icon>
     </div>
     <v-container class="containerstyle" style="border-radius: 3px;">
       <v-row class="py-0" align="center">
         <v-col class="py-0" cols="12" sm="10" md="10" lg="12" xl="9">
           <v-col
-            class="py-0"
+            class="py-1"
             v-if="log"
             cols="12"
             sm="12"
@@ -16,8 +17,8 @@
             lg="12"
             xl="12"
           >
-            <v-sheet class="py_0 containerstyle" :height="height - 112">
-              <div id="boxLog">
+            <v-sheet class="py_0 containerstyle" :height="height - 120">
+              <v-sheet :height="height - 120" id="boxLog">
                 <ul
                   readonly
                   style="font-size: 16px;"
@@ -31,18 +32,18 @@
                     :key="log.id"
                     v-for="log in arrayLog.logs"
                   >
-                    <div
+                    <p
                       v-if="log.type == 'LOG'"
                       style="background-color: #ffffff; color: blue;"
                     >
                       {{ log.message }}
-                    </div>
-                    <div v-else style="background-color: #ffffff; color: red;">
+                    </p>
+                    <p v-else style="background-color: #ffffff; color: red;">
                       {{ log.message }}
-                    </div>
+                    </p>
                   </li>
                 </ul>
-              </div>
+              </v-sheet>
             </v-sheet>
           </v-col>
 
@@ -96,7 +97,7 @@
               <center> <span v-if="this.bottomText.errorConfig!=''" class="label danger">{{this.bottomText.errorConfig}}</span> </center></v-sheet>
             <v-sheet id="treeView">
               <v-row class="py-4">
-                <v-col cols="12" sm="12" md="12" lg="12" xl="12">
+                <v-col cols="12" sm="10" md="10" lg="12" xl="9">
                   <v-sheet id="treeViewBtn" align="center">
                     <v-row>
                       <v-col cols="12" sm="12" md="6" lg="6" xl="6">
@@ -118,7 +119,7 @@
                             this.bottomText.listIRCol == undefined
                           "
                           @click="
-                            numDepth = 1;
+                            numDepth = 1
                             $emit('click-tc')
                           "
                         >
@@ -141,8 +142,8 @@
                           tile
                           :disabled="!this.irPressed||this.selectedItem==''"
                           @click="
-                            numDepth = 1;
-                            $emit('click-irc', selectedItem);
+                            numDepth = 1
+                            $emit('click-irc', selectedItem)
                           "
                         >
                           <v-icon color="grey">mdi-sitemap-outline</v-icon>
@@ -171,6 +172,7 @@
               xl="4"
             >
               <v-btn
+              elevation="0"
                 class="tooltip btnstyle"
                 id="btn_log"
                 tile
@@ -314,7 +316,10 @@ export default {
       return null
     },
     closeWindow(){
-          this.$emit('close-btm');
+      this.$emit('close-btm');
+    },
+    maximizeWindow(){
+      this.$emit('maximize-btm');
     },
     async loadFile() {
       var file = document.getElementById('file_config').files[0]
@@ -443,9 +448,9 @@ export default {
 
 #ul_send {
   /* (A1) FLEXIBLE BOX */
-  display: flex;
+  display: inherit;
   width: 100%;
-  height: 88px;
+  height: 16px;
   /* (A2) REMOVE DEFAULT INDENTATIONS */
   padding: 0;
   margin: 0;
@@ -455,7 +460,7 @@ export default {
 #ul_send li {
   list-style-type: none;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 1px;
   background: transparent;
   width: 100%; /* Auto spacing */
 }
@@ -502,9 +507,6 @@ div.box {
 }
 
 #boxLog {
-  height: 419px !important;
-  height/**/: 419px;
-  padding: 4px;
   overflow: auto;
 }
 
