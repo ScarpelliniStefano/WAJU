@@ -542,7 +542,7 @@ export default {
         width: 400,
         height: 400,
         posz: 0,
-        idRecChange: 0,
+        idRecChange: 121,
       },
 
       send: {
@@ -551,7 +551,7 @@ export default {
         width: 400,
         height: 400,
         posz: 0,
-        idSendChange: 0,
+        idSendChange: 122,
       },
 
       btm: {
@@ -560,7 +560,7 @@ export default {
         width: 400,
         height: 400,
         posz: 0,
-        idBtmChange: 0,
+        idBtmChange: 123,
       },
     };
   },
