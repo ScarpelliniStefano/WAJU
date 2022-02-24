@@ -1,53 +1,7 @@
 <template>
   <v-sheet :color="bgColor" id="body">
-    <div name="c1" class="divheader" style="height: 50px; padding-y: 0 25px">
+    <v-sheet elevation="10" name="c1" class="divheader" style="height: 50px; padding-y: 0 25px; ">
       <h1 id="title" class="display-2 font-weight-bold">JCOUIweb</h1>
-      <!--<v-speed-dial
-        v-if="$vuetify.breakpoint.smAndDown"
-        v-model="fab"
-        direction="bottom"
-        :open-on-hover="false"
-      >
-        <template v-slot:activator>
-          <v-btn
-            v-model="fab"
-            color="blue darken-2"
-            dark
-            fab
-          >
-            <v-icon v-if="fab">
-              mdi-close
-            </v-icon>
-            <v-icon v-else>
-              mdi-account-circle
-            </v-icon>
-          </v-btn>
-        </template>
-        <v-btn
-          fab
-          dark
-          small
-          color="green"
-        >
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="indigo"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="red"
-        >
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>
-      </v-speed-dial>-->
       <v-icon
         id="settings"
         style="
@@ -55,9 +9,9 @@
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
+          color: var(--border-color)
         "
         large
-        color="white"
         v-on:click="settings = true"
         @mouseover="tip = 'Settings'"
         @mouseleave="tip = ''"
@@ -97,10 +51,10 @@
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
+          color: var(--border-color)
         "
         id="bottom"
         large
-        color="white"
         v-on:click="
           send.posz = 0;
           rec.posz = 0;
@@ -142,10 +96,10 @@
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
+          color: var(--border-color)
         "
         id="SaveBack"
         large
-        color="white"
         v-on:click="
           send.posz = 0;
           rec.posz = 30;
@@ -187,10 +141,10 @@
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
+          color: var(--border-color)
         "
         id="execute"
         large
-        color="white"
         v-on:click="
           send.posz = 30;
           rec.posz = 0;
@@ -242,7 +196,7 @@
           Chiudi Impostazioni
         </v-btn>
       </v-overlay>-->
-    </div>
+    </v-sheet>
     <VueDragResize
       :key="rec.idRecChange"
       :min-width="400"
@@ -1201,7 +1155,7 @@ export default {
   display: inline-block;
   justify-content: center;
   margin-left: 8px;
-  color: white;
+  color: var(--border-color);
 }
 #settings {
   text-align: right;
@@ -1257,7 +1211,7 @@ export default {
 }
 
 .btnstyle {
-  border-color: var(--border-color);
+  border-radius: 4px;
 }
 
 .divstyle {
@@ -1429,15 +1383,15 @@ div {
 
 .topbar {
   height: 30px;
-  background-color: var(--border-color);
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  border-style: solid;
   border-color: var(--border-color);
   /*display: flex;*/
   align-items: center;
   justify-content: center;
   color: #fff;
+}
+
+.moderndesign {
+  color: var(--border-color);
 }
 
 .v-text-field__details {
@@ -1486,7 +1440,7 @@ vdr {
   cursor: ne-resize;
 }
 .handle-ml {
-  width: 3;
+  width: 3px;
   height: 50px;
   top: 50%;
   margin-top: -25px;
@@ -1494,7 +1448,7 @@ vdr {
   cursor: w-resize;
 }
 .handle-mr {
-  width: 3;
+  width: 3px;
   height: 50px;
   top: 50%;
   margin-top: -25px;

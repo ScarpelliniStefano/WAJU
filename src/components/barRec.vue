@@ -1,14 +1,14 @@
 <template>
-  <div id="recDiv" class="divstyle">
-    <div class="topbar" @click="$emit('set-z-click', 'rec')">
-      <h4 class="noselect" style="float: left; margin-left: 5px">Response</h4>
-      <v-icon color="white" style="float: right" v-on:click="closeWindow()"
+  <v-sheet elevation="17" id="recDiv" class="divstyle">
+    <v-sheet style="border-bottom: 3px solid #dddddd;" elevation="14" class="topbar" @click="$emit('set-z-click', 'rec')">
+      <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">Response</h4>
+      <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()"
         >mdi-close</v-icon
       >
-      <v-icon color="white" style="float: right" v-on:click="maximizeWindow()"
+      <v-icon class="moderndesign" style="float: right; color: #FFD700;" v-on:click="maximizeWindow()"
         >mdi-window-maximize</v-icon
       >
-    </div>
+    </v-sheet>
     <v-container
       :class="bgcolor"
       v-if="rapporto < 3 / 2"
@@ -18,7 +18,6 @@
     >
       <v-row align="center">
         <v-col
-          class="py-0"
           :key="1.1"
           cols="12"
           :sm="10"
@@ -26,7 +25,7 @@
           :lg="12"
           :xl="12"
         >
-            
+        <v-sheet id="div_send" :height="height-136">    
         <v-data-table 
             class="tastyle pt-0 mt-0"
             no-resize
@@ -49,36 +48,7 @@
                 </td>
             </template>
         </v-data-table>
-         
-          <!--<v-textarea
-            readonly
-            class="tastyle pt-0 mt-0"
-            no-resize
-            name="input-7-1"
-            :rows="
-              browser == 'firefox'
-                ? parseInt((height - 134) / 28)
-                : parseInt((height - 134) / 28)
-            "
-            v-model="recText"
-            color="black"
-            id="ta_rec"
-          >
-          </v-textarea>-->
-        </v-col>
-        <v-col v-if="!$vuetify.breakpoint.mdOnly" class="py-0">
-          <v-sheet
-            elevation="0"
-            :color="bgcolor"
-            :height="
-              browser == 'firefox'
-                ? height - 134 - parseInt((height - 134) / 28) * 28 + 5
-                : browser == 'chrome'
-                ? height - 134 - parseInt((height - 134) / 28) * 28 + 22
-                : height - 134 - parseInt((height - 134) / 28)
-            "
-          >
-          </v-sheet>
+        </v-sheet>   
         </v-col>
         <v-col :key="1.2" cols="12" :sm="2" :md="12" :lg="12" :xl="12">
           <v-row align="center" class="text-center">
@@ -88,14 +58,12 @@
                 id="btn_save"
                 style="
                   border-radius: 4px;
-                  border-style: solid;
-                  border-width: 1px;
                 "
                 tile
                 :disabled="this.recArr.length==0"
                 fab
                 depressed
-                elevation="2"
+                elevation="10"
                 raised
                 @click="download('script', recText)"
               >
@@ -107,12 +75,9 @@
               <v-btn
                 class="tooltip btnstyle"
                 id="btn_back"
-                style="
-                  border-radius: 4px;
-                  border-style: solid;
-                  border-width: 1px;
-                "
+                style="border-radius: 4px;"
                 tile
+                elevation="10"
                 :disabled="this.recArr.length==0"
                 fab
                 @click="$emit('click-back-index')"
@@ -127,7 +92,7 @@
     </v-container>
     <v-container
       :class="bgcolor"
-      v-if="rapporto >= 3 / 2 && rapporto < 3"
+      v-if="rapporto >= 3 / 2 && rapporto < 11/4"
       class="containerstyle"
       style="border-bottom-left-radius: 2px;border-bottom-right-radius: 2px;"
       fluid
@@ -142,43 +107,52 @@
           :lg="10"
           :xl="10"
         >
-        <v-data-table 
-            class="tastyle pt-0 mt-0"
-            no-resize
-            name="input-7-1"
-            :rows="parseInt((height-134)/28)"
-            :items="recArr"
-            color="black"
-            id="ta_rec" 
-            hide-default-header
-            hide-default-footer
-            :expanded.sync="expanded"
-            :headers="recHeaders"
-            item-key="name"
-            
-            show-expand>
-            
-            <template v-slot:expanded-item="{ headers, item }">
-                <td :colspan="headers.length">
-                <p>{{item.value}}</p>
-                </td>
-            </template>
-        </v-data-table>
-          <!--<v-textarea
-            readonly
-            class="tastyle pt-0 mt-0"
-            no-resize
-            name="input-7-1"
-            :rows="
-              browser == 'firefox'
-                ? parseInt((height - 54) / 28)
-                : parseInt((height - 54) / 28)
-            "
-            v-model="recText"
-            color="black"
-            id="ta_rec"
-          >
-          </v-textarea>-->
+<v-sheet id="div_send" :height="height-32">
+                      <v-data-table 
+                    class="tastyle pt-0 mt-0"
+                    no-resize
+                    name="input-7-1"
+                    :rows="parseInt((height-134)/28)"
+                    :items="recArray"
+                    color="black"
+                    id="ta_rec" 
+                    hide-default-header
+                    hide-default-footer
+                    :expanded.sync="expandedOut"
+                    :headers="recHeadersComm"
+                    item-key="commandName"
+                    
+                    show-expand>
+                    
+                    <template v-slot:expanded-item="{ headers, item}">
+                        <td :colspan="headers.length">
+                            <v-data-table 
+                                class="tastyle pt-0 mt-0"
+                                no-resize
+                                name="input-7-1"
+                                :rows="parseInt((height-134)/28)"
+                                :items="item.value"
+                                color="black"
+                                id="ta_rec" 
+                                hide-default-header
+                                hide-default-footer
+                                :expanded.sync="expandedIn"
+                                :headers="recHeaders"
+                                item-key="name"
+                                
+                                show-expand>
+                                
+                                <template v-slot:expanded-item="{ headers, item }">
+                                    <td :colspan="headers.length">
+                                    <v-textarea no-resize v-model="item.value"></v-textarea>
+                                    </td>
+                                </template>
+                            </v-data-table>
+                           
+                        </td>
+                    </template>
+                </v-data-table>
+        </v-sheet>
         </v-col>
         <v-col :key="1.21" cols="12" :sm="2" :md="2" :lg="2" :xl="2">
           <v-row align="center" class="text-center">
@@ -186,17 +160,13 @@
               <v-btn
                 class="tooltip btnstyle"
                 id="btn_save"
-                style="
-                  border-radius: 4px;
-                  border-style: solid;
-                  border-width: 1px;
-                "
+                style="border-radius: 4px;"
                 tile
                 large
                 :disabled="this.recArr.length==0"
                 fab
                 depressed
-                elevation="2"
+                elevation="10"
                 raised
                 @click="download('script', recText)"
               >
@@ -208,13 +178,10 @@
               <v-btn
                 class="tooltip btnstyle"
                 id="btn_back"
-                style="
-                  border-radius: 4px;
-                  border-style: solid;
-                  border-width: 1px;
-                "
+                style="border-radius: 4px;"
                 large
                 tile
+                elevation="10"
                 :disabled="this.recArr.length==0"
                 fab
                 @click="$emit('click-back-index')"
@@ -225,33 +192,11 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col
-          class="py-0"
-          key="colonna_inutile"
-          cols="12"
-          :sm="12"
-          :md="12"
-          :lg="12"
-          :xl="12"
-        >
-          <v-sheet
-            elevation="0"
-            :color="bgcolor"
-            :height="
-              browser == 'firefox'
-                ? height - 54 - parseInt((height - 54) / 28) * 28 + 5
-                : browser == 'chrome'
-                ? height - 54 - parseInt((height - 54) / 28) * 28 + 22
-                : height - 54 - parseInt((height - 54) / 28)
-            "
-          >
-          </v-sheet>
-        </v-col>
       </v-row>
     </v-container>
     <v-container
       :class="bgcolor"
-      v-if="rapporto >= 3"
+      v-if="rapporto >= 11/4"
       class="containerstyle"
       style="border-bottom-left-radius: 2px;border-bottom-right-radius: 2px;"
       fluid
@@ -267,43 +212,52 @@
           :xl="11"
         >
 
-        <v-data-table 
-            class="tastyle pt-0 mt-0"
-            no-resize
-            name="input-7-1"
-            :rows="parseInt((height-134)/28)"
-            :items="recArr"
-            color="black"
-            id="ta_rec" 
-            hide-default-header
-            hide-default-footer
-            :expanded.sync="expanded"
-            :headers="recHeaders"
-            item-key="name"
-            
-            show-expand>
-            
-            <template v-slot:expanded-item="{ headers, item }">
-                <td :colspan="headers.length">
-                <p>{{item.value}}</p>
-                </td>
-            </template>
-        </v-data-table>
-          <!--<v-textarea
-            readonly
-            class="tastyle pt-0 mt-0"
-            no-resize
-            name="input-7-1"
-            :rows="
-              browser == 'firefox'
-                ? parseInt((height - 54) / 28)
-                : parseInt((height - 54) / 28)
-            "
-            v-model="recText"
-            color="black"
-            id="ta_rec"
-          >
-          </v-textarea>-->
+        <v-sheet id="div_send" :height="height-32">
+                      <v-data-table 
+                    class="tastyle pt-0 mt-0"
+                    no-resize
+                    name="input-7-1"
+                    :rows="parseInt((height-134)/28)"
+                    :items="recArray"
+                    color="black"
+                    id="ta_rec" 
+                    hide-default-header
+                    hide-default-footer
+                    :expanded.sync="expandedOut"
+                    :headers="recHeadersComm"
+                    item-key="commandName"
+                    
+                    show-expand>
+                    
+                    <template v-slot:expanded-item="{ headers, item}">
+                        <td :colspan="headers.length">
+                            <v-data-table 
+                                class="tastyle pt-0 mt-0"
+                                no-resize
+                                name="input-7-1"
+                                :rows="parseInt((height-134)/28)"
+                                :items="item.value"
+                                color="black"
+                                id="ta_rec" 
+                                hide-default-header
+                                hide-default-footer
+                                :expanded.sync="expandedIn"
+                                :headers="recHeaders"
+                                item-key="name"
+                                
+                                show-expand>
+                                
+                                <template v-slot:expanded-item="{ headers, item }">
+                                    <td :colspan="headers.length">
+                                    <v-textarea no-resize v-model="item.value"></v-textarea>
+                                    </td>
+                                </template>
+                            </v-data-table>
+                           
+                        </td>
+                    </template>
+                </v-data-table>
+        </v-sheet>
         </v-col>
         <v-col :key="1.21" cols="12" :sm="1" :md="1" :lg="1" :xl="1">
           <v-row align="center" class="text-center">
@@ -313,15 +267,13 @@
                 id="btn_save"
                 style="
                   border-radius: 4px;
-                  border-style: solid;
-                  border-width: 1px;
                 "
                 tile
                 x-large
                 :disabled="this.recArr.length==0"
                 fab
                 depressed
-                elevation="2"
+                elevation="10"
                 raised
                 @click="download('script', recText)"
               >
@@ -335,13 +287,12 @@
                 id="btn_back"
                 style="
                   border-radius: 4px;
-                  border-style: solid;
-                  border-width: 1px;
                 "
                 x-large
                 tile
                 :disabled="this.recArr.length==0"
                 fab
+                elevation="10"
                 @click="$emit('click-back-index')"
               >
                 <v-icon>mdi-history</v-icon>
@@ -350,31 +301,9 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col
-          class="py-0"
-          key="colonna_inutile"
-          cols="12"
-          :sm="12"
-          :md="12"
-          :lg="12"
-          :xl="12"
-        >
-          <v-sheet
-            elevation="0"
-            :color="bgcolor"
-            :height="
-              browser == 'firefox'
-                ? height - 54 - parseInt((height - 54) / 28) * 28 + 5
-                : browser == 'chrome'
-                ? height - 54 - parseInt((height - 54) / 28) * 28 + 22
-                : height - 54 - parseInt((height - 54) / 28)
-            "
-          >
-          </v-sheet>
-        </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-sheet>
 </template>
 <script>
 export default {
@@ -450,7 +379,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #recDiv {
   background-color: white;
   border-radius: 4px;

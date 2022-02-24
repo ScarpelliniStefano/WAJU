@@ -1,13 +1,17 @@
 <template>
-  <div class="divstyle" id="btmDiv">
-    <div class="topbar" @click="$emit('set-z-click', 'btm')">
-      <h4 class="noselect" style="float: left; margin-left: 5px">{{ this.textButton }}</h4>
-      <v-icon color="white" style="float: right;" v-on:click="closeWindow()">mdi-close</v-icon>
-      <v-icon color="white" style="float: right;" v-on:click="maximizeWindow()">mdi-window-maximize</v-icon>
-    </div>
+  <v-sheet elevation="17" id="recDiv" class="divstyle">
+    <v-sheet style="border-bottom: 3px solid #dddddd;" elevation="14" class="topbar" @click="$emit('set-z-click', 'rec')">
+      <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">{{this.textButton}}</h4>
+      <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()"
+        >mdi-close</v-icon
+      >
+      <v-icon class="moderndesign" style="float: right; color: #FFD700;" v-on:click="maximizeWindow()"
+        >mdi-window-maximize</v-icon
+      >
+    </v-sheet>
     <v-container class="containerstyle" style="border-radius: 3px;">
       <v-row class="py-0" align="center">
-        <v-col class="py-0" cols="12" sm="10" md="10" lg="12" xl="9">
+        <v-col class="py-0" cols="12" sm="10" md="10" lg="12" xl="12">
           <v-col
             class="py-1"
             v-if="log"
@@ -161,7 +165,7 @@
         <v-col v-if="ispectstate" class="py-0" cols="12" sm="12" md="12" lg="12" xl="12">
           <v-sheet class="py-0" :height="(height - 318)/2"></v-sheet>
         </v-col>
-        <v-col cols="12" sm="2" md="2" lg="12" xl="3">
+        <v-col cols="12" sm="2" md="2" lg="12" xl="12">
           <v-row no-gutters justify="space-around">
             <v-col
               class="d-flex justify-center"
@@ -199,7 +203,7 @@
                   style="display: none;"
                 />
                 <v-btn
-                  class="tooltip btnstyle"
+                  class="tooltip"
                   elevation="0"
                   id="btn_upload"
                   style="z-index: 1;"
@@ -251,7 +255,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-sheet>
 </template>
 
 <script>
