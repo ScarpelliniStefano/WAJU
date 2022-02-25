@@ -8,6 +8,7 @@
         <subtract-coll v-on:changeValue="changeValue($event)" v-if="this.valueString=='SUBTRACT COLLECTIONS'"/>
         <use-db :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='USE DB'"/>
         <filter-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='FILTER'"/>
+        <expand-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='EXPAND'"/>
     </v-sheet>
 </template>
 
@@ -20,6 +21,7 @@ import intersectColl from "./intersectCollections.vue";
 import subtractColl from "./subtractCollections.vue";
 import useDb from "./useDB.vue";
 import filterClause from "./filter.vue";
+import expandClause from "./expand.vue";
 
 export default {
     data:()=>({
@@ -38,7 +40,8 @@ export default {
         intersectColl,
         subtractColl,
         useDb,
-        filterClause
+        filterClause,
+        expandClause
     },
     watch:{
         select:function(newVal, oldVal){
@@ -67,6 +70,9 @@ export default {
                         break;
                      case "FILTER ON FIELD":
                         this.valueString="FILTER"
+                        break;
+                    case "EXPAND COLLECTIONS":
+                        this.valueString="EXPAND"
                         break;
                     default:
                         break;

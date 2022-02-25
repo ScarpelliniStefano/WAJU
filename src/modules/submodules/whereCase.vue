@@ -1,53 +1,96 @@
 <template>
   <!--<v-sheet>
             {{this.mywhereIndex}}-->
-            <div>
-            <v-container>
-            <v-row width="90vh">
-                <v-col>
-                <v-textarea label="collections clause" rows="4" v-model="whereClause"></v-textarea>
-                </v-col>
-                <!--<v-col>
-                    <v-row><v-btn label="OR" v-on:click="orClick(1)">OR</v-btn><v-btn label="CANC OR" v-on:click="orClick(0)">CANC OR</v-btn></v-row>
-                    <v-row><v-btn label="AND" v-on:click="andClick(1)">AND</v-btn><v-btn label="CANC AND" v-on:click="andClick(0)">CANC AND</v-btn></v-row>
-                    <v-row><v-btn label="NOT" v-on:click="notClick(1)">NOT</v-btn><v-btn label="CANC NOT" v-on:click="notClick(0)">CANC NOT</v-btn></v-row>
-                    <v-row><v-btn label="WITH" v-on:click="withClick(1)">WITH</v-btn><v-btn label="CANC WITH" v-on:click="withClick(0)">CAN WITH</v-btn></v-row>
-                    <v-row><v-btn label="WITHOUT" v-on:click="withoutClick(1)">WITHOUT</v-btn><v-btn label="CANC WITHOUT" v-on:click="withoutClick(0)">CANC WITHOUT</v-btn></v-row>
-                </v-col>-->
-            </v-row>
+            
+            <v-container fluid >
+            
+                <v-textarea label="collections clause" rows="2" auto-grow v-model="whereClause"></v-textarea>
+                <v-checkbox color="var(--bg-color)" v-model="generateAct" label="generate actions?"></v-checkbox>
+                <v-textarea v-if="generateAct" label="generate actions" rows="1" v-model="generateAction"></v-textarea>
+                <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" label="Do you want checks on the fuzzy?"></v-checkbox>
+                <v-row  v-for="collect in collectionsFuzzy" :key="collect.index">
+                    <v-col>
+                    <v-text-field :rules="[rules.counter]" v-if="fuzzyCheck" label="ID" v-model="collect.idFuzzyInstr"></v-text-field>
+                    </v-col>
+                    <v-col>
+                    <v-textarea :rules="[rules.counter]" v-if="fuzzyCheck" label="fuzzy check condition" rows="1" v-model="collect.fuzzyInstr"></v-textarea>
+                    </v-col>
+                </v-row>
+                <v-container v-if="fuzzyCheck">
+                <v-btn
+                    fab
+                    dark 
+                    small
+                    @click="setPlus()" 
+                    color="var(--bg-color)"
+                >
+                    <v-icon dark>
+                        mdi-plus
+                    </v-icon>
+                </v-btn>
+                <v-btn
+                    fab
+                    dark 
+                    small
+                    @click="checkMinus()" 
+                    color="var(--bg-color)"
+                >
+                <v-icon dark>
+                    mdi-minus
+                </v-icon>
+                </v-btn>
+                </v-container>
+                <v-checkbox color="var(--bg-color)" v-model="alphaCut" label="Do you want alpha cut?"></v-checkbox>
+                <v-row  v-for="collect in collectionsAlpha" :key="collect.index">
+                    <v-col>
+                    <v-text-field :rules="[rules.counterA]" v-if="alphaCut" label="numeric expression" v-model="collect.numericIstr"></v-text-field>
+                    </v-col>
+                    <v-col>
+                    <v-text-field :rules="[rules.counterA]" v-if="alphaCut" label="ID" v-model="collect.idAlpha"></v-text-field>
+                    </v-col>
+                    
+                    
+                </v-row>
+                <v-container v-if="alphaCut">
+                <v-btn
+                    fab
+                    dark 
+                    small
+                    @click="setPlusA()" 
+                    color="var(--bg-color)"
+                >
+                    <v-icon dark>
+                        mdi-plus
+                    </v-icon>
+                </v-btn>
+                <v-btn
+                    fab
+                    dark 
+                    small
+                    @click="checkMinusA()" 
+                    color="var(--bg-color)"
+                >
+                <v-icon dark>
+                    mdi-minus
+                </v-icon>
+                </v-btn>
+                </v-container>
+                <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" label="Do you want to keep or drop fuzzy sets?"></v-checkbox>
+                <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValueKDFS="changeTextKeepDropFuzzy($event)"/>
             </v-container>
-            <v-checkbox color="var(--bg-color)" v-model="generateAct" label="generate actions?"></v-checkbox>
-            <v-textarea v-if="generateAct" label="generate actions" rows="4" v-model="generateAction"></v-textarea>
-            <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" label="Do you want checks on the fuzzy?"></v-checkbox>
-            <v-row  v-for="collect in collectionsFuzzy" :key="collect.index">
-                <v-textarea v-if="fuzzyCheck" label="fuzzy check" rows="4" v-model="collect.fuzzyInstr"></v-textarea>
-            </v-row>
-            <v-checkbox color="var(--bg-color)" v-model="alphaCut" label="Do you want alpha cut?"></v-checkbox>
-            <v-textarea v-if="alphaCut" label="alphacut instruction" rows="4" v-model="alphacutText"></v-textarea>
-            <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" label="Do you want to keep or drop fuzzy sets?"></v-checkbox>
-            <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValue="changeTextKeepDropFuzzy($event)"/>
-            </div>
+            
             
             
   <!--</v-sheet>-->
 </template>
 
 <script>
-//import orCondition from './orCondition.vue';
-//import generateAction from './orCondition.vue';
-//import fuzzyCheck from './orCondition.vue';
-//import alphacut from './orCondition.vue';
 import keepDropFuzzySet from './keepdropFS.vue';
 export default {
     props:{
         mywhereIndex: Number
     },
     components:{
-        //whereClause : String
-        /*orCondition,
-        generateAction,
-        fuzzyCheck,
-        alphacut,*/
         keepDropFuzzySet
     },
    data () {
@@ -55,76 +98,149 @@ export default {
         valueString:'',
         whereClause:'',
         generateAction:'',
-        collectionsFuzzy:[{index:1,fuzzyInstr:''}],
-        alphacutText:'',
+        collectionsFuzzy:[{index:'f1',idFuzzyInstr:'',fuzzyInstr:''}],
+        collectionsAlpha:[{index:'a1',idAlpha:'',numericIstr:''}],
         alphaCut:false,
-        keepDropFuzzySets:false,
+        keepDropFuzzy:false,
         fuzzyCheck:false,
         generateAct:false,
+        stringVett:[{typeClause:'where',value:''},
+                    {typeClause:'generate',value:''},
+                    {typeClause:'checkfuzzy',value:''},
+                    {typeClause:'alphacut',value:''},
+                    {typeClause:'keepdropfuzzy',value:''},
+                    ]
+        ,
+        rules: {
+            counter: value => this.counterText(value),
+            counterA: value => this.counterTextA(value),
+        }
       }
     },
     
      watch:{
-        radioGroup:function(newVal,oldVal){
+        keepDropFuzzy:function(newVal,oldVal){
             if(newVal!=oldVal){
-                if(newVal==1){
-                    this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nDROP OTHERS"));
-                    this.valueString+="\nKEEP OTHERS ";
-                }else{
-                    this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nKEEP OTHERS"));
-                     this.valueString+="\nDROP OTHERS ";
-                }
+                if(!newVal)
+                    this.stringVett[4].value="";
             }
-            this.$emit('changeValue', this.valueString);
-        }
-    },
-    methods:{
-        checkMinus(){
-            if(this.collections.length>1){
-                this.collections.pop()
-                this.valueArr.pop()
+            this.refreshArr(this.stringVett);
+        },
+        whereClause:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                this.stringVett[0].value=newVal;
+            }
+            this.refreshArr(this.stringVett);
+        },
+        generateAct:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(!newVal)
+                    this.stringVett[1].value="";
+                else
+                    this.stringVett[1].value=this.generateAction;
+                this.refreshArr(this.stringVett);
+            }
+        },
+        generateAction:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(this.generateAction && newVal!="")
+                    this.stringVett[1].value=newVal;
+                else
+                    this.stringVett[1].value="";
+            }
+            this.refreshArr(this.stringVett);
+        },
+        
+        fuzzyCheck:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(!newVal){
+                    this.stringVett[2].value="";
+                    this.collectionsFuzzy=[{index:'f1',idFuzzyInstr:'',fuzzyInstr:''}]
+                }   
+                this.refreshArr(this.stringVett);
             }
             
-            this.counterText(this.collections.length);
         },
-        setPlus(){
-            this.collections.push({
-                index:this.collections.length+1,
-                collection:'',
-                alias:''
-            })
-            this.valueArr.push('')
-        },
-        changeTextOr(ind){
-            let str= this.valueArr[ind];
-            str="";
-            if(this.collections[ind].collection!="")
-                str=this.collections[ind].collection;
-                if(this.collections[ind].alias)
-                    str+=" AS "+this.collections[ind].alias;
-            this.valueArr[ind]=str;
-            this.valueString=" ";
-            this.valueArr.forEach(element => {
-                this.valueString+=element;
-                this.valueString+=", "
-            });
-            this.valueString=this.valueString.substring(0,this.valueString.length-2);
-            this.valueString+=" ON";
-            if(this.defaultServer){
-                this.valueString+=" DEFAULT SERVER"
-            }else{
-                this.valueString+=" SERVER "+this.server
-                if(this.connString!="")
-                    this.valueString+=" '"+this.connString+"'";
+        alphaCut:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(!newVal){
+                    this.stringVett[3].value="";
+                    this.collectionsAlpha=[{index:'a1',idAlpha:'',numericIstr:''}]
+                }   
+                this.refreshArr(this.stringVett);
             }
-            this.valueString+=";"
+        },
+    },
+    methods:{
+        refreshArr(vettString){
+            this.valueString=this.mywhereIndex+"##\nWHERE ";
+            if(vettString[0].value!="")
+                this.valueString+="\n "+vettString[0].value + " ";
+            if(vettString[1].value!="")
+                this.valueString+="\nGENERATE "+vettString[1].value + " ";
+            if(vettString[2].value!="")
+                this.valueString+="\n"+vettString[2].value + " ";
+            if(vettString[3].value!="")
+                this.valueString+="\n"+vettString[3].value + " ";
+            if(vettString[4].value!="")
+                this.valueString+="\n"+vettString[4].value + " ";
             this.$emit('changeValue', this.valueString);
         },
-        counterText(value){
-            for(let i=0;i<this.valueArr.length;i++){ 
-                this.changeText(i);
+        checkMinus(){
+            if(this.collectionsFuzzy.length>1){
+                this.collectionsFuzzy.pop()
             }
+            this.changeArrCollFuzzy();
+        },
+        setPlus(){
+            this.collectionsFuzzy.push({
+                index:this.collectionsFuzzy.length+1,
+                idFuzzyInstr:'',
+                fuzzyInstr:''
+            })
+            this.changeArrCollFuzzy();
+        },
+        checkMinusA(){
+            if(this.collectionsAlpha.length>1){
+                this.collectionsAlpha.pop()
+            }
+            this.refreshStringColl();
+        },
+        setPlusA(){
+            this.collectionsAlpha.push({
+                index:this.collectionsAlpha.length+1,
+                idAlpha:'',
+                numericIstr:''
+            })
+            this.refreshStringColl();
+        },
+        refreshStringColl(){
+            this.stringVett[3].value="";
+            this.collectionsAlpha.forEach(element => {
+                this.stringVett[3].value+="ALPHACUT "+element.numericIstr+" ON "+element.idAlpha+"\n";
+            });
+            this.stringVett[3].value=this.stringVett[3].value.substring(0,this.stringVett[3].value.length-1);
+            this.refreshArr(this.stringVett)
+        },
+        counterText(value){
+            this.changeArrCollFuzzy();
             return value.length>-1;
+        },
+        counterTextA(value){
+            this.refreshStringColl();
+            return value.length>-1;
+        },
+        changeArrCollFuzzy(){
+            this.stringVett[2].value="";
+            this.collectionsFuzzy.forEach(element => {
+                this.stringVett[2].value+="CHECK FOR FUZZY SET "+element.idFuzzyInstr+" USING "+element.fuzzyInstr+"\n";
+            });
+            this.stringVett[2].value=this.stringVett[2].value.substring(0,this.stringVett[2].value.length-1);
+            this.refreshArr(this.stringVett)
+        },
+        changeTextKeepDropFuzzy(valueString){
+            this.stringVett[4].value=valueString;
+            this.refreshArr(this.stringVett)
         }
         
     },

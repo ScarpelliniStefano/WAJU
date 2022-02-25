@@ -27,7 +27,7 @@
         </v-icon>
         </v-btn>
             </center>
-        <v-textarea disabled v-model="valueString"/>
+        <v-textarea readonly v-model="valueString"/>
     </v-sheet>
 </template>
 
@@ -49,7 +49,8 @@ export default {
                       'MERGE TWO OR MORE COLLECTIONS',
                       'INTERSECT TWO COLLECTIONS',
                       'SUBTRACT TWO COLLECTIONS',
-                      'FILTER ON FIELD'
+                      'FILTER ON FIELD',
+                      'EXPAND COLLECTIONS'
                       ],
         valueString : ''
     }),

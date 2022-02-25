@@ -2,28 +2,39 @@
   <!--<v-sheet>
             {{this.mywhereIndex}}-->
             <div>
-            <div>
-                <v-row><v-col>
-                    <v-textarea label="collections clause" rows="4" v-model="whereClause"></v-textarea>
-                    </v-col>
-                    <v-col>
-                        <v-row><v-btn label="OR" v-on:click="orClick(1)"/><v-btn label="CANC OR" v-on:click="orClick(0)"/></v-row>
-                        <v-row><v-btn label="AND" v-on:click="andClick(1)"/><v-btn label="CANC AND" v-on:click="andClick(0)"/></v-row>
-                        <v-row><v-btn label="NOT" v-on:click="notClick(1)"/><v-btn label="CANC NOT" v-on:click="notClick(0)"/></v-row>
-                        <v-row><v-btn label="WITH" v-on:click="withClick(1)"/><v-btn label="CANC WITH" v-on:click="withClick(0)"/></v-row>
-                        <v-row><v-btn label="WITHOUT" v-on:click="withoutClick(1)"/><v-btn label="CANC WITHOUT" v-on:click="withoutClick(0)"/></v-row>
-                    </v-col></v-row>
-                </div>
-            <v-checkbox color="var(--bg-color)" v-model="generateAct" label="generate actions?"></v-checkbox>
-            <v-textarea v-if="generateAct" label="generate actions" rows="4" v-model="generateAction"></v-textarea>
-            <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" label="Do you want checks on the fuzzy?"></v-checkbox>
-            <v-row  v-for="collect in collectionsFuzzy" :key="collect.index">
-                <v-textarea v-if="fuzzyCheck" label="fuzzy check" rows="4" v-model="collect.fuzzyInstr"></v-textarea>
-            </v-row>
-            <v-checkbox color="var(--bg-color)" v-model="alphaCut" label="Do you want alpha cut?"></v-checkbox>
-            <v-textarea v-if="alphaCut" label="alphacut instruction" rows="4" v-model="alphacutText"></v-textarea>
-            <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" label="Do you want to keep or drop fuzzy sets?"></v-checkbox>
-            <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValue="changeTextKeepDropFuzzy($event)"/>
+                <v-container
+                    class="px-0"
+                    fluid
+                >
+                    <v-radio-group v-model="radioFS">
+                    <v-radio
+                        key="1"
+                        label="DEFUZZIFY"
+                        value="DEFUZZIFY"
+                    ></v-radio>
+                    <v-radio
+                        key="2"
+                        label="DROPPING ALL FUZZY SETS"
+                        value="DROPPING ALL FUZZY SETS"
+                    ></v-radio>
+                    <v-radio
+                        key="3"
+                        label="KEEPING ALL FUZZY SETS"
+                        value="KEEPING ALL FUZZY SETS"
+                    ></v-radio>
+                    <v-radio
+                        key="4"
+                        label="DROPPING FUZZY SETS"
+                        value="DROPPING FUZZY SETS"
+                    ></v-radio>
+                    <v-radio
+                        key="5"
+                        label="KEEPING FUZZY SETS"
+                        value="KEEPING FUZZY SETS"
+                    ></v-radio>
+                    </v-radio-group>
+                    <v-text-field v-if="radioFS=='DROPPING FUZZY SETS' || radioFS=='KEEPING FUZZY SETS'" label="list of ids to keep/drop" v-model="textRadio"></v-text-field>
+                </v-container>
             </div>
             
             
@@ -31,105 +42,32 @@
 </template>
 
 <script>
-//import orCondition from './orCondition.vue';
-//import generateAction from './orCondition.vue';
-//import fuzzyCheck from './orCondition.vue';
-//import alphacut from './orCondition.vue';
-import keepDropFuzzySet from './keepdropFS.vue';
 export default {
-    props:{
-        mywhereIndex: Number
-    },
-    components:{
-        //whereClause : String
-        /*orCondition,
-        generateAction,
-        fuzzyCheck,
-        alphacut,*/
-        keepDropFuzzySet
-    },
    data () {
       return {
-        valueString:'',
-        whereClause:'',
-        generateAction:'',
-        collectionsFuzzy:[{index:1,fuzzyInstr:''}],
-        alphacutText:'',
-        alphaCut:false,
-        keepDropFuzzySets:false,
-        fuzzyCheck:false,
-        generateAct:false,
+        radioFS:'',
+        textRadio:''
       }
     },
     
-     watch:{
-        radioGroup:function(newVal,oldVal){
+    watch:{
+        radioFS:function(newVal,oldVal){
             if(newVal!=oldVal){
-                if(newVal==1){
-                    this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nDROP OTHERS"));
-                    this.valueString+="\nKEEP OTHERS ";
-                }else{
-                    this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nKEEP OTHERS"));
-                     this.valueString+="\nDROP OTHERS ";
+                if(newVal!="KEEPING FUZZY SETS" || newVal!="DROPPING FUZZY SETS"){
+                    this.$emit('changeValueKDFS', newVal);
+                    this.textRadio="";
                 }
             }
-            this.$emit('changeValue', this.valueString);
+        },
+        textRadio:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(this.radioFS=="KEEPING FUZZY SETS" || this.radioFS=="DROPPING FUZZY SETS"){
+                    this.$emit('changeValueKDFS', this.radioFS+ " " + newVal);
+                }
+            }
         }
-    },
-    methods:{
-        checkMinus(){
-            if(this.collections.length>1){
-                this.collections.pop()
-                this.valueArr.pop()
-            }
-            
-            this.counterText(this.collections.length);
-        },
-        setPlus(){
-            this.collections.push({
-                index:this.collections.length+1,
-                collection:'',
-                alias:''
-            })
-            this.valueArr.push('')
-        },
-        changeTextOr(ind){
-            let str= this.valueArr[ind];
-            str="";
-            if(this.collections[ind].collection!="")
-                str=this.collections[ind].collection;
-                if(this.collections[ind].alias)
-                    str+=" AS "+this.collections[ind].alias;
-            this.valueArr[ind]=str;
-            this.valueString=" ";
-            this.valueArr.forEach(element => {
-                this.valueString+=element;
-                this.valueString+=", "
-            });
-            this.valueString=this.valueString.substring(0,this.valueString.length-2);
-            this.valueString+=" ON";
-            if(this.defaultServer){
-                this.valueString+=" DEFAULT SERVER"
-            }else{
-                this.valueString+=" SERVER "+this.server
-                if(this.connString!="")
-                    this.valueString+=" '"+this.connString+"'";
-            }
-            this.valueString+=";"
-            this.$emit('changeValue', this.valueString);
-        },
-        counterText(value){
-            for(let i=0;i<this.valueArr.length;i++){ 
-                this.changeText(i);
-            }
-            return value.length>-1;
-        }
-        
-    },
-    created(){
-        this.valueString=this.mywhereIndex+"##\nWHERE ";
-        this.$emit('changeValue', this.valueString);
     }
+        
 }
 </script>
 
