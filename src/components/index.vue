@@ -211,7 +211,7 @@
       style="position: absolute"
       @click="
         rec.posz = 2;
-        send.posz = 1;
+        send.posz = 0;
         btm.posz = 0;
       "
       :onDrag="onDragStopRec"
@@ -248,7 +248,7 @@
       @click="
         rec.posz = 0;
         send.posz = 2;
-        btm.posz = 1;
+        btm.posz = 0;
       "
       :onDrag="onDragStopSend"
       :onResize="onResizeStopSend"
@@ -496,7 +496,7 @@ export default {
         width: 400,
         height: 400,
         posz: 0,
-        idRecChange: 121,
+        idRecChange: 124,
       },
 
       send: {
@@ -1188,26 +1188,23 @@ export default {
 <style>
 .tooltip .tooltiptext {
   visibility: hidden;
-  background-color: white;
-  color: #000;
+  width: 120px;
+  background-color: var(--border-color);
+  color: #fff;
   text-align: center;
-  border-radius: 4px;
-  border-color: var(--border-color);
-  border-style: solid;
-  border-width: 1px;
+  border-radius: 6px;
+  padding: 5px 0;
   position: absolute;
   z-index: 1;
-  width: 200px;
-  padding: 8 0;
-  bottom: 50px;
   left: 50%;
-  margin-left: -100px;
-  align-content: center;
-  font-size: 16px;
+  margin-left: -180px;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+  opacity: 1;
 }
 
 .btnstyle {
@@ -1241,111 +1238,57 @@ export default {
 }
 
 :root.red {
-  --border-color: #d32f2f;
-  --bg-color: #d32f2f;
+  --border-color: #D50000;
+  --bg-color: #D50000;
   --textarea-color: red;
 }
 
 :root.pink {
-  --border-color: #c2185b;
-  --bg-color: #c2185b;
+  --border-color: #C51162;
+  --bg-color: #C51162;
   --textarea-color: pink;
 }
 
-:root.purple {
-  --border-color: #7b1fa2;
-  --bg-color: #7b1fa2;
-  --textarea-color: purple;
-}
-
-:root.deep-purple {
-  --border-color: #512da8;
-  --bg-color: #512da8;
-  --textarea-color: deep-purple;
-}
-
-:root.indigo {
-  --border-color: #303f9f;
-  --bg-color: #303f9f;
-  --textarea-color: indigo;
-}
-
-:root.blue {
-  --border-color: #1976d2;
-  --bg-color: #1976d2;
-  --textarea-color: blue;
-}
-
-:root.light-blue {
-  --border-color: #0288d1;
-  --bg-color: #0288d1;
-  --textarea-color: light-blue;
-}
-
 :root.cyan {
-  --border-color: #0097a7;
-  --bg-color: #0097a7;
+  --border-color: #00B8D4;
+  --bg-color: #00B8D4;
   --textarea-color: cyan;
 }
 
 :root.teal {
-  --border-color: #00796b;
-  --bg-color: #00796b;
+  --border-color: #00BFA5;
+  --bg-color: #00BFA5;
   --textarea-color: teal;
 }
 
 :root.green {
-  --border-color: #388e3c;
-  --bg-color: #388e3c;
+  --border-color: #00C853;
+  --bg-color: #00C853;
   --textarea-color: green;
 }
 
 :root.light-green {
-  --border-color: #689f38;
-  --bg-color: #689f38;
+  --border-color: #64DD17;
+  --bg-color: #64DD17;
   --textarea-color: light-green;
 }
 
-:root.lime {
-  --border-color: #afb42b;
-  --bg-color: #afb42b;
-  --textarea-color: lime;
-}
-
-:root.yellow {
-  --border-color: #fbc02d;
-  --bg-color: #fbc02d;
-  --textarea-color: yellow;
-}
-
 :root.amber {
-  --border-color: #ffa000;
-  --bg-color: #ffa000;
+  --border-color: #FFAB00;
+  --bg-color: #FFAB00;
   --textarea-color: amber;
 }
 
 :root.orange {
-  --border-color: #f57c00;
-  --bg-color: #f57c00;
+  --border-color: #FF6D00;
+  --bg-color: #FF6D00;
   --textarea-color: orange;
 }
 
 :root.deep-orange {
-  --border-color: #e64a19;
-  --bg-color: #e64a19;
+  --border-color: #DD2C00;
+  --bg-color: #DD2C00;
   --textarea-color: deep-orange;
-}
-
-:root.brown {
-  --border-color: #5d4037;
-  --bg-color: #5d4037;
-  --textarea-color: brown;
-}
-
-:root.blue-grey {
-  --border-color: #455a64;
-  --bg-color: #455a64;
-  --textarea-color: blue-grey;
 }
 
 :root.theme-light {
@@ -1355,17 +1298,7 @@ export default {
 
 :root.theme-dark {
   --bg-theme-color: #222222;
-  --bg-div-color: #333333;
-}
-
-:root.theme-blue {
-  --bg-theme-color: #191970;
-  --bg-div-color: #0047ab;
-}
-
-:root.theme-grey {
-  --bg-theme-color: #202020;
-  --bg-div-color: #383838;
+  --bg-div-color: #222222;
 }
 
 button {

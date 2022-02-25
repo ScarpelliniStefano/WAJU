@@ -581,7 +581,7 @@ div.boxInfo {
 }
 </style>
 
-<style>
+<style scoped>
 .tooltip .tooltiptext {
   visibility: hidden;
   background-color: white;

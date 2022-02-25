@@ -2,12 +2,8 @@
     <v-sheet elevation="17" id="recDiv" class="divstyle">
     <v-sheet style="border-bottom: 3px solid #dddddd;" elevation="14" class="topbar" @click="$emit('set-z-click', 'rec')">
       <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">{{this.textButton}}</h4>
-      <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()"
-        >mdi-close</v-icon
-      >
-      <v-icon class="moderndesign" style="float: right; color: #FFD700;" v-on:click="maximizeWindow()"
-        >mdi-window-maximize</v-icon
-      >
+      <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()">mdi-close</v-icon>
+      <v-icon class="moderndesign" style="float: right; color: #FFD700;" v-on:click="maximizeWindow()">mdi-window-maximize</v-icon>
     </v-sheet>
     <v-container class="containerstyle" style="border-radius: 3px;">
       <v-row class="py-0" align="center">
@@ -19,8 +15,7 @@
             sm="12"
             md="12"
             lg="12"
-            xl="12"
-          >
+            xl="12">
             <v-sheet class="py_0 containerstyle" :height="height - 120">
               <v-sheet :height="height - 120" id="boxLog">
                 <ul
@@ -29,8 +24,7 @@
                   height="100%"
                   name="log-text"
                   label="Logs"
-                  id="ul_send"
-                >
+                  id="ul_send">
                   <li
                     class="containerstyle"
                     :key="log.id"
