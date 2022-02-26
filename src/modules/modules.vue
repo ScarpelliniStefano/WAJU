@@ -9,6 +9,8 @@
         <use-db :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='USE DB'"/>
         <filter-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='FILTER'"/>
         <expand-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='EXPAND'"/>
+        <group-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='GROUP'"/>
+        <join-coll-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='JOIN OF COLLECTIONS'"/>
     </v-sheet>
 </template>
 
@@ -22,6 +24,8 @@ import subtractColl from "./subtractCollections.vue";
 import useDb from "./useDB.vue";
 import filterClause from "./filter.vue";
 import expandClause from "./expand.vue";
+import groupClause from "./group.vue";
+import joinCollClause from "./joinColl.vue";
 
 export default {
     data:()=>({
@@ -41,7 +45,9 @@ export default {
         subtractColl,
         useDb,
         filterClause,
-        expandClause
+        expandClause,
+        groupClause,
+        joinCollClause
     },
     watch:{
         select:function(newVal, oldVal){
@@ -73,6 +79,12 @@ export default {
                         break;
                     case "EXPAND COLLECTIONS":
                         this.valueString="EXPAND"
+                        break;
+                    case "GROUP COLLECTIONS":
+                        this.valueString="GROUP"
+                        break;
+                    case "JOIN OF COLLECTIONS":
+                        this.valueString="JOIN OF COLLECTIONS"
                         break;
                     default:
                         break;

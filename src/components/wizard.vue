@@ -50,7 +50,9 @@ export default {
                       'INTERSECT TWO COLLECTIONS',
                       'SUBTRACT TWO COLLECTIONS',
                       'FILTER ON FIELD',
-                      'EXPAND COLLECTIONS'
+                      'EXPAND COLLECTIONS',
+                      'GROUP COLLECTIONS',
+                      'JOIN OF COLLECTIONS'
                       ],
         valueString : ''
     }),

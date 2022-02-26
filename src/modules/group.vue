@@ -1,7 +1,8 @@
 <template>
   <v-sheet>
-            <v-row v-for="collect in collectionsWhere" :key="collect.index">
-                <where-case :mywhereIndex="collect.index" v-on:changeValue="changeText($event)"/>
+        
+            <v-row v-for="collect in collectionsPartitions" :key="collect.index">
+                <partition-clause :mypartitionIndex="collect.index" v-on:changeValue="changeText($event)"/>
             </v-row>
             <br>
             <v-btn
@@ -24,7 +25,7 @@
                     mdi-minus
                 </v-icon>
                 </v-btn>
-            <v-container
+        <v-container
                 class="px-0"
                 fluid
             >
@@ -34,7 +35,7 @@
                     label="keep others"
                     value="KEEP OTHERS"
                 ></v-radio>
-                 <v-radio
+                <v-radio
                     :key=2
                     label="drop others"
                     value="DROP OTHERS"
@@ -42,30 +43,29 @@
                  <v-radio
                     :key=3
                     label="none"
-                    value=""
+                    value="NONE"
                 ></v-radio>
                 </v-radio-group>
-            </v-container>
-
-            
+        </v-container>
   </v-sheet>
 </template>
 
 <script>
-import whereCase from "./whereCase.vue";
+import partitionClause from "./submodules/partitionClause.vue";
 export default {
+    
     props:{
         maincol: String
     },
     components:{
-        whereCase
+        partitionClause
     },
    data () {
       return {
-        valueString:'',
-        radioGroup:'',
+        valueString:';',
+        radioGroup:'NONE',
         valueArr:[''],
-        collectionsWhere:[
+        collectionsPartitions:[
             {
                 index:1,
                 stringa:"1##"
@@ -73,6 +73,7 @@ export default {
         ]
       }
     },
+    
     
      watch:{
         radioGroup:function(newVal,oldVal){
@@ -82,25 +83,22 @@ export default {
                         this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nKEEP OTHERS"));
                     else if(oldVal=="DROP OTHERS")
                         this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nDROP OTHERS"));
-                    else
-                        this.valueString=this.valueString.substring(0,this.valueString.indexOf("\n#$#"));
-                    this.valueString+="\nKEEP OTHERS #$#";
+                    this.valueString+="\nKEEP OTHERS ";
                 }else if(newVal=="DROP OTHERS"){
                     if(oldVal=="KEEP OTHERS")
                         this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nKEEP OTHERS"));
                     else if(oldVal=="DROP OTHERS")
                         this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nDROP OTHERS"));
-                    else
-                        this.valueString=this.valueString.substring(0,this.valueString.indexOf("\n#$#"));
-                    this.valueString+="\nDROP OTHERS #$#";
+                    
+                    this.valueString+="\nDROP OTHERS ";
                 }else{
                     if(oldVal=="KEEP OTHERS")
                         this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nKEEP OTHERS"));
                     else if(oldVal=="DROP OTHERS")
                         this.valueString=this.valueString.substring(0,this.valueString.indexOf("\nDROP OTHERS"));
                     else
-                        this.valueString=this.valueString.substring(0,this.valueString.indexOf("\n#$#"));
-                    this.valueString+="\n#$#";
+                        this.valueString=this.valueString.substring(0,this.valueString.indexOf(" ;"));
+                    this.valueString+="";
                 }
             }
             this.$emit('changeValue', this.valueString+" ;");
@@ -108,22 +106,22 @@ export default {
     },
     methods:{
         checkMinus(){
-            if(this.collectionsWhere.length>1){
-                this.collectionsWhere.pop()
+            if(this.collectionsPartitions.length>1){
+                this.collectionsPartitions.pop()
                 this.valueArr.pop()
             }
             this.counterText(this.valueArr.length);
         },
         setPlus(){
-            this.collectionsWhere.push({
-                index:this.collectionsWhere.length+1,
-                stringa:(this.collectionsWhere.length+1)+"##"
+            this.collectionsPartitions.push({
+                index:this.collectionsPartitions.length+1,
+                stringa:(this.collectionsPartitions.length+1)+"##"
             })
             this.valueArr.push('');
         },
         changeText(str){
             let id=Number(str.split("##")[0])-1;
-            this.collectionsWhere[id].stringa=str;
+            this.collectionsPartitions[id].stringa=str;
             this.valueArr[id]=str.split("##")[1];
             if(this.valueString.includes("\nKEEP OTHERS")){
                 this.valueString=" ";
@@ -131,38 +129,35 @@ export default {
                     this.valueString+=element;
                     this.valueString+=" "
                 });
-                this.valueString+="\nKEEP OTHERS #$#";
+                this.valueString+="\nKEEP OTHERS ";
             }else if(this.valueString.includes("\nDROP OTHERS")){
                 this.valueString=" ";
                 this.valueArr.forEach(element => {
                     this.valueString+=element;
                     this.valueString+=" "
                 });
-                this.valueString+="\nDROP OTHERS #$#";
-            }
-            else{
+                this.valueString+="\nDROP OTHERS ";
+            }else{
                 this.valueString=" ";
                 this.valueArr.forEach(element => {
                     this.valueString+=element;
                     this.valueString+=" "
                 });
-                this.valueString+="\n#$#";
             }
-            this.$emit('changeValue', this.valueString);
+            this.$emit('changeValue', this.valueString+" ;");
         },
         counterText(value){
             for(let i=0;i<this.valueArr.length;i++){ 
-                this.changeText(this.collectionsWhere[i].stringa);
+                this.changeText(this.collectionsPartitions[i].stringa);
             }
             return value.length>-1;
         }
-        
     },
     created(){
-        this.valueString="\n"+this.radioGroup+"#$#";
-        console.log(this.valueString)
+        this.valueString+="\n"+this.radioGroup+" ;";
         this.$emit('changeValue', this.valueString);
     }
+    
 }
 </script>
 

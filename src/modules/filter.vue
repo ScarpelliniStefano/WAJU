@@ -37,9 +37,9 @@ export default {
         changeValue(string){
             let valueCopy=this.valueString;
             if(valueCopy.includes("REMOVE DUPLICATES;")){
-                this.valueString=" "+string+" REMOVE DUPLICATES";
+                this.valueString=" "+string.split("#$#")[0]+" REMOVE DUPLICATES";
             }else{
-                this.valueString=" " + string;
+                this.valueString=" " + string.split("#$#")[0];
             }
             this.valueString+=";";
             this.$emit('changeValue', this.valueString);
