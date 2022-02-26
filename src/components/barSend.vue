@@ -33,7 +33,7 @@
                             </v-overlay>
                         </v-col>
                         <v-col>
-                            <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessage()">
+                            <v-btn :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessage()">
                                 <v-icon color="white">mdi-play</v-icon>
                                 <span style="color: white">Execute</span>
                             </v-btn>
@@ -57,7 +57,7 @@
                 <v-col :key="1.2" cols="2" :sm="2" :md="2" :lg="2" :xl="2">
                     <v-row align="center" class="text-center">
                         <v-col cols="12" :sm="12" :md="12" :lg="12" :xl="12">
-                            <v-btn large class="tooltip btnstyle" tile style="color: white;background-color: var(--border-color);" fab depressed elevation="5" raised @click="sendMessage()">
+                            <v-btn :loading="exec" large class="tooltip btnstyle" tile style="color: white;background-color: var(--border-color);" fab depressed elevation="5" raised @click="sendMessage()">
                                 <v-icon color="white" large>mdi-play</v-icon>
                                 <span class="tooltiptext">Execute</span>
                             </v-btn>
@@ -89,7 +89,7 @@
                         <v-row align="center">
                             <v-col>
                                 <v-sheet :height="(height-80)/2">
-                                    <v-btn :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessage()">
+                                    <v-btn :loading="exec" :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessage()">
                                         <v-icon color="white">mdi-play</v-icon>
                                         Execute
                                     </v-btn>
@@ -118,7 +118,8 @@ export default {
     data(){
         return{
             overlay: false,
-            textSend: ''
+            textSend: '',
+            exec: false
         }
     },
     props:{
@@ -126,7 +127,47 @@ export default {
         width: Number,
         browser: String,
         rapporto: Number,
-        bgcolor: String
+        bgcolor: String,
+        textRec: String
+    },
+    watch: {
+        textRec: function () {
+            var innerHTML = document.getElementById("div_send").querySelector("span").innerHTML;
+            var arrHTML = innerHTML.replace(/(?:\r\n|\r|\n)/g, '<br/>').split('<br/>');
+
+            var text = document.getElementById('div_send').textContent;
+            var arrTXT = text.replace(/(?:\r\n|\r|\n)/g, " ").split(" ");
+            document.getElementById("div_send").innerHTML = "";
+            var contTXT = 0;
+            arrHTML.forEach(element => {
+                var finish = false;
+                var check = true;
+                var contHTML = 0;
+                var arrSplitHTML = element.split(" ");
+                
+                while(!finish){
+                    console.log("Testo: " + arrTXT[contTXT]);
+                    console.log("Response: " + arrSplitHTML[contHTML]);
+                    if(arrTXT[contTXT].replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;")!= arrSplitHTML[contHTML]){
+                        check = false;
+                        finish = false;
+                    }
+                    
+                    contTXT++;
+                    contHTML++;
+                    if(contHTML === arrSplitHTML.length){
+                        finish = true;
+                    }
+                }
+                if(check === true){
+                    document.getElementById("div_send").innerHTML += `<div><mark style="color: white; background-color:limegreen">${element}</mark></div>`
+                } else {
+                    document.getElementById("div_send").innerHTML += `<div>${element}</div>`
+                }
+            });
+            this.exec = false
+            
+        }
     },
     mounted(){
     },
@@ -142,6 +183,7 @@ export default {
             this.textSend.slice(-1);
             
             this.$emit('click-send', this.textSend)
+            this.exec = true
         },
         getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array

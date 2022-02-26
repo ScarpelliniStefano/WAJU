@@ -261,12 +261,14 @@
         :browser="browserName"
         :width="send.width"
         :height="send.height"
+        :textRec="textToCommand"
         :disable="disBtn"
         v-on:click-send="sendMsg($event)"
         v-on:set-z-click="setZ"
         v-on:close-send="selSend = !selSend"
       ></bar-send>
     </VueDragResize>
+
     <VueDragResize
       :min-width="400"
       :min-height="400"
@@ -279,8 +281,7 @@
       @click="
         rec.posz = 0;
         send.posz = 0;
-        btm.posz = 2;
-      "
+        btm.posz = 2;"
       :x="btm.posx"
       :y="btm.posy"
       :onDrag="onDragStopBtm"
@@ -344,6 +345,7 @@
             :height="send.height"
             :width="send.width"
             :disable="disBtn"
+            :textRec="textToCommand"
             v-on:click-send="sendMsg($event)"
             v-on:set-z-click="setZ"
             v-on:close-send="selSend = !selSend"
@@ -516,6 +518,8 @@ export default {
         posz: 0,
         idBtmChange: 123,
       },
+
+      textToCommand: ""
     };
   },
   created() {
@@ -620,6 +624,7 @@ export default {
         const endP = text.indexOf("##END-PROCESS##");
         this.textRec = text.substring(startP, endP);
         if(text.substring(startP, endP).length>0){
+          this.textToCommand = text.substring(startP, endP);
           this.arrRec=this.fromTextRecToArrRec(text.substring(startP, endP));
         }
         this.disBtn = false;
