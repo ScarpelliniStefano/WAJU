@@ -4,7 +4,7 @@
             
             <v-container fluid >
             
-                <v-textarea label="collections clause" rows="2" auto-grow v-model="whereClause"></v-textarea>
+                <v-textarea :rules="[rules.required]" label="collections clause" rows="2" auto-grow v-model="whereClause"></v-textarea>
                 <v-checkbox color="var(--bg-color)" v-model="generateAct" label="generate actions?"></v-checkbox>
                 <v-textarea v-if="generateAct" label="generate actions" rows="1" v-model="generateAction"></v-textarea>
                 <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" label="Do you want checks on the fuzzy?"></v-checkbox>
@@ -112,6 +112,7 @@ export default {
                     ]
         ,
         rules: {
+            required: value => !!value || 'Required.',
             counter: value => this.counterText(value),
             counterA: value => this.counterTextA(value),
         }

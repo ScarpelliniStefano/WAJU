@@ -160,7 +160,6 @@ export default {
     },
     created(){
         this.valueString="\n"+this.radioGroup+"#$#";
-        console.log(this.valueString)
         this.$emit('changeValue', this.valueString);
     }
 }

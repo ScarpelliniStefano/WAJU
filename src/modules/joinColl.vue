@@ -2,17 +2,17 @@
   <v-sheet>
       <v-container fluid>
             <v-row v-for="collect in collections" :key="collect.index">
-                <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
-                <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`db ${collect.index}`" v-model="collect.db"/></v-col>
-                <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
+                <v-col><v-text-field :rules="[rules.required,rules.counterColl]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
+                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`db ${collect.index}`" v-model="collect.db"/></v-col>
+                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
             <v-checkbox color="var(--bg-color)" v-model="addFields" label="add fields?"></v-checkbox>
             <v-row  v-for="collect in fieldsAddColl" :key="collect.index">
                     <v-col>
-                    <v-textarea :rules="[rules.counter]" v-if="addFields" label="non fuzzy function" rows="1" v-model="collect.nonFuzzyF"></v-textarea>
+                    <v-textarea :rules="[rules.required,rules.counter]" v-if="addFields" label="non fuzzy function" rows="1" v-model="collect.nonFuzzyF"></v-textarea>
                     </v-col>
                     <v-col>
-                    <v-text-field :rules="[rules.counter]" v-if="addFields" label="fieldReference" v-model="collect.fieldRef"></v-text-field>
+                    <v-text-field :rules="[rules.required,rules.counter]" v-if="addFields" label="fieldReference" v-model="collect.fieldRef"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-container v-if="addFields">
@@ -39,8 +39,10 @@
                 </v-icon>
                 </v-btn>
                 </v-container>
-        
-            <case-clause v-on:changeValue="changeValue($event)"/>
+            <v-checkbox color="var(--bg-color)" v-model="setFuzzySets" label="set fuzzy sets?"></v-checkbox>
+            <v-textarea :rules="[rules.required]" v-if="setFuzzySets" label="fuzzy sets" rows="2" v-model="setFuzzySetsText"></v-textarea>
+            <v-checkbox color="var(--bg-color)" v-model="caseClauseSel" label="do you want to insert a case clause?"></v-checkbox>
+            <case-clause v-if="caseClauseSel" v-on:changeValue="changeValue($event)"/>
             <v-checkbox color="var(--bg-color)" v-model="removeDup" label="Remove duplicates?"></v-checkbox>
         </v-container>
   </v-sheet>
@@ -62,6 +64,9 @@ export default {
         valueArr:['',''],
         removeDup: false,
         addFields:false,
+        setFuzzySets:false,
+        setFuzzySetsText:'',
+        caseClauseSel:false,
         collections:[{
             index:1,
             collection: '',
@@ -74,11 +79,12 @@ export default {
             db: '',
             alias: ''
         }],
-        stringVett:['','','','',''],
+        stringVett:['','','',''],
         fieldsAddColl:[{index:"1f",nonFuzzyF:'',fieldRef:''}],
         rules: {
           required: value => !!value || 'Required.',
           counter: value => this.counterText(value),
+          counterColl: value => this.counterTextColl(value),
         }
       }
     },
@@ -87,19 +93,53 @@ export default {
      watch:{
         removeDup:function(newVal,oldVal){
             if(newVal!=oldVal){
-                if(newVal){
-                    this.valueString=this.valueString.substring(0,this.valueString.length-1)+" REMOVE DUPLICATES;"
-                }else{
-                    this.valueString=this.valueString.substring(0,this.valueString.indexOf(" REMOVE DUPLICATES;"))+";";
-                }
+                this.refreshArr(this.stringVett);
             }
-            this.$emit('changeValue', this.valueString);
+        },
+        caseClauseSel:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                this.refreshArr(this.stringVett);
+            }
+        },
+        addFields:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                this.refreshArr(this.stringVett);
+            }
+        },
+        setFuzzySets:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                this.refreshArr(this.stringVett);
+            }
+        },
+        setFuzzySetsText:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(newVal!=""){
+                    this.stringVett[2]=newVal;
+                }
+                this.refreshArr(this.stringVett);
+            }
         },
     },
     methods:{
+        refreshArr(vettString){
+            this.valueString="";
+            if(vettString[0]!="")
+                this.valueString+="\n "+vettString[0] + " ";
+            if(vettString[1]!="" && this.addFields)
+                this.valueString+="\nADD FIELDS "+vettString[1] + " ";
+            if(vettString[2]!="" && this.setFuzzySets)
+                this.valueString+="\nSET FUZZY SETS "+vettString[2] + " ";
+            if(vettString[3]!="" && this.caseClauseSel)
+                this.valueString+="\nCASE "+vettString[3] + " ";
+            if(this.removeDup)
+                this.valueString+="\nREMOVE DUPLICATES ";
+            this.valueString+=";";
+            this.$emit('changeValue', this.valueString);
+        },
         changeText(ind){
             let str= this.valueArr[ind];
             str="";
+            
             if(this.collections[ind].collection!="")
                 str=this.collections[ind].collection;
                 if(this.collections[ind].db!="")
@@ -107,50 +147,50 @@ export default {
                 if(this.collections[ind].alias)
                     str+=" AS "+this.collections[ind].alias;
             this.valueArr[ind]=str;
-            this.valueString=" ";
+            let valTempString=" ";
             this.valueArr.forEach(element => {
-                this.valueString+=element;
-                this.valueString+=", "
+                valTempString+=element;
+                valTempString+=", "
             });
-            this.valueString=this.valueString.substring(0,this.valueString.length-2);
-            this.valueString+=";"
-            this.$emit('changeValue', this.valueString);
+            valTempString=valTempString.substring(0,valTempString.length-2);
+            this.stringVett[0]=valTempString;
+            this.refreshArr(this.stringVett);
         },
         changeValue(string){
-            let valueCopy=this.valueString;
-            if(valueCopy.includes("REMOVE DUPLICATES;")){
-                this.valueString=" "+string.split("#$#")[0]+" REMOVE DUPLICATES";
-            }else{
-                this.valueString=" " + string.split("#$#")[0];
-            }
-            this.valueString+=";";
-            this.$emit('changeValue', this.valueString);
+            this.stringVett[3]=string.split("#$#")[0];
+            this.refreshArr(this.stringVett);
         },
         checkMinus(){
             if(this.fieldsAddColl.length>1){
                 this.fieldsAddColl.pop()
             }
-            this.changeFieldsAddColl();
+            this.counterText(this.fieldsAddColl);
         },
         setPlus(){
             this.fieldsAddColl.push({
-                index:this.fieldsAddColl.length+1,
+                index:(this.fieldsAddColl.length+1)+"f",
                 nonFuzzyF:'',
                 fieldRef:''
             })
-            this.changeFieldsAddColl();
         },
         counterText(value){
-            this.stringVett[2]='';
+            this.stringVett[1]='';
             this.fieldsAddColl.forEach(element=>{
-                this.stringVett[2]+=element.nonFuzzyF + " AS "+element.fieldRef+", ";
+                this.stringVett[1]+=element.nonFuzzyF + " AS "+element.fieldRef+", ";
             })
-            this.stringVett[2]=this.stringVett[2].substring(0,this.stringVett[2].length-2);
+            this.stringVett[1]=this.stringVett[1].substring(0,this.stringVett[1].length-2);
+            this.refreshArr(this.stringVett);
+            return value.length>-1;
+        },
+        counterTextColl(value){
+            for(let i=0;i<this.valueArr.length;i++){ 
+                this.changeText(i);
+            }
             return value.length>-1;
         }
     },
     created(){
-        this.valueString+="\n"+this.radioGroup+" ;";
+        this.valueString=" ;";
         this.$emit('changeValue', this.valueString);
     }
     
