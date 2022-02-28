@@ -11,6 +11,8 @@
         <expand-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='EXPAND'"/>
         <group-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='GROUP'"/>
         <join-coll-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='JOIN OF COLLECTIONS'"/>
+        <spatial-join-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='SPATIAL JOIN OF COLLECTIONS'"/>
+        <create-fuzzy-op :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='CREATE FUZZY OPERATOR'"/>
     </v-sheet>
 </template>
 
@@ -26,6 +28,8 @@ import filterClause from "./filter.vue";
 import expandClause from "./expand.vue";
 import groupClause from "./group.vue";
 import joinCollClause from "./joinColl.vue";
+import spatialJoinClause from "./spatialJoinColl.vue";
+import createFuzzyOp from "./createFuzzyOp.vue";
 
 export default {
     data:()=>({
@@ -47,7 +51,9 @@ export default {
         filterClause,
         expandClause,
         groupClause,
-        joinCollClause
+        joinCollClause,
+        spatialJoinClause,
+        createFuzzyOp
     },
     watch:{
         select:function(newVal, oldVal){
@@ -85,6 +91,12 @@ export default {
                         break;
                     case "JOIN OF COLLECTIONS":
                         this.valueString="JOIN OF COLLECTIONS"
+                        break;
+                    case "SPATIAL JOIN":
+                        this.valueString="SPATIAL JOIN OF COLLECTIONS"
+                        break;
+                    case "CREATE FUZZY OPERATOR":
+                        this.valueString="CREATE FUZZY OPERATOR"
                         break;
                     default:
                         break;

@@ -52,7 +52,9 @@ export default {
                       'FILTER ON FIELD',
                       'EXPAND COLLECTIONS',
                       'GROUP COLLECTIONS',
-                      'JOIN OF COLLECTIONS'
+                      'JOIN OF COLLECTIONS',
+                      'SPATIAL JOIN',
+                      'CREATE FUZZY OPERATOR'
                       ],
         valueString : ''
     }),
