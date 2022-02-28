@@ -87,7 +87,6 @@
 <script>
 import caseClause from "./submodules/caseClause.vue";
 export default {
-    
     props:{
         maincol: String
     },

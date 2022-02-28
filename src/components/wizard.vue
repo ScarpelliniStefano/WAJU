@@ -54,7 +54,8 @@ export default {
                       'GROUP COLLECTIONS',
                       'JOIN OF COLLECTIONS',
                       'SPATIAL JOIN',
-                      'CREATE FUZZY OPERATOR'
+                      'CREATE FUZZY OPERATOR',
+                      'TRAJECTORY MATCHING'
                       ],
         valueString : ''
     }),

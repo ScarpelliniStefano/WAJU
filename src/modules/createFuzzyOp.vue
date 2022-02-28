@@ -93,10 +93,9 @@ export default {
 
             stringVett:['','',''],
             rules: {
-            required: value => !!value || 'Required.',
-            counter: value => this.counterText(value),
-            counterParam: value => this.counterParam(value),
-            counterPoly: value => this.counterPoly(value),
+                required: value => !!value || 'Required.',
+                counterParam: value => this.counterParam(value),
+                counterPoly: value => this.counterPoly(value),
             }
       }
     },

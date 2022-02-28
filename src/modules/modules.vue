@@ -13,6 +13,7 @@
         <join-coll-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='JOIN OF COLLECTIONS'"/>
         <spatial-join-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='SPATIAL JOIN OF COLLECTIONS'"/>
         <create-fuzzy-op :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='CREATE FUZZY OPERATOR'"/>
+        <trajectory-match :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='TRAJECTORY MATCHING'"/>
     </v-sheet>
 </template>
 
@@ -30,6 +31,7 @@ import groupClause from "./group.vue";
 import joinCollClause from "./joinColl.vue";
 import spatialJoinClause from "./spatialJoinColl.vue";
 import createFuzzyOp from "./createFuzzyOp.vue";
+import trajectoryMatch from "./trajectoryMatch.vue";
 
 export default {
     data:()=>({
@@ -53,7 +55,8 @@ export default {
         groupClause,
         joinCollClause,
         spatialJoinClause,
-        createFuzzyOp
+        createFuzzyOp,
+        trajectoryMatch
     },
     watch:{
         select:function(newVal, oldVal){
@@ -97,6 +100,9 @@ export default {
                         break;
                     case "CREATE FUZZY OPERATOR":
                         this.valueString="CREATE FUZZY OPERATOR"
+                        break;
+                    case "TRAJECTORY MATCHING":
+                        this.valueString="TRAJECTORY MATCHING"
                         break;
                     default:
                         break;
