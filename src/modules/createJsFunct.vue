@@ -1,7 +1,7 @@
 <template>
   <v-sheet>
       <v-container fluid>
-            <v-text-field :rules="[rules.required]" label="ID fuzzy operator" v-model="idFuzzyOp"></v-text-field>
+            <v-text-field :rules="[rules.required]" label="ID javascript function" v-model="idJSFunct"></v-text-field>
             <v-row  v-for="collect in parameterList" :key="collect.index">
                 <v-col>
                 <v-text-field :rules="[rules.required,rules.counterParam]" label="id parameter" v-model="collect.idParam"></v-text-field>
@@ -36,41 +36,7 @@
             </v-container>
             <v-checkbox color="var(--bg-color)" v-model="precondition" label="do you want to set preconditions?"></v-checkbox>
             <v-textarea :rules="[rules.required]" v-if="precondition" label="precondition" rows="1" v-model="preconditionText"></v-textarea>
-            <v-textarea :rules="[rules.required]" label="expression to evaluate" rows="1" v-model="jfExpression"></v-textarea>
-            <v-row  v-for="collect in polylineList" :key="collect.index">
-                <v-col>
-                <v-text-field :rules="[rules.required,rules.counterPoly]" label="first number" v-model="collect.firstNum"></v-text-field>
-                </v-col>
-                <v-col>
-                <v-text-field :rules="[rules.required,rules.counterPoly]" label="second number" v-model="collect.secondNum"></v-text-field>
-                </v-col>
-            </v-row>
-            <v-container>
-            <v-btn
-                fab
-                dark 
-                small
-                @click="setPlusPolyline()" 
-                color="var(--bg-color)"
-            >
-                <v-icon dark>
-                    mdi-plus
-                </v-icon>
-            </v-btn>
-            <v-btn
-                fab
-                dark 
-                small
-                @click="checkMinusPolyline()" 
-                color="var(--bg-color)"
-            >
-            <v-icon dark>
-                mdi-minus
-            </v-icon>
-            </v-btn>
-            </v-container>
-
-
+            <v-textarea :rules="[rules.required]" label="body of function" rows="3" v-model="jsBody"></v-textarea>
         </v-container>
   </v-sheet>
 </template>
@@ -83,26 +49,23 @@ export default {
     },
    data () {
       return {
-            idFuzzyOp:'',
+            idJSFunct:'',
             parameterList:[{index:"1par",idParam:'',typeParam:''}],
             precondition:false,
             preconditionText:'',
-            jfExpression:'',
-            polylineList:[{index:"1pol",firstNum:'',secondNum:''}],
+            jsBody:'',
             valueString:';',
-
-            stringVett:['','',''],
+            stringVett:['',''],
             rules: {
                 required: value => !!value || 'Required.',
-                counterParam: value => this.counterParam(value),
-                counterPoly: value => this.counterPoly(value),
+                counterParam: value => this.counterParam(value)
             }
       }
     },
     
     
      watch:{
-        idFuzzyOp:function(newVal,oldVal){
+        idJSFunct:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
@@ -120,7 +83,7 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
-        jfExpression:function(newVal,oldVal){
+        jsBody:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
@@ -129,14 +92,12 @@ export default {
     methods:{
         refreshArr(vettString){
             this.valueString="";
-            this.valueString+=" "+this.idFuzzyOp + " ";
+            this.valueString+=" "+this.idJSFunct + " ";
             if(vettString[0]!="")
                 this.valueString+="\nPARAMETERS "+vettString[0] + " ";
             if(vettString[1]!="" && this.precondition)
                 this.valueString+="\nPRECONDITION "+vettString[1] + " ";
-            this.valueString+="\nEVALUATE "+this.jfExpression + " ";
-            if(vettString[2]!="")
-                this.valueString+="\nPOLYLINE \n["+vettString[2] + "] ";
+            this.valueString+="\nBODY \n"+this.jsBody + " \nEND BODY";
             this.valueString+=";";
             this.$emit('changeValue', this.valueString);
         },
@@ -153,19 +114,6 @@ export default {
                 typeParam:''
             })
         },
-        checkMinusPolyline(){
-            if(this.polylineList.length>1){
-                this.polylineList.pop()
-            }
-            this.counterPoly(this.polylineList);
-        },
-        setPlusPolyline(){
-            this.polylineList.push({
-                index:(this.polylineList.length+1)+"pol",
-                firstNum:'',
-                secondNum:''
-            })
-        },
         counterParam(value){
             this.stringVett[0]='';
             this.parameterList.forEach(element=>{
@@ -174,16 +122,7 @@ export default {
             this.stringVett[0]=this.stringVett[0].substring(0,this.stringVett[0].length-2);
             this.refreshArr(this.stringVett);
             return value.length>-1;
-        },
-        counterPoly(value){
-            this.stringVett[2]='';
-            this.polylineList.forEach(element=>{
-                this.stringVett[2]+="("+element.firstNum + ","+element.secondNum+"),\n";
-            })
-            this.stringVett[2]=this.stringVett[2].substring(0,this.stringVett[2].length-2);
-            this.refreshArr(this.stringVett);
-            return value.length>-1;
-        },
+        }
     },
     created(){
         this.valueString=" ;";

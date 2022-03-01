@@ -55,6 +55,7 @@ export default {
                       'JOIN OF COLLECTIONS',
                       'SPATIAL JOIN',
                       'CREATE FUZZY OPERATOR',
+                      'CREATE JAVASCRIPT FUNCTION',
                       'TRAJECTORY MATCHING'
                       ],
         valueString : ''
