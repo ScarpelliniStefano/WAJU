@@ -125,17 +125,17 @@ export default {
         },
         changeTextTrajectory(str){
             let id=Number(str.split("##")[0].substring(0,str.split("##")[0].length-4))-1;
-            
             this.collectionsPartitions[id].stringa=str;
             this.valueArrTra[id]=str.split("##")[1];
-            
+            this.valueArrTra[id]=this.valueArrTra[id].substring(0,this.valueArrTra[id].length-1);
             this.counterTextTrajectory(str.length)
         },
         counterTextTrajectory(value){
+            this.stringVett[1]=''
             this.valueArrTra.forEach(element=>{
                 this.stringVett[1]+=element+"\n";
             })
-            console.log(this.stringVett)
+            this.stringVett[1]=this.stringVett[1].substring(0,this.stringVett[1].length-1)
             this.refreshArr(this.stringVett);
             return value.length>-1;
         },
@@ -144,7 +144,7 @@ export default {
             if(vettString[0]!="")
                 this.valueString+="\n"+vettString[0] + " ";
             if(vettString[1]!="")
-                this.valueString+="\n"+vettString[1] + " ";
+                this.valueString+=vettString[1] + " ";
             if(this.radioGroup!="NONE")
                 this.valueString+="\n"+this.radioGroup + " ";
             this.valueString+=";";

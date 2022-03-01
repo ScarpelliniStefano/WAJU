@@ -1,31 +1,29 @@
 <template>
             
             <v-container fluid >
-                <!--<v-textarea :rules="[rules.required]" label="conditions" rows="2" auto-grow v-model="orCond"></v-textarea>
-                <v-row v-for="collect in collectionsPartMatch" :key="collect.index">
-                    <partition-matching :mypartmatchIndex="collect.index" v-on:changeValue="changeTextMatch($event)"/>
+                <v-row>
+                    <v-col>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" label="field of matching" v-model="fieldMatch"></v-text-field>
+                    </v-col>
+                    <v-col>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" label="field of wrt" v-model="fieldWrt"></v-text-field>
+                    </v-col>
                 </v-row>
-                <br>
-                <v-btn
-                        fab
-                        dark 
-                        @click="setPlusPartMatch()" 
-                        color="var(--bg-color)"
-                    >
-                        <v-icon dark>
-                            mdi-plus
-                        </v-icon>
-                    </v-btn>
-                    <v-btn
-                        fab
-                        dark 
-                        @click="checkMinusPartMatch()" 
-                        color="var(--bg-color)"
-                    >
-                    <v-icon dark>
-                        mdi-minus
-                    </v-icon>
-                    </v-btn>-->
+                <v-row>
+                    <v-col>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" label="id of threshold" v-model="idThreshold"></v-text-field>
+                    </v-col>
+                    <v-col>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" label="numeric of threshold" v-model="numThreshold"></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-checkbox color="var(--bg-color)" v-model="whereMatching" label="do you want to set where conditions of matching?"></v-checkbox>
+                <v-textarea :rules="[rules.required,rules.counterFields]" v-if="whereMatching" label="where conditions" rows="1" v-model="whereMatchingText"></v-textarea>
+                <v-text-field :rules="[rules.required,rules.counterFields]" label="field of destination" v-model="fieldInto"></v-text-field>
+                <v-checkbox color="var(--bg-color)" v-model="addingToInput" label="do you want to add field to input?"></v-checkbox>
+                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="addingToInput" label="field to add to input" v-model="addingToInputText"></v-text-field>
+                <v-checkbox color="var(--bg-color)" v-model="minSimilarity" label="do you want to set min similarity?"></v-checkbox>
+                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="minSimilarity" label="min similarity numeric" v-model="minSimilarityText"></v-text-field>
             </v-container>
 </template>
 
@@ -38,39 +36,71 @@ export default {
     
    data () {
       return {
-        valueString:'',
-        orCond:'',
-        stringVett:['',''],
+        valueStringMatching:'',
+        fieldMatch:'',
+        fieldWrt:'',
+        idThreshold:'',
+        numThreshold:'',
+        whereMatching:false,
+        whereMatchingText:'',
+        fieldInto:'',
+        addingToInput:false,
+        addingToInputText:'',
+        minSimilarity:false,
+        minSimilarityText:'',
         rules: {
-          required: value => !!value || 'Required.'
+          required: value => !!value || 'Required.',
+          counterFields: value => value!="" ? this.refreshStringMatch() : false,
         }
       }
     },
     
      watch:{
         
-        orCond:function(newVal,oldVal){
+        whereMatching:function(newVal,oldVal){
             if(newVal!=oldVal){
-                this.stringVett[0]=newVal;
+                this.refreshStringMatch();
             }
-            this.refreshArr(this.stringVett);
+        },
+        addingToInput:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                this.refreshStringMatch();
+            }
+        },
+        minSimilarity:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                this.refreshStringMatch();
+            }
         },
 
     },
     methods:{
-        refreshArr(vettString){
-            this.valueString=this.mypartmatchIndex+"##\nMATCHING ";
-            if(vettString[0]!="")
-                this.valueString+="\n "+vettString[0] + " ";
-            if(vettString[1]!="")
-                this.valueString+="\n "+vettString[1] + " ";
-            this.$emit('changeValueMatch', this.valueString);
+        refreshStringMatch(){
+            this.valueStringMatching=this.mypartmatchIndex+"##\nMATCHING ";
+            if(this.fieldMatch!="")
+                this.valueStringMatching+=this.fieldMatch + " ";
+            if(this.fieldWrt!="")
+                this.valueStringMatching+="WRT "+ this.fieldWrt + " \n";
+            if(this.idThreshold!="")
+                this.valueStringMatching+="THRESHOLD ("+ this.idThreshold + ") ";
+            if(this.numThreshold!="")
+                this.valueStringMatching+=""+ this.numThreshold + " \n";
+            if(this.whereMatchingText!="" && this.whereMatching)
+                this.valueStringMatching+="WHERE "+ this.whereMatchingText+ " \n";
+            if(this.fieldInto!="")
+                this.valueStringMatching+="INTO "+ this.fieldInto+ " \n";
+            if(this.addingToInputText!="" && this.addingToInput)
+                this.valueStringMatching+="ADDING "+ this.addingToInputText+ " TO INPUT\n";
+            if(this.minSimilarityText!="" && this.minSimilarity)
+                this.valueStringMatching+="MIN SIMILARITY "+ this.minSimilarityText+ " \n";
+            this.valueStringMatching=this.valueStringMatching.substring(0,this.valueStringMatching.length-1)
+            this.$emit('changeValueMatch', this.valueStringMatching);
+            return true;
         }
     },
     created(){
-        
-        this.valueString=this.mypartmatchIndex+"##\nMATCHING ";
-        this.$emit('changeValueMatch', this.valueString);
+        this.valString=this.mypartmatchIndex+"##\nMATCHING ";
+        this.$emit('changeValueMatch', this.valString);
     }
 }
 </script>

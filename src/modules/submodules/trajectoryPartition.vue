@@ -9,6 +9,7 @@
                 <v-btn
                         fab
                         dark 
+                        small
                         @click="setPlusPartMatch()" 
                         color="var(--bg-color)"
                     >
@@ -19,6 +20,7 @@
                     <v-btn
                         fab
                         dark 
+                        small
                         @click="checkMinusPartMatch()" 
                         color="var(--bg-color)"
                     >
@@ -74,7 +76,8 @@ export default {
             if(vettStringPart[0]!="")
                 this.valueStringPart+="\n"+vettStringPart[0] + " ";
             if(vettStringPart[1]!="")
-                this.valueStringPart+="\n"+vettStringPart[1] + " ";
+                this.valueStringPart+=vettStringPart[1] + " ";
+            
             this.$emit('changeValueTrajectory', this.valueStringPart);
         },
         checkMinusPartMatch(){
@@ -98,8 +101,9 @@ export default {
             this.counterTextMatch(this.valueArrPartMatch.length);
         },
         counterTextMatch(value){
+            this.stringVettPart[1]=''
             this.valueArrPartMatch.forEach(element=>{
-                this.stringVettPart[1]+=element+"\n";
+                this.stringVettPart[1]+=element;
             })
             this.refreshArrPart(this.stringVettPart);
             return value.length>-1;
