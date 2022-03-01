@@ -5,9 +5,6 @@
       <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()"
         >mdi-close</v-icon
       >
-      <v-icon class="moderndesign" style="float: right; color: #FFD700;" v-on:click="maximizeWindow()"
-        >mdi-window-maximize</v-icon
-      >
     </v-sheet>
     <v-container
       :class="bgcolor"
@@ -25,7 +22,7 @@
           :lg="12"
           :xl="12"
         >
-        <v-sheet :height="height-136">    
+        <v-sheet :height="height-136" style="overflow: auto">   
         <v-data-table 
             class="tastyle pt-0 mt-0"
             no-resize
@@ -107,7 +104,7 @@
           :lg="10"
           :xl="10"
         >
-          <v-sheet :height="height-32">
+          <v-sheet :height="height-32" style="overflow: auto">
               <v-data-table 
             class="tastyle pt-0 mt-0"
             no-resize
@@ -190,7 +187,7 @@
           :xl="11"
         >
 
-        <v-sheet :height="height-32">
+        <v-sheet :height="height-32" style="overflow: auto">
             <v-data-table 
             class="tastyle pt-0 mt-0"
             no-resize
@@ -306,9 +303,6 @@ export default {
     },
     closeWindow() {
       this.$emit("close-rec");
-    },
-    maximizeWindow() {
-      this.$emit("maximize-rec");
     },
     Enabled() {
       this.isDisabled = true;

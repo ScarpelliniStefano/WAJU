@@ -1,6 +1,6 @@
 <template>
   <v-sheet elevation="17" id="recDiv" class="divstyle">
-    <v-sheet style="border-bottom: 3px solid #dddddd;" elevation="14" class="topbar" @click="$emit('set-z-click', 'rec')">
+    <v-sheet style="border-bottom: 3px solid #dddddd;" elevation="14" class="topbar" @click="$emit('set-z-click', 'btm')">
       <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">{{this.textButton}}</h4>
       <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()"
         >mdi-close</v-icon
@@ -9,9 +9,9 @@
         >mdi-window-maximize</v-icon
       >
     </v-sheet>
-    <v-container class="containerstyle" style="border-radius: 3px;">
+    <v-container class="ma-0 containerstyle" style="border-radius: 3px;width: 100%;max-width: 9999px;">
       <v-row class="py-0" align="center">
-        <v-col class="py-0" cols="12" sm="10" md="10" lg="12" xl="12">
+        <v-col class="pa-0" cols="12" sm="10" md="10" lg="12" xl="12">
           <v-col
             class="py-1"
             v-if="log"
@@ -21,8 +21,7 @@
             lg="12"
             xl="12"
           >
-            <v-sheet class="py_0 containerstyle" :height="height - 120">
-              <v-sheet :height="height - 120" id="boxLog">
+            <v-sheet class="my_0 containerstyle" :height="height - 136" id="boxLog">
                 <ul
                   readonly
                   style="font-size: 16px;"
@@ -48,7 +47,6 @@
                   </li>
                 </ul>
               </v-sheet>
-            </v-sheet>
           </v-col>
 
           <v-col
@@ -93,7 +91,7 @@
 
           <v-sheet v-if="ispectstate">
             <v-select
-              class="py-4"
+              class="pa-4"
               v-model="selectedItem"
               :items="bottomText.listIRCol"
               label="IR collections" solo></v-select>
@@ -322,9 +320,6 @@ export default {
     closeWindow(){
       this.$emit('close-btm');
     },
-    maximizeWindow(){
-      this.$emit('maximize-btm');
-    },
     async loadFile() {
       var file = document.getElementById('file_config').files[0]
       if (file) {
@@ -467,6 +462,10 @@ export default {
   padding: 1px;
   background: transparent;
   width: 100%; /* Auto spacing */
+}
+
+#ul_send > li > p{
+  margin-bottom: 0px;
 }
 
 @media screen and (max-width: 1263px) and (min-width: 600px) {

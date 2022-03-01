@@ -230,7 +230,6 @@
         v-on:click-back-index="sendBck()"
         v-on:set-z-click="setZ"
         v-on:close-rec="selRec = !selRec"
-        v-on:maximize-rec="maximizeRec"
       ></bar-rec>
     </VueDragResize>
     <VueDragResize
@@ -328,7 +327,6 @@
             v-on:click-back-index="sendBck()"
             v-on:set-z-click="setZ"
             v-on:close-rec="selRec = !selRec"
-            v-on:maximize-rec="maximizeRec"
           ></bar-rec>
         </v-col>
         <v-col
@@ -824,12 +822,6 @@ export default {
       } else {
         this.rec.posy = y;
       }
-    },
-    maximizeRec() {
-      this.rec.posx = 4;
-      this.rec.posy = 60;
-      this.rec.width = window.innerWidth - 24;
-      this.rec.height = window.outerHeight - 50 - 85 - 30;
     },
 
     onResizeStopSend(handle, x, y, width, height) {

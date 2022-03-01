@@ -1,6 +1,6 @@
 <template>
     <v-sheet elevation="17" id="recDiv" class="divstyle">
-        <v-sheet style="border-bottom: 1px solid #dddddd;background-color: var(--bg-div-color); border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'rec')">
+        <v-sheet style="border-bottom: 1px solid #dddddd;background-color: var(--bg-div-color); border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'send')">
         <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">Command</h4>
         <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()"
             >mdi-close</v-icon>
@@ -33,7 +33,7 @@
                             </v-overlay>
                         </v-col>
                         <v-col>
-                            <v-btn :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessage()">
+                            <v-btn :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessageArr()">
                                 <v-icon color="white">mdi-play</v-icon>
                                 <span style="color: white">Execute</span>
                             </v-btn>
@@ -57,7 +57,7 @@
                 <v-col :key="1.2" cols="2" :sm="2" :md="2" :lg="2" :xl="2">
                     <v-row align="center" class="text-center">
                         <v-col cols="12" :sm="12" :md="12" :lg="12" :xl="12">
-                            <v-btn :loading="exec" large class="tooltip btnstyle" tile style="color: white;background-color: var(--border-color);" fab depressed elevation="5" raised @click="sendMessage()">
+                            <v-btn :loading="exec" large class="tooltip btnstyle" tile style="color: white;background-color: var(--border-color);" fab depressed elevation="5" raised @click="sendMessageArr()">
                                 <v-icon color="white" large>mdi-play</v-icon>
                                 <span class="tooltiptext">Execute</span>
                             </v-btn>
@@ -89,7 +89,7 @@
                         <v-row align="center">
                             <v-col>
                                 <v-sheet :height="(height-80)/2">
-                                    <v-btn :loading="exec" :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessage()">
+                                    <v-btn :loading="exec" :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessageArr()">
                                         <v-icon color="white">mdi-play</v-icon>
                                         Execute
                                     </v-btn>
@@ -131,47 +131,45 @@ export default {
         textRec: String
     },
     watch: {
-        textRec: function () {
-            var innerHTML = document.getElementById("div_send").querySelector("span").innerHTML;
-            var arrHTML = innerHTML.replace(/(?:\r\n|\r|\n)/g, '<br/>').split('<br/>');
-
-            var text = document.getElementById('div_send').textContent;
-            var arrTXT = text.replace(/(?:\r\n|\r|\n)/g, " ").split(" ");
-            document.getElementById("div_send").innerHTML = "";
-            var contTXT = 0;
-            arrHTML.forEach(element => {
-                var finish = false;
-                var check = true;
-                var contHTML = 0;
-                var arrSplitHTML = element.split(" ");
-                
-                while(!finish){
-                    console.log("Testo: " + arrTXT[contTXT]);
-                    console.log("Response: " + arrSplitHTML[contHTML]);
-                    if(arrTXT[contTXT].replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;")!= arrSplitHTML[contHTML]){
-                        check = false;
-                        finish = false;
-                    }
-                    
-                    contTXT++;
-                    contHTML++;
-                    if(contHTML === arrSplitHTML.length){
-                        finish = true;
-                    }
-                }
-                if(check === true){
-                    document.getElementById("div_send").innerHTML += `<div><mark style="color: white; background-color:limegreen">${element}</mark></div>`
-                } else {
-                    document.getElementById("div_send").innerHTML += `<div>${element}</div>`
-                }
-            });
-            this.exec = false
-            
+        textRec: function (newVal)
+        {
+            this.highlight(newVal)
         }
     },
     mounted(){
     },
     methods:{
+        highlight(newVal){
+            
+            this.exec = true
+            //Parole della risposta assegnata 
+            var arrResponse = newVal.replace(/(?:\r\n|\r|\n)/g, " ").split(" ");
+            //Righe del div contenteditable
+            var innerHTML = document.getElementById("div_send").innerHTML;
+            innerHTML = innerHTML.replace(/(<([^>]+)>)/ig, '</br>').replace(/(?:\r\n|\r|\n)/g, '</br>').replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<")
+            var arrHTML = innerHTML.split('</br>').filter(element => element.length > 0 & !element.startsWith("<", 0));
+            document.getElementById("div_send").innerHTML = ""
+            var contResponse = 0
+            arrHTML.forEach(element => {
+                var arrWORDSofHTML = element.split(" ")
+                var check = true;
+                var contHTML = 0;
+                while(contHTML < arrWORDSofHTML.length && check === false)
+                {
+                    if(arrWORDSofHTML[contHTML] !== arrResponse[contResponse])
+                    {
+                        check = false;
+                    }
+                    contHTML++;
+                    contResponse++;
+                }
+                if (check === false) {
+                    document.getElementById("div_send").innerHTML += `<div>${element}</div>`
+                }
+            })
+            this.exec = false
+        },
+        /*
         sendMessage(){
             this.textSend = "";
             var x = document.getElementById("div_send").querySelectorAll("div")
@@ -184,6 +182,22 @@ export default {
             
             this.$emit('click-send', this.textSend)
             this.exec = true
+        },
+        */
+        sendMessageArr(){
+            this.textSend = "";
+
+            var innerHTML = document.getElementById("div_send").innerHTML;
+            
+            innerHTML = innerHTML.replace(/(<([^>]+)>)/ig, '</br>').replace(/(?:\r\n|\r|\n)/g, '</br>').replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&nbsp;/g, " ")
+            var arrHTML = innerHTML.split('</br>').filter(element => element.length > 0 & !element.startsWith("<", 0));
+            console.log(arrHTML)
+            arrHTML.forEach(element => {
+                this.textSend += element + "\n";
+            })
+
+            this.textSend += "\n\r";
+            this.$emit('click-send', this.textSend)
         },
         getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array

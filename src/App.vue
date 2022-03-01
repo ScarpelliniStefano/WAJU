@@ -42,8 +42,8 @@ export default {
   }
   #body{
     background-color: white;
-  }
-  #body{
+    min-width: 700px;
+    min-height: 500px;
     display: flex;
     flex-flow: column;
     height: 100%;
