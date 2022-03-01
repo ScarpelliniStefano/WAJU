@@ -1,8 +1,8 @@
 <template>
             
-            <v-container fluid >
+            <v-container fluid style="border-style: outset;">
                 <v-textarea :rules="[rules.required]" label="conditions" rows="2" auto-grow v-model="orCond"></v-textarea>
-                <v-container fluid>
+                <v-container fluid style="border-style: outset;">
                 <v-row v-for="collect in fieldRefSource" :key="collect.index">
                     <v-text-field :rules="[rules.required,rules.counterSource]" label="fields of source fields" v-model="collect.sourceFields"></v-text-field>
                 </v-row>
@@ -33,7 +33,7 @@
                 <v-text-field :rules="[rules.required]" label="fields of destination array" v-model="destFields"></v-text-field>
                 <v-checkbox color="var(--bg-color)" v-model="dropGroup" label="drop grouping fields?"></v-checkbox>
                 <v-checkbox color="var(--bg-color)" v-model="orderSelection" label="order fields?"></v-checkbox>
-                <v-container v-if="orderSelection">
+                <v-container v-if="orderSelection" style="border-style: outset;">
                     <v-row  v-for="collect in fieldRefOrd" :key="collect.index" >
                         <v-col>
                         <v-text-field :rules="[rules.required,rules.counterOrdT]" label="Order fields" v-model="collect.fieldsOrder"></v-text-field>

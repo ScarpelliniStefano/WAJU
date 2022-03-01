@@ -2,13 +2,14 @@
   <!--<v-sheet>
             {{this.mywhereIndex}}-->
             
-            <v-container fluid >
+            <v-container fluid style="border-style: outset;">
             
                 <v-textarea :rules="[rules.required]" label="collections clause" rows="2" auto-grow v-model="whereClause"></v-textarea>
                 <v-checkbox color="var(--bg-color)" v-model="generateAct" label="generate actions?"></v-checkbox>
                 <v-textarea v-if="generateAct" label="generate actions" rows="1" v-model="generateAction"></v-textarea>
                 <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" label="Do you want checks on the fuzzy?"></v-checkbox>
-                <v-row  v-for="collect in collectionsFuzzy" :key="collect.index">
+                <v-container style="border-style: inset;" v-if="fuzzyCheck">
+                <v-row v-for="collect in collectionsFuzzy" :key="collect.index">
                     <v-col>
                     <v-text-field :rules="[rules.counter]" v-if="fuzzyCheck" label="ID" v-model="collect.idFuzzyInstr"></v-text-field>
                     </v-col>
@@ -16,7 +17,7 @@
                     <v-textarea :rules="[rules.counter]" v-if="fuzzyCheck" label="fuzzy check condition" rows="1" v-model="collect.fuzzyInstr"></v-textarea>
                     </v-col>
                 </v-row>
-                <v-container v-if="fuzzyCheck">
+                <v-container>
                 <v-btn
                     fab
                     dark 
@@ -40,18 +41,18 @@
                 </v-icon>
                 </v-btn>
                 </v-container>
+                </v-container>
                 <v-checkbox color="var(--bg-color)" v-model="alphaCut" label="Do you want alpha cut?"></v-checkbox>
-                <v-row  v-for="collect in collectionsAlpha" :key="collect.index">
+                <v-container style="border-style: inset;" v-if="alphaCut">
+                <v-row v-for="collect in collectionsAlpha" :key="collect.index">
                     <v-col>
                     <v-text-field :rules="[rules.counterA]" v-if="alphaCut" label="numeric expression" v-model="collect.numericIstr"></v-text-field>
                     </v-col>
                     <v-col>
                     <v-text-field :rules="[rules.counterA]" v-if="alphaCut" label="ID" v-model="collect.idAlpha"></v-text-field>
                     </v-col>
-                    
-                    
                 </v-row>
-                <v-container v-if="alphaCut">
+                <v-container>
                 <v-btn
                     fab
                     dark 
@@ -74,6 +75,7 @@
                     mdi-minus
                 </v-icon>
                 </v-btn>
+                </v-container>
                 </v-container>
                 <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" label="Do you want to keep or drop fuzzy sets?"></v-checkbox>
                 <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValueKDFS="changeTextKeepDropFuzzy($event)"/>

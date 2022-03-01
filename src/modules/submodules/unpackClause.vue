@@ -2,7 +2,7 @@
   <!--<v-sheet>
             {{this.mywhereIndex}}-->
             
-            <v-container fluid >
+            <v-container fluid style="border-style: outset;">
             
                 <v-textarea :rules="[rules.required]" label="conditions" rows="2" auto-grow v-model="orCond"></v-textarea>
                 <v-text-field :rules="[rules.required]" label="fields of source array" v-model="sourceFields"></v-text-field>

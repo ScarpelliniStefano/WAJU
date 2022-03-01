@@ -2,6 +2,8 @@
             
             <v-container fluid >
                 <v-textarea :rules="[rules.required]" label="conditions" rows="2" auto-grow v-model="orCondPart"></v-textarea>
+                <br>
+                <v-container style="border-style: outset;">
                 <v-row v-for="collect in collectionsPartMatch" :key="collect.index">
                     <partition-matching :mypartmatchIndex="collect.index" v-on:changeValueMatch="changeTextMatch($event)"/>
                 </v-row>
@@ -28,6 +30,7 @@
                         mdi-minus
                     </v-icon>
                     </v-btn>
+                </v-container>
             </v-container>
 </template>
 

@@ -7,6 +7,7 @@
                 <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
             <v-checkbox color="var(--bg-color)" v-model="addFields" label="add fields?"></v-checkbox>
+            <v-container style="border-style: outset;" v-if="addFields">
             <v-row  v-for="collect in fieldsAddColl" :key="collect.index">
                     <v-col>
                     <v-textarea :rules="[rules.required,rules.counter]" v-if="addFields" label="non fuzzy function" rows="1" v-model="collect.nonFuzzyF"></v-textarea>
@@ -15,7 +16,7 @@
                     <v-text-field :rules="[rules.required,rules.counter]" v-if="addFields" label="fieldReference" v-model="collect.fieldRef"></v-text-field>
                     </v-col>
                 </v-row>
-                <v-container v-if="addFields">
+                <v-container >
                 <v-btn
                     fab
                     dark 
@@ -39,6 +40,7 @@
                 </v-icon>
                 </v-btn>
                 </v-container>
+            </v-container>
             <v-checkbox color="var(--bg-color)" v-model="setFuzzySets" label="set fuzzy sets?"></v-checkbox>
             <v-textarea :rules="[rules.required]" v-if="setFuzzySets" label="fuzzy sets" rows="2" v-model="setFuzzySetsText"></v-textarea>
             <v-checkbox color="var(--bg-color)" v-model="caseClauseSel" label="do you want to insert a case clause?"></v-checkbox>

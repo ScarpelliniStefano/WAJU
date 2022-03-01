@@ -1,7 +1,8 @@
 <template>
   <v-sheet>
       <v-container fluid>
-            <v-text-field :rules="[rules.required]" label="ID fuzzy operator" v-model="idFuzzyOp"></v-text-field>
+            <v-text-field :rules="[rules.required]" label="ID fuzzy operator" v-model="idFuzzyOp"></v-text-field><br>
+            <v-container style="border-style: outset;">
             <v-row  v-for="collect in parameterList" :key="collect.index">
                 <v-col>
                 <v-text-field :rules="[rules.required,rules.counterParam]" label="id parameter" v-model="collect.idParam"></v-text-field>
@@ -34,9 +35,13 @@
             </v-icon>
             </v-btn>
             </v-container>
+            </v-container>
             <v-checkbox color="var(--bg-color)" v-model="precondition" label="do you want to set preconditions?"></v-checkbox>
             <v-textarea :rules="[rules.required]" v-if="precondition" label="precondition" rows="1" v-model="preconditionText"></v-textarea>
             <v-textarea :rules="[rules.required]" label="expression to evaluate" rows="1" v-model="jfExpression"></v-textarea>
+            <br>
+            <v-container style="border-style: outset;">
+            <p align="left">Polyline:</p>
             <v-row  v-for="collect in polylineList" :key="collect.index">
                 <v-col>
                 <v-text-field :rules="[rules.required,rules.counterPoly]" label="first number" v-model="collect.firstNum"></v-text-field>
@@ -69,7 +74,7 @@
             </v-icon>
             </v-btn>
             </v-container>
-
+            </v-container>
 
         </v-container>
   </v-sheet>

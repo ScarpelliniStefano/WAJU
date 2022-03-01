@@ -2,6 +2,7 @@
   <v-sheet>
       <v-container fluid>
             <v-text-field :rules="[rules.required]" label="ID javascript function" v-model="idJSFunct"></v-text-field>
+            <v-container style="border-style: outset;">
             <v-row  v-for="collect in parameterList" :key="collect.index">
                 <v-col>
                 <v-text-field :rules="[rules.required,rules.counterParam]" label="id parameter" v-model="collect.idParam"></v-text-field>
@@ -33,6 +34,7 @@
                 mdi-minus
             </v-icon>
             </v-btn>
+            </v-container>
             </v-container>
             <v-checkbox color="var(--bg-color)" v-model="precondition" label="do you want to set preconditions?"></v-checkbox>
             <v-textarea :rules="[rules.required]" v-if="precondition" label="precondition" rows="1" v-model="preconditionText"></v-textarea>

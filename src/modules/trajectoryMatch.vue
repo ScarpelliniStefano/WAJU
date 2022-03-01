@@ -6,6 +6,8 @@
                 <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`db ${collect.index}`" v-model="collect.db"/></v-col>
                 <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
+            <br>
+            <v-container style="border-style: outset;">
             <v-row v-for="collect in collectionsPartitions" :key="collect.index">
                 <trajectory-partition :mytrajectoryPartIndex="collect.index" v-on:changeValueTrajectory="changeTextTrajectory($event)"/>
             </v-row>
@@ -30,6 +32,7 @@
                     mdi-minus
                 </v-icon>
                 </v-btn>
+            </v-container>
             <v-container
                 class="px-0"
                 fluid
