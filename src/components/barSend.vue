@@ -20,7 +20,7 @@
                 <v-col :key="1.2" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
                     <v-row align="center" class="text-center">
                         <v-col>
-                            <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="overlay = !overlay;">
+                            <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="openWizard()">
                                 <v-icon color="white">mdi-auto-fix</v-icon>
                                 <span style="color: white">Wizard</span>
                             </v-btn>
@@ -122,6 +122,7 @@ export default {
     },
     props:{
         height: Number,
+        randomNumberString:String,
         width: Number,
         browser: String,
         rapporto: Number,
@@ -166,6 +167,13 @@ export default {
                 }
             })
             this.exec = false
+        },
+        openWizard(){
+            let routeData = this.$router.resolve({name: 'Wizard',query:{id:this.randomNumberString}});
+            console.log(routeData);
+            setTimeout(function() {
+                window.open(routeData.href, '_blank');
+            },50); 
         },
         /*
         sendMessage(){
@@ -236,15 +244,22 @@ export default {
         border-radius: 4px;
     }
 
-    @media screen and (min-width: 1264px) and (max-width: 1903px){
+    @media screen and (max-width: 1263px){
         #div_send{
             font-size: 14px;
         }
     }
 
+    @media screen and (min-width: 1264px) and (max-width: 1903px){
+        #div_send{
+            font-size: 16px;
+        }
+    }
+  
+
     @media screen and (min-width: 1904px){
         #div_send{
-            font-size: 24px;
+            font-size: 18px;
         }
     }
     

@@ -10,7 +10,6 @@
       <v-row class="py-0" align="center">
         <v-col class="pa-0" cols="12" sm="10" md="10" lg="12" xl="12">
           <v-col
-            class="py-1"
             v-if="log"
             cols="12"
             sm="12"

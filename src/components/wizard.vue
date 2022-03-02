@@ -1,6 +1,6 @@
 <template>
     <v-sheet><center>
-        <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="60%">
+        <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="90%">
             <v-select  v-model="modulo.selected" :items="arrayModel"  label="Modules"></v-select>
             <modules :select="modulo.selected" :maincol="mainColor" :indice="modulo.index" v-on:changeValue="changeValue($event)"></modules><br>
         </v-sheet> 
@@ -28,6 +28,13 @@
         </v-btn>
             </center>
         <v-textarea readonly v-model="valueString"/>
+        <v-btn
+            dark  
+            @click="transferMessage()" 
+            color="var(--bg-color)"
+        >
+        SEND MESSAGE
+        </v-btn>
     </v-sheet>
 </template>
 
@@ -40,6 +47,7 @@ export default {
             selected:'',
             value:''
         }],
+        numberWizard:'',
         mainColor: "",
         colHex:"",
         arrayModel : ['USE A DATABASE',
@@ -71,6 +79,10 @@ export default {
         }
         console.log(this.mainColor)
         document.documentElement.classList.add(this.mainColor);
+    },
+    mounted(){
+      console.log(this.$route.query.id)
+      this.numberWizard=this.$route.query.id
     },
     methods:{
         getCookie(name) {
@@ -113,6 +125,22 @@ export default {
                 value:''
             })
         },
+        transferMessage(){
+          this.connectionPage=new WebSocket('ws://localhost:3000');
+          this.connectionPage.onopen = () =>{
+            console.log("wizard in invio");
+            this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+this.valueString.replace(/\n/g,"<br/>"));
+          }
+          this.connectionPage.onclose = () =>{
+            console.log("wizard in fermata")
+          }
+          this.connectionPage.onerror = () =>{
+            console.log("wizard error aiuto!")
+          }
+          this.connectionPage.onmessage = () =>{
+            console.log("wizard non capisce!! non puoi contattarmi")
+          }
+        }
     }
 }
 </script>

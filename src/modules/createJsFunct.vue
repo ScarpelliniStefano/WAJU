@@ -2,6 +2,7 @@
   <v-sheet>
       <v-container fluid>
             <v-text-field :rules="[rules.required]" label="ID javascript function" v-model="idJSFunct"></v-text-field>
+            <br>
             <v-container style="border-style: outset;">
             <v-row  v-for="collect in parameterList" :key="collect.index">
                 <v-col>

@@ -185,7 +185,30 @@
           </v-sheet>
         </v-container>
       </v-dialog>
+      <v-dialog v-model="showWizard" width="500px">
+        <v-card>
+        <v-card-title class="text-h5 grey lighten-2">
+          WIZARD TEXT
+        </v-card-title>
 
+        <v-card-text>
+          {{textWizard}}
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="showWizard = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+      </v-dialog>
       <!--<v-overlay opacity="1" :value="settings" color="white">
         <Settings
           v-on:set-main-color="this.setMainColor"
@@ -262,6 +285,7 @@
         :height="send.height"
         :textRec="textToCommand"
         :disable="disBtn"
+        :randomNumberString="randomNumber"
         v-on:click-send="sendMsg($event)"
         v-on:set-z-click="setZ"
         v-on:close-send="selSend = !selSend"
@@ -344,6 +368,7 @@
             :width="send.width"
             :disable="disBtn"
             :textRec="textToCommand"
+            :randomNumberString="randomNumber"
             v-on:click-send="sendMsg($event)"
             v-on:set-z-click="setZ"
             v-on:close-send="selSend = !selSend"
@@ -491,6 +516,10 @@ export default {
 
       tip: "",
 
+      showWizard:false,
+      textWizard:'',
+      randomNumber:'',
+
       rec: {
         posx: 4,
         posy: 60,
@@ -567,6 +596,8 @@ export default {
     } else {
       this.browserName = "No browser detection";
     }
+
+    this.startServer();
 
     this.connection = new WebSocket(
       "ws://" + process.env.VUE_APP_ENGINE_SERVER
@@ -673,6 +704,27 @@ export default {
     //vm.$on('receivedData',(v)=>{this.textR+=v;})
   },
   methods: {
+    generatePassword(passwordLength) {
+      var numberChars = "0123456789";
+      var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      var lowerChars = "abcdefghijklmnopqrstuvwxyz";
+      var allChars = numberChars + upperChars + lowerChars;
+      var randPasswordArray = Array(passwordLength);
+      randPasswordArray[0] = numberChars;
+      randPasswordArray[1] = upperChars;
+      randPasswordArray[2] = lowerChars;
+      randPasswordArray = randPasswordArray.fill(allChars, 3);
+      return this.shuffleArray(randPasswordArray.map(function(x) { return x[Math.floor(Math.random() * x.length)] })).join('');
+    },
+    shuffleArray(array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+      return array;
+    },
     fromTextRecToArrRec(textReceived){
       var arrIstr=[];
       var arrTest=textReceived.split(';');
@@ -1001,6 +1053,36 @@ export default {
         setTimeout(function() {
           window.open(routeData.href, '_blank');
         },1000);
+      }
+     
+    },
+
+    startServer(){
+      /*let array = new Uint32Array(15);
+      this.randomNumber=String(window.crypto.getRandomValues(array)[Math.floor(Math.random()*10)]);*/
+      this.randomNumber=this.generatePassword(50);
+      
+      this.connectionPage=new WebSocket('ws://localhost:3000');
+      this.connectionPage.onopen = () =>{
+        console.log("wizard partito")
+      }
+      this.connectionPage.onclose = () =>{
+        console.log("wizard spento")
+      }
+      this.connectionPage.onerror = () =>{
+        console.log("wizard error")
+      }
+      this.connectionPage.onmessage = ({data}) =>{
+        console.log(data)
+        let command=data.split("###")[0];
+        if(command=="WIZARD"){
+          if(data.split("###")[1]==this.randomNumber){
+            this.showWizard=true;
+            this.textWizard=data.split("###")[2];
+            console.log(this.textWizard)
+            document.getElementById("div_send").innerHTML=this.textWizard;
+          }
+        }
       }
     },
     changeErrLog(textToChange) {

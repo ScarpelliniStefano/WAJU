@@ -27,7 +27,7 @@
                 label="Page"
                 type="number"
                 min="1"
-                :max="(this.valTotal/this.size)"
+                :max="(this.valTotal%this.size)!=0 ? (this.valTotal/this.size) + 1 : (this.valTotal/this.size)"
               ></v-text-field>
             </v-col>
             <v-col cols="1">
@@ -276,8 +276,15 @@ export default {
               '###' +
               (this.page - 1) +
               ',' +
-              this.size,
+              this.size
           )
+          console.log('OPEN###' +
+              'textTree_' +
+              this.$route.query.id +
+              '###' +
+              (this.page - 1) +
+              ',' +
+              this.size)
         }
         let jsonData = ''
         this.connectionPage.onmessage = (message) => {

@@ -1,18 +1,20 @@
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({port: 3000});
+let users=[];
 const fs = require('fs');
 
 console.log("started on port 3000")
 
 wss.on('connection', function connection(ws){
-    console.log("connesso")
+    users.push(ws);
+    console.log(`Utente connesso`)
 
     ws.on('close', (data) => {
-        console.log("Utente disconnesso");
+        console.log(`Utente disconnesso`);
     });
 
     ws.on('open', (data) => {
-        console.log("Utente connesso");
+        console.log(`Utente connesso`);
     });
 
     ws.on("message", (data, isBinary) => {
@@ -41,7 +43,7 @@ wss.on('connection', function connection(ws){
                 let valI=page*size;
                 let valF=0;
                     if(total-(page*size)<size)
-                        valF=total-(page*size)
+                        valF=total
                     else
                         valF=(page*size)+size
                 let jsonInterval=JSON.parse(jsonData.tree).slice(valI,valF);
@@ -51,6 +53,12 @@ wss.on('connection', function connection(ws){
                     }
                 });
             })
+        }else if(command=="WIZARD"){
+            wss.clients.forEach( (client) => {
+                if(client !== ws && client.readyState === WebSocket.OPEN){
+                    client.send(data);
+                }
+            });
         }
             
     });
@@ -66,3 +74,13 @@ process.on('SIGINT', function() {
     });
       process.exit(0);
   });
+
+function sendToWS(message,toWho){
+    let founded=false;
+    for(var i=0;i<users.length && !founded;i++){
+        if(users[i] === toWho){
+            founded=true;
+            users[i].send(message);
+        }
+    }
+}
