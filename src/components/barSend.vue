@@ -4,8 +4,6 @@
         <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">Command</h4>
         <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()"
             >mdi-close</v-icon>
-        <v-icon class="moderndesign" style="float: right; color: #FFD700;" v-on:click="maximizeWindow()"
-            >mdi-window-maximize</v-icon>
         </v-sheet>
         <v-container style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;" v-if="rapporto < 3/2" class="containerstyle" fluid>
             <v-row align="center">

@@ -5,9 +5,6 @@
       <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()"
         >mdi-close</v-icon
       >
-      <v-icon class="moderndesign" style="float: right; color: #FFD700;" v-on:click="maximizeWindow()"
-        >mdi-window-maximize</v-icon
-      >
     </v-sheet>
     <v-container class="ma-0 containerstyle" style="border-radius: 3px;width: 100%;max-width: 9999px;">
       <v-row class="py-0" align="center">
