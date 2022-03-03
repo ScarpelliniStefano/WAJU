@@ -1,39 +1,47 @@
 <template>
   <v-sheet>
-            <v-row v-for="collect in collections" :key="collect.index">
-            <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
-            <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
-            </v-row>
-            <br>
-            <v-btn
-                tile fab depressed elevation="5" raised
-                dark
-                class="tooltip btnstyle"
-                width="200px"
-                style="color: white;background-color: var(--bg-color);" 
-                @click="setPlus()" 
-            >
-            <v-icon color="white">mdi-plus</v-icon>
-            <span style="color: white">&nbsp;ADD COLLECTION</span>
-            </v-btn>
-            &nbsp;&nbsp;
-            <v-btn
-                tile fab depressed elevation="5" raised
-                dark
-                class="tooltip btnstyle"
-                width="200px"
-                style="color: white;background-color: var(--bg-color);" 
-                @click="checkMinus()" 
-            >
-            <v-icon color="white">mdi-minus</v-icon>
-            <span style="color: white">&nbsp;DELETE COLLECTION</span>
-            </v-btn>
-                
-            <v-checkbox color="var(--bg-color)" v-model="defaultServer" label="Use default server?"></v-checkbox>
-            <v-row v-if="!defaultServer">
-                <v-col><v-text-field :rules="[rules.required]" v-model="server" label="server"/></v-col>
-                <v-col><v-text-field v-model="connString" label="connection string"/></v-col>
-            </v-row>
+        <v-row>
+            <v-col cols="2">
+                <v-col cols="12">
+                    <v-btn
+                        tile fab depressed elevation="5" raised
+                        dark
+                        class="tooltip btnstyle"
+                        width="200px"
+                        style="color: white;background-color: var(--bg-color);" 
+                        @click="setPlus()" 
+                    >
+                    <v-icon color="white">mdi-plus</v-icon>
+                    <span style="color: white">&nbsp;ADD COLLECTION</span>
+                    </v-btn>
+                </v-col>
+                <v-col cols="12">
+                    <v-btn
+                        tile fab depressed elevation="5" raised
+                        dark
+                        class="tooltip btnstyle"
+                        width="200px"
+                        style="color: white;background-color: var(--bg-color);" 
+                        @click="checkMinus()" 
+                    >
+                    <v-icon color="white">mdi-minus</v-icon>
+                    <span style="color: white">&nbsp;DELETE COLLECTION</span>
+                    </v-btn>
+                </v-col>
+            </v-col>
+            <v-col cols="9">
+                <v-row v-for="collect in collections" :key="collect.index">
+                    <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
+                    <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
+                </v-row>
+            </v-col>
+            
+        </v-row>
+        <v-checkbox color="var(--bg-color)" v-model="defaultServer" label="Use default server?"></v-checkbox>
+        <v-row v-if="!defaultServer">
+            <v-col><v-text-field :rules="[rules.required]" v-model="server" label="server"/></v-col>
+            <v-col><v-text-field v-model="connString" label="connection string"/></v-col>
+        </v-row>
   </v-sheet>
 </template>
 
