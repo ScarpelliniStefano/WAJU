@@ -1,6 +1,4 @@
 <template>
-  <!--<v-sheet>
-            {{this.mywhereIndex}}-->
             
             <v-container fluid style="border-style: outset;">
             
@@ -11,7 +9,7 @@
                 <v-container style="border-style: inset;" v-if="fuzzyCheck">
                 <v-row v-for="collect in collectionsFuzzy" :key="collect.index">
                     <v-col>
-                    <v-text-field :rules="[rules.counter]" v-if="fuzzyCheck" label="ID" v-model="collect.idFuzzyInstr"></v-text-field>
+                    <v-text-field :rules="[rules.counter]" v-if="fuzzyCheck" label="ID istruction" v-model="collect.idFuzzyInstr"></v-text-field>
                     </v-col>
                     <v-col>
                     <v-textarea :rules="[rules.counter]" v-if="fuzzyCheck" label="fuzzy check condition" rows="1" v-model="collect.fuzzyInstr"></v-textarea>
@@ -19,26 +17,27 @@
                 </v-row>
                 <v-container>
                 <v-btn
-                    fab
-                    dark 
-                    small
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="220px"
+                    style="color: white;background-color: var(--bg-color);" 
                     @click="setPlus()" 
-                    color="var(--bg-color)"
                 >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
+                <v-icon color="white">mdi-plus</v-icon>
+                <span style="color: white">&nbsp;ADD FUZZY ISTRUCTION</span>
                 </v-btn>
+                &nbsp;&nbsp;
                 <v-btn
-                    fab
-                    dark 
-                    small
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="220px"
+                    style="color: white;background-color: var(--bg-color);" 
                     @click="checkMinus()" 
-                    color="var(--bg-color)"
                 >
-                <v-icon dark>
-                    mdi-minus
-                </v-icon>
+                <v-icon color="white">mdi-minus</v-icon>
+                <span style="color: white">&nbsp;DELETE FUZZY ISTRUCTION</span>
                 </v-btn>
                 </v-container>
                 </v-container>
@@ -54,26 +53,27 @@
                 </v-row>
                 <v-container>
                 <v-btn
-                    fab
-                    dark 
-                    small
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="220px"
+                    style="color: white;background-color: var(--bg-color);" 
                     @click="setPlusA()" 
-                    color="var(--bg-color)"
                 >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
+                <v-icon color="white">mdi-plus</v-icon>
+                <span style="color: white">&nbsp;ADD ALPHA CUT</span>
                 </v-btn>
+                &nbsp;&nbsp;
                 <v-btn
-                    fab
-                    dark 
-                    small
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="220px"
+                    style="color: white;background-color: var(--bg-color);" 
                     @click="checkMinusA()" 
-                    color="var(--bg-color)"
                 >
-                <v-icon dark>
-                    mdi-minus
-                </v-icon>
+                <v-icon color="white">mdi-minus</v-icon>
+                <span style="color: white">&nbsp;DELETE ALPHA CUT</span>
                 </v-btn>
                 </v-container>
                 </v-container>
@@ -81,9 +81,6 @@
                 <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValueKDFS="changeTextKeepDropFuzzy($event)"/>
             </v-container>
             
-            
-            
-  <!--</v-sheet>-->
 </template>
 
 <script>
@@ -196,12 +193,15 @@ export default {
             this.changeArrCollFuzzy();
         },
         setPlus(){
-            this.collectionsFuzzy.push({
-                index:this.collectionsFuzzy.length+1,
-                idFuzzyInstr:'',
-                fuzzyInstr:''
-            })
-            this.changeArrCollFuzzy();
+            if(this.collectionsFuzzy[this.collectionsFuzzy.length-1].idFuzzyInstr!=''
+                && this.collectionsFuzzy[this.collectionsFuzzy.length-1].fuzzyInstr!=''){
+                this.collectionsFuzzy.push({
+                    index:this.collectionsFuzzy.length+1,
+                    idFuzzyInstr:'',
+                    fuzzyInstr:''
+                })
+                this.changeArrCollFuzzy();
+            }
         },
         checkMinusA(){
             if(this.collectionsAlpha.length>1){
@@ -210,12 +210,15 @@ export default {
             this.refreshStringColl();
         },
         setPlusA(){
-            this.collectionsAlpha.push({
-                index:this.collectionsAlpha.length+1,
-                idAlpha:'',
-                numericIstr:''
-            })
-            this.refreshStringColl();
+            if(this.collectionsAlpha[this.collectionsAlpha.length-1].idAlpha!=''
+                && this.collectionsAlpha[this.collectionsAlpha.length-1].numericIstr!=''){
+                this.collectionsAlpha.push({
+                    index:this.collectionsAlpha.length+1,
+                    idAlpha:'',
+                    numericIstr:''
+                })
+                this.refreshStringColl();
+            }
         },
         refreshStringColl(){
             this.stringVett[3].value="";

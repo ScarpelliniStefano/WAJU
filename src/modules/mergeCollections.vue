@@ -1,32 +1,34 @@
 <template>
   <v-sheet>
             <v-row v-for="collect in collections" :key="collect.index">
-            <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
-            <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`db ${collect.index}`" v-model="collect.db"/></v-col>
-            <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
+                <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
+                <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`db ${collect.index}`" v-model="collect.db"/></v-col>
+                <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
-            
             <br>
-           <v-btn
-                    fab
-                    dark 
-                    @click="setPlus()" 
-                    color="var(--bg-color)"
-                >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
-                </v-btn>
-                <v-btn
-                    fab
-                    dark 
-                    @click="checkMinus()" 
-                    color="var(--bg-color)"
-                >
-                <v-icon dark>
-                    mdi-minus
-                </v-icon>
-                </v-btn>
+            <v-btn
+                tile fab depressed elevation="5" raised
+                dark
+                class="tooltip btnstyle"
+                width="200px"
+                style="color: white;background-color: var(--bg-color);" 
+                @click="setPlus()" 
+            >
+            <v-icon color="white">mdi-plus</v-icon>
+            <span style="color: white">&nbsp;ADD COLLECTION</span>
+            </v-btn>
+            &nbsp;&nbsp;
+            <v-btn
+                tile fab depressed elevation="5" raised
+                dark
+                class="tooltip btnstyle"
+                width="200px"
+                style="color: white;background-color: var(--bg-color);" 
+                @click="checkMinus()" 
+            >
+            <v-icon color="white">mdi-minus</v-icon>
+            <span style="color: white">&nbsp;DELETE COLLECTION</span>
+            </v-btn>
             <v-checkbox v-model="removeDup" color="var(--bg-color)" label="remove duplicates?"></v-checkbox>
   </v-sheet>
 </template>
@@ -78,13 +80,15 @@ export default {
             this.valueArr.pop()
         },
         setPlus(){
-            this.collections.push({
-                index:this.collections.length+1,
-                collection:'',
-                db:'',
-                alias:''
-            })
-            this.valueArr.push('')
+            if(this.collections[this.collections.length-1].collection!=''){
+                this.collections.push({
+                    index:this.collections.length+1,
+                    collection:'',
+                    db:'',
+                    alias:''
+                })
+                this.valueArr.push('')
+            }
         },
         changeText(ind){
             let str= this.valueArr[ind];

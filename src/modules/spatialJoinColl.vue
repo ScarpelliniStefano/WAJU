@@ -54,26 +54,27 @@
                 </v-row>
                 <v-container>
                 <v-btn
-                    fab
-                    dark 
-                    small
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="220px"
+                    style="color: white;background-color: var(--bg-color);" 
                     @click="setPlus()" 
-                    color="var(--bg-color)"
                 >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
+                <v-icon color="white">mdi-plus</v-icon>
+                <span style="color: white">&nbsp;ADD FIELD REFERENCE</span>
                 </v-btn>
+                &nbsp;&nbsp;
                 <v-btn
-                    fab
-                    dark 
-                    small
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="220px"
+                    style="color: white;background-color: var(--bg-color);" 
                     @click="checkMinus()" 
-                    color="var(--bg-color)"
                 >
-                <v-icon dark>
-                    mdi-minus
-                </v-icon>
+                <v-icon color="white">mdi-minus</v-icon>
+                <span style="color: white">&nbsp;DELETE FIELD REFERENCE</span>
                 </v-btn>
                 </v-container>
             </v-container>
@@ -228,11 +229,14 @@ export default {
             this.counterText(this.fieldsAddColl);
         },
         setPlus(){
-            this.fieldsAddColl.push({
-                index:(this.fieldsAddColl.length+1)+"f",
-                nonFuzzyF:'',
-                fieldRef:''
-            })
+            if(this.fieldsAddColl[this.fieldsAddColl.length-1].nonFuzzyF!=''
+                && this.fieldsAddColl[this.fieldsAddColl.length-1].fieldRef!=''){
+                this.fieldsAddColl.push({
+                    index:(this.fieldsAddColl.length+1)+"f",
+                    nonFuzzyF:'',
+                    fieldRef:''
+                })
+            }
         },
         counterText(value){
             this.stringVett[2]='';

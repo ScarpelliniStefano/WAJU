@@ -13,26 +13,27 @@
             </v-row>
             <v-container>
             <v-btn
-                fab
-                dark 
-                small
+                tile fab depressed elevation="5" raised
+                dark small
+                class="tooltip btnstyle"
+                width="200px"
+                style="color: white;background-color: var(--bg-color);" 
                 @click="setPlusParam()" 
-                color="var(--bg-color)"
             >
-                <v-icon dark>
-                    mdi-plus
-                </v-icon>
+            <v-icon color="white">mdi-plus</v-icon>
+            <span style="color: white">&nbsp;ADD PARAMETER</span>
             </v-btn>
+            &nbsp;&nbsp;
             <v-btn
-                fab
-                dark 
-                small
+                tile fab depressed elevation="5" raised
+                dark small
+                class="tooltip btnstyle"
+                width="200px"
+                style="color: white;background-color: var(--bg-color);" 
                 @click="checkMinusParam()" 
-                color="var(--bg-color)"
             >
-            <v-icon dark>
-                mdi-minus
-            </v-icon>
+            <v-icon color="white">mdi-minus</v-icon>
+            <span style="color: white">&nbsp;DELETE PARAMETER</span>
             </v-btn>
             </v-container>
             </v-container>
@@ -52,26 +53,27 @@
             </v-row>
             <v-container>
             <v-btn
-                fab
-                dark 
-                small
+                tile fab depressed elevation="5" raised
+                dark small
+                class="tooltip btnstyle"
+                width="250px"
+                style="color: white;background-color: var(--bg-color);" 
                 @click="setPlusPolyline()" 
-                color="var(--bg-color)"
             >
-                <v-icon dark>
-                    mdi-plus
-                </v-icon>
+            <v-icon color="white">mdi-plus</v-icon>
+            <span style="color: white">&nbsp;ADD POLYLINE COORDINATES</span>
             </v-btn>
+            &nbsp;&nbsp;
             <v-btn
-                fab
-                dark 
-                small
+                tile fab depressed elevation="5" raised
+                dark small
+                class="tooltip btnstyle"
+                width="250px"
+                style="color: white;background-color: var(--bg-color);" 
                 @click="checkMinusPolyline()" 
-                color="var(--bg-color)"
             >
-            <v-icon dark>
-                mdi-minus
-            </v-icon>
+            <v-icon color="white">mdi-minus</v-icon>
+            <span style="color: white">&nbsp;DELETE POLYLINE COORDINATES</span>
             </v-btn>
             </v-container>
             </v-container>
@@ -152,11 +154,14 @@ export default {
             this.counterParam(this.parameterList);
         },
         setPlusParam(){
-            this.parameterList.push({
-                index:(this.parameterList.length+1)+"par",
-                idParam:'',
-                typeParam:''
-            })
+            if(this.parameterList[this.parameterList.length-1].idParam!=''
+                && this.parameterList[this.parameterList.length-1].typeParam!=''){
+                this.parameterList.push({
+                    index:(this.parameterList.length+1)+"par",
+                    idParam:'',
+                    typeParam:''
+                })
+            }
         },
         checkMinusPolyline(){
             if(this.polylineList.length>1){
@@ -165,11 +170,14 @@ export default {
             this.counterPoly(this.polylineList);
         },
         setPlusPolyline(){
-            this.polylineList.push({
-                index:(this.polylineList.length+1)+"pol",
-                firstNum:'',
-                secondNum:''
-            })
+            if(this.polylineList[this.polylineList.length-1].firstNum!=''
+                && this.polylineList[this.polylineList.length-1].secondNum!=''){
+                this.polylineList.push({
+                    index:(this.polylineList.length+1)+"pol",
+                    firstNum:'',
+                    secondNum:''
+                })
+            }
         },
         counterParam(value){
             this.stringVett[0]='';

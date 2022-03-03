@@ -1,7 +1,9 @@
 <template>
   <v-sheet>
           <v-row>
-          <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col><v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" label="db" v-model="db"/></v-col><v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" label="alias" v-model="alias"/></v-col>
+            <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col>
+            <v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" label="db" v-model="db"/></v-col>
+            <v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" label="alias" v-model="alias"/></v-col>
           </v-row>
   </v-sheet>
 </template>

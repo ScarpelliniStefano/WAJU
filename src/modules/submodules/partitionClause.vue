@@ -9,26 +9,27 @@
                 </v-container>
                 <br>
                 <v-btn
-                    fab
-                    dark 
-                    small
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="220px"
+                    style="color: white;background-color: var(--bg-color);" 
                     @click="setPlusFieldRef()" 
-                    color="var(--bg-color)"
                 >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
+                <v-icon color="white">mdi-plus</v-icon>
+                <span style="color: white">&nbsp;ADD SOURCE FIELD</span>
                 </v-btn>
+                &nbsp;&nbsp;
                 <v-btn
-                    fab
-                    dark 
-                    small
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="220px"
+                    style="color: white;background-color: var(--bg-color);" 
                     @click="checkMinusFieldRef()" 
-                    color="var(--bg-color)"
                 >
-                    <v-icon dark>
-                    mdi-minus
-                    </v-icon>
+                <v-icon color="white">mdi-minus</v-icon>
+                <span style="color: white">&nbsp;DELETE SOURCE FIELD</span>
                 </v-btn>
                 <v-text-field :rules="[rules.required]" label="fields of destination array" v-model="destFields"></v-text-field>
                 <v-checkbox color="var(--bg-color)" v-model="dropGroup" label="drop grouping fields?"></v-checkbox>
@@ -65,26 +66,27 @@
                     </v-row>
                     <br>
                     <v-btn
-                        fab
-                        dark 
-                        small
+                        tile fab depressed elevation="5" raised
+                        dark small
+                        class="tooltip btnstyle"
+                        width="200px"
+                        style="color: white;background-color: var(--bg-color);" 
                         @click="setPlusFieldOrd()" 
-                        color="var(--bg-color)"
                     >
-                        <v-icon dark>
-                            mdi-plus
-                        </v-icon>
+                    <v-icon color="white">mdi-plus</v-icon>
+                    <span style="color: white">&nbsp;ADD ORDER FIELD</span>
                     </v-btn>
+                    &nbsp;&nbsp;
                     <v-btn
-                        fab
-                        dark 
-                        small
+                        tile fab depressed elevation="5" raised
+                        dark small
+                        class="tooltip btnstyle"
+                        width="200px"
+                        style="color: white;background-color: var(--bg-color);" 
                         @click="checkMinusFieldOrd()" 
-                        color="var(--bg-color)"
                     >
-                        <v-icon dark>
-                        mdi-minus
-                        </v-icon>
+                    <v-icon color="white">mdi-minus</v-icon>
+                    <span style="color: white">&nbsp;DELETE ORDER FIELD</span>
                     </v-btn>
                 </v-container>
                 
@@ -186,17 +188,22 @@ export default {
             this.$emit('changeValue', this.valueString);
         },
         setPlusFieldRef(){
-            this.fieldRefSource.push({
-                index:this.fieldRefSource.length+1,
-                sourceFields:''
-            })
+            if(this.fieldRefSource[this.fieldRefSource.length-1].sourceFields!=''){
+                this.fieldRefSource.push({
+                    index:this.fieldRefSource.length+1,
+                    sourceFields:''
+                })
+            }
         },
         setPlusFieldOrd(){
-            this.fieldRefOrd.push({
-                index:this.fieldRefOrd.length+1,
-                fieldsOrder:'',
-                order:''
-            })
+            if(this.fieldRefOrd[this.fieldRefOrd.length-1].fieldsOrder!='' 
+                && this.fieldRefOrd[this.fieldRefOrd.length-1].order!=''){
+                this.fieldRefOrd.push({
+                    index:this.fieldRefOrd.length+1,
+                    fieldsOrder:'',
+                    order:''
+                })
+            }
         },
         checkMinusFieldRef(){
             if(this.fieldRefSource.length>1){

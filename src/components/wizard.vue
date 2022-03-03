@@ -1,40 +1,49 @@
 <template>
-    <v-sheet><center>
+    <v-sheet>
+      <center>
         <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="90%">
             <v-select  v-model="modulo.selected" :items="arrayModel"  label="Modules"></v-select>
             <modules :select="modulo.selected" :maincol="mainColor" :indice="modulo.index" v-on:changeValue="changeValue($event)"></modules><br>
         </v-sheet> 
+        <br>
         <v-btn
-            fab
-            dark 
-            large 
+            tile fab depressed elevation="5" raised
+            dark large
+            class="tooltip btnstyle"
+            width="200px"
+            style="color: white;background-color: var(--bg-color);" 
             @click="setPlus()" 
-            color="var(--bg-color)"
         >
-        <v-icon dark>
-           mdi-plus
-        </v-icon>
+          <v-icon color="white">mdi-plus</v-icon>
+          <span style="color: white">&nbsp;ADD MODULE</span>
         </v-btn>
+        &nbsp;&nbsp;
         <v-btn
-            fab
-            dark 
-            large 
+            tile fab depressed elevation="5" raised
+            dark large
+            class="tooltip btnstyle"
+            width="200px"
+            style="color: white;background-color: var(--bg-color);" 
             @click="checkMinus()" 
-            color="var(--bg-color)"
         >
-        <v-icon dark>
-            mdi-minus
-        </v-icon>
+          <v-icon color="white">mdi-minus</v-icon>
+          <span style="color: white">&nbsp;DELETE MODULE</span>
         </v-btn>
-            </center>
+      
         <v-textarea readonly v-model="valueString"/>
+        <br>
         <v-btn
-            dark  
+            tile fab depressed elevation="5" raised
+            dark large
+            class="tooltip btnstyle"
+            width="200px"
+            style="color: white;background-color: var(--bg-color);" 
             @click="transferMessage()" 
-            color="var(--bg-color)"
         >
-        SEND MESSAGE
+          <v-icon color="white">mdi-send</v-icon>
+          <span style="color: white">&nbsp;SEND MESSAGE</span>
         </v-btn>
+      </center>
     </v-sheet>
 </template>
 
@@ -147,14 +156,7 @@ export default {
 
 <style scoped>
 
-.btnstyle{
-    background-color: var(--bg-color);
-    border-color: var(--border-color);
-    border-radius: 50%;
-    padding: 10px 10px;
-    margin: 10px 2px;
-    box-shadow: 0 8px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
+
 
 :root {
   --border-color: #2b2b2b;

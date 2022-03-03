@@ -13,25 +13,28 @@
             </v-row>
             <br>
             <v-btn
-                    fab
-                    dark 
-                    @click="setPlus()" 
-                    color="var(--bg-color)"
-                >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
-                </v-btn>
-                <v-btn
-                    fab
-                    dark 
-                    @click="checkMinus()" 
-                    color="var(--bg-color)"
-                >
-                <v-icon dark>
-                    mdi-minus
-                </v-icon>
-                </v-btn>
+                tile fab depressed elevation="5" raised
+                dark
+                class="tooltip btnstyle"
+                width="300px"
+                style="color: white;background-color: var(--bg-color);" 
+                @click="setPlus()" 
+            >
+            <v-icon color="white">mdi-plus</v-icon>
+            <span style="color: white">&nbsp;ADD TRAJECTORY PARTITION</span>
+            </v-btn>
+            &nbsp;&nbsp;
+            <v-btn
+                tile fab depressed elevation="5" raised
+                dark
+                class="tooltip btnstyle"
+                width="300px"
+                style="color: white;background-color: var(--bg-color);" 
+                @click="checkMinus()" 
+            >
+            <v-icon color="white">mdi-minus</v-icon>
+            <span style="color: white">&nbsp;DELETE TRAJECTORY PARTITION</span>
+            </v-btn>
             </v-container>
             <v-container
                 class="px-0"
@@ -120,11 +123,13 @@ export default {
             this.counterTextTrajectory(this.valueArrTra.length);
         },
         setPlus(){
-            this.collectionsPartitions.push({
-                index:(this.collectionsPartitions.length+1)+"part",
-                stringa:(this.collectionsPartitions.length+1)+"part##"
-            })
-            this.valueArrTra.push('');
+            if(this.collectionsPartitions[this.collectionsPartitions.length-1].stringa!=''){
+                this.collectionsPartitions.push({
+                    index:(this.collectionsPartitions.length+1)+"part",
+                    stringa:(this.collectionsPartitions.length+1)+"part##"
+                })
+                this.valueArrTra.push('');
+            }
         },
         changeTextTrajectory(str){
             let id=Number(str.split("##")[0].substring(0,str.split("##")[0].length-4))-1;

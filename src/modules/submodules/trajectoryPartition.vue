@@ -1,36 +1,42 @@
 <template>
             
-            <v-container fluid >
+            <v-container fluid style="border-style: outset;">
                 <v-textarea :rules="[rules.required]" label="conditions" rows="2" auto-grow v-model="orCondPart"></v-textarea>
                 <br>
-                <v-container style="border-style: outset;">
+                
                 <v-row v-for="collect in collectionsPartMatch" :key="collect.index">
+                    <v-container style="border-style: inset;">
                     <partition-matching :mypartmatchIndex="collect.index" v-on:changeValueMatch="changeTextMatch($event)"/>
+                    </v-container>
+                    <br>
                 </v-row>
                 <br>
+                
                 <v-btn
-                        fab
-                        dark 
-                        small
-                        @click="setPlusPartMatch()" 
-                        color="var(--bg-color)"
-                    >
-                        <v-icon dark>
-                            mdi-plus
-                        </v-icon>
-                    </v-btn>
-                    <v-btn
-                        fab
-                        dark 
-                        small
-                        @click="checkMinusPartMatch()" 
-                        color="var(--bg-color)"
-                    >
-                    <v-icon dark>
-                        mdi-minus
-                    </v-icon>
-                    </v-btn>
-                </v-container>
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="250px"
+                    style="color: white;background-color: var(--bg-color);" 
+                    @click="setPlusPartMatch()" 
+                >
+                <v-icon color="white">mdi-plus</v-icon>
+                <span style="color: white">&nbsp;ADD MATCHING PARTITION</span>
+                </v-btn>
+                &nbsp;&nbsp;
+                <v-btn
+                    tile fab depressed elevation="5" raised
+                    dark small
+                    class="tooltip btnstyle"
+                    width="250px"
+                    style="color: white;background-color: var(--bg-color);" 
+                    @click="checkMinusPartMatch()" 
+                >
+                <v-icon color="white">mdi-minus</v-icon>
+                <span style="color: white">&nbsp;DELETE MATCHING PARTITION</span>
+                </v-btn>
+                
+                
             </v-container>
 </template>
 
@@ -91,11 +97,13 @@ export default {
             this.counterTextMatch(this.valueArrPartMatch.length);
         },
         setPlusPartMatch(){
-            this.collectionsPartMatch.push({
-                index:(this.collectionsPartMatch.length+1)+"pm",
-                stringaPM:(this.collectionsPartMatch.length+1)+"pm##"
-            })
-            this.valueArrPartMatch.push('');
+            if(this.collectionsPartMatch[this.collectionsPartMatch.length-1].stringaPM!=''){
+                this.collectionsPartMatch.push({
+                    index:(this.collectionsPartMatch.length+1)+"pm",
+                    stringaPM:(this.collectionsPartMatch.length+1)+"pm##"
+                })
+                this.valueArrPartMatch.push('');
+            }
         },
         changeTextMatch(str){
             let id=Number(str.split("##")[0].substring(0,str.split("##")[0].length-2))-1;

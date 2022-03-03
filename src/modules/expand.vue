@@ -1,31 +1,34 @@
 <template>
   <v-sheet>
-        
+        <v-container fluid>
             <v-row v-for="collect in collectionsUnpack" :key="collect.index">
                 <unpack-clause :myunpackIndex="collect.index" v-on:changeValue="changeText($event)"/>
             </v-row>
             <br>
             <v-btn
-                    fab
-                    dark 
-                    @click="setPlus()" 
-                    color="var(--bg-color)"
-                >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
-                </v-btn>
-                <v-btn
-                    fab
-                    dark 
-                    @click="checkMinus()" 
-                    color="var(--bg-color)"
-                >
-                <v-icon dark>
-                    mdi-minus
-                </v-icon>
-                </v-btn>
-        <v-container
+                tile fab depressed elevation="5" raised
+                dark
+                class="tooltip btnstyle"
+                width="230px"
+                style="color: white;background-color: var(--bg-color);" 
+                @click="setPlus()" 
+            >
+            <v-icon color="white">mdi-plus</v-icon>
+            <span style="color: white">&nbsp;ADD UNPACK CLAUSE</span>
+            </v-btn>
+            &nbsp;&nbsp;
+            <v-btn
+                tile fab depressed elevation="5" raised
+                dark
+                class="tooltip btnstyle"
+                width="230px"
+                style="color: white;background-color: var(--bg-color);" 
+                @click="checkMinus()" 
+            >
+            <v-icon color="white">mdi-minus</v-icon>
+            <span style="color: white">&nbsp;DELETE UNPACK CLAUSE</span>
+            </v-btn>
+            <v-container
                 class="px-0"
                 fluid
             >
@@ -46,6 +49,7 @@
                     value="NONE"
                 ></v-radio>
                 </v-radio-group>
+            </v-container>
         </v-container>
   </v-sheet>
 </template>
@@ -113,11 +117,13 @@ export default {
             this.counterText(this.valueArr.length);
         },
         setPlus(){
-            this.collectionsUnpack.push({
-                index:this.collectionsUnpack.length+1,
-                stringa:(this.collectionsUnpack.length+1)+"##"
-            })
-            this.valueArr.push('');
+            if(this.collectionsUnpack[this.collectionsUnpack.length-1].stringa!=''){
+                this.collectionsUnpack.push({
+                    index:this.collectionsUnpack.length+1,
+                    stringa:(this.collectionsUnpack.length+1)+"##"
+                })
+                this.valueArr.push('');
+            }
         },
         changeText(str){
             let id=Number(str.split("##")[0])-1;
