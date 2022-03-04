@@ -1,6 +1,7 @@
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({port: 3000});
 let users=[];
+var dir = './tmp';
 const fs = require('fs');
 
 console.log("started on port 3000")
@@ -25,10 +26,14 @@ wss.on('connection', function connection(ws){
     ws.on("message", (data, isBinary) => {
         data=data.toString();
         var command=data.split('###')[0];
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
         if(command=="SAVE"){
             var title=data.split('###')[1];
             var text=data.split('###')[2];
-            fs.writeFile(`./src/temp/${title}.txt`, text, error => {
+            fs.writeFile(`./tmp/${title}.txt`, text, error => {
+                
                 if (error) {
                     console.error(error);
                     return;
@@ -38,7 +43,7 @@ wss.on('connection', function connection(ws){
             let title=data.split('###')[1];
             let page=Number(data.split('###')[2].split(',')[0]);
             let size=Number(data.split('###')[2].split(',')[1]);
-            fs.readFile(`./src/temp/${title}.txt`, (error, dataRes) => {
+            fs.readFile(`./tmp/${title}.txt`, (error, dataRes) => {
                 if (error) {
                     console.error(error);
                     return;
@@ -59,6 +64,9 @@ wss.on('connection', function connection(ws){
                     }
                 });
             })
+        }else if(command=="DELETE"){
+            let title=data.split('###')[1];
+            fs.unlink(`./tmp/${title}.txt`);
         }else if(command=="WIZARD"){
             wss.clients.forEach( (client) => {
                 if(client !== ws && client.readyState === WebSocket.OPEN){

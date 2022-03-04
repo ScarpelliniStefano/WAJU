@@ -217,6 +217,7 @@ export default {
     this.changeDimension()
   },
   methods: {
+
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color)
       this.mainColor = color
