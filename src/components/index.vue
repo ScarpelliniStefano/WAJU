@@ -1,6 +1,6 @@
 <template>
   <v-sheet :color="bgColor" id="body">
-    <v-sheet elevation="10" name="c1" class="divheader" style="height: 50px; padding-y: 0 25px; ">
+    <v-sheet :dark="darkMode" elevation="10" name="c1" class="divheader" style="height: 50px; padding-y: 0 25px; ">
       <h1 id="title" class="display-2 font-weight-bold">JCOUIweb</h1>
       <v-icon
         style="
@@ -29,7 +29,7 @@
           margin-bottom: 7px;
         "
         large
-        color="black"
+        :dark="darkMode"
         v-on:click="
           clickDragResize('btm')
           selBtm = !selBtm;
@@ -68,7 +68,7 @@
           margin-bottom: 7px;
         "
         large
-        color="black"
+        :dark="darkMode"
         v-on:click="
           clickDragResize('log')
           selLog = !selLog;
@@ -107,7 +107,7 @@
           margin-bottom: 7px;
         "
         large
-        color="black"
+        :dark="darkMode"
         v-on:click="
           clickDragResize('rec')
           selRec = !selRec;
@@ -147,7 +147,7 @@
         "
         id="execute"
         large
-        color="black"
+        :dark="darkMode"
         v-on:click="
           clickDragResize('send')
           selSend = !selSend;
@@ -184,6 +184,30 @@
         {{ this.tip }}
       </h4>
 
+      <v-bottom-sheet v-model="settings">
+        <v-sheet
+          class="text-center"
+          height="350px"
+          min-width="700px"
+        >
+          <v-btn
+            class="mt-6"
+            text
+            color="red"
+            @click="settings = !settings"
+          >
+            save
+          </v-btn>
+          <Settings
+           v-on:set-main-color="setMainColor"
+            v-on:set-theme-color="setThemeColor"
+            v-on:set-style="setStyle"
+            :darkMode="darkMode">
+          </Settings>
+        </v-sheet>
+      </v-bottom-sheet>
+
+      <!--
       <v-dialog
         v-model="settings"
         scrollable
@@ -207,6 +231,7 @@
           </v-sheet>
         </v-container>
       </v-dialog>
+      -->
       <!--<v-dialog v-model="showWizard" width="500px">
         <v-card>
         <v-card-title class="text-h5 grey lighten-2">
@@ -283,6 +308,7 @@
       @resizestop="onModSend"
     >
       <bar-send
+        :darkMode="darkMode"
         :bgcolor="contColor"
         :rapporto="send.width / send.height"
         :browser="browserName"
@@ -299,7 +325,7 @@
 
     <VueDragResize
       :min-width="400"
-      :min-height="400"
+      :min-height="150"
       :w="log.width"
       :h="log.height"
       v-if="selLog && $vuetify.breakpoint.mdAndUp"
@@ -357,6 +383,7 @@
         v-on:click-back-index="sendBck()"
         v-on:set-z-click="setZ"
         v-on:close-btm="selBtm = !selBtm"
+        v-on:save-status="saveStatus($event)"
         :bottomText="received"
         :arrayLog="arrayLog"
       >
@@ -576,6 +603,7 @@ export default {
       bgColor: '',
       contColor: '',
       darkMode: false,
+      outlined: false,
 
       selRec: false,
       selSend: false,
@@ -669,6 +697,7 @@ export default {
       this.setCookie("font-size", "14", 30);
     }
     document.documentElement.classList.add(this.fontSize);
+
   },
   mounted() {
     let userAgent = navigator.userAgent;
@@ -685,6 +714,8 @@ export default {
     } else {
       this.browserName = "No browser detection";
     }
+
+    window.addEventListener('resize', this.setPositions);
 
     this.startServer();
 
@@ -792,6 +823,23 @@ export default {
     };
   },
   methods: {
+    setPositions(){
+      if(this.send.posx + this.send.width > document.documentElement.clientWidth){
+        this.send.posx = document.documentElement.clientWidth - this.send.width - 5
+      }
+
+      if(this.rec.posx + this.rec.width > document.documentElement.clientWidth){
+        this.rec.posx = document.documentElement.clientWidth - this.rec.width - 5
+      }
+
+      if(this.log.posx + this.log.width > document.documentElement.clientWidth){
+        this.log.posx = document.documentElement.clientWidth - this.log.width - 5
+      }
+
+      if(this.btm.posx + this.btm.width > document.documentElement.clientWidth){
+        this.btm.posx = document.documentElement.clientWidth - this.btm.width - 5
+      }
+    },
     clickDragResize(component){
       this.send.posz = 0;
       this.rec.posz = 0;
@@ -1117,7 +1165,14 @@ export default {
       }
       this.setCookie("theme-color", theme, 30);
     },
-
+    setStyle(style) {
+      if(style === 'full'){
+        this.outlined = true
+      } else {
+        this.outlined = false
+      }
+      this.setCookie("style", style, 30);
+    },
     setCookie(name, value, daysToLive) {
       // Encode value in order to escape semicolons, commas, and whitespace
       var cookie = name + "=" + encodeURIComponent(value);

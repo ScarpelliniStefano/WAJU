@@ -146,6 +146,7 @@ export default {
             })
         },
         transferMessage(){
+          this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+this.valueString.replace(/\n/g,"<br/>"));
           this.connectionPage.onopen = () =>{
             console.log("wizard in invio");
             this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+this.valueString.replace(/\n/g,"<br/>"));

@@ -1,24 +1,24 @@
 <template>
-<v-sheet elevation="17" id="recDiv" class="divstyle">
-    <v-sheet style="border-bottom: 1px solid #dddddd;background-color: var(--bg-div-color); border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'send')">
+<v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
+    <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd;background-color: var(--bg-div-color); border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'send')">
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{title}}</h4>
         <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-container style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;" v-if="rapporto < 3/2" class="containerstyle" fluid>
         <v-row align="center">
             <v-col :key="1.1" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
-                <v-sheet id="div_send" :height="height-136" contenteditable></v-sheet>
+                <v-sheet outlined :dark="darkMode" id="div_send" :height="height-136" contenteditable></v-sheet>
             </v-col>
             <v-col :key="1.2" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
                 <v-row align="center" class="text-center">
                     <v-col>
-                        <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="openWizard()">
-                            <v-icon color="white">mdi-auto-fix</v-icon>
-                            <span style="color: white">Wizard</span>
+                        <v-btn :dark="darkMode" :width="(width-100)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;" tile fab depressed elevation="5" raised @click="openWizard()">
+                            <v-icon>mdi-auto-fix</v-icon>
+                            <span>Wizard</span>
                         </v-btn>
                     </v-col>
                     <v-col>
-                        <v-btn :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessageArr()">
+                        <v-btn :dark="darkMode" :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessageArr()">
                             <v-icon color="white">mdi-play</v-icon>
                             <span style="color: white">Execute</span>
                         </v-btn>
@@ -104,8 +104,9 @@ export default {
         width: Number,
         browser: String,
         rapporto: Number,
-        bgcolor: String,
-        textRec: String
+        textRec: String,
+        darkMode: Boolean,
+        outlined: Boolean
     },
     watch: {
         textRec: function (newVal) {
@@ -220,7 +221,6 @@ export default {
 }
 
 #div_send {
-    background-color: #e9e9e9;
     overflow-y: auto;
     position: relative;
     border-radius: 4px;
