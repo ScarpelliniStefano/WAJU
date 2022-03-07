@@ -1,18 +1,17 @@
 <template>
 <v-sheet elevation="17" id="recDiv" class="divstyle">
-    <v-sheet style="border-bottom: 3px solid #dddddd;" elevation="14" class="topbar" @click="$emit('set-z-click', 'rec')">
-        <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">Response</h4>
-        <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()">mdi-close</v-icon>
+    <v-sheet style="border-bottom: 1px solid #dddddd;" elevation="14" class="topbar" @click="$emit('set-z-click', 'rec')">
+        <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">Response</h4>
+        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-container :class="bgcolor" v-if="rapporto < 3 / 2" class="containerstyle" style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;" fluid>
         <v-row align="center">
             <v-col :key="1.1" cols="12" :sm="10" :md="12" :lg="12" :xl="12">
                 <v-sheet :height="height-136" style="overflow: auto">
-                    <v-data-table :items-per-page="500" class="tastyle pt-0 mt-0" no-resize name="input-7-1" :rows="parseInt((height-134)/28)" :items="recArr" color="black" id="ta_rec" hide-default-header hide-default-footer :expanded.sync="expanded" :headers="recHeaders" item-key="name" show-expand>
-
+                    <v-data-table dense :items-per-page="500" class="tastyle pt-0 mt-0" no-resize name="input-7-1" :rows="parseInt((height-134)/28)" :items="recArr" color="black" id="ta_rec" hide-default-header hide-default-footer :expanded.sync="expanded" :headers="recHeaders" item-key="name" show-expand>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length">
-                                <p>{{item.value}}</p>
+                                <p style="padding-bottom: 8px; padding-top: 8px; margin-bottom: 0px">{{item.value}}</p>
                             </td>
                         </template>
                     </v-data-table>
@@ -192,5 +191,9 @@ export default {
     border-radius: 4px;
     border-style: solid;
     border-width: 1px;
+}
+
+tr {
+  box-shadow: none;
 }
 </style>

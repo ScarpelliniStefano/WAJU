@@ -1,8 +1,8 @@
 <template>
 <v-sheet elevation="17" id="recDiv" class="divstyle">
     <v-sheet style="border-bottom: 1px solid #dddddd;background-color: var(--bg-div-color); border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'send')">
-        <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">{{title}}</h4>
-        <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()">mdi-close</v-icon>
+        <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{title}}</h4>
+        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-container style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;" v-if="rapporto < 3/2" class="containerstyle" fluid>
         <v-row align="center">

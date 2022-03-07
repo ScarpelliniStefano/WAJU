@@ -575,6 +575,7 @@ export default {
 
       bgColor: '',
       contColor: '',
+      darkMode: false,
 
       selRec: false,
       selSend: false,
@@ -1108,9 +1109,11 @@ export default {
       if(theme == 'theme-dark'){
         this.bgColor = 'grey darken-4'
         this.contColor = 'grey darken-3'
+        this.darkMode = true
       } else {
         this.bgColor = 'grey lighten-5'
         this.contColor = 'white'
+        this.darkMode = false
       }
       this.setCookie("theme-color", theme, 30);
     },

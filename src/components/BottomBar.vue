@@ -1,8 +1,8 @@
 <template>
 <v-sheet elevation="17" id="recDiv" class="divstyle">
-    <v-sheet style="border-bottom: 3px solid #dddddd;" elevation="14" class="topbar" @click="$emit('set-z-click', 'btm')">
-        <h4 class="noselect moderndesign" style="float: left; margin-left: 5px">{{this.textButton}}</h4>
-        <v-icon color="red darken-4" style="float: right" v-on:click="closeWindow()">mdi-close</v-icon>
+    <v-sheet style="border-bottom: 1px solid #dddddd;background-color: var(--bg-div-color); border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'btm')">
+        <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{this.textButton}}</h4>
+        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-container class="containerstyle" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 9999px;">
         <v-row align="center">
@@ -22,12 +22,11 @@
 
             <v-col v-if="ispectstate" cols="12">
                 <v-sheet id="div_send" :height="height-136" style="overflow: auto">
-                    <v-list class="pa-3">
-                        <v-subheader inset>Collections</v-subheader>
+                    <v-list class="pa-0">
 
                         <v-list-item v-for="coll in bottomText.listIRCol" :key="coll">
                             <v-list-item-avatar>
-                                <v-icon style="background-color: var(--border-color)">
+                                <v-icon style="background-color: var(--border-color)" color="white">
                                     mdi-database
                                 </v-icon>
                             </v-list-item-avatar>
@@ -37,7 +36,7 @@
                             </v-list-item-content>
 
                             <v-list-item-action>
-                                <v-btn icon @click="numDepth = 1; $emit('click-irc', coll)">
+                                <v-btn icon @click="numDepth = 1; $emit('click-irc', coll)" color="var(--border-color)">
                                     IR
                                 </v-btn>
                             </v-list-item-action>
