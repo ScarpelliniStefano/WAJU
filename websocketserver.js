@@ -62,6 +62,12 @@ wss.on('connection', function connection(ws){
                     client.send(data);
                 }
             });
+        }else if(command=="CHANGE_COLOR"){
+            wss.clients.forEach( (client) => {
+                if(client !== ws && client.readyState === WebSocket.OPEN){
+                    client.send(data);
+                }
+            });
         }
             
     });

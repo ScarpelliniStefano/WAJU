@@ -57,7 +57,7 @@ export default {
             value:''
         }],
         numberWizard:'',
-        mainColor: "",
+        mainColor: "black",
         colHex:"",
         arrayModel : ['USE A DATABASE',
                       'GET A COLLECTION',
@@ -81,19 +81,30 @@ export default {
         modules
     },
     created(){
-        this.mainColor = this.getCookie("main-color");
-        if (!this.mainColor) {
-            this.mainColor = "black";
-            this.setCookie("main-color", "black", 30);
+        this.changeColor();
+        this.connectionPage=new WebSocket('ws://localhost:3000');
+        this.connectionPage.onmessage = (data) =>{
+            console.log(data.data)
+            if(data.data.split('###')[0]=="CHANGE_COLOR"){ 
+              this.changeColor();
+            }
         }
-        console.log(this.mainColor)
-        document.documentElement.classList.add(this.mainColor);
+       
     },
     mounted(){
       console.log(this.$route.query.id)
       this.numberWizard=this.$route.query.id
     },
     methods:{
+        changeColor(){
+            document.documentElement.classList.remove(this.mainColor);
+            this.mainColor = this.getCookie("main-color");
+            if (!this.mainColor) {
+              this.mainColor = "black";
+            }
+            console.log(this.mainColor);
+            document.documentElement.classList.add(this.mainColor);
+        },
         getCookie(name) {
             // Split cookie string and get all individual name=value pairs in an array
             var cookieArr = document.cookie.split(";");
@@ -135,7 +146,6 @@ export default {
             })
         },
         transferMessage(){
-          this.connectionPage=new WebSocket('ws://localhost:3000');
           this.connectionPage.onopen = () =>{
             console.log("wizard in invio");
             this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+this.valueString.replace(/\n/g,"<br/>"));
@@ -146,9 +156,7 @@ export default {
           this.connectionPage.onerror = () =>{
             console.log("wizard error aiuto!")
           }
-          this.connectionPage.onmessage = () =>{
-            console.log("wizard non capisce!! non puoi contattarmi")
-          }
+          
         }
     }
 }

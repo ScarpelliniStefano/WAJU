@@ -836,7 +836,9 @@ export default {
       return array;
     },
     fromTextRecToArrRec(textReceived){
+      console.log(textReceived)
       var arrIstr=[];
+      this.counterRec=0;
       var arrTest=textReceived.split(';');
       
       arrTest.forEach(element => {
@@ -1082,11 +1084,23 @@ export default {
         this.log.posy = y;
       }
     },
-
+  signalChangeColor(){
+      this.connectionPage=new WebSocket('ws://localhost:3000');
+      this.connectionPage.onerror=()=>{
+        this.received.errorConfig="no server available"
+      }
+      this.connectionPage.onclose = () => {
+        this.received.errorConfig="server save/open closed"
+      }
+      this.connectionPage.onopen = () => {
+        this.connectionPage.send('CHANGE_COLOR###'+this.mainColor);
+      }    
+    },
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color);
       this.mainColor = color;
       this.setCookie("main-color", color, 30);
+      this.signalChangeColor();
     },
     setThemeColor(theme) {
       document.documentElement.classList.replace(this.themeColor, theme);

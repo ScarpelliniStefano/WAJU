@@ -1,7 +1,31 @@
 <template>
   <v-sheet>
-        <v-row>
-            <v-col cols="2">
+        <v-row align="center">
+            <v-col cols="12">
+                <v-row v-for="collect in collections" :key="collect.index">
+                    <v-col cols="5"><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
+                    <v-col cols="5"><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
+                    <v-col cols="1">
+                    <v-btn
+                        icon
+                        color="red"
+                        @click="checkMinusCopy(collect.index)" 
+                    >
+                    <v-icon dark>mdi-minus</v-icon>
+                    </v-btn>
+                    </v-col>
+                    <v-col v-if="checkLast(collect.index)" cols="1">
+                    <v-btn
+                        icon
+                        color="green" 
+                        @click="setPlus()" 
+                    >
+                    <v-icon dark>mdi-plus</v-icon>
+                    </v-btn>
+                    </v-col>
+                </v-row>
+            </v-col>
+            <!--<v-col cols="2">
                 <v-col cols="12">
                     <v-btn
                         tile fab depressed elevation="5" raised
@@ -28,14 +52,7 @@
                     <span style="color: white">&nbsp;DELETE COLLECTION</span>
                     </v-btn>
                 </v-col>
-            </v-col>
-            <v-col cols="9">
-                <v-row v-for="collect in collections" :key="collect.index">
-                    <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
-                    <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
-                </v-row>
-            </v-col>
-            
+            </v-col>-->
         </v-row>
         <v-checkbox color="var(--bg-color)" v-model="defaultServer" label="Use default server?"></v-checkbox>
         <v-row v-if="!defaultServer">
@@ -46,6 +63,7 @@
 </template>
 
 <script>
+import { delDoubleArrayViaIndex } from '../functions/functionTools';
 export default {
     props:{
         maincol: String
@@ -114,6 +132,15 @@ export default {
                 this.valueArr.pop()
             }
             
+            this.counterText(this.collections.length);
+        },
+        checkLast(index){
+            return index==this.collections[this.collections.length-1].index;
+        },
+        checkMinusCopy(index){
+            if(this.collections.length>1){
+                delDoubleArrayViaIndex(this.collections,this.valueArr,index);
+            }
             this.counterText(this.collections.length);
         },
         setPlus(){
