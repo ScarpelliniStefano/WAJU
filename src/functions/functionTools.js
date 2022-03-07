@@ -4,5 +4,5 @@ export function timeString(textToDateTime){
     var stringDateMinutes = ('0' + date.getMinutes()).slice(-2);
     var stringDateSeconds = ('0' + date.getSeconds()).slice(-2);
     var stringDateMilliseconds = ('00' + date.getMilliseconds()).slice(-3);
-    return stringDateHours + ':' + stringDateMinutes + ':' + stringDateSeconds + '.' + stringDateMilliseconds + ' -> ' + textToDateTime;
+    return '[' + stringDateHours + ':' + stringDateMinutes + ':' + stringDateSeconds + '.' + stringDateMilliseconds + '] ' + textToDateTime;
 }

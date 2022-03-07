@@ -3,7 +3,6 @@
     <v-sheet elevation="10" name="c1" class="divheader" style="height: 50px; padding-y: 0 25px; ">
       <h1 id="title" class="display-2 font-weight-bold">JCOUIweb</h1>
       <v-icon
-        id="settings"
         style="
           float: right;
           margin-right: 20px;
@@ -21,7 +20,7 @@
 
       <v-icon
         v-if="!selBtm"
-        @mouseover="tip = 'Other tools'"
+        @mouseover="tip = 'Config. & Collection'"
         @mouseleave="tip = ''"
         style="
           float: right;
@@ -29,21 +28,18 @@
           margin-top: 7px;
           margin-bottom: 7px;
         "
-        id="bottom"
         large
         color="black"
         v-on:click="
-          send.posz = 0;
-          rec.posz = 0;
-          btm.posz = 30;
+          clickDragResize('btm')
           selBtm = !selBtm;
         "
       >
-        mdi-post-outline
+        mdi-toolbox-outline
       </v-icon>
 
       <v-icon
-        @mouseover="tip = 'Other tools'"
+        @mouseover="tip = 'Config. & Collection'"
         @mouseleave="tip = ''"
         v-if="selBtm"
         style="
@@ -53,16 +49,51 @@
           margin-bottom: 7px;
           color: var(--border-color)
         "
-        id="bottom"
         large
         v-on:click="
-          send.posz = 0;
-          rec.posz = 0;
-          btm.posz = 30;
           selBtm = !selBtm;
         "
       >
-        mdi-post
+        mdi-toolbox
+      </v-icon>
+
+      <v-icon
+        v-if="!selLog"
+        @mouseover="tip = 'Log'"
+        @mouseleave="tip = ''"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+        "
+        large
+        color="black"
+        v-on:click="
+          clickDragResize('log')
+          selLog = !selLog;
+        "
+      >
+        mdi-text-box-outline
+      </v-icon>
+
+      <v-icon
+        @mouseover="tip = 'Log'"
+        @mouseleave="tip = ''"
+        v-if="selLog"
+        style="
+          float: right;
+          margin-right: 20px;
+          margin-top: 7px;
+          margin-bottom: 7px;
+          color: var(--border-color)
+        "
+        large
+        v-on:click="
+          selLog = !selLog;
+        "
+      >
+        mdi-text-box
       </v-icon>
 
       <v-icon
@@ -75,13 +106,10 @@
           margin-top: 7px;
           margin-bottom: 7px;
         "
-        id="SaveBack"
         large
         color="black"
         v-on:click="
-          send.posz = 0;
-          rec.posz = 30;
-          btm.posz = 0;
+          clickDragResize('rec')
           selRec = !selRec;
         "
       >
@@ -101,9 +129,6 @@
         id="SaveBack"
         large
         v-on:click="
-          send.posz = 0;
-          rec.posz = 30;
-          btm.posz = 0;
           selRec = !selRec;
         "
       >
@@ -124,9 +149,7 @@
         large
         color="black"
         v-on:click="
-          send.posz = 30;
-          rec.posz = 0;
-          btm.posz = 0;
+          clickDragResize('send')
           selSend = !selSend;
         "
       >
@@ -156,7 +179,7 @@
       </v-icon>
 
       <h4
-        style="float: right; margin-right: 20px; color: white; margin-top: 12px"
+        style="float: right; margin-right: 20px; color: var(--border-color); margin-top: 12px"
       >
         {{ this.tip }}
       </h4>
@@ -171,7 +194,6 @@
           <Settings
             v-on:set-main-color="setMainColor"
             v-on:set-theme-color="setThemeColor"
-            v-on:set-order="setOrder"
           />
           <v-sheet align="center" color="transparent">
             <v-btn
@@ -185,7 +207,7 @@
           </v-sheet>
         </v-container>
       </v-dialog>
-      <v-dialog v-model="showWizard" width="500px">
+      <!--<v-dialog v-model="showWizard" width="500px">
         <v-card>
         <v-card-title class="text-h5 grey lighten-2">
           WIZARD TEXT
@@ -208,17 +230,7 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-      </v-dialog>
-      <!--<v-overlay opacity="1" :value="settings" color="white">
-        <Settings
-          v-on:set-main-color="this.setMainColor"
-          v-on:set-theme-color="this.setThemeColor"
-          v-on:set-order="this.setOrder"
-        />
-        <v-btn color="orange lighten-2" v-on:click="settings = false">
-          Chiudi Impostazioni
-        </v-btn>
-      </v-overlay>-->
+      </v-dialog>-->
     </v-sheet>
     <VueDragResize
       :key="rec.idRecChange"
@@ -232,11 +244,7 @@
       v-if="selRec && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
-      @click="
-        rec.posz = 2;
-        send.posz = 0;
-        btm.posz = 0;
-      "
+      @click="clickDragResize('rec')"
       :onDrag="onDragStopRec"
       :onResize="onResizeStopRec"
       @dragstop="onModRec"
@@ -255,6 +263,7 @@
         v-on:close-rec="selRec = !selRec"
       ></bar-rec>
     </VueDragResize>
+
     <VueDragResize
       :key="send.idSendChange"
       :min-width="400"
@@ -267,11 +276,7 @@
       v-if="selSend && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
-      @click="
-        rec.posz = 0;
-        send.posz = 2;
-        btm.posz = 0;
-      "
+      @click="clickDragResize('send')"
       :onDrag="onDragStopSend"
       :onResize="onResizeStopSend"
       @dragstop="onModSend"
@@ -295,16 +300,43 @@
     <VueDragResize
       :min-width="400"
       :min-height="400"
+      :w="log.width"
+      :h="log.height"
+      v-if="selLog && $vuetify.breakpoint.mdAndUp"
+      drag-handle=".topbar"
+      :z="log.posz"
+      style="position: absolute"
+      @click="clickDragResize('log')"
+      :x="log.posx"
+      :y="log.posy"
+      :onDrag="onDragStopLog"
+      :onResize="onResizeStopLog"
+      @dragstop="onModLog"
+      @resizestop="onModLog"
+    >
+      <bar-log
+        :bgcolor="contColor"
+        :browser="browserName"
+        :height="log.height"
+        :width="log.width"
+        :rapporto="log.width / log.height"
+        v-on:set-z-click="setZ"
+        v-on:close-log="selLog = !selLog"
+        :arrayLog="arrayLog"
+      >
+      </bar-log>
+    </VueDragResize>
+
+    <VueDragResize
+      :min-width="400"
+      :min-height="400"
       :w="btm.width"
       :h="btm.height"
       v-if="selBtm && $vuetify.breakpoint.mdAndUp"
       drag-handle=".topbar"
       :z="btm.posz"
       style="position: absolute"
-      @click="
-        rec.posz = 0;
-        send.posz = 0;
-        btm.posz = 2;"
+      @click="clickDragResize('btm')"
       :x="btm.posx"
       :y="btm.posy"
       :onDrag="onDragStopBtm"
@@ -331,6 +363,23 @@
       </bottom-bar>
     </VueDragResize>
 
+    <v-snackbar
+      v-model="wizardAlert" elevation="5" light
+    >
+      Wizard forwarded an istruction
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="var(--border-color)"
+          text
+          v-bind="attrs"
+          @click="wizardAlert = false"
+        >
+          Ok
+        </v-btn>
+      </template>
+    </v-snackbar>
+
     <v-container
       v-if="$vuetify.breakpoint.smAndDown"
       name="c2"
@@ -339,24 +388,10 @@
       fluid
     >
       <v-row class="text-center" align="center" align-content="center">
-        <v-col v-if="selRec" class="" :key="1" :cols="12" :sm="12">
-          <bar-rec
-            :bgcolor="contColor"
-            :rapporto="1"
-            :browser="browserName"
-            :width="rec.width"
-            :height="rec.height"
-            :recText="textRec"
-            :recArr="arrRec"
-            v-on:click-back-index="sendBck()"
-            v-on:set-z-click="setZ"
-            v-on:close-rec="selRec = !selRec"
-          ></bar-rec>
-        </v-col>
         <v-col
           v-if="selSend"
           class=""
-          :key="2"
+          :key="1"
           :cols="12"
           :sm="12"
         >
@@ -375,10 +410,43 @@
           ></bar-send>
         </v-col>
         <v-col
+          v-if="selLog"
+          class=""
+          :key="2"
+          :cols="12"
+          :sm="12"
+        >
+          <bar-log
+            :bgcolor="contColor"
+            :browser="browserName"
+            :height="log.height"
+            :width="log.width"
+            :rapporto="log.width / log.height"
+            v-on:set-z-click="setZ"
+            v-on:close-log="selLog = !selLog"
+            :arrayLog="arrayLog"
+          >
+          </bar-log>
+        </v-col>
+        <v-col v-if="selRec" class="" :key="3" :cols="12" :sm="12">
+          <bar-rec
+            :bgcolor="contColor"
+            :rapporto="1"
+            :browser="browserName"
+            :width="rec.width"
+            :height="rec.height"
+            :recText="textRec"
+            :recArr="arrRec"
+            v-on:click-back-index="sendBck()"
+            v-on:set-z-click="setZ"
+            v-on:close-rec="selRec = !selRec"
+          ></bar-rec>
+        </v-col>
+        <v-col
           v-if="selBtm"
           class=""
           id="third"
-          :key="3"
+          :key="4"
           :cols="12"
           :sm="12"
         >
@@ -468,6 +536,7 @@ export var isPreDone = () => {
 import BarRec from "./barRec.vue";
 import BarSend from "./barSend.vue";
 import BottomBar from "./BottomBar.vue";
+import BarLog from './logComp.vue'
 
 export default {
   name: "PaginaPrincipale",
@@ -475,6 +544,7 @@ export default {
   components: {
     BarRec,
     BarSend,
+    BarLog,
     BottomBar,
     Settings,
     VueDragResize,
@@ -506,13 +576,10 @@ export default {
       bgColor: '',
       contColor: '',
 
-      orderBottom: "last",
-      orderSend: "first",
-      orderRec: "2",
-
       selRec: false,
       selSend: false,
       selBtm: false,
+      selLog: false,
 
       tip: "",
 
@@ -547,12 +614,33 @@ export default {
         idBtmChange: 123,
       },
 
-      textToCommand: ""
+      log: {
+        posx: 4,
+        posy: 60,
+        width: 400,
+        height: 400,
+        posz: 0,
+        idLogChange: 123,
+      },
+
+      textToCommand: "",
+      wizardAlert: false
     };
+  },
+  watch: {
+    wizardAlert: function(newVal){
+      var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+      link.rel = 'icon';
+      if(newVal === true){
+        link.href = window.location.origin + "/wizardAlert.ico"
+      } else {
+        link.href = window.location.origin + "/favicon.ico"
+      }
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
   },
   created() {
     //ADD Commenti
-
     this.themeColor = this.getCookie("theme-color");
     if (!this.themeColor) {
       this.themeColor = "theme-light";
@@ -701,9 +789,31 @@ export default {
         setConnected();
       }
     };
-    //vm.$on('receivedData',(v)=>{this.textR+=v;})
   },
   methods: {
+    clickDragResize(component){
+      this.send.posz = 0;
+      this.rec.posz = 0;
+      this.btm.posz = 0;
+      this.log.posz = 0;
+
+      switch(component){
+        case 'send':
+          this.send.posz = 2;
+          break;
+        case 'rec':
+          this.rec.posz = 2;
+          break;
+        case 'btm':
+          this.btm.posz = 2;
+          break;
+        case 'log':
+          this.log.posz = 2;
+          break;
+        default:
+          alert('Comando non riconosciuto')
+      }
+    },
     generatePassword(passwordLength) {
       var numberChars = "0123456789";
       var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -833,14 +943,22 @@ export default {
         this.rec.posz = 2;
         this.send.posz = 0;
         this.btm.posz = 0;
+        this.log.posz = 0;
       } else if (tipo === "send") {
         this.rec.posz = 0;
         this.send.posz = 2;
         this.btm.posz = 0;
+        this.log.posz = 0;
       } else if (tipo === "btm") {
         this.rec.posz = 0;
         this.send.posz = 0;
         this.btm.posz = 2;
+        this.log.posz = 0;
+      } else if (tipo === 'log') {
+        this.rec.posz = 0;
+        this.send.posz = 0;
+        this.btm.posz = 0;
+        this.log.posz = 2;
       } else {
         console.log("Comando non riconosciuto");
       }
@@ -936,11 +1054,35 @@ export default {
       }
     },
 
-    setOrder(ordRec, ordSend, ordBott) {
-      this.orderBottom = ordBott;
-      this.orderSend = ordSend;
-      this.orderRec = ordRec;
+    onResizeStopLog(handle, x, y, width, height) {
+      this.log.posx = x;
+      this.log.posy = y;
+      this.log.width = width;
+      this.log.height = height;
+      if (this.log.posz != 2) {
+        this.setZ("btm");
+      }
     },
+    onDragStopLog(x, y) {
+      this.log.posx = x;
+      this.log.posy = y;
+      if (this.log.posz != 2) {
+        this.setZ("btm");
+      }
+    },
+    onModLog(x, y) {
+      if (x < 4) {
+        this.log.posx = 4;
+      } else {
+        this.log.posx = x;
+      }
+      if (y < 60) {
+        this.log.posy = 60;
+      } else {
+        this.log.posy = y;
+      }
+    },
+
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color);
       this.mainColor = color;
@@ -985,6 +1127,7 @@ export default {
       // Return null if not found
       return null;
     },
+
     changeConfig(textToChange) {
       if (textToChange.startsWith("{")) {
         var parseJSON = JSON.parse(textToChange);
@@ -994,6 +1137,7 @@ export default {
         this.received.textConf = textToChange;
       }
     },
+
     changeIRTree(textToChange) {
       if (textToChange.startsWith("{")) {
         var parseJSON = JSON.parse(textToChange);
@@ -1016,6 +1160,7 @@ export default {
         this.generatePage(title, textConv);
       }
     },
+
     changeIRList(textToChange) {
       if (textToChange.startsWith("{")) {
         var parseJSON = JSON.parse(textToChange);
@@ -1033,6 +1178,7 @@ export default {
         for (var i in json_data) this.received.listIRCol.push(json_data[i]);
       }
     },
+
     generatePage(title,textToSend){
       let dateGen=new Date();
       let millis=dateGen.getTime();
@@ -1054,7 +1200,6 @@ export default {
           window.open(routeData.href, '_blank');
         },1000);
       }
-     
     },
 
     startServer(){
@@ -1077,10 +1222,10 @@ export default {
         let command=data.split("###")[0];
         if(command=="WIZARD"){
           if(data.split("###")[1]==this.randomNumber){
-            this.showWizard=true;
+            //this.showWizard=true;
             this.textWizard=data.split("###")[2];
-            console.log(this.textWizard)
             document.getElementById("div_send").innerHTML=this.textWizard;
+            this.wizardAlert = true;
           }
         }
       }
