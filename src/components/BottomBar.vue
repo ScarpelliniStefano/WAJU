@@ -20,9 +20,9 @@
             </v-col>
             <v-col v-if="ispectstate" cols="12">
                 <v-sheet id="div_send" :height="height-192" style="overflow: auto">
-                    <v-list class="pa-0">
+                    <v-list class="pa-0" >
 
-                        <v-list-item v-for="coll in bottomText.listIRCol" :key="coll">
+                        <v-list-item @click="numDepth = 1; $emit('click-irc', coll)" v-for="coll in bottomText.listIRCol" :key="coll">
                             <v-list-item-avatar>
                                 <v-icon style="background-color: var(--border-color)" color="white">
                                     mdi-database
@@ -34,7 +34,7 @@
                             </v-list-item-content>
 
                             <v-list-item-action>
-                                <v-btn icon @click="numDepth = 1; $emit('click-irc', coll)" color="var(--border-color)">
+                                <v-btn icon outlined color="var(--border-color)">
                                     IR
                                 </v-btn>
                             </v-list-item-action>
@@ -97,7 +97,7 @@
                             </v-list-item-content>
 
                             <v-list-item-action>
-                                <v-btn icon @click="numDepth = 1; $emit('click-irc', coll)" color="var(--border-color)">
+                                <v-btn icon outlined @click="numDepth = 1; $emit('click-irc', coll)" color="var(--border-color)">
                                     IR
                                 </v-btn>
                             </v-list-item-action>

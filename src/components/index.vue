@@ -776,6 +776,7 @@ export default {
         if(text.substring(startP, endP).length>0){
           this.textToCommand = text.substring(startP, endP);
           this.arrRec=this.fromTextRecToArrRec(text.substring(startP, endP));
+          this.sendIRList();
         }
         this.disBtn = false;
         //disconnect();
@@ -1241,9 +1242,8 @@ export default {
       } else {
         this.received.listIRCol = [];
         const startE =
-          textToChange.indexOf("#@IR-LIST#") +
-          "#@IR-LIST@#  ".length +
-          '{ 	"total": 2, 	"IRList": '.length;
+          textToChange.indexOf("IRList") +
+          "IRList\":".length;
         const endE = textToChange.lastIndexOf("#@END-IR-LIST@#") - 2;
         var textChanged = textToChange.substring(startE, endE);
         /*.replace('","','\n')*/ var json_data = JSON.parse(textChanged);

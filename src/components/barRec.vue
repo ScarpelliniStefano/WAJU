@@ -41,7 +41,7 @@
         <v-row align="center">
             <v-col class="py-0" :key="'recKey_middle'" :cols='10'>
                 <v-sheet id="div_send" :height="height-56" style="overflow: auto">
-                    <v-data-table class="tastyle pt-0 mt-0" no-resize name="input-7-1" :rows="parseInt((height-134)/28)" :items="recArr" color="black" id="ta_rec" hide-default-header hide-default-footer :expanded.sync="expanded" :headers="recHeaders" item-key="name" show-expand>
+                    <v-data-table :items-per-page="500" class="tastyle pt-0 mt-0" no-resize name="input-7-1" :rows="parseInt((height-134)/28)" :items="recArr" color="black" id="ta_rec" hide-default-header hide-default-footer :expanded.sync="expanded" :headers="recHeaders" item-key="name" show-expand>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length">
                                 <p>{{item.value}}</p>
@@ -76,7 +76,7 @@
         <v-row align="center">
             <v-col class="py-0" :key="1.11" cols="10">
                 <v-sheet id="div_send" :height="height-56" style="overflow: auto">
-                    <v-data-table class="tastyle pt-0 mt-0" no-resize name="input-7-1" :rows="parseInt((height-134)/28)" :items="recArr" color="black" id="ta_rec" hide-default-header hide-default-footer :expanded.sync="expanded" :headers="recHeaders" item-key="name" show-expand>
+                    <v-data-table class="tastyle pt-0 mt-0" :items-per-page="500" no-resize name="input-7-1" :rows="parseInt((height-134)/28)" :items="recArr" color="black" id="ta_rec" hide-default-header hide-default-footer :expanded.sync="expanded" :headers="recHeaders" item-key="name" show-expand>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length">
                                 <p>{{item.value}}</p>
