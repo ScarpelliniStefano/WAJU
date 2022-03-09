@@ -118,11 +118,12 @@
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <div class="box" align="left" justify="left">
+        <div class="box" id="treeViewer" align="left" justify="left">
           <json-view
             rootKey="documents"
             :key="numDepth"
             :max-depth="numDepth"
+            
             :data="this.textIRTreeCol"
           />
         </div>
@@ -217,7 +218,7 @@ export default {
     this.changeDimension()
   },
   methods: {
-
+    
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color)
       this.mainColor = color
@@ -314,6 +315,8 @@ export default {
           }
         }
       }
+
+     
     },
     setDepth() {
       this.numDepth = this.numDepth < 2 ? 10 : 1
@@ -642,6 +645,10 @@ div.boxInfo {
   height: 70vh;
   border-style: solid;
   border-color: cadetblue;
+}
+
+.darkBG {
+  background-color:#000;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
