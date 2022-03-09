@@ -30,7 +30,7 @@
     <v-container v-if="rapporto >= 3/2 && rapporto < 5/2" class="containerstyle" fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
         <v-row align="center">
             <v-col :key="'send_first_col'" :cols='10'>
-                <v-sheet id="div_send" :height="height-56" contenteditable></v-sheet>
+                <v-sheet outlined id="div_send" :height="height-56" contenteditable></v-sheet>
             </v-col>
             <v-col :key="'send_second_col'" :cols="2">
                 <v-row align="center">
@@ -57,7 +57,7 @@
     <v-container v-if="rapporto >= 5/2" class="containerstyle" fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
         <v-row align="center">
             <v-col :key="1.1" :cols="10">
-                <v-sheet id="div_send" :height="height-56" contenteditable></v-sheet>
+                <v-sheet outlined id="div_send" :height="height-56" contenteditable></v-sheet>
             </v-col>
             <v-col :key="1.2" :cols="2">
                 <v-row align="center">
@@ -243,4 +243,5 @@ export default {
         font-size: 18px;
     }
 }
+
 </style>

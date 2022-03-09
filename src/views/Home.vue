@@ -7,7 +7,9 @@
 
   export default {
     name: 'Home',
-
+    created(){
+      document.title = 'Home - JCOUI Web'
+    },
     components: {
       indexC,
     },

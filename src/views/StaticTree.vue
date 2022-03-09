@@ -7,7 +7,6 @@
 
   export default {
     name: 'StaticPage',
-
     components: {
       PageTree,
     },

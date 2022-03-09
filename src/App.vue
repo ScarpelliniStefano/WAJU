@@ -20,6 +20,7 @@ export default {
   }),
   
   created (){
+    document.title = "Loading..."
     if(!isPreDone()){
       connect();
     }  

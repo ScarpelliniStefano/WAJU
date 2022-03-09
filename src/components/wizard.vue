@@ -81,6 +81,7 @@ export default {
         modules
     },
     created(){
+      document.title = 'Wizard - JCOUI Web'
         this.changeColor();
         this.connectionPage=new WebSocket('ws://localhost:3000');
         this.connectionPage.onmessage = (data) =>{
