@@ -231,9 +231,9 @@ export default {
   methods: {
     calculatePageSize(){
       if((this.valTotal%this.size)!=0){
-        this.pageCount=(this.valTotal/this.size) + 1
+        this.pageCount=((this.valTotal/this.size) + 1).toFixed();
       }else{
-        this.pageCount=(this.valTotal/this.size)
+        this.pageCount=(this.valTotal/this.size).toFixed();
       }
     },
     setMainColor(color) {

@@ -36,7 +36,7 @@
                     <v-col>
                         <v-pagination
                         v-model="page"
-                        :length="pageCount"
+                        :length="pageCount.toFixed()"
                         :total-visible="7"
                         color="var(--border-color)"
                         prev-icon="mdi-menu-left"
@@ -87,7 +87,7 @@
                             <v-col>
                                 <v-pagination :dark="darkMode"
                                 v-model="page"
-                                :length="pageCount"
+                                :length="pageCount.toFixed()"
                                 :total-visible="7"
                                 color="var(--border-color)"
                                 prev-icon="mdi-menu-left"
@@ -141,7 +141,7 @@
                     <v-col>
                         <v-pagination
                         v-model="page"
-                        :length="pageCount"
+                        :length="pageCount.toFixed()"
                         :total-visible="7"
                         color="var(--border-color)"
                         prev-icon="mdi-menu-left"
