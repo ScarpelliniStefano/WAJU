@@ -95,34 +95,32 @@
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <v-row cols="12">
-            <v-spacer></v-spacer>
-            <v-col cols="4">
-                <v-pagination
-                v-model="page"
-                :length="pageCount"
-                :total-visible="7"
-                color="var(--border-color)"
-                prev-icon="mdi-menu-left"
-                next-icon="mdi-menu-right"
-              ></v-pagination>
-              <v-text-field
-                v-model="page"
-                label="Page"
-                type="number"
-                min="1"
-                :max="(this.valTotal%this.size)!=0 ? (this.valTotal/this.size) + 1 : (this.valTotal/this.size)"
-              ></v-text-field>
-            </v-col>
+        <v-row cols="12" align="center">
+          <v-spacer></v-spacer>
+          <v-col cols="2">
+              <v-pagination
+              v-model="page"
+              :length="pageCount"
+              :total-visible="7"
+              color="var(--border-color)"
+              prev-icon="mdi-menu-left"
+              next-icon="mdi-menu-right"
+            ></v-pagination>
+          </v-col>
+          <v-spacer></v-spacer>
+        </v-row>
+        <v-row cols="2" align="center">
+          <v-spacer></v-spacer>
+          
             <v-col cols="1">
-              <v-text-field
+              <v-select
                 v-model="size"
+                :items="itemsSize"
                 label="Size"
-                type="number"
-                min="0"
-                :max="maxDimSize()"
-              ></v-text-field>
+                dense
+              ></v-select>
             </v-col>
+            
             <v-col cols="1">
               <v-btn
                 elevation="2"
@@ -162,6 +160,7 @@ export default {
       page: 1,
       pageCount:0,
       size: 25,
+      itemsSize:[5,10,15,25,50],
       mounted: false,
       overlay: true,
       settings: false,
@@ -315,6 +314,25 @@ export default {
             this.datetime = jsonData.datetime
             this.title = jsonData.name
             this.valTotal = jsonData.tot
+            this.itemsSize=[5];
+            if(this.valTotal>5){
+              this.itemsSize.push(10);
+            }
+            if(this.valTotal>10){
+              this.itemsSize.push(15);
+            }
+            if(this.valTotal>15){
+              this.itemsSize.push(25);
+            }
+            if(this.valTotal>25){
+              this.itemsSize.push(50);
+            }
+            if(this.valTotal>50){
+              this.itemsSize.push(100);
+            }
+            if(this.valTotal>100){
+              this.itemsSize.push(200);
+            }
             this.valInitial = jsonData.initial
             this.valFinal = jsonData.final
             if (!this.mounted) {
