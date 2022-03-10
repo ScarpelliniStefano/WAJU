@@ -123,7 +123,11 @@ export default {
             if(typeUpdate=="RESET")
               this.textSend = textWizard.replace(/(<([^>]+)>)/ig, '\n')
             if(typeUpdate=="APPEND")
-              this.textSend += textWizard.replace(/(<([^>]+)>)/ig, '\n')
+                if(this.textSend.endsWith('\n')) {
+                    this.textSend += textWizard.replace(/(<([^>]+)>)/ig, '\n')
+                }else{
+                    this.textSend += '\n'+textWizard.replace(/(<([^>]+)>)/ig, '\n')
+                }
         },
         changeTitle(tip) {
             this.title = this.defaultTitle + " - " + tip
