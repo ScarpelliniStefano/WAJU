@@ -112,11 +112,19 @@ export default {
     },
     watch: {
         textRec: function (newVal) {
-            this.highlight(newVal)
+            this.changeText(newVal)
         }
     },
     mounted() {},
     methods: {
+        changeText(value){
+            var typeUpdate=value.split("###")[0];
+            var textWizard=value.split("###")[1];
+            if(typeUpdate=="RESET")
+              this.textSend = textWizard.replace(/(<([^>]+)>)/ig, '\n')
+            if(typeUpdate=="APPEND")
+              this.textSend += textWizard.replace(/(<([^>]+)>)/ig, '\n')
+        },
         changeTitle(tip) {
             this.title = this.defaultTitle + " - " + tip
         },

@@ -158,7 +158,7 @@ export default {
             })
         },
         transferMessage(type){
-          this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+type+"###"+this.valueString.replace(/\n/g,"<br/>"));
+          this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+type+"###"+this.valueString);
           
         }
     }

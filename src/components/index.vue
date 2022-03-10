@@ -1329,10 +1329,11 @@ export default {
             //this.showWizard=true;
             let typeUpdate=data.split("###")[2];
             this.textWizard=data.split("###")[3];
-            if(typeUpdate=="RESET")
+            this.textToCommand = typeUpdate + '###' + this.textWizard + '###' + Date.now()
+            /*if(typeUpdate=="RESET")
               document.getElementById("div_send").innerHTML=this.textWizard;
             if(typeUpdate=="APPEND")
-              document.getElementById("div_send").innerHTML+=this.textWizard;
+              document.getElementById("div_send").innerHTML+=this.textWizard;*/
             this.wizardAlert = true;
           }
         }
