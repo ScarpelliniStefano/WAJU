@@ -8,7 +8,7 @@
         <v-container v-if="rapporto < 3/2" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 99999px;">
             <v-row align="center">
                 <v-col v-if="conf" :cols="12">
-                    <v-textarea readonly outlined :dark="darkMode" id="div_send" :height="height - 168" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
+                    <v-textarea class="pb-2" readonly outlined :dark="darkMode" id="div_send" :height="height - 176" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
                     <input type="file" id="file_config" v-on:change="loadFile()" style="display: none;" />
                     <v-btn block height="32px" v-on:click="uploadConf()">
                         <v-icon small>mdi-upload
@@ -70,7 +70,7 @@
         <v-container v-if="rapporto >= 3/2 && rapporto < 5/2" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 99999px;">
             <v-row align="center">
                 <v-col v-if="conf" :cols="10">
-                    <v-textarea readonly outlined :dark="darkMode" id="div_send" :height="height - 96" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
+                    <v-textarea class="pb-2" readonly outlined :dark="darkMode" id="div_send" :height="height - 96" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
                     <input type="file" id="file_config" v-on:change="loadFile()" style="display: none;" />
                     <v-btn block height="32px" v-on:click="uploadConf()">
                         <v-icon small>mdi-upload
@@ -108,18 +108,19 @@
                         </v-btn>
                     </v-col>
                 </v-col>
+                <v-divider vertical></v-divider>
                 <v-col :cols="2">
                     <v-row align="center" class="text-center">
                         <v-col cols="12">
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
                                     <v-icon :size="width/20">mdi-wrench</v-icon>
                                 </v-btn>
                             </v-sheet>
                         </v-col>
                         <v-col cols="12">
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " tile fab depressed elevation="5" raised @click="
+                                <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " tile fab depressed elevation="5" raised @click="
                                 irPressed = true
                                 setIR()
                                 $emit('click-ir')">
@@ -134,7 +135,7 @@
         <v-container v-if="rapporto >= 5/2" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 99999px;">
             <v-row align="center">
                 <v-col v-if="conf" :cols="10">
-                    <v-textarea readonly outlined :dark="darkMode" id="div_send" :height="height - 96" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
+                    <v-textarea class="pb-2" readonly outlined :dark="darkMode" id="div_send" :height="height - 96" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
                     <input type="file" id="file_config" v-on:change="loadFile()" style="display: none;" />
                     <v-btn block height="32px" v-on:click="uploadConf()">
                         <v-icon small>mdi-upload
@@ -172,11 +173,12 @@
                         </v-btn>
                     </v-col>
                 </v-col>
+                <v-divider vertical></v-divider>
                 <v-col :cols="2">
                     <v-row align="center" class="text-center">
                         <v-col cols="12">
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
                                     <v-icon small>mdi-wrench</v-icon>
                                     Config.
                                 </v-btn>
@@ -184,7 +186,7 @@
                         </v-col>
                         <v-col cols="12">
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " tile fab depressed elevation="5" raised @click="
+                                <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " tile fab depressed elevation="5" raised @click="
                                 irPressed = true
                                 setIR()
                                 $emit('click-ir')">

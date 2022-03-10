@@ -307,6 +307,8 @@
       :onResize="onResizeStopSend"
       @dragstop="onModSend"
       @resizestop="onModSend"
+      :resizable="send.resizable"
+      :draggable="send.draggable"
     >
       <bar-send
         :darkMode="darkMode"
@@ -321,6 +323,8 @@
         v-on:click-send="sendMsg($event)"
         v-on:set-z-click="setZ"
         v-on:close-send="selSend = !selSend"
+        v-on:send-text='sendText()'
+        :textChange="send.textSend"
       ></bar-send>
     </VueDragResize>
 
@@ -433,6 +437,8 @@
             :width="send.widthSm"
             :disable="disBtn"
             :textRec="textToCommand"
+            v-on:send-text='sendText()'
+            :textChange="send.textSend"
             :randomNumberString="randomNumber"
             :darkMode="darkMode"
             v-on:click-send="sendMsg($event)"
@@ -644,7 +650,9 @@ export default {
         idSendChange: 122,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
-        heightSm: 400
+        heightSm: 400,
+
+        textSend: 'ciao'
       },
 
       btm: {
@@ -849,6 +857,9 @@ export default {
     };
   },
   methods: {
+    sendText(text){
+      this.send.textSend = text
+    },
     setPositions(){
       if(this.send.posx + this.send.width > document.documentElement.clientWidth){
         this.send.posx = document.documentElement.clientWidth - this.send.width - 5

@@ -33,11 +33,12 @@
                 <v-col :cols='10'>
                     <v-textarea outlined :dark="darkMode" id="div_send" :height="height - 56" no-resize color="var(--border-color)" v-model="textSend"></v-textarea>
                 </v-col>
+                <v-divider vertical></v-divider>
                 <v-col :cols="2">
                     <v-row align="center">
                         <v-col>
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('Execute')" @mouseleave="title = defaultTitle" :loading="exec" :width="width/6 - 36" :height="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " fab depressed elevation="5" @click="sendMessageArr()">
+                                <v-btn @mouseenter="changeTitle('Execute')" @mouseleave="title = defaultTitle" :loading="exec" :width="width/6 - 24" :height="width/6 - 24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " fab depressed elevation="5" @click="sendMessageArr()">
                                     <v-icon color="white" :size="width/15">mdi-play</v-icon>
                                 </v-btn>
                             </v-sheet>
@@ -46,7 +47,7 @@
                     <v-row align="center">
                         <v-col>
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('Wizard')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " fab depressed elevation="5" @click="openWizard()">
+                                <v-btn @mouseenter="changeTitle('Wizard')" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " fab depressed elevation="5" @click="openWizard()">
                                     <v-icon color="white" :size="width/20">mdi-auto-fix</v-icon>
                                 </v-btn>
                             </v-sheet>
@@ -60,11 +61,12 @@
                 <v-col :key="1.1" :cols="10">
                     <v-textarea outlined :dark="darkMode" id="div_send" :height="height - 56" no-resize color="var(--border-color)" v-model="textSend"></v-textarea>
                 </v-col>
+                <v-divider vertical></v-divider>
                 <v-col :key="1.2" :cols="2">
                     <v-row align="center">
                         <v-col>
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn :loading="exec" :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessageArr()">
+                                <v-btn :loading="exec" :width="width/6 - 24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessageArr()">
                                     <v-icon color="white">mdi-play</v-icon>
                                     Execute
                                 </v-btn>
@@ -74,7 +76,7 @@
                     <v-row align="center">
                         <v-col>
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " fab depressed elevation="5" @click="openWizard()">
+                                <v-btn :width="width/6 - 24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " fab depressed elevation="5" @click="openWizard()">
                                     <v-icon color="white">mdi-auto-fix</v-icon>
                                     Wizard
                                 </v-btn>
@@ -108,15 +110,25 @@ export default {
         rapporto: Number,
         textRec: String,
         darkMode: Boolean,
-        outlined: Boolean
+        outlined: Boolean,
+        textChange: String
     },
     watch: {
         textRec: function (newVal) {
             this.changeText(newVal)
+        },
+        textChange: function (newVal) {
+            this.textSend = newVal
         }
     },
-    mounted() {},
+    mounted() {
+        window.addEventListener('resize', this.copyText);
+    },
     methods: {
+        copyText(){
+            if (this.textSend === undefined) this.textSend = ''
+            this.$emit('send-text', this.textSend)
+        },
         changeText(value){
             var typeUpdate=value.split("###")[0];
             var textWizard=value.split("###")[1];
