@@ -345,6 +345,7 @@
         :browser="browserName"
         :height="log.height"
         :width="log.width"
+        :darkMode="darkMode"
         :rapporto="log.width / log.height"
         v-on:set-z-click="setZ"
         v-on:close-log="selLog = !selLog"
@@ -431,6 +432,7 @@
             :disable="disBtn"
             :textRec="textToCommand"
             :randomNumberString="randomNumber"
+            :darkMode="darkMode"
             v-on:click-send="sendMsg($event)"
             v-on:set-z-click="setZ"
             v-on:close-send="selSend = !selSend"
@@ -451,6 +453,7 @@
             :rapporto="log.width / log.height"
             v-on:set-z-click="setZ"
             v-on:close-log="selLog = !selLog"
+            :darkMode="darkMode"
             :arrayLog="arrayLog"
           >
           </bar-log>
@@ -464,6 +467,7 @@
             :height="rec.height"
             :recText="textRec"
             :recArr="arrRec"
+            :darkMode="darkMode"
             v-on:click-back-index="sendBck()"
             v-on:set-z-click="setZ"
             v-on:close-rec="selRec = !selRec"
@@ -483,6 +487,7 @@
             :height="btm.height"
             :width="btm.width"
             :rapporto="1"
+            :darkMode="darkMode"
             v-on:file-upload-index="sendConfigFile($event)"
             v-on:click-ir="sendIRList()"
             v-on:click-tc="sendIRTempCol()"
@@ -1523,10 +1528,6 @@ export default {
 
 .colcontainer {
   background-color: var(--bg-theme-color);
-}
-
-.containerstyle {
-  background-color: var(--bg-div-color);
 }
 
 :root {

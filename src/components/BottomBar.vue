@@ -1,140 +1,207 @@
 <template>
-<v-sheet elevation="17" id="recDiv" class="divstyle">
-    <v-sheet style="border-bottom: 1px solid #dddddd;background-color: var(--bg-div-color); border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'btm')">
+<v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
+    <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd; border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'btm')">
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{this.title}}</h4>
         <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
-    <v-container v-if="rapporto < 3/2" class="containerstyle" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 99999px;">
-        <v-row align="center">
-            <v-col v-if="conf" :cols="12">
-                <v-textarea class="tastyle pt-0 mt-0" readonly style="padding-bottom: 8px; font-size: 14px;" no-resize :rows="parseInt((height - 193) / 28)" height="100%" name="conf-text" v-model="bottomText.textConf" id="ta_conf"></v-textarea>
-                <input type="file" id="file_config" v-on:change="loadFile()" style="display: none;" />
-                <v-btn block height="32px" v-on:click="uploadConf()">
-                    <v-icon small>mdi-upload
-                    </v-icon>
-                    Upload configuration
-                </v-btn>
-            </v-col>
-            <v-col v-if="conf" class="py-0" :cols="12">
-                <v-sheet class="py-0" elevation="0" color="white" :height="height - 193 - parseInt((height - 193) / 28) * 28"></v-sheet>
-            </v-col>
-            <v-col v-if="ispectstate" cols="12">
-                <v-sheet id="div_send" :height="height-192" style="overflow: auto">
-                    <v-list class="pa-0" >
+    <v-sheet :dark="darkMode">
+        <v-container v-if="rapporto < 3/2" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 99999px;">
+            <v-row align="center">
+                <v-col v-if="conf" :cols="12">
+                    <v-textarea readonly outlined :dark="darkMode" id="div_send" :height="height - 168" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
+                    <input type="file" id="file_config" v-on:change="loadFile()" style="display: none;" />
+                    <v-btn block height="32px" v-on:click="uploadConf()">
+                        <v-icon small>mdi-upload
+                        </v-icon>
+                        Upload configuration
+                    </v-btn>
+                </v-col>
+                <v-col v-if="ispectstate" cols="12">
+                    <v-sheet :dark="darkMode" id="div_send" :height="height-192" style="overflow: auto">
+                        <v-list :dark="darkMode" class="pa-0">
 
-                        <v-list-item @click="numDepth = 1; $emit('click-irc', coll)" v-for="coll in bottomText.listIRCol" :key="coll">
-                            <v-list-item-avatar>
-                                <v-icon style="background-color: var(--border-color)" color="white">
-                                    mdi-database
-                                </v-icon>
-                            </v-list-item-avatar>
+                            <v-list-item @click="numDepth = 1; $emit('click-irc', coll)" v-for="coll in bottomText.listIRCol" :key="coll">
+                                <v-list-item-avatar>
+                                    <v-icon style="background-color: var(--border-color)" color="white">
+                                        mdi-database
+                                    </v-icon>
+                                </v-list-item-avatar>
 
-                            <v-list-item-content>
-                                <v-list-item-title v-text="coll"></v-list-item-title>
-                            </v-list-item-content>
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="coll"></v-list-item-title>
+                                </v-list-item-content>
 
-                            <v-list-item-action>
-                                <v-btn icon outlined color="var(--border-color)">
-                                    IR
-                                </v-btn>
-                            </v-list-item-action>
-                        </v-list-item>
-                    </v-list>
-                </v-sheet>
-            </v-col>
-            <v-col v-if="ispectstate" cols="12">
-                <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined"
-                    @click="numDepth = 1; $emit('click-tc')">
-                    <v-icon>mdi-page-last</v-icon>
-                    Temporary Collection
-                </v-btn>
-            </v-col>
-            <v-col :cols="12">
-                <v-row align="center" class="text-center">
-                    <v-col cols="6">
-                        <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised v-on:click="setConf()">
-                            <v-icon small>mdi-wrench</v-icon>
-                            Config.
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="6">
-                        <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="
-                            irPressed = true
-                            setIR()
-                            $emit('click-ir')">
-                            <v-icon small>mdi-file-find-outline</v-icon>
-                            IR Request
-                        </v-btn>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
-    <v-container v-if="rapporto >= 3/2 && rapporto < 5/2" class="containerstyle" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 99999px;">
-        <v-row align="center">
-            <v-col v-if="conf" :cols="10">
-                <v-textarea class="tastyle pt-0 mt-0" readonly style="padding-bottom: 8px; font-size: 14px;" no-resize :rows="parseInt((height - 112) / 28)" height="100%" name="conf-text" v-model="bottomText.textConf" id="ta_conf"></v-textarea>
-                <input type="file" id="file_config" v-on:change="loadFile()" style="display: none;" />
-                <v-btn block height="32px" v-on:click="uploadConf()">
-                    <v-icon small>mdi-upload
-                    </v-icon>
-                    Upload configuration
-                </v-btn>
-            </v-col>
-            <v-col v-if="ispectstate" cols="10" class="pr-0">
-                <v-sheet id="div_send" :height="height-112" style="overflow: auto">
-                    <v-list class="pa-0">
-
-                        <v-list-item v-for="coll in bottomText.listIRCol" :key="coll">
-                            <v-list-item-avatar>
-                                <v-icon style="background-color: var(--border-color)" color="white">
-                                    mdi-database
-                                </v-icon>
-                            </v-list-item-avatar>
-
-                            <v-list-item-content>
-                                <v-list-item-title v-text="coll"></v-list-item-title>
-                            </v-list-item-content>
-
-                            <v-list-item-action>
-                                <v-btn icon outlined @click="numDepth = 1; $emit('click-irc', coll)" color="var(--border-color)">
-                                    IR
-                                </v-btn>
-                            </v-list-item-action>
-                        </v-list-item>
-                    </v-list>
-                </v-sheet>
-                <v-col v-if="ispectstate" class="pr-0">
-                    <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined"
-                        @click="numDepth = 1; $emit('click-tc')">
+                                <v-list-item-action>
+                                    <v-btn icon outlined color="var(--border-color)">
+                                        IR
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
+                    </v-sheet>
+                </v-col>
+                <v-col v-if="ispectstate" cols="12">
+                    <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined" @click="numDepth = 1; $emit('click-tc')">
                         <v-icon>mdi-page-last</v-icon>
                         Temporary Collection
                     </v-btn>
                 </v-col>
-            </v-col>
-            <v-col :cols="2">
-                <v-row align="center" class="text-center">
-                    <v-col cols="12">
-                        <v-sheet :height="(height-80)/2">
-                            <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
-                                <v-icon :size="width/20">mdi-wrench</v-icon>
+                <v-col :cols="12">
+                    <v-row align="center" class="text-center">
+                        <v-col cols="6">
+                            <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                <v-icon small>mdi-wrench</v-icon>
+                                Config.
                             </v-btn>
-                        </v-sheet>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="
+                            irPressed = true
+                            setIR()
+                            $emit('click-ir')">
+                                <v-icon small>mdi-file-find-outline</v-icon>
+                                IR Request
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-sheet>
+    <v-sheet :dark="darkMode">
+        <v-container v-if="rapporto >= 3/2 && rapporto < 5/2" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 99999px;">
+            <v-row align="center">
+                <v-col v-if="conf" :cols="10">
+                    <v-textarea readonly outlined :dark="darkMode" id="div_send" :height="height - 96" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
+                    <input type="file" id="file_config" v-on:change="loadFile()" style="display: none;" />
+                    <v-btn block height="32px" v-on:click="uploadConf()">
+                        <v-icon small>mdi-upload
+                        </v-icon>
+                        Upload configuration
+                    </v-btn>
+                </v-col>
+                <v-col v-if="ispectstate" cols="10" class="pr-0">
+                    <v-sheet :dark="darkMode" id="div_send" :height="height-112" style="overflow: auto">
+                        <v-list :dark="darkMode" class="pa-0">
+
+                            <v-list-item v-for="coll in bottomText.listIRCol" :key="coll">
+                                <v-list-item-avatar>
+                                    <v-icon style="background-color: var(--border-color)" color="white">
+                                        mdi-database
+                                    </v-icon>
+                                </v-list-item-avatar>
+
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="coll"></v-list-item-title>
+                                </v-list-item-content>
+
+                                <v-list-item-action>
+                                    <v-btn icon outlined @click="numDepth = 1; $emit('click-irc', coll)" color="var(--border-color)">
+                                        IR
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
+                    </v-sheet>
+                    <v-col v-if="ispectstate" class="pr-0">
+                        <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined" @click="numDepth = 1; $emit('click-tc')">
+                            <v-icon>mdi-page-last</v-icon>
+                            Temporary Collection
+                        </v-btn>
                     </v-col>
-                    <v-col cols="12">
-                        <v-sheet :height="(height-80)/2">
-                            <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " tile fab depressed elevation="5" raised @click="
+                </v-col>
+                <v-col :cols="2">
+                    <v-row align="center" class="text-center">
+                        <v-col cols="12">
+                            <v-sheet :dark="darkMode" :height="(height-80)/2">
+                                <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                    <v-icon :size="width/20">mdi-wrench</v-icon>
+                                </v-btn>
+                            </v-sheet>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-sheet :dark="darkMode" :height="(height-80)/2">
+                                <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " tile fab depressed elevation="5" raised @click="
                                 irPressed = true
                                 setIR()
                                 $emit('click-ir')">
-                                <v-icon :size="width/20">mdi-file-find-outline</v-icon>
-                            </v-btn>
-                        </v-sheet>
+                                    <v-icon :size="width/20">mdi-file-find-outline</v-icon>
+                                </v-btn>
+                            </v-sheet>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-sheet>
+    <v-sheet :dark="darkMode">
+        <v-container v-if="rapporto >= 5/2" fluid style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; max-width: 99999px;">
+            <v-row align="center">
+                <v-col v-if="conf" :cols="10">
+                    <v-textarea readonly outlined :dark="darkMode" id="div_send" :height="height - 96" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
+                    <input type="file" id="file_config" v-on:change="loadFile()" style="display: none;" />
+                    <v-btn block height="32px" v-on:click="uploadConf()">
+                        <v-icon small>mdi-upload
+                        </v-icon>
+                        Upload configuration
+                    </v-btn>
+                </v-col>
+                <v-col v-if="ispectstate" cols="10" class="pr-0">
+                    <v-sheet :dark="darkMode" id="div_send" :height="height-112" style="overflow: auto">
+                        <v-list :dark="darkMode" class="pa-0">
+
+                            <v-list-item v-for="coll in bottomText.listIRCol" :key="coll">
+                                <v-list-item-avatar>
+                                    <v-icon style="background-color: var(--border-color)" color="white">
+                                        mdi-database
+                                    </v-icon>
+                                </v-list-item-avatar>
+
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="coll"></v-list-item-title>
+                                </v-list-item-content>
+
+                                <v-list-item-action>
+                                    <v-btn icon outlined @click="numDepth = 1; $emit('click-irc', coll)" color="var(--border-color)">
+                                        IR
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
+                    </v-sheet>
+                    <v-col v-if="ispectstate" class="pr-0">
+                        <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined" @click="numDepth = 1; $emit('click-tc')">
+                            <v-icon>mdi-page-last</v-icon>
+                            Temporary Collection
+                        </v-btn>
                     </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
+                </v-col>
+                <v-col :cols="2">
+                    <v-row align="center" class="text-center">
+                        <v-col cols="12">
+                            <v-sheet :dark="darkMode" :height="(height-80)/2">
+                                <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                    <v-icon small>mdi-wrench</v-icon>
+                                    Config.
+                                </v-btn>
+                            </v-sheet>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-sheet :dark="darkMode" :height="(height-80)/2">
+                                <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 36" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " tile fab depressed elevation="5" raised @click="
+                                irPressed = true
+                                setIR()
+                                $emit('click-ir')">
+                                    <v-icon small>mdi-file-find-outline</v-icon>
+                                    IR Coll.
+                                </v-btn>
+                            </v-sheet>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-sheet>
 </v-sheet>
 </template>
 
@@ -180,8 +247,17 @@ export default {
         }
     },
     methods: {
+        pxBrowser(){
+            switch(this.browser){
+                case 'firefox':
+                    return 28
+                case 'chrome':
+                case 'edge':
+                    return 25
+            }
+        },
         changeTitle(tip) {
-            if (tip !== this.textButton){
+            if (tip !== this.textButton) {
                 this.title = this.defaultTitle + ' > ' + tip
             }
         },
@@ -221,7 +297,7 @@ export default {
         setConf() {
             if (!this.conf) {
                 this.conf = true,
-                this.ispectstate = false
+                    this.ispectstate = false
                 this.title = 'Configuration'
                 this.defaultTitle = 'Configuration'
                 this.textButton = 'Configuration'
@@ -230,7 +306,7 @@ export default {
         setIR() {
             if (!this.ispectstate) {
                 this.conf = false,
-                this.ispectstate = true
+                    this.ispectstate = true
                 this.title = 'IR Collection'
                 this.defaultTitle = 'IR Collection'
                 this.textButton = 'IR Collection'
@@ -245,6 +321,45 @@ export default {
 </script>
 
 <style scoped>
+
+::v-deep #div_send {
+    margin-top: 0px;
+    line-height: 1.25rem;
+}
+
+::v-deep fieldset {
+    padding-left: 0px !important;
+    z-index: 45 !important;
+    border: 1px solid var(--border-color) !important;
+    transition-duration: 0ms !important;
+}
+
+::v-deep fieldset:hover {
+    padding-left: 0px !important;
+    z-index: 45 !important;
+    border: 1px solid var(--border-color) !important;
+    transition-duration: 0ms !important;
+}
+
+::v-deep fieldset:focus {
+    padding-left: 0px !important;
+    z-index: 45 !important;
+    border: 1px solid var(--border-color) !important;
+    transition-duration: 0ms !important;
+}
+
+::v-deep .v-input__slot {
+    padding-left: 4px !important;
+    padding-right: 14px !important;
+    transition-duration: 0ms !important;
+}
+
+::v-deep .v-text-field__slot {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+
+
 .label {
     color: white;
     padding: 8px;

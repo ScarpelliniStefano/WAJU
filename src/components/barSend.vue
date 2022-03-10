@@ -1,88 +1,94 @@
 <template>
 <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
-    <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd;background-color: var(--bg-div-color); border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'send')">
+    <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd; border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'send')">
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{title}}</h4>
         <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
-    <v-container style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;" v-if="rapporto < 3/2" class="containerstyle" fluid>
-        <v-row align="center">
-            <v-col :key="1.1" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
-                <v-sheet outlined :dark="darkMode" id="div_send" :height="height-136" contenteditable></v-sheet>
-            </v-col>
-            <v-col :key="1.2" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
-                <v-row align="center" class="text-center">
-                    <v-col>
-                        <v-btn :dark="darkMode" :width="(width-100)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;" tile fab depressed elevation="5" raised @click="openWizard()">
-                            <v-icon>mdi-auto-fix</v-icon>
-                            <span>Wizard</span>
-                        </v-btn>
-                    </v-col>
-                    <v-col>
-                        <v-btn :dark="darkMode" :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessageArr()">
-                            <v-icon color="white">mdi-play</v-icon>
-                            <span style="color: white">Execute</span>
-                        </v-btn>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
-    <v-container v-if="rapporto >= 3/2 && rapporto < 5/2" class="containerstyle" fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
-        <v-row align="center">
-            <v-col :key="'send_first_col'" :cols='10'>
-                <v-sheet outlined id="div_send" :height="height-56" contenteditable></v-sheet>
-            </v-col>
-            <v-col :key="'send_second_col'" :cols="2">
-                <v-row align="center">
-                    <v-col>
-                        <v-sheet :height="(height-80)/2">
-                            <v-btn @mouseenter="changeTitle('Execute')" @mouseleave="title = defaultTitle" :loading="exec" :width="width/6 - 36" :height="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " fab depressed elevation="5" @click="sendMessageArr()">
-                                <v-icon color="white" :size="width/15">mdi-play</v-icon>
+    <v-sheet>
+        <v-container style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;" v-if="rapporto < 3/2" fluid>
+            <v-row align="center">
+                <v-col :key="1.1" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
+                    <v-textarea outlined :dark="darkMode" id="div_send" :height="height - 136" no-resize color="var(--border-color)" v-model="textSend"></v-textarea>
+                </v-col>
+                <v-col :key="1.2" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
+                    <v-row align="center" class="text-center">
+                        <v-col>
+                            <v-btn :dark="darkMode" :width="(width-100)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;" tile fab depressed elevation="5" raised @click="openWizard()">
+                                <v-icon>mdi-auto-fix</v-icon>
+                                <span>Wizard</span>
                             </v-btn>
-                        </v-sheet>
-                    </v-col>
-                </v-row>
-                <v-row align="center">
-                    <v-col>
-                        <v-sheet :height="(height-80)/2">
-                            <v-btn @mouseenter="changeTitle('Wizard')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " fab depressed elevation="5" @click="openWizard()">
-                                <v-icon color="white" :size="width/20">mdi-auto-fix</v-icon>
-                            </v-btn>
-                        </v-sheet>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
-    <v-container v-if="rapporto >= 5/2" class="containerstyle" fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
-        <v-row align="center">
-            <v-col :key="1.1" :cols="10">
-                <v-sheet outlined id="div_send" :height="height-56" contenteditable></v-sheet>
-            </v-col>
-            <v-col :key="1.2" :cols="2">
-                <v-row align="center">
-                    <v-col>
-                        <v-sheet :height="(height-80)/2">
-                            <v-btn :loading="exec" :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessageArr()">
+                        </v-col>
+                        <v-col>
+                            <v-btn :dark="darkMode" :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessageArr()">
                                 <v-icon color="white">mdi-play</v-icon>
-                                Execute
+                                <span style="color: white">Execute</span>
                             </v-btn>
-                        </v-sheet>
-                    </v-col>
-                </v-row>
-                <v-row align="center">
-                    <v-col>
-                        <v-sheet :height="(height-80)/2">
-                            <v-btn :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " fab depressed elevation="5" @click="openWizard()">
-                                <v-icon color="white">mdi-auto-fix</v-icon>
-                                Wizard
-                            </v-btn>
-                        </v-sheet>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-sheet>
+    <v-sheet>
+        <v-container v-if="rapporto >= 3/2 && rapporto < 5/2" fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
+            <v-row align="center">
+                <v-col :cols='10'>
+                    <v-textarea outlined :dark="darkMode" id="div_send" :height="height - 56" no-resize color="var(--border-color)" v-model="textSend"></v-textarea>
+                </v-col>
+                <v-col :cols="2">
+                    <v-row align="center">
+                        <v-col>
+                            <v-sheet :dark="darkMode" :height="(height-80)/2">
+                                <v-btn @mouseenter="changeTitle('Execute')" @mouseleave="title = defaultTitle" :loading="exec" :width="width/6 - 36" :height="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " fab depressed elevation="5" @click="sendMessageArr()">
+                                    <v-icon color="white" :size="width/15">mdi-play</v-icon>
+                                </v-btn>
+                            </v-sheet>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col>
+                            <v-sheet :dark="darkMode" :height="(height-80)/2">
+                                <v-btn @mouseenter="changeTitle('Wizard')" @mouseleave="title = defaultTitle" :width="width/6 - 36" :height="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " fab depressed elevation="5" @click="openWizard()">
+                                    <v-icon color="white" :size="width/20">mdi-auto-fix</v-icon>
+                                </v-btn>
+                            </v-sheet>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-sheet>
+    <v-sheet>
+        <v-container v-if="rapporto >= 5/2" fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
+            <v-row align="center">
+                <v-col :key="1.1" :cols="10">
+                    <v-textarea outlined :dark="darkMode" id="div_send" :height="height - 56" no-resize color="var(--border-color)" v-model="textSend"></v-textarea>
+                </v-col>
+                <v-col :key="1.2" :cols="2">
+                    <v-row align="center">
+                        <v-col>
+                            <v-sheet :dark="darkMode" :height="(height-80)/2">
+                                <v-btn :loading="exec" :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessageArr()">
+                                    <v-icon color="white">mdi-play</v-icon>
+                                    Execute
+                                </v-btn>
+                            </v-sheet>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col>
+                            <v-sheet :dark="darkMode" :height="(height-80)/2">
+                                <v-btn :width="width/6 - 36" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " fab depressed elevation="5" @click="openWizard()">
+                                    <v-icon color="white">mdi-auto-fix</v-icon>
+                                    Wizard
+                                </v-btn>
+                            </v-sheet>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-sheet>
 </v-sheet>
 </template>
 
@@ -119,7 +125,6 @@ export default {
             this.title = this.defaultTitle + " - " + tip
         },
         highlight(newVal) {
-
             this.exec = true
             //Parole della risposta assegnata 
             var arrResponse = newVal.replace(/(?:\r\n|\r|\n)/g, " ").split(" ");
@@ -174,8 +179,7 @@ export default {
         },
         */
         sendMessageArr() {
-            this.textSend = "";
-
+            /*
             var innerHTML = document.getElementById("div_send").innerHTML;
 
             innerHTML = innerHTML.replace(/(<([^>]+)>)/ig, '</br>').replace(/(?:\r\n|\r|\n)/g, '</br>').replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&nbsp;/g, " ")
@@ -186,6 +190,7 @@ export default {
             })
 
             this.textSend += "\n\r";
+            */
             this.$emit('click-send', this.textSend)
         },
         getCookie(name) {
@@ -220,10 +225,41 @@ export default {
     border-width: 1px;
 }
 
-#div_send {
-    overflow-y: auto;
-    position: relative;
-    border-radius: 4px;
+::v-deep #div_send {
+    margin-top: 0px;
+    line-height: 1.25rem;
+}
+
+::v-deep fieldset {
+    padding-left: 0px !important;
+    z-index: 45 !important;
+    border: 1px solid var(--border-color) !important;
+    transition-duration: 0ms !important;
+}
+
+::v-deep fieldset:hover {
+    padding-left: 0px !important;
+    z-index: 45 !important;
+    border: 1px solid var(--border-color) !important;
+    transition-duration: 0ms !important;
+}
+
+::v-deep fieldset:focus {
+    padding-left: 0px !important;
+    z-index: 45 !important;
+    border: 1px solid var(--border-color) !important;
+    transition-duration: 0ms !important;
+}
+
+::v-deep .v-input__slot {
+    padding-left: 4px !important;
+    padding-right: 14px !important;
+    transition-duration: 0ms !important;
+}
+
+::v-deep .v-text-field__slot {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
 }
 
 @media screen and (max-width: 1263px) {
@@ -243,5 +279,4 @@ export default {
         font-size: 18px;
     }
 }
-
 </style>

@@ -1,6 +1,6 @@
 <template>
-<v-sheet elevation="17" id="recDiv" class="divstyle">
-    <v-sheet style="border-bottom: 1px solid #dddddd" elevation="14" class="topbar" @click="$emit('set-z-click', 'log')">
+<v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
+    <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd" elevation="14" class="topbar" @click="$emit('set-z-click', 'log')">
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">
             {{ this.textButton }}
         </h4>
@@ -8,24 +8,27 @@
             mdi-close
         </v-icon>
     </v-sheet>
+    <v-sheet :dark="darkMode">
     <v-container class="ma-0 containerstyle" style="border-radius: 3px; width: 100%; max-width: 99999px">
         <v-row class="py-0" align="center">
             <v-col class="pa-0" cols="12">
-                <v-sheet class="pa-3 containerstyle" :height="height - 32" id="boxLog">
+                <v-sheet :dark="darkMode" class="pa-3" :height="height - 32" id="boxLog">
                     <ul readonly style="font-size: 16px" height="100%" name="log-text" label="Logs" id="ul_send">
                         <li :key="log.id" v-for="log in arrayLog.logs">
-                            <p v-if="log.type == 'LOG'" style="font-family: Consolas; color: blue">
+                            <p v-if="log.type == 'LOG'" style="font-family: Consolas; color: var(--border-color)">
                                 {{ log.message }}
                             </p>
                             <p v-else style="font-family: Consolas; color: red">
                                 {{ log.message }}
                             </p>
+                            <v-divider></v-divider>
                         </li>
                     </ul>
                 </v-sheet>
             </v-col>
         </v-row>
     </v-container>
+    </v-sheet>
 </v-sheet>
 </template>
 
@@ -37,6 +40,7 @@ export default {
         arrayLog: Object,
         height: Number,
         width: Number,
+        darkMode: Boolean
     },
     data: () => ({
         value: 1,
@@ -172,13 +176,6 @@ export default {
     margin-bottom: 0px;
 }
 
-#ul_send>li:nth-child(odd)>p {
-    background-color: #f0f0f0;
-}
-
-#ul_send>li:nth-child(even)>p {
-    background-color: #eeeeee;
-}
 
 @media screen and (max-width: 1263px) and (min-width: 600px) {
     .list {

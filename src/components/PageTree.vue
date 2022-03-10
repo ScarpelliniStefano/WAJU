@@ -123,7 +123,6 @@
             rootKey="documents"
             :key="numDepth"
             :max-depth="numDepth"
-            
             :data="this.textIRTreeCol"
           />
         </div>
@@ -177,6 +176,7 @@ export default {
           console.log(this.promise)*/
         }
       }
+      console.log(document.getElementById('treeViewer').innerHTML)
     },
   },
   computed: {
@@ -185,6 +185,7 @@ export default {
     },
   },
   created() {
+    document.title = this.title + '- JCOUI Web'
     //ADD Commenti
     this.themeColor = this.getCookie('theme-color')
     if (!this.themeColor) {
@@ -306,7 +307,7 @@ export default {
             }
             console.log(jsonData.tree)
             this.textIRTreeCol = jsonData.tree
-
+            document.title = this.title + ' | JCOUI Web'
             /*this.promise=setInterval(() => {
               console.log("finito!");
               this.overlay = false;
