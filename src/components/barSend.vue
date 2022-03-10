@@ -4,7 +4,7 @@
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{title}}</h4>
         <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
-    <v-sheet>
+    <v-sheet :dark="darkMode" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
         <v-container style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;" v-if="rapporto < 3/2" fluid>
             <v-row align="center">
                 <v-col :key="1.1" cols="12" :sm="12" :md="12" :lg="12" :xl="12">
@@ -28,8 +28,6 @@
                 </v-col>
             </v-row>
         </v-container>
-    </v-sheet>
-    <v-sheet>
         <v-container v-if="rapporto >= 3/2 && rapporto < 5/2" fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
             <v-row align="center">
                 <v-col :cols='10'>
@@ -57,8 +55,6 @@
                 </v-col>
             </v-row>
         </v-container>
-    </v-sheet>
-    <v-sheet>
         <v-container v-if="rapporto >= 5/2" fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
             <v-row align="center">
                 <v-col :key="1.1" :cols="10">

@@ -283,6 +283,7 @@
         :height="rec.height"
         :recText="textRec"
         :recArr="arrRec"
+        :darkMode="darkMode"
         v-on:click-back-index="sendBck()"
         v-on:set-z-click="setZ"
         v-on:close-rec="selRec = !selRec"
@@ -377,6 +378,7 @@
         :height="btm.height"
         :width="btm.width"
         :rapporto="btm.width / btm.height"
+        :darkMode="darkMode"
         v-on:file-upload-index="sendConfigFile($event)"
         v-on:click-ir="sendIRList()"
         v-on:click-tc="sendIRTempCol()"
@@ -427,8 +429,8 @@
             :bgcolor="contColor"
             :rapporto="1"
             :browser="browserName"
-            :height="send.height"
-            :width="send.width"
+            :height="send.heightSm"
+            :width="send.widthSm"
             :disable="disBtn"
             :textRec="textToCommand"
             :randomNumberString="randomNumber"
@@ -448,8 +450,8 @@
           <bar-log
             :bgcolor="contColor"
             :browser="browserName"
-            :height="log.height"
-            :width="log.width"
+            :height="log.heightSm"
+            :width="log.widthSm"
             :rapporto="log.width / log.height"
             v-on:set-z-click="setZ"
             v-on:close-log="selLog = !selLog"
@@ -463,8 +465,8 @@
             :bgcolor="contColor"
             :rapporto="1"
             :browser="browserName"
-            :width="rec.width"
-            :height="rec.height"
+            :width="rec.widthSm"
+            :height="rec.heightSm"
             :recText="textRec"
             :recArr="arrRec"
             :darkMode="darkMode"
@@ -484,8 +486,8 @@
           <bottom-bar
             :bgcolor="contColor"
             :browser="browserName"
-            :height="btm.height"
-            :width="btm.width"
+            :height="btm.heightSm"
+            :width="btm.widthSm"
             :rapporto="1"
             :darkMode="darkMode"
             v-on:file-upload-index="sendConfigFile($event)"
@@ -628,6 +630,9 @@ export default {
         height: 400,
         posz: 0,
         idRecChange: 124,
+        //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
+        widthSm: 500,
+        heightSm: 400
       },
 
       send: {
@@ -637,6 +642,9 @@ export default {
         height: 400,
         posz: 0,
         idSendChange: 122,
+        //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
+        widthSm: 500,
+        heightSm: 400
       },
 
       btm: {
@@ -646,6 +654,9 @@ export default {
         height: 400,
         posz: 0,
         idBtmChange: 123,
+        //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
+        widthSm: 500,
+        heightSm: 400
       },
 
       log: {
@@ -655,6 +666,9 @@ export default {
         height: 400,
         posz: 0,
         idLogChange: 123,
+        //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
+        widthSm: 500,
+        heightSm: 400
       },
 
       textToCommand: "",
@@ -703,6 +717,12 @@ export default {
     }
     document.documentElement.classList.add(this.fontSize);
 
+    if(window.innerWidth < 960 && window.innerWidth > 700){
+        this.send.widthSm = window.innerWidth
+        this.rec.widthSm = window.innerWidth
+        this.log.widthSm = window.innerWidth
+        this.btm.widthSm = window.innerWidth
+      }
   },
   mounted() {
     let userAgent = navigator.userAgent;
@@ -844,6 +864,13 @@ export default {
 
       if(this.btm.posx + this.btm.width > document.documentElement.clientWidth){
         this.btm.posx = document.documentElement.clientWidth - this.btm.width - 5
+      }
+
+      if(window.innerWidth < 960 && window.innerWidth > 700){
+        this.send.widthSm = window.innerWidth
+        this.rec.widthSm = window.innerWidth
+        this.log.widthSm = window.innerWidth
+        this.btm.widthSm = window.innerWidth
       }
     },
     clickDragResize(component){
