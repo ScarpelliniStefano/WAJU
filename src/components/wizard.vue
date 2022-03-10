@@ -36,12 +36,23 @@
             tile fab depressed elevation="5" raised
             dark large
             class="tooltip btnstyle"
-            width="200px"
+            width="300px"
             style="color: white;background-color: var(--bg-color);" 
-            @click="transferMessage()" 
+            @click="transferMessage('RESET')" 
         >
           <v-icon color="white">mdi-send</v-icon>
-          <span style="color: white">&nbsp;SEND MESSAGE</span>
+          <span style="color: white">&nbsp;RESET & SEND MESSAGE</span>
+        </v-btn>&nbsp;&nbsp;
+        <v-btn
+            tile fab depressed elevation="5" raised
+            dark large
+            class="tooltip btnstyle"
+            width="200px"
+            style="color: white;background-color: var(--bg-color);" 
+            @click="transferMessage('APPEND')" 
+        >
+          <v-icon color="white">mdi-send</v-icon>
+          <span style="color: white">&nbsp;APPEND MESSAGE</span>
         </v-btn>
       </center>
     </v-sheet>
@@ -146,18 +157,8 @@ export default {
                 value:''
             })
         },
-        transferMessage(){
-          this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+this.valueString.replace(/\n/g,"<br/>"));
-          this.connectionPage.onopen = () =>{
-            console.log("wizard in invio");
-            this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+this.valueString.replace(/\n/g,"<br/>"));
-          }
-          this.connectionPage.onclose = () =>{
-            console.log("wizard in fermata")
-          }
-          this.connectionPage.onerror = () =>{
-            console.log("wizard error aiuto!")
-          }
+        transferMessage(type){
+          this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+type+"###"+this.valueString.replace(/\n/g,"<br/>"));
           
         }
     }

@@ -14,44 +14,11 @@
           </center>
           <br />
           <center>
-            <h5>
+            <h4>
               Total item:{{ this.valTotal }} - Initial document:
               {{ this.valInitial }} - Final document: {{ this.valFinal }}
-            </h5>
+            </h4>
           </center>
-          <v-row cols="12">
-            <v-spacer></v-spacer>
-            <v-col cols="1">
-              <v-text-field
-                v-model="page"
-                label="Page"
-                type="number"
-                min="1"
-                :max="(this.valTotal%this.size)!=0 ? (this.valTotal/this.size) + 1 : (this.valTotal/this.size)"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="1">
-              <v-text-field
-                v-model="size"
-                label="Size"
-                type="number"
-                min="0"
-                :max="maxDimSize()"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="1">
-              <v-btn
-                elevation="2"
-                @click="
-                  changeDimension()
-                  overlay = !overlay
-                "
-              >
-                Update
-              </v-btn>
-            </v-col>
-            <v-spacer></v-spacer>
-          </v-row>
           <v-row>
             <div v-if="this.error != ''">
               <center>
@@ -127,6 +94,49 @@
           />
         </div>
       </v-col>
+      <v-col cols="12" sm="12" md="12" lg="12" xl="12">
+        <v-row cols="12">
+            <v-spacer></v-spacer>
+            <v-col cols="4">
+                <v-pagination
+                v-model="page"
+                :length="pageCount"
+                :total-visible="7"
+                color="var(--border-color)"
+                prev-icon="mdi-menu-left"
+                next-icon="mdi-menu-right"
+              ></v-pagination>
+              <v-text-field
+                v-model="page"
+                label="Page"
+                type="number"
+                min="1"
+                :max="(this.valTotal%this.size)!=0 ? (this.valTotal/this.size) + 1 : (this.valTotal/this.size)"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="1">
+              <v-text-field
+                v-model="size"
+                label="Size"
+                type="number"
+                min="0"
+                :max="maxDimSize()"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="1">
+              <v-btn
+                elevation="2"
+                @click="
+                  changeDimension()
+                  overlay = !overlay
+                "
+              >
+                Update
+              </v-btn>
+            </v-col>
+            <v-spacer></v-spacer>
+          </v-row>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -150,6 +160,7 @@ export default {
       valTotal: 0,
       connectionPage: null,
       page: 1,
+      pageCount:0,
       size: 25,
       mounted: false,
       overlay: true,
@@ -219,7 +230,13 @@ export default {
     this.changeDimension()
   },
   methods: {
-    
+    calculatePageSize(){
+      if((this.valTotal%this.size)!=0){
+        this.pageCount=(this.valTotal/this.size) + 1
+      }else{
+        this.pageCount=(this.valTotal/this.size)
+      }
+    },
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color)
       this.mainColor = color
@@ -307,6 +324,7 @@ export default {
             }
             console.log(jsonData.tree)
             this.textIRTreeCol = jsonData.tree
+            this.calculatePageSize();
             document.title = this.title + ' | JCOUI Web'
             /*this.promise=setInterval(() => {
               console.log("finito!");

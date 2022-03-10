@@ -1300,8 +1300,12 @@ export default {
         if(command=="WIZARD"){
           if(data.split("###")[1]==this.randomNumber){
             //this.showWizard=true;
-            this.textWizard=data.split("###")[2];
-            document.getElementById("div_send").innerHTML=this.textWizard;
+            let typeUpdate=data.split("###")[2];
+            this.textWizard=data.split("###")[3];
+            if(typeUpdate=="RESET")
+              document.getElementById("div_send").innerHTML=this.textWizard;
+            if(typeUpdate=="APPEND")
+              document.getElementById("div_send").innerHTML+=this.textWizard;
             this.wizardAlert = true;
           }
         }
