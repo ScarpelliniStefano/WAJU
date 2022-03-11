@@ -1,18 +1,18 @@
 <template>
-  <div id="treeView">
+  <v-sheet>
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="200"></v-progress-circular>
     </v-overlay>
+    <v-container>
     <v-row>
       <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <div class="boxInfo" align="left" justify="left">
+        <v-sheet rounded elevation="10" width="100%">
           <center>
             <h1>{{ this.title }}</h1>
           </center>
           <center>
             <h3>{{ new Date(this.datetime).toLocaleString() }}</h3>
           </center>
-          <br />
           <center>
             <h4>
               Total item:{{ this.valTotal }} - Initial document:
@@ -20,98 +20,14 @@
             </h4>
           </center>
           <v-row>
-            <div v-if="this.error != ''">
+            <v-sheet v-if="this.error != ''">
               <center>
                 <span class="label danger">{{ this.error }}</span>
               </center>
-            </div>
+            </v-sheet>
           </v-row>
-          <v-row>
-            <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-              <div id="treeViewBtn" align="center">
-                <ul class="list_inside">
-                  <li
-                    v-if="
-                      !(
-                        this.textIRTreeCol == '' ||
-                        this.textIRTreeCol == undefined
-                      )
-                    "
-                  >
-                    <v-btn
-                      class="tooltip btnstyle"
-                      elevation="0"
-                      style="
-                        border-radius: 4px;
-                        border-style: solid;
-                        border-width: 1px;
-                      "
-                      fab
-                      tile
-                      @click="download('TreeColl')"
-                    >
-                      <v-icon color="grey">mdi-content-save-outline</v-icon>
-                      <span class="tooltiptext">Save Tree...</span>
-                    </v-btn>
-                  </li>
-                  <li
-                    v-if="
-                      !(
-                        this.textIRTreeCol == '' ||
-                        this.textIRTreeCol == undefined
-                      )
-                    "
-                  >
-                    <v-btn
-                      class="tooltip btnstyle"
-                      elevation="0"
-                      style="
-                        border-radius: 4px;
-                        border-style: solid;
-                        border-width: 1px;
-                      "
-                      fab
-                      tile
-                      @click="setDepth()"
-                    >
-                      <v-icon color="grey">mdi-circle-expand</v-icon>
-                      <span class="tooltiptext">Expand</span>
-                    </v-btn>
-                  </li>
-                </ul>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
-      </v-col>
-      <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <div class="box" id="treeViewer" align="left" justify="left">
-          <!--<json-view
-            rootKey="documents"
-            :key="numDepth"
-            :max-depth="numDepth"
-            :data="this.textIRTreeCol"
-          />-->
-        </div>
-      </v-col>
-      <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <v-row cols="12" align="center">
-          <v-spacer></v-spacer>
-          <v-col cols="2">
-              <v-pagination
-              v-model="page"
-              :length="pageCount"
-              :total-visible="7"
-              color="var(--border-color)"
-              prev-icon="mdi-menu-left"
-              next-icon="mdi-menu-right"
-            ></v-pagination>
-          </v-col>
-          <v-spacer></v-spacer>
-        </v-row>
-        <v-row cols="2" align="center">
-          <v-spacer></v-spacer>
-          
+          <v-row align="center" class="text-center pt-3">
+            <v-spacer></v-spacer>
             <v-col cols="1">
               <v-select
                 v-model="size"
@@ -120,23 +36,67 @@
                 dense
               ></v-select>
             </v-col>
-            
-            <v-col cols="1">
-              <v-btn
-                elevation="2"
-                @click="
-                  changeDimension()
-                  overlay = !overlay
-                "
-              >
-                Update
-              </v-btn>
-            </v-col>
             <v-spacer></v-spacer>
           </v-row>
+          <v-row align="center" class="text-center">
+              <v-col cols="3" class="pl-9">
+                    <v-btn
+                      color="var(--border-color)"
+                      elevation="2"
+                      style="
+                        border-radius: 4px;
+                        border-style: solid;
+                        border-width: 1px;
+                      "
+                      @click="download('TreeColl')"
+                      width="100%"
+                    >
+                      <v-icon color="white">mdi-content-save-outline</v-icon>
+                      <span style="color: white;">Save Tree...</span>
+                    </v-btn>
+              </v-col>
+              <v-col cols="6">
+                <v-pagination
+                  v-model="page"
+                  :length="pageCount"
+                  :total-visible="7"
+                  color="var(--border-color)"
+                  prev-icon="mdi-menu-left"
+                  next-icon="mdi-menu-right"
+                ></v-pagination>
+              </v-col>
+              <v-col cols="3" class="pr-9">
+                    <v-btn
+                      color="var(--border-color)"
+                      elevation="2"
+                      style="
+                        border-radius: 4px;
+                        border-style: solid;
+                        border-width: 1px;
+                      "
+                      @click="setDepth()"
+                      width="100%"
+                    >
+                      <v-icon color="white">mdi-circle-expand</v-icon>
+                      <span style="color: white;">Expand</span>
+                    </v-btn>
+              </v-col>
+          </v-row>
+        </v-sheet>
+      </v-col>
+      <v-col cols="12" sm="12" md="12" lg="12" xl="12">
+        <v-sheet rounded height="350px" elevation="5" id="treeViewer" style="overflow: auto;">
+          <!--<json-view
+            rootKey="documents"
+            :key="numDepth"
+            :max-depth="numDepth"
+            :data="this.textIRTreeCol"
+          />-->
+        </v-sheet>
       </v-col>
     </v-row>
-  </div>
+    </v-container>
+  </v-sheet>
 </template>
 <script>
 //import { JSONView } from 'vue-json-component'
@@ -174,6 +134,12 @@ export default {
     }
   },
   watch: {
+    size: function () {
+      this.changeDimension()
+    },
+    page: function () {
+      this.changeDimension()
+    },
     textIRTreeCol: function (newVal, oldVal) {
       if (newVal != oldVal) {
         if ((newVal == '' || newVal == undefined) && this.error == '') {
@@ -381,7 +347,7 @@ export default {
               '\n}',
           ),
       )
-      element.setAttribute('download', filename)
+      element.setAttribute('download', filename + '.json')
 
       element.style.display = 'none'
       document.body.appendChild(element)
