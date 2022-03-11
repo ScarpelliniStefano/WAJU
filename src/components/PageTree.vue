@@ -86,12 +86,12 @@
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="12" xl="12">
         <div class="box" id="treeViewer" align="left" justify="left">
-          <json-view
+          <!--<json-view
             rootKey="documents"
             :key="numDepth"
             :max-depth="numDepth"
             :data="this.textIRTreeCol"
-          />
+          />-->
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="12" xl="12">
@@ -139,13 +139,13 @@
   </div>
 </template>
 <script>
-import { JSONView } from 'vue-json-component'
+//import { JSONView } from 'vue-json-component'
 //import Settings from '../components/Settings.vue';
-
+import jsonview from '@pgrabovets/json-view';
 
 export default {
   name: 'IRCompTree',
-  components: { 'json-view': JSONView },
+  //components: { 'json-view': JSONView },
   data: function () {
     return {
       expand: false,
@@ -160,6 +160,7 @@ export default {
       page: 1,
       pageCount:0,
       size: 25,
+      tree:null,
       itemsSize:[5,10,15,25,50],
       mounted: false,
       overlay: true,
@@ -341,6 +342,10 @@ export default {
               else this.size = 25
             }
             console.log(jsonData.tree)
+            this.tree = jsonview.createWithInitial(jsonData.tree,this.valInitial);
+            document.querySelector('#treeViewer').innerHTML='';
+              jsonview.render(this.tree, document.querySelector('#treeViewer'));
+              jsonview.expandDepth(this.tree,this.numDepth);
             this.textIRTreeCol = jsonData.tree
             this.calculatePageSize();
             document.title = this.title + ' | JCOUI Web'
@@ -355,8 +360,15 @@ export default {
 
      
     },
-    setDepth() {
-      this.numDepth = this.numDepth < 2 ? 10 : 1
+    setDepth() { 
+      if(this.numDepth<2) jsonview.expand(this.tree);
+      else{
+        jsonview.collapse(this.tree);
+        jsonview.expandDepth(this.tree,1);
+      } 
+      this.numDepth = this.numDepth < 2 ? 10 : 1;
+      
+     
     },
     download(filename) {
       var element = document.createElement('a')

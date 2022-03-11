@@ -11,6 +11,7 @@
     "startdebug": "node --inspect ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve"
   },
   "dependencies": {
+    "@pgrabovets/json-view": "git+https://github.com/ScarpelliniStefano/json-view.git",
     "@vue/cli": "^4.5.14",
     "bootstrap": "^5.1.3",
     "concurrently": "^6.4.0",
