@@ -324,7 +324,8 @@
         v-on:set-z-click="setZ"
         v-on:close-send="selSend = !selSend"
         v-on:send-text='sendText()'
-        :textChange="send.textSend"
+        v-on:share-text='shareText'
+        :textShare='send.textShare'
       ></bar-send>
     </VueDragResize>
 
@@ -444,6 +445,8 @@
             v-on:click-send="sendMsg($event)"
             v-on:set-z-click="setZ"
             v-on:close-send="selSend = !selSend"
+            v-on:share-text='shareText'
+            :textShare='send.textShare'
           ></bar-send>
         </v-col>
         <v-col
@@ -652,7 +655,7 @@ export default {
         widthSm: 500,
         heightSm: 400,
 
-        textSend: 'ciao'
+        textShare: ''
       },
 
       btm: {
@@ -857,8 +860,9 @@ export default {
     };
   },
   methods: {
-    sendText(text){
-      this.send.textSend = text
+    shareText(text){
+      console.log('Testo share ha un nuovo valore: ' + text)
+      this.send.textShare = text
     },
     setPositions(){
       if(this.send.posx + this.send.width > document.documentElement.clientWidth){
