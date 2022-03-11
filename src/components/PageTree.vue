@@ -198,9 +198,9 @@ export default {
   methods: {
     calculatePageSize(){
       if((this.valTotal%this.size)!=0){
-        this.pageCount=(this.valTotal/this.size) + 1
+        this.pageCount=Math.floor((this.valTotal/this.size) + 1)
       }else{
-        this.pageCount=(this.valTotal/this.size)
+        this.pageCount=(this.valTotal/this.size).toFixed()
       }
     },
     setMainColor(color) {
@@ -308,7 +308,7 @@ export default {
               else this.size = 25
             }
             console.log(jsonData.tree)
-            this.tree = jsonview.createWithInitial(jsonData.tree,this.valInitial);
+            this.tree = jsonview.createWithInitial(jsonData.tree,this.valInitial+1);
             document.querySelector('#treeViewer').innerHTML='';
               jsonview.render(this.tree, document.querySelector('#treeViewer'));
               jsonview.expandDepth(this.tree,this.numDepth);
