@@ -35,8 +35,10 @@
         <v-btn
             tile fab depressed elevation="5" raised
             dark large
+            :disabled="disabledBtn"
             class="tooltip btnstyle"
             width="300px"
+            id="btnReset"
             style="color: white;background-color: var(--bg-color);" 
             @click="transferMessage('RESET')" 
         >
@@ -46,7 +48,9 @@
         <v-btn
             tile fab depressed elevation="5" raised
             dark large
+            :disabled="disabledBtn"
             class="tooltip btnstyle"
+            id="btnAppend"
             width="200px"
             style="color: white;background-color: var(--bg-color);" 
             @click="transferMessage('APPEND')" 
@@ -55,18 +59,40 @@
           <span style="color: white">&nbsp;APPEND MESSAGE</span>
         </v-btn>
       </center>
-    </v-sheet>
-</template>
+        <v-snackbar
+        v-model="wizardAlert" elevation="5" light
+        >
+            {{lblPopup}}
 
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="var(--border-color)"
+            text
+            v-bind="attrs"
+            @click="wizardAlert = false"
+          >
+            Ok
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </v-sheet>
+    
+</template>
 <script>
 import modules from '../modules/modules.vue'
+import LongPress from 'vue-directive-long-press'
 export default {
+    directives: {
+      'long-press': LongPress
+    },
     data:()=> ({
         modulesData:[{
             index:1,
             selected:'',
             value:''
         }],
+        lblPopup:'pippo',
+        wizardAlert: false,
         numberWizard:'',
         mainColor: "black",
         colHex:"",
@@ -86,10 +112,20 @@ export default {
                       'CREATE JAVASCRIPT FUNCTION',
                       'TRAJECTORY MATCHING'
                       ],
-        valueString : ''
+        valueString : '',
+        disabledBtn:true,
+        isLongClick:false,
+        timerId:''
     }),
     components:{
         modules
+    },
+    watch:{
+      valueString: function(newVal){
+        if(newVal!=''){
+          this.disabledBtn=false;
+        }
+      }
     },
     created(){
       document.title = 'Wizard - JCOUI Web'
@@ -101,11 +137,14 @@ export default {
               this.changeColor();
             }
         }
+        
        
     },
     mounted(){
       console.log(this.$route.query.id)
       this.numberWizard=this.$route.query.id
+      this.addMouseOverEvent('btnAppend','Transfer the text in the main view, append that to the previuos content in the command view');
+      this.addMouseOverEvent('btnReset','Transfer the text in the main view, cleaning all previuos content in the command view');
     },
     methods:{
         changeColor(){
@@ -158,9 +197,26 @@ export default {
             })
         },
         transferMessage(type){
-          this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+type+"###"+this.valueString);
-          
+          if(!this.isLongClick)
+            this.connectionPage.send("WIZARD###"+this.numberWizard+"###"+type+"###"+this.valueString);
+            clearTimeout(this.timerId)
+        },
+        addMouseOverEvent(idElement,message){
+          document.getElementById(idElement).onmousedown = (args) =>{
+            this.isLongClick=false;
+            this.timerId=setTimeout(() => fn.apply(null, [args]), 500)
+          }
+        
+
+          var fn = (args) => {
+            console.log('onmousedown args', args)
+            this.lblPopup=message;
+            this.wizardAlert=true;
+            this.isLongClick=true;
+          }
         }
+        
+        
     }
 }
 </script>

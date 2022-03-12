@@ -131,7 +131,7 @@ export default {
                 if (typeUpdate == "RESET")
                     this.textSend = textWizard.replace(/(<([^>]+)>)/ig, '\n')
                 if (typeUpdate == "APPEND"){
-                    if (this.textSend.endsWith('\n')) {
+                    if (this.textSend.endsWith('\n')||this.textSend=='') {
                         this.textSend += textWizard.replace(/(<([^>]+)>)/ig, '\n')
                     } else {
                         this.textSend += '\n' + textWizard.replace(/(<([^>]+)>)/ig, '\n')
