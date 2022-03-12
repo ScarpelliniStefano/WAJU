@@ -80,11 +80,7 @@
 </template>
 <script>
 import modules from '../modules/modules.vue'
-import LongPress from 'vue-directive-long-press'
 export default {
-    directives: {
-      'long-press': LongPress
-    },
     data:()=> ({
         modulesData:[{
             index:1,

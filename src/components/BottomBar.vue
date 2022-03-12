@@ -1,7 +1,7 @@
 <template>
 <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd; border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'btm')">
-        <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{this.title}}</h4>
+        <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{TITLE}}</h4>
         <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-sheet :dark="darkMode" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
@@ -13,7 +13,7 @@
                     <v-btn block height="32px" v-on:click="uploadConf()">
                         <v-icon small>mdi-upload
                         </v-icon>
-                        Upload configuration
+                        {{BTN_SPAN_UPLOAD}}
                     </v-btn>
                 </v-col>
                 <v-col v-if="ispectstate" cols="12">
@@ -43,7 +43,7 @@
                 <v-col v-if="ispectstate" cols="12">
                     <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined" @click="numDepth = 1; $emit('click-tc')">
                         <v-icon>mdi-page-last</v-icon>
-                        Temporary Collection
+                        {{BTN_TEMPORARY_COLL}}
                     </v-btn>
                 </v-col>
                 <v-col :cols="12">
@@ -51,7 +51,7 @@
                         <v-col cols="6">
                             <v-btn :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised v-on:click="setConf()">
                                 <v-icon small>mdi-wrench</v-icon>
-                                Config.
+                                {{BTN_SPAN_CONFIG_SHORT}}
                             </v-btn>
                         </v-col>
                         <v-col cols="6">
@@ -60,7 +60,7 @@
                             setIR()
                             $emit('click-ir')">
                                 <v-icon small>mdi-file-find-outline</v-icon>
-                                IR Request
+                                {{BTN_SPAN_IR_REQUEST}}
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -75,7 +75,7 @@
                     <v-btn block height="32px" v-on:click="uploadConf()">
                         <v-icon small>mdi-upload
                         </v-icon>
-                        Upload configuration
+                        {{BTN_SPAN_UPLOAD}}
                     </v-btn>
                 </v-col>
                 <v-col v-if="ispectstate" cols="10" class="pr-0">
@@ -104,7 +104,7 @@
                     <v-col v-if="ispectstate" class="pr-0">
                         <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined" @click="numDepth = 1; $emit('click-tc')">
                             <v-icon>mdi-page-last</v-icon>
-                            Temporary Collection
+                            {{BTN_TEMPORARY_COLL}}
                         </v-btn>
                     </v-col>
                 </v-col>
@@ -113,14 +113,14 @@
                     <v-row align="center" class="text-center">
                         <v-col cols="12">
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                <v-btn @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
                                     <v-icon :size="width/20">mdi-wrench</v-icon>
                                 </v-btn>
                             </v-sheet>
                         </v-col>
                         <v-col cols="12">
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " tile fab depressed elevation="5" raised @click="
+                                <v-btn @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " tile fab depressed elevation="5" raised @click="
                                 irPressed = true
                                 setIR()
                                 $emit('click-ir')">
@@ -140,7 +140,7 @@
                     <v-btn block height="32px" v-on:click="uploadConf()">
                         <v-icon small>mdi-upload
                         </v-icon>
-                        Upload configuration
+                        {{BTN_SPAN_UPLOAD}}
                     </v-btn>
                 </v-col>
                 <v-col v-if="ispectstate" cols="10" class="pr-0">
@@ -169,7 +169,7 @@
                     <v-col v-if="ispectstate" class="pr-0">
                         <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined" @click="numDepth = 1; $emit('click-tc')">
                             <v-icon>mdi-page-last</v-icon>
-                            Temporary Collection
+                            {{BTN_TEMPORARY_COLL}}
                         </v-btn>
                     </v-col>
                 </v-col>
@@ -178,20 +178,20 @@
                     <v-row align="center" class="text-center">
                         <v-col cols="12">
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('Configuration')" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                <v-btn @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
                                     <v-icon small>mdi-wrench</v-icon>
-                                    Config.
+                                    {{BTN_SPAN_CONFIG_SHORT}}
                                 </v-btn>
                             </v-sheet>
                         </v-col>
                         <v-col cols="12">
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
-                                <v-btn @mouseenter="changeTitle('IR Collection')" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " tile fab depressed elevation="5" raised @click="
+                                <v-btn @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " tile fab depressed elevation="5" raised @click="
                                 irPressed = true
                                 setIR()
                                 $emit('click-ir')">
                                     <v-icon small>mdi-file-find-outline</v-icon>
-                                    IR Coll.
+                                    {{BTN_SPAN_COLL_SHORT}}
                                 </v-btn>
                             </v-sheet>
                         </v-col>
@@ -204,8 +204,9 @@
 </template>
 
 <script>
+import lang from '../env/lang.en'
 export default {
-    name: 'barRec',
+    name: 'barConfigColl',
     components: {},
     props: {
         bottomText: Object,
@@ -228,7 +229,15 @@ export default {
         textButton: 'Configuration',
         listEmpty: true,
         defaultTitle: 'Configuration',
-        title: 'Configuration'
+        title: 'Configuration',
+        TITLE: lang.CONFIG_COLL_COMP.CONFIG.TITLE,
+        BTN_SPAN_UPLOAD: lang.CONFIG_COLL_COMP.CONFIG.BTN_SPAN_UPLOAD,
+        BTN_SPAN_CONFIG_SHORT: lang.CONFIG_COLL_COMP.BTN_SPAN_CONFIG_SHORT,
+        BTN_SPAN_COLL_SHORT: lang.CONFIG_COLL_COMP.BTN_SPAN_COLL_SHORT,
+        BTN_SPAN_CONFIG_FULL: lang.CONFIG_COLL_COMP.BTN_SPAN_CONFIG_FULL,
+        BTN_SPAN_COLL_FULL: lang.CONFIG_COLL_COMP.BTN_SPAN_COLL_FULL,
+        BTN_TEMPORARY_COLL:lang.CONFIG_COLL_COMP.COLLECTION.BTN_SPAN_TEMPORARY_COLLECTION,
+        BTN_SPAN_IR_REQUEST:lang.CONFIG_COLL_COMP.BTN_SPAN_IR_REQUEST
     }),
     created() {},
     mounted() {},
@@ -298,6 +307,7 @@ export default {
                     this.ispectstate = false
                 this.title = 'Configuration'
                 this.defaultTitle = 'Configuration'
+                this.TITLE=lang.CONFIG_COLL_COMP.CONFIG.TITLE
                 this.textButton = 'Configuration'
             }
         },
@@ -307,6 +317,7 @@ export default {
                     this.ispectstate = true
                 this.title = 'IR Collection'
                 this.defaultTitle = 'IR Collection'
+                this.TITLE=lang.CONFIG_COLL_COMP.COLLECTION.TITLE
                 this.textButton = 'IR Collection'
             }
         },

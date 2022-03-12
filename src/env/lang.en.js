@@ -16,12 +16,14 @@ const lang = {
             BTN_SPAN_UPLOAD: 'Upload Configuration',
         },
         COLLECTION: {
-            TITLE: 'Collection'
+            TITLE: 'Collection',
+            BTN_SPAN_TEMPORARY_COLLECTION: 'Temporary Collection',
         },
         BTN_SPAN_CONFIG_SHORT: 'Config.',
         BTN_SPAN_CONFIG_FULL: 'Configuration',
         BTN_SPAN_COLL_SHORT: 'IR Coll.',
-        BTN_SPAN_COLL_FULL: 'IR Collections'
+        BTN_SPAN_COLL_FULL: 'IR Collections',
+        BTN_SPAN_IR_REQUEST: 'IR Request'
     },
     LOG_COMP: {
         TITLE: 'Log'
