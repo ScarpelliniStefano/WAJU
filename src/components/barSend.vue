@@ -1,14 +1,14 @@
 <template>
 <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd; border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'send')">
-        <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{title}}</h4>
+        <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{TITLE}}</h4>
         <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-sheet :dark="darkMode" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
         <v-container fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">
             <v-row align="center">
                 <v-col :cols='dimCols(1)'>
-                    <v-textarea outlined :dark="darkMode" id="div_send" :height="height - diffHeight()" no-resize style="border: 1px solid var(--border-color); border-radius:3px; overflow:auto;" v-model="textSend"></v-textarea>
+                    <v-textarea outlined :dark="darkMode" id="div_send" :height="height - diffHeight()" no-resize v-model="textSend"></v-textarea>
                 </v-col>
                 <v-divider v-if="dividerBool()" vertical></v-divider>
                 <v-col :cols='dimCols(2)'>
@@ -16,7 +16,7 @@
                         <v-col>
                             <v-btn v-if="ratioMode() === 'small'" :dark="darkMode" :width="(width-100)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;" tile fab depressed elevation="5" raised @click="openWizard()">
                                 <v-icon>mdi-auto-fix</v-icon>
-                                <span>Wizard</span>
+                                <span>{{BTN_SPAN_WIZARD}}</span>
                             </v-btn>
                             <v-sheet v-if="ratioMode() !== 'small'" :dark="darkMode" :height="(height-80)/2">
                                 <v-btn v-if="ratioMode() === 'medium'" @mouseenter="changeTitle('Execute')" @mouseleave="title = defaultTitle" :loading="exec" :width="width/6 - 24" :height="width/6 - 24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " fab depressed elevation="5" @click="sendMessageArr()">
@@ -24,7 +24,7 @@
                                 </v-btn>
                                 <v-btn v-if="ratioMode() === 'big'" :loading="exec" :width="width/6 - 24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " fab depressed elevation="5" @click="sendMessageArr()">
                                     <v-icon color="white">mdi-play</v-icon>
-                                    <span>Execute</span>
+                                    <span>{{BTN_SPAN_EXECUTE}}</span>
                                 </v-btn>
                             </v-sheet>
 
@@ -32,7 +32,7 @@
                         <v-col v-if="ratioMode() === 'small'">
                             <v-btn :dark="darkMode" :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessageArr()">
                                 <v-icon color="white">mdi-play</v-icon>
-                                <span style="color: white">Execute</span>
+                                <span style="color: white">{{BTN_SPAN_EXECUTE}}</span>
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -44,7 +44,7 @@
                                 </v-btn>
                                 <v-btn v-if="ratioMode() === 'big'" :width="width/6 - 24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " fab depressed elevation="5" @click="openWizard()">
                                     <v-icon color="white">mdi-auto-fix</v-icon>
-                                    Wizard
+                                    <span>{{BTN_SPAN_WIZARD}}</span>
                                 </v-btn>
                             </v-sheet>
                         </v-col>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import lang from '../env/lang.en'
 export default {
     name: 'barSend',
     data() {
@@ -65,7 +66,11 @@ export default {
             textSend: '',
             exec: false,
             defaultTitle: 'Command',
-            title: 'Command'
+            title: 'Command',
+
+            TITLE: lang.SEND_COMP.TITLE,
+            BTN_SPAN_EXECUTE: lang.SEND_COMP.BTN_SPAN_EXECUTE,
+            BTN_SPAN_WIZARD: lang.SEND_COMP.BTN_SPAN_WIZARD
         }
     },
     props: {
@@ -84,18 +89,14 @@ export default {
             this.changeText(newVal)
         },
         textSend: function (newVal) {
-            console.log('Modificato il contenuto del div editabile: ' + newVal)
             this.$emit('share-text', newVal)
         },
         textShare: function (newVal) {
-            console.log('Modificato il testo condiviso: ' + newVal)
             this.textSend = newVal
         }
     },
     mounted() {
-        console.log('Component Mounted with text share: ' + this.textShare)
         this.textSend = this.textShare
-        console.log('Component Mounted with text send: ' + this.textSend)
     },
     methods: {
         dimCols(numCol) {
@@ -121,16 +122,23 @@ export default {
             else return 56
         },
         changeText(value) {
-            var typeUpdate = value.split("###")[0];
-            var textWizard = value.split("###")[1];
-            if (typeUpdate == "RESET")
-                this.textSend = textWizard.replace(/(<([^>]+)>)/ig, '\n')
-            if (typeUpdate == "APPEND")
-                if (this.textSend.endsWith('\n')) {
-                    this.textSend += textWizard.replace(/(<([^>]+)>)/ig, '\n')
-                } else {
-                    this.textSend += '\n' + textWizard.replace(/(<([^>]+)>)/ig, '\n')
+            if(value.split('###').length === 1)
+            {
+                this.highlight(value)
+            } else {
+                var typeUpdate = value.split("###")[0];
+                var textWizard = value.split("###")[1];
+                if (typeUpdate == "RESET")
+                    this.textSend = textWizard.replace(/(<([^>]+)>)/ig, '\n')
+                if (typeUpdate == "APPEND"){
+                    if (this.textSend.endsWith('\n')) {
+                        this.textSend += textWizard.replace(/(<([^>]+)>)/ig, '\n')
+                    } else {
+                        this.textSend += '\n' + textWizard.replace(/(<([^>]+)>)/ig, '\n')
+                    }
                 }
+            }
+            
         },
         changeTitle(tip) {
             this.title = this.defaultTitle + " - " + tip
@@ -169,7 +177,6 @@ export default {
                     id: this.randomNumberString
                 }
             });
-            console.log(routeData);
             setTimeout(function () {
                 window.open(routeData.href, '_blank');
             }, 50);
@@ -190,7 +197,7 @@ export default {
         },
         */
         sendMessageArr() {
-
+            /*
             var innerHTML = document.getElementById("div_send").innerHTML;
 
             innerHTML = innerHTML.replace(/(<([^>]+)>)/ig, '</br>').replace(/(?:\r\n|\r|\n)/g, '</br>').replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&nbsp;/g, " ")
@@ -201,7 +208,7 @@ export default {
             })
 
             this.textSend += "\n\r";
-
+            */
             this.$emit('click-send', this.textSend)
         },
         getCookie(name) {

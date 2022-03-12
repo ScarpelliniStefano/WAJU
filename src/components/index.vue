@@ -861,7 +861,6 @@ export default {
   },
   methods: {
     shareText(text){
-      console.log('Testo share ha un nuovo valore: ' + text)
       this.send.textShare = text
     },
     setPositions(){
