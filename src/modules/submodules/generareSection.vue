@@ -1,31 +1,116 @@
+
 <template>
-            
-            <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" label="collections clause" rows="2" auto-grow v-model="whereClause"></v-textarea>
-                <v-checkbox color="var(--bg-color)" v-model="generateSect" label="add a generate section?"></v-checkbox>
-                <generate-section v-on:changeValue="changeText($event)"/>
-            </v-container>
-            
+  <v-container fluid>
+        <v-textarea v-if="generateSect" label="generate actions" rows="1" v-model="generateAction"></v-textarea>
+        <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" label="Do you want checks on the fuzzy?"></v-checkbox>
+        <v-container style="border-style: inset;" v-if="fuzzyCheck">
+        <v-row v-for="collect in collectionsFuzzy" :key="collect.index">
+            <v-col>
+            <v-text-field :rules="[rules.counter]" v-if="fuzzyCheck" label="ID istruction" v-model="collect.idFuzzyInstr"></v-text-field>
+            </v-col>
+            <v-col>
+            <v-textarea :rules="[rules.counter]" v-if="fuzzyCheck" label="fuzzy check condition" rows="1" v-model="collect.fuzzyInstr"></v-textarea>
+            </v-col>
+        </v-row>
+        <v-container>
+        <v-btn
+            tile fab depressed elevation="5" raised
+            dark small
+            class="tooltip btnstyle"
+            width="220px"
+            style="color: white;background-color: var(--bg-color);" 
+            @click="setPlus()" 
+        >
+        <v-icon color="white">mdi-plus</v-icon>
+        <span style="color: white">&nbsp;ADD FUZZY ISTRUCTION</span>
+        </v-btn>
+        &nbsp;&nbsp;
+        <v-btn
+            tile fab depressed elevation="5" raised
+            dark small
+            class="tooltip btnstyle"
+            width="220px"
+            style="color: white;background-color: var(--bg-color);" 
+            @click="checkMinus()" 
+        >
+        <v-icon color="white">mdi-minus</v-icon>
+        <span style="color: white">&nbsp;DELETE FUZZY ISTRUCTION</span>
+        </v-btn>
+        </v-container>
+        </v-container>
+        <v-checkbox color="var(--bg-color)" v-model="alphaCut" label="Do you want alpha cut?"></v-checkbox>
+        <v-container style="border-style: inset;" v-if="alphaCut">
+        <v-row v-for="collect in collectionsAlpha" :key="collect.index">
+            <v-col>
+            <v-text-field :rules="[rules.counterA]" v-if="alphaCut" label="numeric expression" v-model="collect.numericIstr"></v-text-field>
+            </v-col>
+            <v-col>
+            <v-text-field :rules="[rules.counterA]" v-if="alphaCut" label="ID" v-model="collect.idAlpha"></v-text-field>
+            </v-col>
+        </v-row>
+        <v-container>
+        <v-btn
+            tile fab depressed elevation="5" raised
+            dark small
+            class="tooltip btnstyle"
+            width="220px"
+            style="color: white;background-color: var(--bg-color);" 
+            @click="setPlusA()" 
+        >
+        <v-icon color="white">mdi-plus</v-icon>
+        <span style="color: white">&nbsp;ADD ALPHA CUT</span>
+        </v-btn>
+        &nbsp;&nbsp;
+        <v-btn
+            tile fab depressed elevation="5" raised
+            dark small
+            class="tooltip btnstyle"
+            width="220px"
+            style="color: white;background-color: var(--bg-color);" 
+            @click="checkMinusA()" 
+        >
+        <v-icon color="white">mdi-minus</v-icon>
+        <span style="color: white">&nbsp;DELETE ALPHA CUT</span>
+        </v-btn>
+        </v-container>
+        </v-container>
+        <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" label="Do you want to keep or drop fuzzy sets?"></v-checkbox>
+        <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValueKDFS="changeTextKeepDropFuzzy($event)"/>
+    </v-container>
 </template>
 
 <script>
-import generateSection from './generateSection.vue';
+import keepDropFuzzySet from './keepdropFS.vue';
 export default {
     props:{
         mywhereIndex: Number
     },
     components:{
-        generateSection
+        keepDropFuzzySet
     },
    data () {
       return {
         valueString:'',
         whereClause:'',
-        generateSection:'',
-        generateSect:false,
+        generateAction:'',
+        collectionsFuzzy:[{index:'f1',idFuzzyInstr:'',fuzzyInstr:''}],
+        collectionsAlpha:[{index:'a1',idAlpha:'',numericIstr:''}],
+        alphaCut:false,
+        keepDropFuzzy:false,
+        fuzzyCheck:false,
+        generateAct:false,
         stringVett:[{typeClause:'where',value:''},
-                    {typeClause:'generate',value:''}
+                    {typeClause:'generate',value:''},
+                    {typeClause:'checkfuzzy',value:''},
+                    {typeClause:'alphacut',value:''},
+                    {typeClause:'keepdropfuzzy',value:''},
                     ]
+        ,
+        rules: {
+            required: value => !!value || 'Required.',
+            counter: value => this.counterText(value),
+            counterA: value => this.counterTextA(value),
+        }
       }
     },
     
