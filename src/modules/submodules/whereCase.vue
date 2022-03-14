@@ -30,56 +30,29 @@ export default {
     },
     
      watch:{
-        keepDropFuzzy:function(newVal,oldVal){
-            if(newVal!=oldVal){
-                if(!newVal)
-                    this.stringVett[4].value="";
-            }
-            this.refreshArr(this.stringVett);
-        },
         whereClause:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVett[0].value=newVal;
             }
             this.refreshArr(this.stringVett);
         },
-        generateAct:function(newVal,oldVal){
+        generateSect:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal)
                     this.stringVett[1].value="";
                 else
-                    this.stringVett[1].value=this.generateAction;
+                    this.stringVett[1].value=this.generateSection;
                 this.refreshArr(this.stringVett);
             }
         },
-        generateAction:function(newVal,oldVal){
+        generateSection:function(newVal,oldVal){
             if(newVal!=oldVal){
-                if(this.generateAction && newVal!="")
+                if(this.generateSection && newVal!="")
                     this.stringVett[1].value=newVal;
                 else
                     this.stringVett[1].value="";
             }
             this.refreshArr(this.stringVett);
-        },
-        
-        fuzzyCheck:function(newVal,oldVal){
-            if(newVal!=oldVal){
-                if(!newVal){
-                    this.stringVett[2].value="";
-                    this.collectionsFuzzy=[{index:'f1',idFuzzyInstr:'',fuzzyInstr:''}]
-                }   
-                this.refreshArr(this.stringVett);
-            }
-            
-        },
-        alphaCut:function(newVal,oldVal){
-            if(newVal!=oldVal){
-                if(!newVal){
-                    this.stringVett[3].value="";
-                    this.collectionsAlpha=[{index:'a1',idAlpha:'',numericIstr:''}]
-                }   
-                this.refreshArr(this.stringVett);
-            }
         },
     },
     methods:{
@@ -89,75 +62,7 @@ export default {
                 this.valueString+="\n "+vettString[0].value + " ";
             if(vettString[1].value!="")
                 this.valueString+="\nGENERATE "+vettString[1].value + " ";
-            if(vettString[2].value!="")
-                this.valueString+="\n"+vettString[2].value + " ";
-            if(vettString[3].value!="")
-                this.valueString+="\n"+vettString[3].value + " ";
-            if(vettString[4].value!="")
-                this.valueString+="\n"+vettString[4].value + " ";
             this.$emit('changeValue', this.valueString);
-        },
-        checkMinus(){
-            if(this.collectionsFuzzy.length>1){
-                this.collectionsFuzzy.pop()
-            }
-            this.changeArrCollFuzzy();
-        },
-        setPlus(){
-            if(this.collectionsFuzzy[this.collectionsFuzzy.length-1].idFuzzyInstr!=''
-                && this.collectionsFuzzy[this.collectionsFuzzy.length-1].fuzzyInstr!=''){
-                this.collectionsFuzzy.push({
-                    index:this.collectionsFuzzy.length+1,
-                    idFuzzyInstr:'',
-                    fuzzyInstr:''
-                })
-                this.changeArrCollFuzzy();
-            }
-        },
-        checkMinusA(){
-            if(this.collectionsAlpha.length>1){
-                this.collectionsAlpha.pop()
-            }
-            this.refreshStringColl();
-        },
-        setPlusA(){
-            if(this.collectionsAlpha[this.collectionsAlpha.length-1].idAlpha!=''
-                && this.collectionsAlpha[this.collectionsAlpha.length-1].numericIstr!=''){
-                this.collectionsAlpha.push({
-                    index:this.collectionsAlpha.length+1,
-                    idAlpha:'',
-                    numericIstr:''
-                })
-                this.refreshStringColl();
-            }
-        },
-        refreshStringColl(){
-            this.stringVett[3].value="";
-            this.collectionsAlpha.forEach(element => {
-                this.stringVett[3].value+="ALPHACUT "+element.numericIstr+" ON "+element.idAlpha+"\n";
-            });
-            this.stringVett[3].value=this.stringVett[3].value.substring(0,this.stringVett[3].value.length-1);
-            this.refreshArr(this.stringVett)
-        },
-        counterText(value){
-            this.changeArrCollFuzzy();
-            return value.length>-1;
-        },
-        counterTextA(value){
-            this.refreshStringColl();
-            return value.length>-1;
-        },
-        changeArrCollFuzzy(){
-            this.stringVett[2].value="";
-            this.collectionsFuzzy.forEach(element => {
-                this.stringVett[2].value+="CHECK FOR FUZZY SET "+element.idFuzzyInstr+" USING "+element.fuzzyInstr+"\n";
-            });
-            this.stringVett[2].value=this.stringVett[2].value.substring(0,this.stringVett[2].value.length-1);
-            this.refreshArr(this.stringVett)
-        },
-        changeTextKeepDropFuzzy(valueString){
-            this.stringVett[4].value=valueString;
-            this.refreshArr(this.stringVett)
         }
         
     },
