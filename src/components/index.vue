@@ -1582,6 +1582,12 @@ export default {
   --textarea-color: black;
 }
 
+:root.document-color {
+  --border-color: #0b77b8;
+  --bg-color: #0b77b8;
+  --textarea-color: black;
+}
+
 :root.red {
   --border-color: #D50000;
   --bg-color: #D50000;
