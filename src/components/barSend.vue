@@ -124,7 +124,7 @@ export default {
         changeText(value) {
             if(value.split('###').length === 1)
             {
-                this.highlight(value)
+                this.removeOk(value)
             } else {
                 var typeUpdate = value.split("###")[0];
                 var textWizard = value.split("###")[1];
@@ -143,17 +143,16 @@ export default {
         changeTitle(tip) {
             this.title = this.defaultTitle + " - " + tip
         },
-        highlight(newVal) {
+        //Da sistemare
+        removeOk(newVal) {
             this.exec = true
             //Parole della risposta assegnata 
             var arrResponse = newVal.replace(/(?:\r\n|\r|\n)/g, " ").split(" ");
-            //Righe del div contenteditable
-            var innerHTML = document.getElementById("div_send").innerHTML;
-            innerHTML = innerHTML.replace(/(<([^>]+)>)/ig, '</br>').replace(/(?:\r\n|\r|\n)/g, '</br>').replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<")
-            var arrHTML = innerHTML.split('</br>').filter(element => element.length > 0 & !element.startsWith("<", 0));
-            document.getElementById("div_send").innerHTML = ""
+            //Righe della textarea
+            var arrRowText = this.textSend.split(/(?:\r\n|\r|\n)/g)
+            this.textSend = ''
             var contResponse = 0
-            arrHTML.forEach(element => {
+            arrRowText.forEach(element => {
                 var arrWORDSofHTML = element.split(" ")
                 var check = true;
                 var contHTML = 0;
@@ -165,7 +164,7 @@ export default {
                     contResponse++;
                 }
                 if (check === false) {
-                    document.getElementById("div_send").innerHTML += `<div>${element}</div>`
+                    this.textSend += element
                 }
             })
             this.exec = false
@@ -181,50 +180,17 @@ export default {
                 window.open(routeData.href, '_blank');
             }, 50);
         },
-        /*
-        sendMessage(){
-            this.textSend = "";
-            var x = document.getElementById("div_send").querySelectorAll("div")
-            x.forEach(element =>{
-                element.appendChild(document.createTextNode (" "));
-            }); 
-            x = document.getElementById("div_send");
-            this.textSend += x.textContent + "\n\r";
-            this.textSend.slice(-1);
-
-            this.$emit('click-send', this.textSend)
-            this.exec = true
-        },
-        */
         sendMessageArr() {
-            /*
-            var innerHTML = document.getElementById("div_send").innerHTML;
-
-            innerHTML = innerHTML.replace(/(<([^>]+)>)/ig, '</br>').replace(/(?:\r\n|\r|\n)/g, '</br>').replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&nbsp;/g, " ")
-            var arrHTML = innerHTML.split('</br>').filter(element => element.length > 0 & !element.startsWith("<", 0));
-            console.log(arrHTML)
-            arrHTML.forEach(element => {
-                this.textSend += element + "\n";
-            })
-
-            this.textSend += "\n\r";
-            */
             this.$emit('click-send', this.textSend)
         },
         getCookie(name) {
-            // Split cookie string and get all individual name=value pairs in an array
             var cookieArr = document.cookie.split(";");
-            // Loop through the array elements
             for (var i = 0; i < cookieArr.length; i++) {
                 var cookiePair = cookieArr[i].split("=");
-                /* Removing whitespace at the beginning of the cookie name
-                and compare it with the given string */
                 if (name == cookiePair[0].trim()) {
-                    // Decode the cookie value and return
                     return decodeURIComponent(cookiePair[1]);
                 }
             }
-            // Return null if not found
             return null;
         },
         closeWindow() {

@@ -14,7 +14,7 @@
                                 <v-data-table :page.sync="page" :items-per-page="itemsPerPage" @page-count="pageCount = $event" :dark="darkMode" class="tastyle pt-0 mt-0" no-resize name="input-7-1" :rows="parseInt((height-134)/28)" :items="recArr" color="black" id="ta_rec" hide-default-header hide-default-footer :expanded.sync="expanded" :headers="recHeaders" item-key="name" show-expand>
                                     <template v-slot:expanded-item="{ headers, item }">
                                         <td :colspan="headers.length">
-                                            <p>{{item.value}}</p>
+                                            <p style="padding-bottom: 8px; padding-top: 8px; margin-bottom: 0px">{{item.value}}</p>
                                         </td>
                                     </template>
                                 </v-data-table>
