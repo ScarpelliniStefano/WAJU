@@ -90,8 +90,8 @@
                     </v-btn>
                 </v-container>
                 
-                <v-checkbox color="var(--bg-color)" v-model="generateAct" label="generate actions?"></v-checkbox>
-                <v-textarea v-if="generateAct" label="generate actions" rows="1" v-model="generateAction"></v-textarea>
+                <v-checkbox color="var(--bg-color)" v-model="generateSect" label="add a generate section?"></v-checkbox>
+                <generate-section v-if="generateSect" v-on:changeValue="changeText($event)"/>
             </v-container>
 </template>
 
@@ -106,10 +106,10 @@ export default {
       return {
         valueString:'',
         orCond:'',
-        generateAct:false,
+        generateSect:false,
         dropGroup:false,
         orderSelection:false,
-        generateAction:'',
+        generateSection:'',
         sourceFields:'',
         destFields:'',
         fieldRefSource:[{index:1,sourceFields:''}],
@@ -151,18 +151,18 @@ export default {
             if(newVal!=oldVal)
                 this.refreshArr(this.stringVett);
         },
-        generateAct:function(newVal,oldVal){
+        generateSect:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal)
                     this.stringVett[4]="";
                 else
-                    this.stringVett[4]=this.generateAction;
+                    this.stringVett[4]=this.generateSection;
                 this.refreshArr(this.stringVett);
             }
         },
-        generateAction:function(newVal,oldVal){
+        generateSection:function(newVal,oldVal){
             if(newVal!=oldVal){
-                if(this.generateAction && newVal!="")
+                if(this.generateSection && newVal!="")
                     this.stringVett[4]=newVal;
                 else
                     this.stringVett[4]="";
@@ -184,7 +184,7 @@ export default {
             if(vettString[3]!="" && this.orderSelection)
                 this.valueString+="\nORDER BY "+vettString[3];
             if(vettString[4]!="" && this.generateAct)
-                this.valueString+="\nGENERATE "+vettString[4] + " ";
+                this.valueString+=vettString[4] + " ";
             this.$emit('changeValue', this.valueString);
         },
         setPlusFieldRef(){
@@ -235,6 +235,9 @@ export default {
             this.stringVett[3]=this.stringVett[3].substring(0,this.stringVett[3].length-2);
             this.refreshArr(this.stringVett);
             return value.length>-1;
+        },
+        changeText(textToChange){
+            this.generateSection=textToChange;
         }
     },
     created(){

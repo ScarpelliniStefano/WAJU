@@ -1,7 +1,71 @@
 
 <template>
   <v-container fluid>
-        <v-textarea v-if="generateSect" label="generate actions" rows="1" v-model="generateAction"></v-textarea>
+        <v-container
+                class="px-0"
+                fluid
+            >
+            <v-row>
+                <v-col cols="3">
+                    GEOMETRY:
+                </v-col>
+                <v-col cols="9">
+                <v-radio-group v-model="setGeometry" row>
+                <v-radio
+                    :key=1
+                    label="KEEPING GEOMETRY"
+                    value="KEEPING GEOMETRY"
+                ></v-radio>
+                <v-radio
+                    :key=2
+                    label="DROPPING GEOMETRY"
+                    value="DROPPING GEOMETRY"
+                ></v-radio>
+                <v-radio
+                    :key=3
+                    label="SETTING GEOMETRY"
+                    value="SETTING GEOMETRY"
+                ></v-radio>
+                </v-radio-group>
+                </v-col>
+            </v-row>
+            </v-container>
+            <v-container
+                class="px-0"
+                fluid
+                v-if="setGeometry=='SETTING GEOMETRY'"
+            >
+            <v-row>
+                <v-radio-group v-model="setGeometrySetting" row>
+                <v-radio
+                        key="1"
+                        label="POINT"
+                        value="POINT"
+                    ></v-radio>
+                    <v-radio
+                        key="2"
+                        label="AGGREGATE"
+                        value="AGGREGATE"
+                    ></v-radio>
+                    <v-radio
+                        key="3"
+                        label="insert a field"
+                        value=""
+                    ></v-radio>
+                    <v-radio
+                        key="4"
+                        label="TO_POLYLINE"
+                        value="TO_POLYLINE"
+                    ></v-radio>
+                    </v-radio-group>
+                    <v-row v-if="setGeometrySetting=='POINT'"><v-col>
+                    <v-text-field label="first coordinate" v-model="textRadioBtn1"></v-text-field>
+                    </v-col><v-col>
+                    <v-text-field label="second coordinate" v-model="textRadioBtn2"></v-text-field>
+                    </v-col></v-row>
+                    <v-text-field v-if="setGeometrySetting!='POINT'" label="field" v-model="textRadioBtn1"></v-text-field> 
+            </v-row>
+            </v-container>
         <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" label="Do you want checks on the fuzzy?"></v-checkbox>
         <v-container style="border-style: inset;" v-if="fuzzyCheck">
         <v-row v-for="collect in collectionsFuzzy" :key="collect.index">
@@ -76,34 +140,37 @@
         </v-container>
         <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" label="Do you want to keep or drop fuzzy sets?"></v-checkbox>
         <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValueKDFS="changeTextKeepDropFuzzy($event)"/>
+        <v-checkbox color="var(--bg-color)" v-model="buildAction" label="Do you want a build action?"></v-checkbox>
+        <v-textarea rows=2 v-if="buildAction" color="var(--bg-color)" v-model="textBuild" :rules="[rules.required]" label="field to build separed by comma"></v-textarea>
     </v-container>
 </template>
 
 <script>
 import keepDropFuzzySet from './keepdropFS.vue';
 export default {
-    props:{
-        mywhereIndex: Number
-    },
     components:{
         keepDropFuzzySet
     },
    data () {
       return {
         valueString:'',
-        whereClause:'',
-        generateAction:'',
+        generateGeometry:'KEEPING GEOMETRY',
+        setGeometry:'KEEPING GEOMETRY',
+        setGeometrySetting:'POINT',
+        textRadioBtn1:'',
+        textRadioBtn2:'',
+        textBuild:'',
         collectionsFuzzy:[{index:'f1',idFuzzyInstr:'',fuzzyInstr:''}],
         collectionsAlpha:[{index:'a1',idAlpha:'',numericIstr:''}],
         alphaCut:false,
         keepDropFuzzy:false,
         fuzzyCheck:false,
-        generateAct:false,
-        stringVett:[{typeClause:'where',value:''},
-                    {typeClause:'generate',value:''},
+        buildAction:false,
+        stringVett:[{typeClause:'geometry',value:'KEEPING GEOMETRY'},
                     {typeClause:'checkfuzzy',value:''},
                     {typeClause:'alphacut',value:''},
                     {typeClause:'keepdropfuzzy',value:''},
+                    {typeClause:'build',value:''},
                     ]
         ,
         rules: {
@@ -118,31 +185,86 @@ export default {
         keepDropFuzzy:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal)
-                    this.stringVett[4].value="";
+                    this.stringVett[3].value="";
             }
             this.refreshArr(this.stringVett);
         },
-        whereClause:function(newVal,oldVal){
+        setGeometry:function(newVal,oldVal){
             if(newVal!=oldVal){
-                this.stringVett[0].value=newVal;
+                if(newVal!=""){
+                    this.generateGeometry=newVal;
+                    if(newVal=='SETTING GEOMETRY'){
+                        this.generateGeometry+=" "+this.setGeometrySetting;
+                        if(this.setGeometrySetting=='POINT'){
+                            this.generateGeometry+=" ("+this.textRadioBtn1+","+this.textRadioBtn2+") ";
+                        }else if(this.setGeometrySetting=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
+                            this.generateGeometry+=" ("+this.textRadioBtn1+") ";
+                        }else{
+                            this.generateGeometry+=" "+this.textRadioBtn1+" ";
+                        }
+                    }
+                    this.stringVett[0].value=this.generateGeometry;
+                }else{
+                    this.generateGeometry="";
+                    this.stringVett[0].value="";
+                }
             }
             this.refreshArr(this.stringVett);
         },
-        generateAct:function(newVal,oldVal){
+        setGeometrySetting:function(newVal,oldVal){
             if(newVal!=oldVal){
-                if(!newVal)
-                    this.stringVett[1].value="";
-                else
-                    this.stringVett[1].value=this.generateAction;
-                this.refreshArr(this.stringVett);
+                if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
+                    this.generateGeometry=this.setGeometry+" "+newVal;
+                    if(newVal=='POINT'){
+                        this.generateGeometry+=" ("+this.textRadioBtn1+","+this.textRadioBtn2+") ";
+                    }else if(newVal=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
+                        this.generateGeometry+=" ("+this.textRadioBtn1+") ";
+                    }else{
+                        this.generateGeometry+=" "+this.textRadioBtn1+" ";
+                    }
+                    this.stringVett[0].value=this.generateGeometry;
+                }else{
+                    this.generateGeometry=this.setGeometry;
+                    this.stringVett[0].value=this.generateGeometry;
+                }
             }
+            this.refreshArr(this.stringVett);
         },
-        generateAction:function(newVal,oldVal){
+        textRadioBtn1:function(newVal,oldVal){
             if(newVal!=oldVal){
-                if(this.generateAction && newVal!="")
-                    this.stringVett[1].value=newVal;
-                else
-                    this.stringVett[1].value="";
+                if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
+                    this.generateGeometry=this.setGeometry+" "+this.setGeometrySetting;
+                    if(this.setGeometrySetting=='POINT'){
+                        this.generateGeometry+=" ("+newVal+","+this.textRadioBtn2+") ";
+                    }else if(this.setGeometrySetting=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
+                        this.generateGeometry+=" ("+newVal+") ";
+                    }else{
+                        this.generateGeometry+=" "+newVal+" ";
+                    }
+                    this.stringVett[0].value=this.generateGeometry;
+                }else{
+                    this.generateGeometry=this.setGeometry;
+                    this.stringVett[0].value=this.generateGeometry;
+                }
+            }
+            this.refreshArr(this.stringVett);
+        },
+        textRadioBtn2:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
+                    this.generateGeometry=this.setGeometry+" "+this.setGeometrySetting;
+                    if(this.setGeometrySetting=='POINT'){
+                        this.generateGeometry+=" ("+this.textRadioBtn1+","+newVal+") ";
+                    }else if(this.setGeometrySetting=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
+                        this.generateGeometry+=" ("+this.textRadioBtn1+") ";
+                    }else{
+                        this.generateGeometry+=" "+this.textRadioBtn1+" ";
+                    }
+                    this.stringVett[0].value=this.generateGeometry;
+                }else{
+                    this.generateGeometry=this.setGeometry;
+                    this.stringVett[0].value=this.generateGeometry;
+                }
             }
             this.refreshArr(this.stringVett);
         },
@@ -150,7 +272,7 @@ export default {
         fuzzyCheck:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal){
-                    this.stringVett[2].value="";
+                    this.stringVett[1].value="";
                     this.collectionsFuzzy=[{index:'f1',idFuzzyInstr:'',fuzzyInstr:''}]
                 }   
                 this.refreshArr(this.stringVett);
@@ -160,8 +282,24 @@ export default {
         alphaCut:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal){
-                    this.stringVett[3].value="";
+                    this.stringVett[2].value="";
                     this.collectionsAlpha=[{index:'a1',idAlpha:'',numericIstr:''}]
+                }   
+                this.refreshArr(this.stringVett);
+            }
+        },
+        buildAction:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(!newVal){
+                    this.stringVett[4].value="";
+                }   
+                this.refreshArr(this.stringVett);
+            }
+        },
+        textBuild:function(newVal,oldVal){
+            if(newVal!=oldVal){
+                if(newVal!='' && this.buildAction){
+                    this.stringVett[4].value="BUILD {"+newVal+"}";
                 }   
                 this.refreshArr(this.stringVett);
             }
@@ -169,11 +307,11 @@ export default {
     },
     methods:{
         refreshArr(vettString){
-            this.valueString=this.mywhereIndex+"##\nWHERE ";
+            this.valueString="\nGENERATE ";
             if(vettString[0].value!="")
-                this.valueString+="\n "+vettString[0].value + " ";
+                this.valueString+=vettString[0].value + " ";
             if(vettString[1].value!="")
-                this.valueString+="\nGENERATE "+vettString[1].value + " ";
+                this.valueString+="\n"+vettString[1].value + " ";
             if(vettString[2].value!="")
                 this.valueString+="\n"+vettString[2].value + " ";
             if(vettString[3].value!="")
@@ -217,11 +355,12 @@ export default {
             }
         },
         refreshStringColl(){
-            this.stringVett[3].value="";
+            this.stringVett[2].value="";
+            this.stringVett[2].value+="ALPHACUT ";
             this.collectionsAlpha.forEach(element => {
-                this.stringVett[3].value+="ALPHACUT "+element.numericIstr+" ON "+element.idAlpha+"\n";
+                this.stringVett[2].value+=element.numericIstr+" ON "+element.idAlpha+",\n";
             });
-            this.stringVett[3].value=this.stringVett[3].value.substring(0,this.stringVett[3].value.length-1);
+            this.stringVett[2].value=this.stringVett[2].value.substring(0,this.stringVett[2].value.length-2);
             this.refreshArr(this.stringVett)
         },
         counterText(value){
@@ -233,21 +372,23 @@ export default {
             return value.length>-1;
         },
         changeArrCollFuzzy(){
-            this.stringVett[2].value="";
+            this.stringVett[1].value="";
+            this.stringVett[1].value+="CHECK FOR "
             this.collectionsFuzzy.forEach(element => {
-                this.stringVett[2].value+="CHECK FOR FUZZY SET "+element.idFuzzyInstr+" USING "+element.fuzzyInstr+"\n";
+                this.stringVett[1].value+="FUZZY SET "+element.idFuzzyInstr+" USING "+element.fuzzyInstr+",\n";
             });
-            this.stringVett[2].value=this.stringVett[2].value.substring(0,this.stringVett[2].value.length-1);
+            this.stringVett[1].value=this.stringVett[1].value.substring(0,this.stringVett[1].value.length-2);
             this.refreshArr(this.stringVett)
         },
         changeTextKeepDropFuzzy(valueString){
-            this.stringVett[4].value=valueString;
+            this.stringVett[3].value=valueString;
             this.refreshArr(this.stringVett)
         }
         
     },
     created(){
-        this.valueString=this.mywhereIndex+"##\nWHERE ";
+        this.valueString="\nGENERATE ";
+        this.refreshArr(this.stringVett);
         this.$emit('changeValue', this.valueString);
     }
 }

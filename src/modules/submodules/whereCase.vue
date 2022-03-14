@@ -3,7 +3,7 @@
             <v-container fluid style="border-style: outset;">
                 <v-textarea :rules="[rules.required]" label="collections clause" rows="2" auto-grow v-model="whereClause"></v-textarea>
                 <v-checkbox color="var(--bg-color)" v-model="generateSect" label="add a generate section?"></v-checkbox>
-                <generate-section v-on:changeValue="changeText($event)"/>
+                <generate-section v-if="generateSect" v-on:changeValue="changeText($event)"/>
             </v-container>
             
 </template>
@@ -25,7 +25,10 @@ export default {
         generateSect:false,
         stringVett:[{typeClause:'where',value:''},
                     {typeClause:'generate',value:''}
-                    ]
+                    ],
+        rules: {
+            required: value => !!value || 'Required.'
+        }
       }
     },
     
@@ -61,8 +64,11 @@ export default {
             if(vettString[0].value!="")
                 this.valueString+="\n "+vettString[0].value + " ";
             if(vettString[1].value!="")
-                this.valueString+="\nGENERATE "+vettString[1].value + " ";
+                this.valueString+=vettString[1].value + " ";
             this.$emit('changeValue', this.valueString);
+        },
+        changeText(textToChange){
+            this.generateSection=textToChange;
         }
         
     },
