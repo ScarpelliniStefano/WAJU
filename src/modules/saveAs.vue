@@ -1,17 +1,18 @@
 <template>
   <v-sheet>
           <v-row>
-          <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col></v-row>
+          <v-col><v-text-field :rules="[rules.required]" v-model="collection" :label="TXT_COLLECTION"/></v-col></v-row>
           <v-row>
-            <v-col><v-checkbox color="var(--bg-color)" v-model="saveInDB" label="Do you want to save the collection in a database?"></v-checkbox></v-col>
+            <v-col><v-checkbox color="var(--border-color)" v-model="saveInDB" :label="CHECK_SAVE_DB"></v-checkbox></v-col>
           </v-row>
           <v-row>
-            <v-col><v-text-field :rules="[rules.required]" v-if="saveInDB" label="db" v-model="db"/></v-col>
+            <v-col><v-text-field :rules="[rules.required]" v-if="saveInDB" :label="TXT_DATABASE" v-model="db"/></v-col>
           </v-row>
   </v-sheet>
 </template>
 
 <script>
+import lang from '../env/lang.en'
 export default {
    data () {
       return {
@@ -22,7 +23,12 @@ export default {
         saveInDB:false,
         rules: {
           required: value => !!value || 'Required.'
-        }
+        },
+
+        //LABEL
+        TXT_COLLECTION: lang.WIZARD.MODULES.SAVE_AS.TXT_COLLECTION,
+        CHECK_SAVE_DB: lang.WIZARD.MODULES.SAVE_AS.CHECK_SAVE_DB,
+        TXT_DATABASE: lang.WIZARD.MODULES.SAVE_AS.TXT_DATABASE
       }
     },
     watch:{

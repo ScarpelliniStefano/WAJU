@@ -2,7 +2,7 @@
 <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd;border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'log')">
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">
-            {{ this.textButton }}
+            {{ TITLE }}
         </h4>
         <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">
             mdi-close
@@ -33,8 +33,9 @@
 </template>
 
 <script>
+import lang from '../env/lang.en'
 export default {
-    name: "BarLog",
+    name: "Log",
     components: {},
     props: {
         arrayLog: Object,
@@ -50,8 +51,10 @@ export default {
         conf: false,
         selectedItem: -1,
         numDepth: 1,
-        textButton: "Log",
         listEmpty: true,
+
+        //LABEL
+        TITLE: lang.LOG_COMP.TITLE
     }),
     created() {},
     mounted() {},

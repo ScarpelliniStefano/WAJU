@@ -432,7 +432,7 @@
         >
           <bar-send
             :bgcolor="contColor"
-            :rapporto="1"
+            :rapporto="send.widthSm / send.heightSm"
             :browser="browserName"
             :height="send.heightSm"
             :width="send.widthSm"
@@ -461,7 +461,7 @@
             :browser="browserName"
             :height="log.heightSm"
             :width="log.widthSm"
-            :rapporto="log.width / log.height"
+            :rapporto="log.widthSm / log.heightSm"
             v-on:set-z-click="setZ"
             v-on:close-log="selLog = !selLog"
             :darkMode="darkMode"
@@ -472,7 +472,7 @@
         <v-col v-if="selRec" class="" :key="3" :cols="12" :sm="12">
           <bar-rec
             :bgcolor="contColor"
-            :rapporto="1"
+            :rapporto="rec.widthSm / rec.heightSm"
             :browser="browserName"
             :width="rec.widthSm"
             :height="rec.heightSm"
@@ -497,7 +497,7 @@
             :browser="browserName"
             :height="btm.heightSm"
             :width="btm.widthSm"
-            :rapporto="1"
+            :rapporto="btm.widthSm / btm.heightSm"
             :darkMode="darkMode"
             v-on:file-upload-index="sendConfigFile($event)"
             v-on:click-ir="sendIRList()"
@@ -881,10 +881,10 @@ export default {
       }
 
       if(window.innerWidth < 960 && window.innerWidth > 700){
-        this.send.widthSm = window.innerWidth
-        this.rec.widthSm = window.innerWidth
-        this.log.widthSm = window.innerWidth
-        this.btm.widthSm = window.innerWidth
+        this.send.widthSm = window.innerWidth - 12
+        this.rec.widthSm = window.innerWidth - 12
+        this.log.widthSm = window.innerWidth - 12
+        this.btm.widthSm = window.innerWidth - 12
       }
     },
     clickDragResize(component){

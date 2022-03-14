@@ -13,8 +13,8 @@
                 <v-divider v-if="dividerBool()" vertical></v-divider>
                 <v-col :cols='dimCols(2)'>
                     <v-row align="center" class="text-center">
-                        <v-col>
-                            <v-btn v-if="ratioMode() === 'small'" :dark="darkMode" :width="(width-100)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;" tile fab depressed elevation="5" raised @click="openWizard()">
+                        <v-col cols="6">
+                            <v-btn v-if="ratioMode() === 'small'" :dark="darkMode" :width="(width-48)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;" tile fab depressed elevation="5" raised @click="openWizard()">
                                 <v-icon>mdi-auto-fix</v-icon>
                                 <span>{{BTN_SPAN_WIZARD}}</span>
                             </v-btn>
@@ -29,8 +29,8 @@
                             </v-sheet>
 
                         </v-col>
-                        <v-col v-if="ratioMode() === 'small'">
-                            <v-btn :dark="darkMode" :loading="exec" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessageArr()">
+                        <v-col v-if="ratioMode() === 'small'" cols="6">
+                            <v-btn :dark="darkMode" :loading="exec" :width="(width-48)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="sendMessageArr()">
                                 <v-icon color="white">mdi-play</v-icon>
                                 <span style="color: white">{{BTN_SPAN_EXECUTE}}</span>
                             </v-btn>
@@ -68,6 +68,7 @@ export default {
             defaultTitle: 'Command',
             title: 'Command',
 
+            //LABEL
             TITLE: lang.SEND_COMP.TITLE,
             BTN_SPAN_EXECUTE: lang.SEND_COMP.BTN_SPAN_EXECUTE,
             BTN_SPAN_WIZARD: lang.SEND_COMP.BTN_SPAN_WIZARD
