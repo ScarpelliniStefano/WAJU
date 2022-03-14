@@ -11,7 +11,6 @@
         <expand-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='EXPAND'"/>
         <group-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='GROUP'"/>
         <join-coll-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='JOIN OF COLLECTIONS'"/>
-        <spatial-join-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='SPATIAL JOIN OF COLLECTIONS'"/>
         <create-fuzzy-op :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='CREATE FUZZY OPERATOR'"/>
         <create-javascript-function :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='CREATE JAVASCRIPT FUNCTION'"/>
         <trajectory-match :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='TRAJECTORY MATCHING'"/>
@@ -30,7 +29,6 @@ import filterClause from "./filter.vue";
 import expandClause from "./expand.vue";
 import groupClause from "./group.vue";
 import joinCollClause from "./joinColl.vue";
-import spatialJoinClause from "./spatialJoinColl.vue";
 import createFuzzyOp from "./createFuzzyOp.vue";
 import createJavascriptFunction from "./createJsFunct.vue"
 import trajectoryMatch from "./trajectoryMatch.vue";
@@ -56,7 +54,6 @@ export default {
         expandClause,
         groupClause,
         joinCollClause,
-        spatialJoinClause,
         createFuzzyOp,
         createJavascriptFunction,
         trajectoryMatch
@@ -97,9 +94,6 @@ export default {
                         break;
                     case "JOIN OF COLLECTIONS":
                         this.valueString="JOIN OF COLLECTIONS"
-                        break;
-                    case "SPATIAL JOIN":
-                        this.valueString="SPATIAL JOIN OF COLLECTIONS"
                         break;
                     case "CREATE FUZZY OPERATOR":
                         this.valueString="CREATE FUZZY OPERATOR"
