@@ -220,6 +220,7 @@ export default {
                     }else if(newVal=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
                         this.generateGeometry+=" ("+this.textRadioBtn1+") ";
                     }else{
+                        console.log(this.textRadioBtn1);
                         this.generateGeometry+=" "+this.textRadioBtn1+" ";
                     }
                     this.stringVett[0].value=this.generateGeometry;

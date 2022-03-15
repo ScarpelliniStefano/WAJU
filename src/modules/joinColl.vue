@@ -67,7 +67,7 @@
                         label="comparator"
                         v-model="choiceSpFunct"
                     ></v-select>
-                    <v-text-field :rules="[rules.required]" v-if="((spatialFunctText=='DISTANCE' || spatialFunctText=='AREA') && setCompNumSpfunct) || (spatialFunctText=='ORIENTATION' && setCompNumSpfunct)" v-model="idSpFunct" :label="`numeric ${spatialFunctText}`"/>
+                    <v-text-field :rules="[rules.required]" v-if="((spatialFunctText=='DISTANCE' || spatialFunctText=='AREA') && setCompNumSpfunct) || (spatialFunctText=='ORIENTATION' && setCompNumSpfunct)" v-model="numSpFunct" :label="`numeric ${spatialFunctText}`"/>
                 </v-col>
             </v-row>
             </v-container>
@@ -85,22 +85,22 @@
                 <v-radio-group v-model="setGeometryVal" row>
                 <v-radio
                     :key=1
-                    label="intersection"
+                    label="INTERSECTION"
                     value="INTERSECTION"
                 ></v-radio>
                 <v-radio
                     :key=2
-                    label="right"
+                    label="RIGHT"
                     value="RIGHT"
                 ></v-radio>
                 <v-radio
                     :key=3
-                    label="left"
+                    label="LEFT"
                     value="LEFT"
                 ></v-radio>
                 <v-radio
                     :key=4
-                    label="all"
+                    label="ALL"
                     value="ALL"
                 ></v-radio>
                 </v-radio-group>
@@ -182,13 +182,13 @@ export default {
         setGeometryVal:'INTERSECTION',
         caseClauseSel:false,
         collections:[{
-            index:'1coll',
+            index:'1',
             collection: '',
             db: '',
             alias: ''
         },
         {
-            index:'2coll',
+            index:'2',
             collection: '',
             db: '',
             alias: ''
@@ -252,14 +252,16 @@ export default {
             if(newVal!=oldVal){
                 if(newVal!=""){
                     this.stringVett[1]=newVal;
-                    if(this.newVal=='DISTANCE'|| this.newVal=='AREA'){
+                    if(newVal=='DISTANCE'|| newVal=='AREA'){
                         this.stringVett[1]+=" ("+this.idSpFunct+") ";
                         if(this.setCompNumSpfunct) this.stringVett[1]+=this.choiceSpFunct+" "+this.numSpFunct;
-                    }else if(this.newVal=='ORIENTATION'){
+                    }else if(newVal=='ORIENTATION'){
+                        this.leftRightSpFunct='LEFT'
                         this.stringVett[1]+=" ("+this.leftRightSpFunct+" ";
                         if(this.setCompNumSpfunct) this.stringVett[1]+=", "+this.idSpFunct+":"+this.numSpFunct;
                         this.stringVett[1]+=") ";
-                    }else if(this.newVal=='INCLUDED'){
+                    }else if(newVal=='INCLUDED'){
+                        console.log('hi')
                         this.stringVett[1]+=" ("+this.leftRightSpFunct+") ";
                     }
                 }
@@ -418,6 +420,8 @@ export default {
     },
     created(){
         this.valueString=" ;";
+        this.refreshArr(this.stringVett);
+        this.stringVett[1]=this.spatialFunctText;
         this.$emit('changeValue', this.valueString);
     }
     
