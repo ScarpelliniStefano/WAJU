@@ -50,7 +50,7 @@
                     <v-radio
                         key="3"
                         label="insert a field"
-                        value=""
+                        value=" "
                     ></v-radio>
                     <v-radio
                         key="4"
@@ -194,13 +194,16 @@ export default {
                 if(newVal!=""){
                     this.generateGeometry=newVal;
                     if(newVal=='SETTING GEOMETRY'){
-                        this.generateGeometry+=" "+this.setGeometrySetting;
+                        this.generateGeometry+=" ";
+                        if(this.setGeometrySetting!=" "){
+                            this.generateGeometry+=this.setGeometrySetting;
+                        }
                         if(this.setGeometrySetting=='POINT'){
                             this.generateGeometry+=" ("+this.textRadioBtn1+","+this.textRadioBtn2+") ";
                         }else if(this.setGeometrySetting=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
                             this.generateGeometry+=" ("+this.textRadioBtn1+") ";
                         }else{
-                            this.generateGeometry+=" "+this.textRadioBtn1+" ";
+                            this.generateGeometry+=this.textRadioBtn1+" ";
                         }
                     }
                     this.stringVett[0].value=this.generateGeometry;
@@ -214,14 +217,16 @@ export default {
         setGeometrySetting:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
-                    this.generateGeometry=this.setGeometry+" "+newVal;
+                    this.generateGeometry=this.setGeometry+" ";
+                    if(newVal!=" "){
+                        this.generateGeometry+=newVal;
+                    }
                     if(newVal=='POINT'){
                         this.generateGeometry+=" ("+this.textRadioBtn1+","+this.textRadioBtn2+") ";
                     }else if(newVal=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
                         this.generateGeometry+=" ("+this.textRadioBtn1+") ";
-                    }else{
-                        console.log(this.textRadioBtn1);
-                        this.generateGeometry+=" "+this.textRadioBtn1+" ";
+                    }else if(newVal==" "){
+                        this.generateGeometry+=this.textRadioBtn1+" ";
                     }
                     this.stringVett[0].value=this.generateGeometry;
                 }else{
@@ -234,13 +239,16 @@ export default {
         textRadioBtn1:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
-                    this.generateGeometry=this.setGeometry+" "+this.setGeometrySetting;
+                    this.generateGeometry=this.setGeometry+" ";
+                    if(this.setGeometrySetting!=" "){
+                            this.generateGeometry+=this.setGeometrySetting;
+                    }
                     if(this.setGeometrySetting=='POINT'){
                         this.generateGeometry+=" ("+newVal+","+this.textRadioBtn2+") ";
                     }else if(this.setGeometrySetting=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
                         this.generateGeometry+=" ("+newVal+") ";
                     }else{
-                        this.generateGeometry+=" "+newVal+" ";
+                        this.generateGeometry+=newVal+" ";
                     }
                     this.stringVett[0].value=this.generateGeometry;
                 }else{
@@ -253,13 +261,16 @@ export default {
         textRadioBtn2:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
-                    this.generateGeometry=this.setGeometry+" "+this.setGeometrySetting;
+                    this.generateGeometry=this.setGeometry+" ";
+                    if(this.setGeometrySetting!=" "){
+                        this.generateGeometry+=this.setGeometrySetting;
+                    }
                     if(this.setGeometrySetting=='POINT'){
                         this.generateGeometry+=" ("+this.textRadioBtn1+","+newVal+") ";
                     }else if(this.setGeometrySetting=='AGGREGATE'||this.setGeometrySetting=='TO_POLYLINE'){
                         this.generateGeometry+=" ("+this.textRadioBtn1+") ";
                     }else{
-                        this.generateGeometry+=" "+this.textRadioBtn1+" ";
+                        this.generateGeometry+=this.textRadioBtn1+" ";
                     }
                     this.stringVett[0].value=this.generateGeometry;
                 }else{
@@ -309,9 +320,9 @@ export default {
     methods:{
         refreshArr(vettString){
             this.valueString="\nGENERATE ";
-            if(vettString[0].value!="")
+            if(vettString[0].value!=""){
                 this.valueString+=vettString[0].value + " ";
-            if(vettString[1].value!="")
+            }if(vettString[1].value!="")
                 this.valueString+="\n"+vettString[1].value + " ";
             if(vettString[2].value!="")
                 this.valueString+="\n"+vettString[2].value + " ";
