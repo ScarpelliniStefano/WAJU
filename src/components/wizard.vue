@@ -80,6 +80,7 @@
 </template>
 <script>
 import modules from '../modules/modules.vue'
+import lang from '../env/lang.en'
 export default {
     data:()=> ({
         modulesData:[{
@@ -92,21 +93,21 @@ export default {
         numberWizard:'',
         mainColor: "black",
         colHex:"",
-        arrayModel : ['GET A COLLECTION',
-                      'SAVE LOCALLY OR IN A DATABASE',
-                      'JOIN OF COLLECTIONS',
-                      'FILTER ON FIELD',
-                      'GROUP COLLECTIONS',
-                      'EXPAND COLLECTIONS',
-                      'MERGE TWO OR MORE COLLECTIONS',
-                      'INTERSECT TWO COLLECTIONS',
-                      'SUBTRACT TWO COLLECTIONS',
-                      'USE A DATABASE',
-                      'TRAJECTORY MATCHING',
-                      'CREATE FUZZY OPERATOR',
-                      'CREATE JAVASCRIPT FUNCTION',
-                      'GET A DICTIONARY'
-                      ],
+        arrayModel : [lang.WIZARD.SPECIFICATION.SEL_GET_COLL,
+                      lang.WIZARD.SPECIFICATION.SEL_GET_DICT,
+                      lang.WIZARD.SPECIFICATION.SEL_SAVE_AS,
+                      lang.WIZARD.SPECIFICATION.SEL_MERGE_COLL,
+                      lang.WIZARD.SPECIFICATION.SEL_INTERSECT_COLL,
+                      lang.WIZARD.SPECIFICATION.SEL_SUBTRACT_COLL,
+                      lang.WIZARD.SPECIFICATION.SEL_USE_DB,
+                      lang.WIZARD.SPECIFICATION.SEL_FILTER,
+                      lang.WIZARD.SPECIFICATION.SEL_EXPAND,
+                      lang.WIZARD.SPECIFICATION.SEL_GROUP,
+                      lang.WIZARD.SPECIFICATION.SEL_JOIN,
+                      lang.WIZARD.SPECIFICATION.SEL_FUZZY_OP,
+                      lang.WIZARD.SPECIFICATION.SEL_JS_FUNCTION,
+                      lang.WIZARD.SPECIFICATION.SEL_TRAJECTORY_MATCHING
+                    ],
         valueString : '',
         disabledBtn:true,
         isLongClick:false,

@@ -2,11 +2,11 @@
   <v-sheet>
       <v-container fluid>
             <v-row v-for="collect in collections" :key="collect.index">
-                <v-col><v-text-field :rules="[rules.required,rules.counterColl]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
-                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`db ${collect.index}`" v-model="collect.db"/></v-col>
-                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
+                <v-col><v-text-field :rules="[rules.required,rules.counterColl]" v-model="collect.collection" :label="`${TXT_COLLECTION_NR + collect.index}`"/></v-col>
+                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`${TXT_DB + collect.index}`" v-model="collect.db"/></v-col>
+                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`${TXT_ALIAS + collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
-            <v-checkbox color="var(--bg-color)" v-model="spatialFunct" label="you want to set a geometry spatial function?"></v-checkbox>
+            <v-checkbox color="var(--bg-color)" v-model="spatialFunct" :label="SPATIAL_FUNCTION.CHECK_SPATIAL_FUNCTION"></v-checkbox>
             <v-container
                 class="px-0"
                 fluid
@@ -14,38 +14,38 @@
             >
             <v-row>
                 <v-col cols="3">
-                    GEOMETRY SPATIAL FUNCTION:
+                   {{SPATIAL_FUNCTION.LB_GEO_SPATIAL_FUNCT}}
                 </v-col>
                 <v-col cols="5">
                 <v-radio-group v-model="spatialFunctText" row>
                 <v-radio
                     key='1spf'
-                    label="DISTANCE"
+                    :label="SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_DISTANCE"
                     value="DISTANCE"
                 ></v-radio>
                 <v-radio
                     key='2spf'
-                    label="AREA"
+                    :label="SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_AREA"
                     value="AREA"
                 ></v-radio>
                 <v-radio
                     key='3spf'
-                    label="ORIENTATION"
+                    :label="SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_ORIENTATION"
                     value="ORIENTATION"
                 ></v-radio>
                 <v-radio
                     key='4spf'
-                    label="INCLUDED"
+                    :label="SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_INCLUDED"
                     value="INCLUDED"
                 ></v-radio>
                 <v-radio
                     key='5spf'
-                    label="MEET"
+                    :label="SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_MEET"
                     value="MEET"
                 ></v-radio>
                 <v-radio
                     key='6spf'
-                    label="INTERSECT"
+                    :label="SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_INTERSECT"
                     value="INTERSECT"
                 ></v-radio>
                 </v-radio-group>
@@ -54,24 +54,24 @@
                     <v-select
                         v-if="spatialFunctText=='ORIENTATION' || spatialFunctText=='INCLUDED'"
                         :items="itemsLeftRightSpFunct"
-                        label="left or right?"
+                        :label="SPATIAL_FUNCTION.SEL_LEFT_RIGHT_SP_FUNCT"
                         v-model="leftRightSpFunct"
                     ></v-select>
-                    <v-checkbox color="var(--bg-color)" v-if="spatialFunctText=='ORIENTATION'" v-model="setCompNumSpfunct" label="set id and number to it?"></v-checkbox>
-                    <v-text-field :rules="[rules.required]" v-if="spatialFunctText=='DISTANCE' || spatialFunctText=='AREA' || (spatialFunctText=='ORIENTATION' && setCompNumSpfunct)" v-model="idSpFunct" :label="`id ${spatialFunctText}`"/>
-                    <v-checkbox color="var(--bg-color)" v-if="spatialFunctText=='DISTANCE' || spatialFunctText=='AREA'" v-model="setCompNumSpfunct" label="set comparation?"></v-checkbox>
+                    <v-checkbox color="var(--bg-color)" v-if="spatialFunctText=='ORIENTATION'" v-model="setCompNumSpfunct" :label="SPATIAL_FUNCTION.CHECK_ID_NUMBER"></v-checkbox>
+                    <v-text-field :rules="[rules.required]" v-if="spatialFunctText=='DISTANCE' || spatialFunctText=='AREA' || (spatialFunctText=='ORIENTATION' && setCompNumSpfunct)" v-model="idSpFunct" :label="`${SPATIAL_FUNCTION.TXT_ID_SP_FUNCT+spatialFunctText}`"/>
+                    <v-checkbox color="var(--bg-color)" v-if="spatialFunctText=='DISTANCE' || spatialFunctText=='AREA'" v-model="setCompNumSpfunct" :label="SPATIAL_FUNCTION.CHECK_SET_COMP_NUM_SP_FUNCT"></v-checkbox>
                      <v-select
                         v-if="setCompNumSpfunct &&
                         (spatialFunctText=='DISTANCE' || spatialFunctText=='AREA')"
                         :items="itemschoiceSpFunct"
-                        label="comparator"
+                        :label="SPATIAL_FUNCTION.SEL_CHOICE_SP_FUNCT"
                         v-model="choiceSpFunct"
                     ></v-select>
-                    <v-text-field :rules="[rules.required]" v-if="((spatialFunctText=='DISTANCE' || spatialFunctText=='AREA') && setCompNumSpfunct) || (spatialFunctText=='ORIENTATION' && setCompNumSpfunct)" v-model="numSpFunct" :label="`numeric ${spatialFunctText}`"/>
+                    <v-text-field :rules="[rules.required]" v-if="((spatialFunctText=='DISTANCE' || spatialFunctText=='AREA') && setCompNumSpfunct) || (spatialFunctText=='ORIENTATION' && setCompNumSpfunct)" v-model="numSpFunct" :label="`${SPATIAL_FUNCTION.TXT_NUM_SP_FUNCT+spatialFunctText}`"/>
                 </v-col>
             </v-row>
             </v-container>
-            <v-checkbox color="var(--bg-color)" v-model="setGeometry" label="set geometry?"></v-checkbox>
+            <v-checkbox color="var(--bg-color)" v-model="setGeometry" :label="GEOMETRY.CHECK_GEOMETRY"></v-checkbox>
             <v-container
                 class="px-0"
                 fluid
@@ -79,42 +79,42 @@
             >
             <v-row>
                 <v-col cols="3">
-                    GEOMETRY:
+                    {{GEOMETRY.LB_GEOMETRY}}
                 </v-col>
                 <v-col cols="9">
                 <v-radio-group v-model="setGeometryVal" row>
                 <v-radio
                     :key=1
-                    label="INTERSECTION"
+                    :label="GEOMETRY.RADIO_GEOMETRY_INTERSECTION"
                     value="INTERSECTION"
                 ></v-radio>
                 <v-radio
                     :key=2
-                    label="RIGHT"
+                    :label="GEOMETRY.RADIO_GEOMETRY_RIGHT"
                     value="RIGHT"
                 ></v-radio>
                 <v-radio
                     :key=3
-                    label="LEFT"
+                    :label="GEOMETRY.RADIO_GEOMETRY_LEFT"
                     value="LEFT"
                 ></v-radio>
                 <v-radio
                     :key=4
-                    label="ALL"
+                    :label="GEOMETRY.RADIO_GEOMETRY_ALL"
                     value="ALL"
                 ></v-radio>
                 </v-radio-group>
                 </v-col>
             </v-row>
             </v-container>
-            <v-checkbox color="var(--bg-color)" v-model="addFields" label="add fields?"></v-checkbox>
+            <v-checkbox color="var(--bg-color)" v-model="addFields" :label="CHECK_ADD_FIELDS"></v-checkbox>
             <v-container style="border-style: outset;" v-if="addFields">
             <v-row  v-for="collect in fieldsAddColl" :key="collect.index">
                     <v-col>
-                    <v-textarea :rules="[rules.required,rules.counter]" v-if="addFields" label="non fuzzy function" rows="1" v-model="collect.nonFuzzyF"></v-textarea>
+                    <v-textarea :rules="[rules.required,rules.counter]" v-if="addFields" :label="TXT_ADD_FIELD_NON_FUZZY_FUNCT" rows="1" v-model="collect.nonFuzzyF"></v-textarea>
                     </v-col>
                     <v-col>
-                    <v-text-field :rules="[rules.required,rules.counter]" v-if="addFields" label="fieldReference" v-model="collect.fieldRef"></v-text-field>
+                    <v-text-field :rules="[rules.required,rules.counter]" v-if="addFields" :label="TXT_ADD_FIELD_FIELD_REF" v-model="collect.fieldRef"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-container>
@@ -127,7 +127,7 @@
                     @click="setPlus()" 
                 >
                 <v-icon color="white">mdi-plus</v-icon>
-                <span style="color: white">&nbsp;ADD FIELD REFERENCE</span>
+                <span style="color: white">{{BTN_SPAN_ADD_FIELD_REF}}</span>
                 </v-btn>
                 &nbsp;&nbsp;
                 <v-btn
@@ -139,21 +139,23 @@
                     @click="checkMinus()" 
                 >
                 <v-icon color="white">mdi-minus</v-icon>
-                <span style="color: white">&nbsp;DELETE FIELD REFERENCE</span>
+                <span style="color: white">{{BTN_SPAN_REMOVE_FIELD_REF}}</span>
                 </v-btn>
                 </v-container>
             </v-container>
-            <v-checkbox color="var(--bg-color)" v-model="setFuzzySets" label="set fuzzy sets?"></v-checkbox>
-            <v-textarea :rules="[rules.required]" v-if="setFuzzySets" label="fuzzy sets" rows="2" v-model="setFuzzySetsText"></v-textarea>
-            <v-checkbox color="var(--bg-color)" v-model="caseClauseSel" label="do you want to insert a case clause?"></v-checkbox>
+            <v-checkbox color="var(--bg-color)" v-model="setFuzzySets" :label="CHECK_FUZZY_SETS"></v-checkbox>
+            <v-textarea :rules="[rules.required]" v-if="setFuzzySets" :label="TXT_FUZZY_SETS" rows="2" v-model="setFuzzySetsText"></v-textarea>
+            <v-checkbox color="var(--bg-color)" v-model="caseClauseSel" :label="CHECK_CASE_CLAUSE"></v-checkbox>
             <case-clause v-if="caseClauseSel" v-on:changeValue="changeValue($event)"/>
-            <v-checkbox color="var(--bg-color)" v-model="removeDup" label="Remove duplicates?"></v-checkbox>
+            <v-checkbox color="var(--bg-color)" v-model="removeDup" :label="CHECK_REMOVE_DUPLICATES"></v-checkbox>
         </v-container>
   </v-sheet>
 </template>
 
 <script>
 import caseClause from "./submodules/caseClause.vue";
+import lang from '../env/lang.en'
+
 export default {
     props:{
         maincol: String
@@ -195,6 +197,45 @@ export default {
         }],
         stringVett:['','','','',''],
         fieldsAddColl:[{index:"1f",nonFuzzyF:'',fieldRef:''}],
+
+        //LABEL
+        TXT_COLLECTION_NR: lang.WIZARD.MODULES.JOIN_COLLECTION.TXT_COLLECTION_NR,
+        TXT_DB: lang.WIZARD.MODULES.JOIN_COLLECTION.TXT_DB,
+        TXT_ALIAS: lang.WIZARD.MODULES.JOIN_COLLECTION.TXT_ALIAS,
+        SPATIAL_FUNCTION:{
+            CHECK_SPATIAL_FUNCTION:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.CHECK_SPATIAL_FUNCTION,
+            LB_GEO_SPATIAL_FUNCT:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.LB_GEO_SPATIAL_FUNCT,
+            RADIO_SPATIAL_FUNCT_DISTANCE:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_DISTANCE,
+            RADIO_SPATIAL_FUNCT_AREA:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_AREA,
+            RADIO_SPATIAL_FUNCT_ORIENTATION:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_ORIENTATION,
+            RADIO_SPATIAL_FUNCT_INCLUDED:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_INCLUDED,
+            RADIO_SPATIAL_FUNCT_MEET:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_MEET,
+            RADIO_SPATIAL_FUNCT_INTERSECT:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.RADIO_SPATIAL_FUNCT_INTERSECT,
+            SEL_LEFT_RIGHT_SP_FUNCT:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.SEL_LEFT_RIGHT_SP_FUNCT,
+            CHECK_ID_NUMBER:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.CHECK_ID_NUMBER,
+            TXT_ID_SP_FUNCT:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.TXT_ID_SP_FUNCT,
+            CHECK_SET_COMP_NUM_SP_FUNCT:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.CHECK_SET_COMP_NUM_SP_FUNCT,
+            TXT_NUM_SP_FUNCT:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.TXT_NUM_SP_FUNCT,
+            SEL_CHOICE_SP_FUNCT:lang.WIZARD.MODULES.JOIN_COLLECTION.SPATIAL_FUNCTION.SEL_CHOICE_SP_FUNCT
+        },
+        GEOMETRY:{
+            CHECK_GEOMETRY:lang.WIZARD.MODULES.JOIN_COLLECTION.GEOMETRY.CHECK_GEOMETRY,
+            LB_GEOMETRY:lang.WIZARD.MODULES.JOIN_COLLECTION.GEOMETRY.LB_GEOMETRY,
+            RADIO_GEOMETRY_INTERSECTION:lang.WIZARD.MODULES.JOIN_COLLECTION.GEOMETRY.RADIO_GEOMETRY_INTERSECTION,
+            RADIO_GEOMETRY_RIGHT:lang.WIZARD.MODULES.JOIN_COLLECTION.GEOMETRY.RADIO_GEOMETRY_RIGHT,
+            RADIO_GEOMETRY_LEFT:lang.WIZARD.MODULES.JOIN_COLLECTION.GEOMETRY.RADIO_GEOMETRY_LEFT,
+            RADIO_GEOMETRY_ALL:lang.WIZARD.MODULES.JOIN_COLLECTION.GEOMETRY.RADIO_GEOMETRY_ALL
+        },
+        CHECK_ADD_FIELDS:lang.WIZARD.MODULES.JOIN_COLLECTION.CHECK_ADD_FIELDS,
+        TXT_ADD_FIELD_NON_FUZZY_FUNCT:lang.WIZARD.MODULES.JOIN_COLLECTION.TXT_ADD_FIELD_NON_FUZZY_FUNCT,
+        TXT_ADD_FIELD_FIELD_REF:lang.WIZARD.MODULES.JOIN_COLLECTION.TXT_ADD_FIELD_FIELD_REF,
+        BTN_SPAN_ADD_FIELD_REF:lang.WIZARD.MODULES.JOIN_COLLECTION.BTN_SPAN_ADD_FIELD_REF,
+        BTN_SPAN_REMOVE_FIELD_REF:lang.WIZARD.MODULES.JOIN_COLLECTION.BTN_SPAN_REMOVE_FIELD_REF,
+        CHECK_FUZZY_SETS:lang.WIZARD.MODULES.JOIN_COLLECTION.CHECK_FUZZY_SETS,
+        TXT_FUZZY_SETS:lang.WIZARD.MODULES.JOIN_COLLECTION.TXT_FUZZY_SETS,
+        CHECK_CASE_CLAUSE:lang.WIZARD.MODULES.JOIN_COLLECTION.CHECK_CASE_CLAUSE,
+        CHECK_REMOVE_DUPLICATES:lang.WIZARD.MODULES.JOIN_COLLECTION.CHECK_REMOVE_DUPLICATES,
+
         rules: {
           required: value => !!value || 'Required.',
           counter: value => this.counterText(value),

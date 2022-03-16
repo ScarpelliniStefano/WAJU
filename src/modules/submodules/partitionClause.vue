@@ -1,10 +1,10 @@
 <template>
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" label="conditions" rows="2" auto-grow v-model="orCond"></v-textarea>
+                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCond"></v-textarea>
                 <v-container fluid style="border-style: outset;">
                 <v-row v-for="collect in fieldRefSource" :key="collect.index">
-                    <v-text-field :rules="[rules.required,rules.counterSource]" label="fields of source fields" v-model="collect.sourceFields"></v-text-field>
+                    <v-text-field :rules="[rules.required,rules.counterSource]" :label="TXT_SOURCE_FIELDS" v-model="collect.sourceFields"></v-text-field>
                 </v-row>
                 </v-container>
                 <br>
@@ -17,7 +17,7 @@
                     @click="setPlusFieldRef()" 
                 >
                 <v-icon color="white">mdi-plus</v-icon>
-                <span style="color: white">&nbsp;ADD SOURCE FIELD</span>
+                <span style="color: white">{{BTN_SPAN_ADD_SOURCE_FIELDS}}</span>
                 </v-btn>
                 &nbsp;&nbsp;
                 <v-btn
@@ -29,15 +29,15 @@
                     @click="checkMinusFieldRef()" 
                 >
                 <v-icon color="white">mdi-minus</v-icon>
-                <span style="color: white">&nbsp;DELETE SOURCE FIELD</span>
+                <span style="color: white">{{BTN_SPAN_REMOVE_SOURCE_FIELDS}}</span>
                 </v-btn>
-                <v-text-field :rules="[rules.required]" label="fields of destination array" v-model="destFields"></v-text-field>
-                <v-checkbox color="var(--bg-color)" v-model="dropGroup" label="drop grouping fields?"></v-checkbox>
-                <v-checkbox color="var(--bg-color)" v-model="orderSelection" label="order fields?"></v-checkbox>
+                <v-text-field :rules="[rules.required]" :label="TXT_FIELD_DESTINATION" v-model="destFields"></v-text-field>
+                <v-checkbox color="var(--bg-color)" v-model="dropGroup" :label="CHECK_DROP_GROUPING_FIELDS"></v-checkbox>
+                <v-checkbox color="var(--bg-color)" v-model="orderSelection" :label="CHECK_ORDER_FIELDS"></v-checkbox>
                 <v-container v-if="orderSelection" style="border-style: outset;">
                     <v-row  v-for="collect in fieldRefOrd" :key="collect.index" >
                         <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterOrdT]" label="Order fields" v-model="collect.fieldsOrder"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterOrdT]" :label="TXT_ORDER_FIELDS" v-model="collect.fieldsOrder"></v-text-field>
                         </v-col>
                         <v-col>
                         <v-container
@@ -47,17 +47,17 @@
                                 <v-radio-group v-model="collect.order" :rules="[rules.counterOrdT]" row>
                                 <v-radio
                                     :key=1
-                                    label="none"
+                                    :label="RADIO_ORDER_NONE"
                                     value=" "
                                 ></v-radio>
                                 <v-radio
                                     :key=2
-                                    label="ascendent"
+                                    :label="RADIO_ORDER_ASCENDENT"
                                     value="ASC "
                                 ></v-radio>
                                 <v-radio
                                     :key=3
-                                    label="descendent"
+                                    :label="RADIO_ORDER_DESCENDENT"
                                     value="DESC "
                                 ></v-radio>
                                 </v-radio-group>
@@ -74,7 +74,7 @@
                         @click="setPlusFieldOrd()" 
                     >
                     <v-icon color="white">mdi-plus</v-icon>
-                    <span style="color: white">&nbsp;ADD ORDER FIELD</span>
+                    <span style="color: white">{{BTN_SPAN_ADD_ORDER_FIELDS}}</span>
                     </v-btn>
                     &nbsp;&nbsp;
                     <v-btn
@@ -86,16 +86,17 @@
                         @click="checkMinusFieldOrd()" 
                     >
                     <v-icon color="white">mdi-minus</v-icon>
-                    <span style="color: white">&nbsp;DELETE ORDER FIELD</span>
+                    <span style="color: white">{{BTN_SPAN_REMOVE_ORDER_FIELDS}}</span>
                     </v-btn>
                 </v-container>
                 
-                <v-checkbox color="var(--bg-color)" v-model="generateSect" label="add a generate section?"></v-checkbox>
+                <v-checkbox color="var(--bg-color)" v-model="generateSect" :label="CHECK_GENERATE_SECTION"></v-checkbox>
                 <generate-section v-if="generateSect" v-on:changeValue="changeText($event)"/>
             </v-container>
 </template>
 
 <script>
+import lang from '../../env/lang.en'
 
 export default {
     props:{
@@ -115,6 +116,23 @@ export default {
         fieldRefSource:[{index:1,sourceFields:''}],
         fieldRefOrd:[{index:1,fieldsOrder:'',order:''}],
         stringVett:['','','','',''],
+
+        //LABEL
+        TXT_CONDITIONS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.TXT_CONDITIONS,
+        TXT_SOURCE_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.TXT_SOURCE_FIELDS,
+        BTN_SPAN_ADD_SOURCE_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.BTN_SPAN_ADD_ORDER_FIELDS,
+        BTN_SPAN_REMOVE_SOURCE_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.BTN_SPAN_REMOVE_ORDER_FIELDS,
+        TXT_FIELD_DESTINATION:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.TXT_FIELD_DESTINATION,
+        CHECK_DROP_GROUPING_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.CHECK_DROP_GROUPING_FIELDS,
+        CHECK_ORDER_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.CHECK_ORDER_FIELDS,
+        TXT_ORDER_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.TXT_ORDER_FIELDS,
+        RADIO_ORDER_NONE:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.RADIO_ORDER_NONE,
+        RADIO_ORDER_ASCENDENT:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.RADIO_ORDER_ASCENDENT,
+        RADIO_ORDER_DESCENDENT:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.RADIO_ORDER_DESCENDENT,
+        BTN_SPAN_ADD_ORDER_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.BTN_SPAN_ADD_ORDER_FIELDS,
+        BTN_SPAN_REMOVE_ORDER_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.BTN_SPAN_REMOVE_ORDER_FIELDS,
+        CHECK_GENERATE_SECTION:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.CHECK_GENERATE_SECTION,
+
         rules: {
           required: value => !!value || 'Required.',
           counterSource: value => this.counterTextSource(value),

@@ -2,9 +2,9 @@
   <v-sheet>
       <v-container fluid>
             <v-row v-for="collect in collections" :key="collect.index">
-                <v-col><v-text-field :rules="[rules.required,rules.counterColl]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
-                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`db ${collect.index}`" v-model="collect.db"/></v-col>
-                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
+                <v-col><v-text-field :rules="[rules.required,rules.counterColl]" v-model="collect.collection" :label="`${TXT_COLLECTION_NR+collect.index}`"/></v-col>
+                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`${TXT_DB+collect.index}`" v-model="collect.db"/></v-col>
+                <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`${TXT_ALIAS+collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
             <br>
             <v-container style="border-style: outset;">
@@ -21,7 +21,7 @@
                 @click="setPlus()" 
             >
             <v-icon color="white">mdi-plus</v-icon>
-            <span style="color: white">&nbsp;ADD TRAJECTORY PARTITION</span>
+            <span style="color: white">{{BTN_SPAN_ADD_TRAJECTORY_PARTITION}}</span>
             </v-btn>
             &nbsp;&nbsp;
             <v-btn
@@ -33,7 +33,7 @@
                 @click="checkMinus()" 
             >
             <v-icon color="white">mdi-minus</v-icon>
-            <span style="color: white">&nbsp;DELETE TRAJECTORY PARTITION</span>
+            <span style="color: white">{{BTN_SPAN_REMOVE_TRAJECTORY_PARTITION}}</span>
             </v-btn>
             </v-container>
             <v-container
@@ -43,17 +43,17 @@
                 <v-radio-group v-model="radioGroup" row>
                 <v-radio
                     :key=1
-                    label="keep others"
+                    :label="RADIO_KEEP_OTHERS"
                     value="KEEP OTHERS"
                 ></v-radio>
                 <v-radio
                     :key=2
-                    label="drop others"
+                    :label="RADIO_DROP_OTHERS"
                     value="DROP OTHERS"
                 ></v-radio>
                  <v-radio
                     :key=3
-                    label="none"
+                    :label="RADIO_NONE"
                     value="NONE"
                 ></v-radio>
                 </v-radio-group>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import lang from '../env/lang.en'
 import trajectoryPartition from "./submodules/trajectoryPartition.vue";
 export default {
     
@@ -98,6 +99,18 @@ export default {
             }
             ],
             stringVett:['',''],
+
+            //LABEL:
+            TXT_COLLECTION_NR: lang.WIZARD.MODULES.TRAJECTORY_MATCHING.TXT_COLLECTION_NR,
+            TXT_DB: lang.WIZARD.MODULES.TRAJECTORY_MATCHING.TXT_DB,
+            TXT_ALIAS: lang.WIZARD.MODULES.TRAJECTORY_MATCHING.TXT_ALIAS,
+            BTN_SPAN_ADD_TRAJECTORY_PARTITION:lang.WIZARD.MODULES.TRAJECTORY_MATCHING.BTN_SPAN_ADD_TRAJECTORY_PARTITION,
+            BTN_SPAN_REMOVE_TRAJECTORY_PARTITION:lang.WIZARD.MODULES.TRAJECTORY_MATCHING.BTN_SPAN_REMOVE_TRAJECTORY_PARTITION,
+            RADIO_KEEP_OTHERS:lang.WIZARD.MODULES.TRAJECTORY_MATCHING.RADIO_KEEP_OTHERS,
+            RADIO_DROP_OTHERS:lang.WIZARD.MODULES.TRAJECTORY_MATCHING.RADIO_DROP_OTHERS,
+            RADIO_NONE:lang.WIZARD.MODULES.TRAJECTORY_MATCHING.RADIO_NONE,
+
+
             rules: {
                 required: value => !!value || 'Required.',
                 counter: value => this.counterTextTrajectory(value),

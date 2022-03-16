@@ -7,23 +7,23 @@
             >
             <v-row>
                 <v-col cols="3">
-                    GEOMETRY:
+                    {{GEOMETRY.LB_GEOMETRY}}
                 </v-col>
                 <v-col cols="9">
                 <v-radio-group v-model="setGeometry" row>
                 <v-radio
                     :key=1
-                    label="KEEPING GEOMETRY"
+                    :label="GEOMETRY.RADIO_GEOMETRY_KEEPING"
                     value="KEEPING GEOMETRY"
                 ></v-radio>
                 <v-radio
                     :key=2
-                    label="DROPPING GEOMETRY"
+                    :label="GEOMETRY.RADIO_GEOMETRY_DROPPING"
                     value="DROPPING GEOMETRY"
                 ></v-radio>
                 <v-radio
                     :key=3
-                    label="SETTING GEOMETRY"
+                    :label="GEOMETRY.RADIO_GEOMETRY_SETTING"
                     value="SETTING GEOMETRY"
                 ></v-radio>
                 </v-radio-group>
@@ -39,41 +39,41 @@
                 <v-radio-group v-model="setGeometrySetting" row>
                 <v-radio
                         key="1"
-                        label="POINT"
+                        :label="GEOMETRY.RADIO_GEOMETRY_SETTING_POINT"
                         value="POINT"
                     ></v-radio>
                     <v-radio
                         key="2"
-                        label="AGGREGATE"
+                        :label="GEOMETRY.RADIO_GEOMETRY_SETTING_AGGREGATE"
                         value="AGGREGATE"
                     ></v-radio>
                     <v-radio
                         key="3"
-                        label="insert a field"
+                        :label="GEOMETRY.RADIO_GEOMETRY_SETTING_FIELD"
                         value=" "
                     ></v-radio>
                     <v-radio
                         key="4"
-                        label="TO_POLYLINE"
+                        :label="GEOMETRY.RADIO_GEOMETRY_SETTING_TO_POLYLINE"
                         value="TO_POLYLINE"
                     ></v-radio>
                     </v-radio-group>
                     <v-row v-if="setGeometrySetting=='POINT'"><v-col>
-                    <v-text-field label="first coordinate" v-model="textRadioBtn1"></v-text-field>
+                    <v-text-field :label="VTXT_GEOMETRY_SETTING_POINT_FIRST_COORDINATE" v-model="textRadioBtn1"></v-text-field>
                     </v-col><v-col>
-                    <v-text-field label="second coordinate" v-model="textRadioBtn2"></v-text-field>
+                    <v-text-field :label="GEOMETRY.TXT_GEOMETRY_SETTING_POINT_SECOND_COORDINATE" v-model="textRadioBtn2"></v-text-field>
                     </v-col></v-row>
-                    <v-text-field v-if="setGeometrySetting!='POINT'" label="field" v-model="textRadioBtn1"></v-text-field> 
+                    <v-text-field v-if="setGeometrySetting!='POINT'" :label="GEOMETRY.TXT_GEOMETRY_SETTING_NO_POINT_FIELD" v-model="textRadioBtn1"></v-text-field> 
             </v-row>
             </v-container>
-        <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" label="Do you want checks on the fuzzy?"></v-checkbox>
+        <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" :label="CHECK_FUZZY_CHECK"></v-checkbox>
         <v-container style="border-style: inset;" v-if="fuzzyCheck">
         <v-row v-for="collect in collectionsFuzzy" :key="collect.index">
             <v-col>
-            <v-text-field :rules="[rules.counter]" v-if="fuzzyCheck" label="ID istruction" v-model="collect.idFuzzyInstr"></v-text-field>
+            <v-text-field :rules="[rules.counter]" :label="TXT_COLL_FUZZY_ID_ISTR" v-model="collect.idFuzzyInstr"></v-text-field>
             </v-col>
             <v-col>
-            <v-textarea :rules="[rules.counter]" v-if="fuzzyCheck" label="fuzzy check condition" rows="1" v-model="collect.fuzzyInstr"></v-textarea>
+            <v-textarea :rules="[rules.counter]" :label="TXT_COLL_FUZZY_CONDITION" rows="1" v-model="collect.fuzzyInstr"></v-textarea>
             </v-col>
         </v-row>
         <v-container>
@@ -86,7 +86,7 @@
             @click="setPlus()" 
         >
         <v-icon color="white">mdi-plus</v-icon>
-        <span style="color: white">&nbsp;ADD FUZZY ISTRUCTION</span>
+        <span style="color: white">{{BTN_SPAN_ADD_FUZZY_ISTRUCTION}}</span>
         </v-btn>
         &nbsp;&nbsp;
         <v-btn
@@ -98,18 +98,18 @@
             @click="checkMinus()" 
         >
         <v-icon color="white">mdi-minus</v-icon>
-        <span style="color: white">&nbsp;DELETE FUZZY ISTRUCTION</span>
+        <span style="color: white">{{BTN_SPAN_REMOVE_FUZZY_ISTRUCTION}}</span>
         </v-btn>
         </v-container>
         </v-container>
-        <v-checkbox color="var(--bg-color)" v-model="alphaCut" label="Do you want alpha cut?"></v-checkbox>
+        <v-checkbox color="var(--bg-color)" v-model="alphaCut" :label="CHECK_ALPHACUT"></v-checkbox>
         <v-container style="border-style: inset;" v-if="alphaCut">
         <v-row v-for="collect in collectionsAlpha" :key="collect.index">
             <v-col>
-            <v-text-field :rules="[rules.counterA]" v-if="alphaCut" label="numeric expression" v-model="collect.numericIstr"></v-text-field>
+            <v-text-field :rules="[rules.counterA]" :label="TXT_ALPHACUT_NUMERIC_EXPR" v-model="collect.numericIstr"></v-text-field>
             </v-col>
             <v-col>
-            <v-text-field :rules="[rules.counterA]" v-if="alphaCut" label="ID" v-model="collect.idAlpha"></v-text-field>
+            <v-text-field :rules="[rules.counterA]" :label="TXT_ALPHACUT_ID" v-model="collect.idAlpha"></v-text-field>
             </v-col>
         </v-row>
         <v-container>
@@ -122,7 +122,7 @@
             @click="setPlusA()" 
         >
         <v-icon color="white">mdi-plus</v-icon>
-        <span style="color: white">&nbsp;ADD ALPHA CUT</span>
+        <span style="color: white">{{BTN_SPAN_ADD_ALPHACUT}}</span>
         </v-btn>
         &nbsp;&nbsp;
         <v-btn
@@ -134,19 +134,20 @@
             @click="checkMinusA()" 
         >
         <v-icon color="white">mdi-minus</v-icon>
-        <span style="color: white">&nbsp;DELETE ALPHA CUT</span>
+        <span style="color: white">{{BTN_SPAN_REMOVE_ALPHACUT}}</span>
         </v-btn>
         </v-container>
         </v-container>
-        <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" label="Do you want to keep or drop fuzzy sets?"></v-checkbox>
+        <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" :label="CHECK_KEEP_DROP_FUZZY"></v-checkbox>
         <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValueKDFS="changeTextKeepDropFuzzy($event)"/>
-        <v-checkbox color="var(--bg-color)" v-model="buildAction" label="Do you want a build action?"></v-checkbox>
-        <v-textarea rows=2 v-if="buildAction" color="var(--bg-color)" v-model="textBuild" :rules="[rules.required]" label="field to build separed by comma"></v-textarea>
+        <v-checkbox color="var(--bg-color)" v-model="buildAction" :label="CHECK_BUILD_ACTION"></v-checkbox>
+        <v-textarea rows=2 v-if="buildAction" color="var(--bg-color)" v-model="textBuild" :rules="[rules.required]" :label="TXT_BUILD_ACTION_FIELD"></v-textarea>
     </v-container>
 </template>
 
 <script>
 import keepDropFuzzySet from './keepdropFS.vue';
+import lang from '../../env/lang.en'
 export default {
     components:{
         keepDropFuzzySet
@@ -173,6 +174,35 @@ export default {
                     {typeClause:'build',value:''},
                     ]
         ,
+
+        //LABEL
+            GEOMETRY:{
+                LB_GEOMETRY:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.LB_GEOMETRY,
+                RADIO_GEOMETRY_KEEPING:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.RADIO_GEOMETRY_KEEPING,
+                RADIO_GEOMETRY_DROPPING:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.RADIO_GEOMETRY_DROPPING,
+                RADIO_GEOMETRY_SETTING:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.RADIO_GEOMETRY_SETTING,
+                RADIO_GEOMETRY_SETTING_POINT:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.RADIO_GEOMETRY_SETTING_POINT,
+                RADIO_GEOMETRY_SETTING_AGGREGATE:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.RADIO_GEOMETRY_SETTING_AGGREGATE,
+                RADIO_GEOMETRY_SETTING_FIELD:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.RADIO_GEOMETRY_SETTING_FIELD,
+                RADIO_GEOMETRY_SETTING_TO_POLYLINE:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.RADIO_GEOMETRY_SETTING_TO_POLYLINE,
+                TXT_GEOMETRY_SETTING_POINT_FIRST_COORDINATE:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.TXT_GEOMETRY_SETTING_POINT_FIRST_COORDINATE,
+                TXT_GEOMETRY_SETTING_POINT_SECOND_COORDINATE:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.TXT_GEOMETRY_SETTING_POINT_SECOND_COORDINATE,
+                TXT_GEOMETRY_SETTING_NO_POINT_FIELD:lang.WIZARD.SUBMODULES.GENERATE_SECTION.GEOMETRY.TXT_GEOMETRY_SETTING_NO_POINT_FIELD,
+            },
+            CHECK_FUZZY_CHECK:lang.WIZARD.SUBMODULES.GENERATE_SECTION.CHECK_FUZZY_CHECK,
+            TXT_COLL_FUZZY_ID_ISTR:lang.WIZARD.SUBMODULES.GENERATE_SECTION.TXT_COLL_FUZZY_ID_ISTR,
+            TXT_COLL_FUZZY_CONDITION:lang.WIZARD.SUBMODULES.GENERATE_SECTION.TXT_COLL_FUZZY_CONDITION,
+            BTN_SPAN_ADD_FUZZY_ISTRUCTION:lang.WIZARD.SUBMODULES.GENERATE_SECTION.BTN_SPAN_ADD_FUZZY_ISTRUCTION,
+            BTN_SPAN_REMOVE_FUZZY_ISTRUCTION:lang.WIZARD.SUBMODULES.GENERATE_SECTION.BTN_SPAN_REMOVE_FUZZY_ISTRUCTION,
+            CHECK_ALPHACUT:lang.WIZARD.SUBMODULES.GENERATE_SECTION.CHECK_ALPHACUT,
+            TXT_ALPHACUT_NUMERIC_EXPR:lang.WIZARD.SUBMODULES.GENERATE_SECTION.TXT_ALPHACUT_NUMERIC_EXPR,
+            TXT_ALPHACUT_ID:lang.WIZARD.SUBMODULES.GENERATE_SECTION.TXT_ALPHACUT_ID,
+            BTN_SPAN_ADD_ALPHACUT:lang.WIZARD.SUBMODULES.GENERATE_SECTION.BTN_SPAN_ADD_ALPHACUT,
+            BTN_SPAN_REMOVE_ALPHACUT:lang.WIZARD.SUBMODULES.GENERATE_SECTION.BTN_SPAN_REMOVE_ALPHACUT,
+            CHECK_KEEP_DROP_FUZZY:lang.WIZARD.SUBMODULES.GENERATE_SECTION.CHECK_KEEP_DROP_FUZZY,
+            CHECK_BUILD_ACTION:lang.WIZARD.SUBMODULES.GENERATE_SECTION.CHECK_BUILD_ACTION,
+            TXT_BUILD_ACTION_FIELD:lang.WIZARD.SUBMODULES.GENERATE_SECTION.TXT_BUILD_ACTION_FIELD,
+
         rules: {
             required: value => !!value || 'Required.',
             counter: value => this.counterText(value),

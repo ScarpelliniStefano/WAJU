@@ -1,14 +1,16 @@
 <template>
   <v-sheet>
             <v-row v-for="collect in collections" :key="collect.index">
-                <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`collection ${collect.index}`"/></v-col>
-                <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`db ${collect.index}`" v-model="collect.db"/></v-col>
-                <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`alias ${collect.index}`" v-model="collect.alias"/></v-col>
+                <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`${TXT_COLLECTION_NR + collect.index}`"/></v-col>
+                <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`${TXT_DB + collect.index}`" v-model="collect.db"/></v-col>
+                <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`${TXT_ALIAS + collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
   </v-sheet>
 </template>
 
 <script>
+import lang from '../env/lang.en'
+
 export default {
    data () {
       return {
@@ -27,6 +29,12 @@ export default {
             db: '',
             alias: ''
         }],
+
+        //LABEL
+        TXT_COLLECTION_NR: lang.WIZARD.MODULES.SUBTRACT_COLLECTION.TXT_COLLECTION_NR,
+        TXT_DB: lang.WIZARD.MODULES.SUBTRACT_COLLECTION.TXT_DB,
+        TXT_ALIAS: lang.WIZARD.MODULES.SUBTRACT_COLLECTION.TXT_ALIAS,
+
         rules: {
           required: value => !!value || 'Required.',
           counter: value => this.counterText(value),

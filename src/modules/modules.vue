@@ -33,9 +33,27 @@ import createFuzzyOp from "./createFuzzyOp.vue";
 import createJavascriptFunction from "./createJsFunct.vue"
 import trajectoryMatch from "./trajectoryMatch.vue";
 
+import lang from '../env/lang.en'
+
 export default {
     data:()=>({
-        valueString:''
+        valueString:'',
+
+        //LABEL
+        SEL_GET_COLL:lang.WIZARD.SPECIFICATION.SEL_GET_COLL,
+        SEL_GET_DICT:lang.WIZARD.SPECIFICATION.SEL_GET_DICT,
+        SEL_SAVE_AS:lang.WIZARD.SPECIFICATION.SEL_SAVE_AS,
+        SEL_MERGE_COLL:lang.WIZARD.SPECIFICATION.SEL_MERGE_COLL,
+        SEL_INTERSECT_COLL:lang.WIZARD.SPECIFICATION.SEL_INTERSECT_COLL,
+        SEL_SUBTRACT_COLL:lang.WIZARD.SPECIFICATION.SEL_SUBTRACT_COLL,
+        SEL_USE_DB:lang.WIZARD.SPECIFICATION.SEL_USE_DB,
+        SEL_FILTER:lang.WIZARD.SPECIFICATION.SEL_FILTER,
+        SEL_EXPAND:lang.WIZARD.SPECIFICATION.SEL_EXPAND,
+        SEL_GROUP:lang.WIZARD.SPECIFICATION.SEL_GROUP,
+        SEL_JOIN:lang.WIZARD.SPECIFICATION.SEL_JOIN,
+        SEL_FUZZY_OP:lang.WIZARD.SPECIFICATION.SEL_FUZZY_OP,
+        SEL_JS_FUNCTION:lang.WIZARD.SPECIFICATION.SEL_JS_FUNCTION,
+        SEL_TRAJECTORY_MATCHING:lang.WIZARD.SPECIFICATION.SEL_TRAJECTORY_MATCHING
     }),
     props:{
         select : String,
@@ -62,46 +80,46 @@ export default {
         select:function(newVal, oldVal){
             if(newVal!=oldVal){
                 switch (newVal) {
-                    case "GET A COLLECTION":
+                    case this.SEL_GET_COLL:
                         this.valueString="GET COLLECTION"
                         break;
-                    case "GET A DICTIONARY":
+                    case this.SEL_GET_DICT:
                         this.valueString="GET DICTIONARY"
                         break;
-                    case "SAVE LOCALLY OR IN A DATABASE":
+                    case this.SEL_SAVE_AS:
                         this.valueString="SAVE AS"
                         break;
-                    case "MERGE TWO OR MORE COLLECTIONS":
+                    case this.SEL_MERGE_COLL:
                         this.valueString="MERGE COLLECTIONS"
                         break;
-                    case "INTERSECT TWO COLLECTIONS":
+                    case this.SEL_INTERSECT_COLL:
                         this.valueString="INTERSECT COLLECTIONS"
                         break;
-                    case "SUBTRACT TWO COLLECTIONS":
+                    case this.SEL_SUBTRACT_COLL:
                         this.valueString="SUBTRACT COLLECTIONS"
                         break;
-                    case "USE A DATABASE":
+                    case this.SEL_USE_DB:
                         this.valueString="USE DB"
                         break;
-                     case "FILTER ON FIELD":
+                     case this.SEL_FILTER:
                         this.valueString="FILTER"
                         break;
-                    case "EXPAND COLLECTIONS":
+                    case this.SEL_EXPAND:
                         this.valueString="EXPAND"
                         break;
-                    case "GROUP COLLECTIONS":
+                    case this.SEL_GROUP:
                         this.valueString="GROUP"
                         break;
-                    case "JOIN OF COLLECTIONS":
+                    case this.SEL_JOIN:
                         this.valueString="JOIN OF COLLECTIONS"
                         break;
-                    case "CREATE FUZZY OPERATOR":
+                    case this.SEL_FUZZY_OP:
                         this.valueString="CREATE FUZZY OPERATOR"
                         break;
-                    case "CREATE JAVASCRIPT FUNCTION":
+                    case this.SEL_JS_FUNCTION:
                         this.valueString="CREATE JAVASCRIPT FUNCTION"
                         break;
-                    case "TRAJECTORY MATCHING":
+                    case this.SEL_TRAJECTORY_MATCHING:
                         this.valueString="TRAJECTORY MATCHING"
                         break;
                     default:

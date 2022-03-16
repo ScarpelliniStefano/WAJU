@@ -9,31 +9,31 @@
                     <v-radio-group v-model="radioFS">
                     <v-radio
                         key="1"
-                        label="DEFUZZIFY"
+                        :label="RADIO_DEFUZZIFY"
                         value="DEFUZZIFY"
                     ></v-radio>
                     <v-radio
                         key="2"
-                        label="DROPPING ALL FUZZY SETS"
+                        :label="RADIO_DROPPING_ALL_FS"
                         value="DROPPING ALL FUZZY SETS"
                     ></v-radio>
                     <v-radio
                         key="3"
-                        label="KEEPING ALL FUZZY SETS"
+                        :label="RADIO_KEEPING_ALL_FS"
                         value="KEEPING ALL FUZZY SETS"
                     ></v-radio>
                     <v-radio
                         key="4"
-                        label="DROPPING FUZZY SETS"
+                        :label="RADIO_DROPPING_FUZZY_SETS"
                         value="DROPPING FUZZY SETS"
                     ></v-radio>
                     <v-radio
                         key="5"
-                        label="KEEPING FUZZY SETS"
+                        :label="RADIO_KEEPING_FUZZY_SETS"
                         value="KEEPING FUZZY SETS"
                     ></v-radio>
                     </v-radio-group>
-                    <v-text-field v-if="radioFS=='DROPPING FUZZY SETS' || radioFS=='KEEPING FUZZY SETS'" label="list of ids to keep/drop" v-model="textRadio"></v-text-field>
+                    <v-text-field v-if="radioFS=='DROPPING FUZZY SETS' || radioFS=='KEEPING FUZZY SETS'" :label="TXT_LIST_ID" v-model="textRadio"></v-text-field>
                 </v-container>
             </div>
             
@@ -42,11 +42,20 @@
 </template>
 
 <script>
+import lang from '../../env/lang.en'
 export default {
    data () {
       return {
         radioFS:'',
-        textRadio:''
+        textRadio:'',
+
+        //LABEL
+        RADIO_DEFUZZIFY:lang.WIZARD.SUBMODULES.KEEP_DROP_FS.RADIO_DEFUZZIFY,
+        RADIO_DROPPING_ALL_FS:lang.WIZARD.SUBMODULES.KEEP_DROP_FS.RADIO_DROPPING_ALL_FS,
+        RADIO_KEEPING_ALL_FS:lang.WIZARD.SUBMODULES.KEEP_DROP_FS.RADIO_KEEPING_ALL_FS,
+        RADIO_DROPPING_FUZZY_SETS:lang.WIZARD.SUBMODULES.KEEP_DROP_FS.RADIO_DROPPING_FUZZY_SETS,
+        RADIO_KEEPING_FUZZY_SETS:lang.WIZARD.SUBMODULES.KEEP_DROP_FS.RADIO_KEEPING_FUZZY_SETS,
+        TXT_LIST_ID:lang.WIZARD.SUBMODULES.KEEP_DROP_FS.TXT_LIST_ID
       }
     },
     
