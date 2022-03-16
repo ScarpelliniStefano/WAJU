@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-        <case-clause v-on:changeValue="changeValue($event)"/>
+        <case-clause @changeValue="changeValue($event)"/>
         <v-checkbox color="var(--bg-color)" v-model="removeDup" :label="CHECK_REMOVE_DUPL"></v-checkbox>
   </v-sheet>
 </template>

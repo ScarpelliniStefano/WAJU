@@ -9,7 +9,7 @@
             <br>
             <v-container style="border-style: outset;">
             <v-row v-for="collect in collectionsPartitions" :key="collect.index">
-                <trajectory-partition :mytrajectoryPartIndex="collect.index" v-on:changeValueTrajectory="changeTextTrajectory($event)"/>
+                <trajectory-partition :mytrajectoryPartIndex="collect.index" @changeValueTrajectory="changeTextTrajectory($event)"/>
             </v-row>
             <br>
             <v-btn

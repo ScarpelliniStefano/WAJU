@@ -139,7 +139,7 @@
         </v-container>
         </v-container>
         <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" :label="CHECK_KEEP_DROP_FUZZY"></v-checkbox>
-        <keepDropFuzzySet v-if="keepDropFuzzy" v-on:changeValueKDFS="changeTextKeepDropFuzzy($event)"/>
+        <keepDropFuzzySet v-if="keepDropFuzzy" @changeValueKDFS="changeTextKeepDropFuzzy($event)"/>
         <v-checkbox color="var(--bg-color)" v-model="buildAction" :label="CHECK_BUILD_ACTION"></v-checkbox>
         <v-textarea rows=2 v-if="buildAction" color="var(--bg-color)" v-model="textBuild" :rules="[rules.required]" :label="TXT_BUILD_ACTION_FIELD"></v-textarea>
     </v-container>

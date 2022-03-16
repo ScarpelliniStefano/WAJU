@@ -146,7 +146,7 @@
             <v-checkbox color="var(--bg-color)" v-model="setFuzzySets" :label="CHECK_FUZZY_SETS"></v-checkbox>
             <v-textarea :rules="[rules.required]" v-if="setFuzzySets" :label="TXT_FUZZY_SETS" rows="2" v-model="setFuzzySetsText"></v-textarea>
             <v-checkbox color="var(--bg-color)" v-model="caseClauseSel" :label="CHECK_CASE_CLAUSE"></v-checkbox>
-            <case-clause v-if="caseClauseSel" v-on:changeValue="changeValue($event)"/>
+            <case-clause v-if="caseClauseSel" @changeValue="changeValue($event)"/>
             <v-checkbox color="var(--bg-color)" v-model="removeDup" :label="CHECK_REMOVE_DUPLICATES"></v-checkbox>
         </v-container>
   </v-sheet>

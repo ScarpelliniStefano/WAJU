@@ -6,7 +6,7 @@
                 
                 <v-row v-for="collect in collectionsPartMatch" :key="collect.index">
                     <v-container style="border-style: inset;">
-                    <partition-matching :mypartmatchIndex="collect.index" v-on:changeValueMatch="changeTextMatch($event)"/>
+                    <partition-matching :mypartmatchIndex="collect.index" @changeValueMatch="changeTextMatch($event)"/>
                     </v-container>
                     <br>
                 </v-row>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import partitionMatching from "./partitionMatching.vue";
+import partitionMatching from "./ModulePartitionMatching.vue";
 import lang from '../../env/lang.en'
 export default {
     props:{

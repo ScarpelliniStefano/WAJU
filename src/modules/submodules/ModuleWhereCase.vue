@@ -3,13 +3,13 @@
             <v-container fluid style="border-style: outset;">
                 <v-textarea :rules="[rules.required]" :label="TXT_COLLECT_CLAUSE" rows="2" auto-grow v-model="whereClause"></v-textarea>
                 <v-checkbox color="var(--bg-color)" v-model="generateSect" :label="CHECK_GEN_SECTION"></v-checkbox>
-                <generate-section v-if="generateSect" v-on:changeValue="changeText($event)"/>
+                <generate-section v-if="generateSect" @changeValue="changeText($event)"/>
             </v-container>
             
 </template>
 
 <script>
-import generateSection from './generateSection.vue';
+import generateSection from './ModuleGenerateSection.vue';
 import lang from '../../env/lang.en'
 export default {
     props:{

@@ -1,36 +1,36 @@
 <template>
     <v-sheet>
-        <get-coll v-on:changeValue="changeValue($event)" v-if="this.valueString=='GET COLLECTION'"/>
-        <get-dict v-on:changeValue="changeValue($event)" v-if="this.valueString=='GET DICTIONARY'"/>
-        <save-as v-on:changeValue="changeValue($event)" v-if="this.valueString=='SAVE AS'"/>
-        <merge-coll :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='MERGE COLLECTIONS'"/>
-        <intersect-coll v-on:changeValue="changeValue($event)" v-if="this.valueString=='INTERSECT COLLECTIONS'"/>
-        <subtract-coll v-on:changeValue="changeValue($event)" v-if="this.valueString=='SUBTRACT COLLECTIONS'"/>
-        <use-db :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='USE DB'"/>
-        <filter-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='FILTER'"/>
-        <expand-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='EXPAND'"/>
-        <group-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='GROUP'"/>
-        <join-coll-clause :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='JOIN OF COLLECTIONS'"/>
-        <create-fuzzy-op :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='CREATE FUZZY OPERATOR'"/>
-        <create-javascript-function :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='CREATE JAVASCRIPT FUNCTION'"/>
-        <trajectory-match :maincol="maincol" v-on:changeValue="changeValue($event)" v-if="this.valueString=='TRAJECTORY MATCHING'"/>
+        <get-coll @changeValue="changeValue($event)" v-if="this.valueString=='GET COLLECTION'"/>
+        <get-dict @changeValue="changeValue($event)" v-if="this.valueString=='GET DICTIONARY'"/>
+        <save-as @changeValue="changeValue($event)" v-if="this.valueString=='SAVE AS'"/>
+        <merge-coll :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='MERGE COLLECTIONS'"/>
+        <intersect-coll @changeValue="changeValue($event)" v-if="this.valueString=='INTERSECT COLLECTIONS'"/>
+        <subtract-coll @changeValue="changeValue($event)" v-if="this.valueString=='SUBTRACT COLLECTIONS'"/>
+        <use-db :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='USE DB'"/>
+        <filter-clause :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='FILTER'"/>
+        <expand-clause :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='EXPAND'"/>
+        <group-clause :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='GROUP'"/>
+        <join-coll-clause :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='JOIN OF COLLECTIONS'"/>
+        <create-fuzzy-op :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='CREATE FUZZY OPERATOR'"/>
+        <create-javascript-function :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='CREATE JAVASCRIPT FUNCTION'"/>
+        <trajectory-match :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='TRAJECTORY MATCHING'"/>
     </v-sheet>
 </template>
 
 <script>
-import getColl from "./getCollection.vue";
-import getDict from "./getDictionary.vue";
+import getColl from "./WizardGetCollection.vue";
+import getDict from "./WizardGetDictionary.vue";
 import saveAs from "./saveAs.vue";
-import mergeColl from "./mergeCollections.vue";
-import intersectColl from "./intersectCollections.vue";
+import mergeColl from "./WizardMergeCollections.vue";
+import intersectColl from "./WizardIntersectCollections.vue";
 import subtractColl from "./subtractCollections.vue";
 import useDb from "./useDB.vue";
-import filterClause from "./filter.vue";
-import expandClause from "./expand.vue";
-import groupClause from "./group.vue";
-import joinCollClause from "./joinColl.vue";
-import createFuzzyOp from "./createFuzzyOp.vue";
-import createJavascriptFunction from "./createJsFunct.vue"
+import filterClause from "./WizardFilter.vue";
+import expandClause from "./WizardExpand.vue";
+import groupClause from "./WizardGroup.vue";
+import joinCollClause from "./WizardJoinCollections.vue";
+import createFuzzyOp from "./WizardCreateFuzzyOperator.vue";
+import createJavascriptFunction from "./WizardCreateJavaScriptFunction.vue"
 import trajectoryMatch from "./trajectoryMatch.vue";
 
 import lang from '../env/lang.en'

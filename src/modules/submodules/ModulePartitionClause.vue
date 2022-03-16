@@ -91,7 +91,7 @@
                 </v-container>
                 
                 <v-checkbox color="var(--bg-color)" v-model="generateSect" :label="CHECK_GENERATE_SECTION"></v-checkbox>
-                <generate-section v-if="generateSect" v-on:changeValue="changeText($event)"/>
+                <generate-section v-if="generateSect" @changeValue="changeText($event)"/>
             </v-container>
 </template>
 
