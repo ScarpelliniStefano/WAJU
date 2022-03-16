@@ -251,7 +251,7 @@ const lang = Object.freeze({
                 TXT_NUMERIC_THRESHOLD: 'Threshold\'s Numeric',
                 CHECK_WHERE_COND: 'Do you want to set where conditions of matching?',
                 TXT_WHERE_COND: 'Where conditions',
-                TXT_FIELD_DEST: 'Destination\s Field',
+                TXT_FIELD_DEST: 'Destination\'s Field',
                 CHECK_ADD_FIELD: 'Do you want to add field to input?',
                 TXT_ADD_FIELD: 'Field to add',
                 CHECK_SET_MIN_SIM: 'Do you want to set min similarity?',

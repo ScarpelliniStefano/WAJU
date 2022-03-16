@@ -32,7 +32,7 @@
         large
         :dark="darkMode"
         @click="
-          clickDragResize('btm')
+          clickDragResize('btm');
           selBtm = !selBtm;
         "
       >
@@ -51,9 +51,7 @@
           color: var(--border-color);
         "
         large
-        @click="
-          selBtm = !selBtm;
-        "
+        @click="selBtm = !selBtm"
       >
         mdi-toolbox
       </v-icon>
@@ -66,7 +64,7 @@
         large
         :dark="darkMode"
         @click="
-          clickDragResize('log')
+          clickDragResize('log');
           selLog = !selLog;
         "
       >
@@ -85,9 +83,7 @@
           color: var(--border-color);
         "
         large
-        @click="
-          selLog = !selLog;
-        "
+        @click="selLog = !selLog"
       >
         mdi-text-box
       </v-icon>
@@ -100,7 +96,7 @@
         large
         :dark="darkMode"
         @click="
-          clickDragResize('rec')
+          clickDragResize('rec');
           selRec = !selRec;
         "
       >
@@ -119,9 +115,7 @@
         "
         id="SaveBack"
         large
-        @click="
-          selRec = !selRec;
-        "
+        @click="selRec = !selRec"
       >
         mdi-content-save
       </v-icon>
@@ -135,7 +129,7 @@
         large
         :dark="darkMode"
         @click="
-          clickDragResize('send')
+          clickDragResize('send');
           selSend = !selSend;
         "
       >
@@ -181,10 +175,11 @@
             <span>{{ BTN_SPAN_SETTINGS }}</span>
           </v-btn>
           <Settings
-           @set-main-color="setMainColor"
+            @set-main-color="setMainColor"
             @set-theme-color="setThemeColor"
             @set-style="setStyle"
-            :darkMode="darkMode">
+            :darkMode="darkMode"
+          >
           </Settings>
         </v-sheet>
       </v-bottom-sheet>
@@ -255,9 +250,9 @@
         @click-send="sendMsg($event)"
         @set-z-click="setZ"
         @close-send="selSend = !selSend"
-        @send-text='sendText()'
-        @share-text='shareText'
-        :textShare='send.textShare'
+        @send-text="sendText()"
+        @share-text="shareText"
+        :textShare="send.textShare"
       ></bar-send>
     </VueDragResize>
 
@@ -362,15 +357,15 @@
             :width="send.widthSm"
             :disable="disBtn"
             :textRec="textToCommand"
-            @send-text='sendText()'
+            @send-text="sendText()"
             :textChange="send.textSend"
             :randomNumberString="randomNumber"
             :darkMode="darkMode"
             @click-send="sendMsg($event)"
             @set-z-click="setZ"
             @close-send="selSend = !selSend"
-            @share-text='shareText'
-            :textShare='send.textShare'
+            @share-text="shareText"
+            :textShare="send.textShare"
           ></bar-send>
         </v-col>
         <v-col v-if="selLog" class="" :key="2" :cols="12" :sm="12">
