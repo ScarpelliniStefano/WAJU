@@ -1,14 +1,14 @@
 <template>
-   <page-tree />
+  <page-tree />
 </template>
 
 <script>
-  import PageTree from '../components/PageTree.vue'
+import PageTree from "../components/AppPageTree.vue";
 
-  export default {
-    name: 'StaticPage',
-    components: {
-      PageTree,
-    },
-  }
+export default {
+  name: "StaticPage",
+  components: {
+    PageTree,
+  },
+};
 </script>

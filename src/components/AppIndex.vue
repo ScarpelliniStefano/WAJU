@@ -1,14 +1,20 @@
 <template>
   <v-sheet :color="bgColor" id="body">
-    <v-sheet :dark="darkMode" elevation="10" name="c1" class="divheader" style="height: 50px; padding-y: 0 25px; ">
-      <h1 id="title" class="display-2 font-weight-bold">{{TITLE}}</h1>
+    <v-sheet
+      :dark="darkMode"
+      elevation="10"
+      name="c1"
+      class="divheader"
+      style="height: 50px; padding-y: 0 25px"
+    >
+      <h1 id="title" class="display-2 font-weight-bold">{{ TITLE }}</h1>
       <v-icon
         style="
           float: right;
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
-          color: var(--border-color)
+          color: var(--border-color);
         "
         large
         v-on:click="settings = true"
@@ -22,16 +28,11 @@
         v-if="!selBtm"
         @mouseover="tip = TIP_CONFIG_COLL"
         @mouseleave="tip = ''"
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-        "
+        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
         v-on:click="
-          clickDragResize('btm')
+          clickDragResize('btm');
           selBtm = !selBtm;
         "
       >
@@ -47,12 +48,10 @@
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
-          color: var(--border-color)
+          color: var(--border-color);
         "
         large
-        v-on:click="
-          selBtm = !selBtm;
-        "
+        v-on:click="selBtm = !selBtm"
       >
         mdi-toolbox
       </v-icon>
@@ -61,16 +60,11 @@
         v-if="!selLog"
         @mouseover="tip = TIP_LOG"
         @mouseleave="tip = ''"
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-        "
+        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
         v-on:click="
-          clickDragResize('log')
+          clickDragResize('log');
           selLog = !selLog;
         "
       >
@@ -86,12 +80,10 @@
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
-          color: var(--border-color)
+          color: var(--border-color);
         "
         large
-        v-on:click="
-          selLog = !selLog;
-        "
+        v-on:click="selLog = !selLog"
       >
         mdi-text-box
       </v-icon>
@@ -100,16 +92,11 @@
         v-if="!selRec"
         @mouseover="tip = TIP_SAVE_UNDO"
         @mouseleave="tip = ''"
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-        "
+        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
         v-on:click="
-          clickDragResize('rec')
+          clickDragResize('rec');
           selRec = !selRec;
         "
       >
@@ -124,13 +111,11 @@
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
-          color: var(--border-color)
+          color: var(--border-color);
         "
         id="SaveBack"
         large
-        v-on:click="
-          selRec = !selRec;
-        "
+        v-on:click="selRec = !selRec"
       >
         mdi-content-save
       </v-icon>
@@ -139,17 +124,12 @@
         v-if="!selSend"
         @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
         @mouseleave="tip = ''"
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-        "
+        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         id="execute"
         large
         :dark="darkMode"
         v-on:click="
-          clickDragResize('send')
+          clickDragResize('send');
           selSend = !selSend;
         "
       >
@@ -164,7 +144,7 @@
           margin-right: 20px;
           margin-top: 7px;
           margin-bottom: 7px;
-          color: var(--border-color)
+          color: var(--border-color);
         "
         id="execute"
         large
@@ -179,30 +159,27 @@
       </v-icon>
 
       <h4
-        style="float: right; margin-right: 20px; color: var(--border-color); margin-top: 12px"
+        style="
+          float: right;
+          margin-right: 20px;
+          color: var(--border-color);
+          margin-top: 12px;
+        "
       >
         {{ this.tip }}
       </h4>
 
       <v-bottom-sheet v-model="settings">
-        <v-sheet
-          class="text-center"
-          height="350px"
-          min-width="700px"
-        >
-          <v-btn
-            class="mt-6"
-            text
-            color="red"
-            @click="settings = !settings"
-          >
-            <span>{{BTN_SPAN_SETTINGS}}</span>
+        <v-sheet class="text-center" height="350px" min-width="700px">
+          <v-btn class="mt-6" text color="red" @click="settings = !settings">
+            <span>{{ BTN_SPAN_SETTINGS }}</span>
           </v-btn>
           <Settings
-           v-on:set-main-color="setMainColor"
+            v-on:set-main-color="setMainColor"
             v-on:set-theme-color="setThemeColor"
             v-on:set-style="setStyle"
-            :darkMode="darkMode">
+            :darkMode="darkMode"
+          >
           </Settings>
         </v-sheet>
       </v-bottom-sheet>
@@ -273,9 +250,9 @@
         v-on:click-send="sendMsg($event)"
         v-on:set-z-click="setZ"
         v-on:close-send="selSend = !selSend"
-        v-on:send-text='sendText()'
-        v-on:share-text='shareText'
-        :textShare='send.textShare'
+        v-on:send-text="sendText()"
+        v-on:share-text="shareText"
+        :textShare="send.textShare"
       ></bar-send>
     </VueDragResize>
 
@@ -348,9 +325,7 @@
       </bottom-bar>
     </VueDragResize>
 
-    <v-snackbar
-      v-model="wizardAlert" elevation="5" light
-    >
+    <v-snackbar v-model="wizardAlert" elevation="5" light>
       Wizard forwarded an istruction
 
       <template v-slot:action="{ attrs }">
@@ -373,13 +348,7 @@
       fluid
     >
       <v-row class="text-center" align="center" align-content="center">
-        <v-col
-          v-if="selSend"
-          class=""
-          :key="1"
-          :cols="12"
-          :sm="12"
-        >
+        <v-col v-if="selSend" class="" :key="1" :cols="12" :sm="12">
           <bar-send
             :bgcolor="contColor"
             :rapporto="send.widthSm / send.heightSm"
@@ -388,24 +357,18 @@
             :width="send.widthSm"
             :disable="disBtn"
             :textRec="textToCommand"
-            v-on:send-text='sendText()'
+            v-on:send-text="sendText()"
             :textChange="send.textSend"
             :randomNumberString="randomNumber"
             :darkMode="darkMode"
             v-on:click-send="sendMsg($event)"
             v-on:set-z-click="setZ"
             v-on:close-send="selSend = !selSend"
-            v-on:share-text='shareText'
-            :textShare='send.textShare'
+            v-on:share-text="shareText"
+            :textShare="send.textShare"
           ></bar-send>
         </v-col>
-        <v-col
-          v-if="selLog"
-          class=""
-          :key="2"
-          :cols="12"
-          :sm="12"
-        >
+        <v-col v-if="selLog" class="" :key="2" :cols="12" :sm="12">
           <bar-log
             :bgcolor="contColor"
             :browser="browserName"
@@ -434,14 +397,7 @@
             v-on:close-rec="selRec = !selRec"
           ></bar-rec>
         </v-col>
-        <v-col
-          v-if="selBtm"
-          class=""
-          id="third"
-          :key="4"
-          :cols="12"
-          :sm="12"
-        >
+        <v-col v-if="selBtm" class="" id="third" :key="4" :cols="12" :sm="12">
           <bottom-bar
             :bgcolor="contColor"
             :browser="browserName"
@@ -470,9 +426,9 @@
 <script>
 //import Vue from 'vue'
 import { timeString } from "../functions/functionTools";
-import Settings from "../components/Settings.vue";
+import Settings from "./Settings.vue";
 import VueDragResize from "vue-draggable-resizable";
-import lang from '../env/lang.en'
+import lang from "../env/lang.en";
 //import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 //'vue-draggable-resizable'
 //vue-drag-resize
@@ -527,10 +483,10 @@ export var isPreDone = () => {
   return preDone;
 };
 
-import BarRec from "./barRec.vue";
-import BarSend from "./barSend.vue";
-import BottomBar from "./BottomBar.vue";
-import BarLog from './logComp.vue'
+import BarRec from "./AppReceive.vue";
+import BarSend from "./AppSend.vue";
+import BottomBar from "./AppConfigurationCollection.vue";
+import BarLog from "./logComp.vue";
 
 export default {
   name: "IndexPage",
@@ -550,7 +506,7 @@ export default {
       connectionPage: null,
       textRec: "",
       arrRec: [],
-      counterRec:0,
+      counterRec: 0,
       disBtn: false,
       arrayLog: new ArrayLogMessage(),
       settings: false,
@@ -567,8 +523,8 @@ export default {
       fontColor: "",
       fontSize: 0,
 
-      bgColor: '',
-      contColor: '',
+      bgColor: "",
+      contColor: "",
       darkMode: false,
       outlined: false,
 
@@ -579,9 +535,9 @@ export default {
 
       tip: "",
 
-      showWizard:false,
-      textWizard:'',
-      randomNumber:'',
+      showWizard: false,
+      textWizard: "",
+      randomNumber: "",
 
       rec: {
         posx: 4,
@@ -592,7 +548,7 @@ export default {
         idRecChange: 124,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
-        heightSm: 400
+        heightSm: 400,
       },
 
       send: {
@@ -606,7 +562,7 @@ export default {
         widthSm: 500,
         heightSm: 400,
 
-        textShare: ''
+        textShare: "",
       },
 
       btm: {
@@ -618,7 +574,7 @@ export default {
         idBtmChange: 123,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
-        heightSm: 400
+        heightSm: 400,
       },
 
       log: {
@@ -630,7 +586,7 @@ export default {
         idLogChange: 123,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
-        heightSm: 400
+        heightSm: 400,
       },
 
       textToCommand: "",
@@ -643,20 +599,21 @@ export default {
       TIP_LOG: lang.INDEX.TIP_LOG,
       TIP_SAVE_UNDO: lang.INDEX.TIP_SAVE_UNDO,
       TIP_EXE_COMMAND_WIZARD: lang.INDEX.TIP_EXE_COMMAND_WIZARD,
-      BTN_SPAN_SETTINGS: lang.INDEX.BTN_SPAN_SETTINGS
+      BTN_SPAN_SETTINGS: lang.INDEX.BTN_SPAN_SETTINGS,
     };
   },
   watch: {
-    wizardAlert: function(newVal){
-      var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-      link.rel = 'icon';
-      if(newVal === true){
-        link.href = window.location.origin + "/wizardAlert.ico"
+    wizardAlert: function (newVal) {
+      var link =
+        document.querySelector("link[rel*='icon']") || document.createElement("link");
+      link.rel = "icon";
+      if (newVal === true) {
+        link.href = window.location.origin + "/wizardAlert.ico";
       } else {
-        link.href = window.location.origin + "/favicon.ico"
+        link.href = window.location.origin + "/favicon.ico";
       }
-      document.getElementsByTagName('head')[0].appendChild(link);
-    }
+      document.getElementsByTagName("head")[0].appendChild(link);
+    },
   },
   created() {
     //ADD Commenti
@@ -688,12 +645,12 @@ export default {
     }
     document.documentElement.classList.add(this.fontSize);
 
-    if(window.innerWidth < 960 && window.innerWidth > 700){
-        this.send.widthSm = window.innerWidth
-        this.rec.widthSm = window.innerWidth
-        this.log.widthSm = window.innerWidth
-        this.btm.widthSm = window.innerWidth
-      }
+    if (window.innerWidth < 960 && window.innerWidth > 700) {
+      this.send.widthSm = window.innerWidth;
+      this.rec.widthSm = window.innerWidth;
+      this.log.widthSm = window.innerWidth;
+      this.btm.widthSm = window.innerWidth;
+    }
   },
   mounted() {
     let userAgent = navigator.userAgent;
@@ -711,76 +668,59 @@ export default {
       this.browserName = "No browser detection";
     }
 
-    window.addEventListener('resize', this.setPositions);
+    window.addEventListener("resize", this.setPositions);
 
     this.startServer();
 
-    this.connection = new WebSocket(
-      "ws://" + process.env.VUE_APP_ENGINE_SERVER
-    );
+    this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
     this.connection.onmessage = (message) => {
       const text = message.data;
       if (text.includes("##BEGIN-ERROR##")) {
-        const startE =
-          text.indexOf("##BEGIN-ERROR##") + "##BEGIN-ERROR##".length;
+        const startE = text.indexOf("##BEGIN-ERROR##") + "##BEGIN-ERROR##".length;
         const endE = text.lastIndexOf("##END-ERROR##");
         this.changeLog(
-          "#@LOGS@#" +
-            timeString("ERROR IN JOBS. SEE ERROR LOG BELOW") +
-            "#@END-LOGS@#"
+          "#@LOGS@#" + timeString("ERROR IN JOBS. SEE ERROR LOG BELOW") + "#@END-LOGS@#"
         );
         this.changeErrLog(
-          "#@ERR-LOGS@#" +
-            timeString(text.substring(startE, endE)) +
-            "#@END-ERR-LOGS@#"
+          "#@ERR-LOGS@#" + timeString(text.substring(startE, endE)) + "#@END-ERR-LOGS@#"
         );
       } else if (text.includes("##ACK##")) {
         console.log("ACK");
         this.arrRec.pop();
-        this.changeLog(
-          "#@LOGS@#" + timeString("BACKTRACK DONE") + "#@END-LOGS@#"
-        );
+        this.changeLog("#@LOGS@#" + timeString("BACKTRACK DONE") + "#@END-LOGS@#");
       } else if (text.includes("##BEGIN-COLLECTION##")) {
         const startE =
-          text.indexOf("##BEGIN-COLLECTION##") +
-          "##BEGIN-COLLECTION##".length +
-          1;
+          text.indexOf("##BEGIN-COLLECTION##") + "##BEGIN-COLLECTION##".length + 1;
         const endE = text.lastIndexOf("##END-COLLECTION##");
         this.changeIRTree(
           "#@TREE-DRAW@#" + text.substring(startE, endE) + "#@END-TREE-DRAW@#"
         );
         this.changeLog("#@LOGS@#" + timeString("TREE DREW") + "#@END-LOGS@#");
       } else if (text.includes("##BEGIN-IR-LIST##")) {
-        const startE =
-          text.indexOf("##BEGIN-IR-LIST##") + "##BEGIN-IR-LIST##".length;
+        const startE = text.indexOf("##BEGIN-IR-LIST##") + "##BEGIN-IR-LIST##".length;
         const endE = text.lastIndexOf("##END-IR-LIST##");
         this.changeIRList(
           "#@IR-LIST@#" + text.substring(startE, endE) + "#@END-IR-LIST@#"
         );
-        this.changeLog(
-          "#@LOGS@#" + timeString("IR LIST ARRIVED") + "#@END-LOGS@#"
-        );
+        this.changeLog("#@LOGS@#" + timeString("IR LIST ARRIVED") + "#@END-LOGS@#");
       } else if (text.includes("##SUCCESS##")) {
         console.log("successo");
         this.changeLog("#@LOGS@#" + timeString("JOB DONE") + "#@END-LOGS@#");
       } else if (text.includes("##BEGIN-PROCESS##")) {
         console.log("end messages");
-        const startP =
-          text.indexOf("##BEGIN-PROCESS##") + "##BEGIN-PROCESS##".length + 1;
+        const startP = text.indexOf("##BEGIN-PROCESS##") + "##BEGIN-PROCESS##".length + 1;
         const endP = text.indexOf("##END-PROCESS##");
         this.textRec = text.substring(startP, endP);
-        if(text.substring(startP, endP).length>0){
+        if (text.substring(startP, endP).length > 0) {
           this.textToCommand = text.substring(startP, endP);
-          this.arrRec=this.fromTextRecToArrRec(text.substring(startP, endP));
+          this.arrRec = this.fromTextRecToArrRec(text.substring(startP, endP));
           this.sendIRList();
         }
         this.disBtn = false;
         //disconnect();
       } else if (text.includes("##BEGIN-SERVER-CONF##")) {
         const startE =
-          text.indexOf("##BEGIN-SERVER-CONF##") +
-          "##BEGIN-SERVER-CONF##".length +
-          1;
+          text.indexOf("##BEGIN-SERVER-CONF##") + "##BEGIN-SERVER-CONF##".length + 1;
         const endE = text.lastIndexOf("##END-SERVER-CONF##");
         this.changeConfig(text.substring(startE, endE));
         console.log("config");
@@ -811,63 +751,61 @@ export default {
       if (isConnected) {
         this.changeConfig("Configurazione non presente");
         this.changeLog(
-          "#@LOGS@#" +
-            timeString("Connection with engine crashed") +
-            "\n#@END-LOGS@#"
+          "#@LOGS@#" + timeString("Connection with engine crashed") + "\n#@END-LOGS@#"
         );
         setConnected();
       }
     };
   },
   methods: {
-    shareText(text){
-      this.send.textShare = text
+    shareText(text) {
+      this.send.textShare = text;
     },
-    setPositions(){
-      if(this.send.posx + this.send.width > document.documentElement.clientWidth){
-        this.send.posx = document.documentElement.clientWidth - this.send.width - 5
+    setPositions() {
+      if (this.send.posx + this.send.width > document.documentElement.clientWidth) {
+        this.send.posx = document.documentElement.clientWidth - this.send.width - 5;
       }
 
-      if(this.rec.posx + this.rec.width > document.documentElement.clientWidth){
-        this.rec.posx = document.documentElement.clientWidth - this.rec.width - 5
+      if (this.rec.posx + this.rec.width > document.documentElement.clientWidth) {
+        this.rec.posx = document.documentElement.clientWidth - this.rec.width - 5;
       }
 
-      if(this.log.posx + this.log.width > document.documentElement.clientWidth){
-        this.log.posx = document.documentElement.clientWidth - this.log.width - 5
+      if (this.log.posx + this.log.width > document.documentElement.clientWidth) {
+        this.log.posx = document.documentElement.clientWidth - this.log.width - 5;
       }
 
-      if(this.btm.posx + this.btm.width > document.documentElement.clientWidth){
-        this.btm.posx = document.documentElement.clientWidth - this.btm.width - 5
+      if (this.btm.posx + this.btm.width > document.documentElement.clientWidth) {
+        this.btm.posx = document.documentElement.clientWidth - this.btm.width - 5;
       }
 
-      if(window.innerWidth < 960 && window.innerWidth > 700){
-        this.send.widthSm = window.innerWidth - 12
-        this.rec.widthSm = window.innerWidth - 12
-        this.log.widthSm = window.innerWidth - 12
-        this.btm.widthSm = window.innerWidth - 12
+      if (window.innerWidth < 960 && window.innerWidth > 700) {
+        this.send.widthSm = window.innerWidth - 12;
+        this.rec.widthSm = window.innerWidth - 12;
+        this.log.widthSm = window.innerWidth - 12;
+        this.btm.widthSm = window.innerWidth - 12;
       }
     },
-    clickDragResize(component){
+    clickDragResize(component) {
       this.send.posz = 0;
       this.rec.posz = 0;
       this.btm.posz = 0;
       this.log.posz = 0;
 
-      switch(component){
-        case 'send':
+      switch (component) {
+        case "send":
           this.send.posz = 2;
           break;
-        case 'rec':
+        case "rec":
           this.rec.posz = 2;
           break;
-        case 'btm':
+        case "btm":
           this.btm.posz = 2;
           break;
-        case 'log':
+        case "log":
           this.log.posz = 2;
           break;
         default:
-          alert('Comando non riconosciuto')
+          alert("Comando non riconosciuto");
       }
     },
     generatePassword(passwordLength) {
@@ -880,7 +818,11 @@ export default {
       randPasswordArray[1] = upperChars;
       randPasswordArray[2] = lowerChars;
       randPasswordArray = randPasswordArray.fill(allChars, 3);
-      return this.shuffleArray(randPasswordArray.map(function(x) { return x[Math.floor(Math.random() * x.length)] })).join('');
+      return this.shuffleArray(
+        randPasswordArray.map(function (x) {
+          return x[Math.floor(Math.random() * x.length)];
+        })
+      ).join("");
     },
     shuffleArray(array) {
       for (var i = array.length - 1; i > 0; i--) {
@@ -891,107 +833,93 @@ export default {
       }
       return array;
     },
-    fromTextRecToArrRec(textReceived){
-      console.log(textReceived)
-      var arrIstr=[];
-      this.counterRec=0;
-      var arrTest=textReceived.split(';');
-      
-      arrTest.forEach(element => {
-        if(element.startsWith("\n")){
-          element=element.slice(1,element.length)
+    fromTextRecToArrRec(textReceived) {
+      console.log(textReceived);
+      var arrIstr = [];
+      this.counterRec = 0;
+      var arrTest = textReceived.split(";");
+
+      arrTest.forEach((element) => {
+        if (element.startsWith("\n")) {
+          element = element.slice(1, element.length);
         }
-          if(element.match(/GET COLLECTION/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". GET COLLECTION",
-              value: element+";"
-            })
-          }
-          else if(element.match(/SAVE AS/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". SAVE AS",
-              value: element+";"
-            })
-          }
-          else if(element.match(/SPATIAL JOIN OF COLLECTIONS/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". SPATIAL JOIN OF COLLECTIONS",
-              value: element+";"
-            })
-          }
-          else if(element.match(/JOIN OF COLLECTIONS/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". JOIN OF COLLECTIONS",
-              value: element+";"
-            })
-          }
-          else if(element.match(/FILTER/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". FILTER",
-              value: element+";"
-            })
-          }
-          else if(element.match(/GROUP/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". GROUP",
-              value: element+";"
-            })
-          }
-          else if(element.match(/EXPAND/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". EXPAND",
-              value: element+";"
-            })
-          }
-          else if(element.match(/MERGE COLLECTIONS/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". MERGE COLLECTIONS",
-              value: element+";"
-            })
-          }
-          else if(element.match(/INTERSECT COLLECTIONS/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". INTERSECT COLLECTIONS",
-              value: element+";"
-            })
-          }
-          else if(element.match(/SUBTRACT COLLECTIONS/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". SUBTRACT COLLECTIONS",
-              value: element+";"
-            })
-          }
-          else if(element.match(/USE DB/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". USE DB",
-              value: element+";"
-            })
-          }
-          else if(element.match(/TRAJECTORY MATCHING/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". TRAJECTORY MATCHING",
-              value: element+";"
-            })
-          }
-          else if(element.match(/CREATE_FO/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". CREATE FUZZY OPERATOR",
-              value: element+";"
-            })
-          }
-          else if(element.match(/CREATE_JF/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". CREATE JAVASCRIPT FUNCTION",
-              value: element+";"
-            })
-          }
-          else if(element.match(/GET DICTIONARY/gi)){
-            arrIstr.push({
-              name: (this.counterRec+1)+". GET DICTIONARY",
-              value: element+";"
-            })
-          }
-          this.counterRec+=1;
+        if (element.match(/GET COLLECTION/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". GET COLLECTION",
+            value: element + ";",
+          });
+        } else if (element.match(/SAVE AS/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". SAVE AS",
+            value: element + ";",
+          });
+        } else if (element.match(/SPATIAL JOIN OF COLLECTIONS/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". SPATIAL JOIN OF COLLECTIONS",
+            value: element + ";",
+          });
+        } else if (element.match(/JOIN OF COLLECTIONS/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". JOIN OF COLLECTIONS",
+            value: element + ";",
+          });
+        } else if (element.match(/FILTER/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". FILTER",
+            value: element + ";",
+          });
+        } else if (element.match(/GROUP/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". GROUP",
+            value: element + ";",
+          });
+        } else if (element.match(/EXPAND/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". EXPAND",
+            value: element + ";",
+          });
+        } else if (element.match(/MERGE COLLECTIONS/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". MERGE COLLECTIONS",
+            value: element + ";",
+          });
+        } else if (element.match(/INTERSECT COLLECTIONS/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". INTERSECT COLLECTIONS",
+            value: element + ";",
+          });
+        } else if (element.match(/SUBTRACT COLLECTIONS/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". SUBTRACT COLLECTIONS",
+            value: element + ";",
+          });
+        } else if (element.match(/USE DB/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". USE DB",
+            value: element + ";",
+          });
+        } else if (element.match(/TRAJECTORY MATCHING/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". TRAJECTORY MATCHING",
+            value: element + ";",
+          });
+        } else if (element.match(/CREATE_FO/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". CREATE FUZZY OPERATOR",
+            value: element + ";",
+          });
+        } else if (element.match(/CREATE_JF/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". CREATE JAVASCRIPT FUNCTION",
+            value: element + ";",
+          });
+        } else if (element.match(/GET DICTIONARY/gi)) {
+          arrIstr.push({
+            name: this.counterRec + 1 + ". GET DICTIONARY",
+            value: element + ";",
+          });
+        }
+        this.counterRec += 1;
       });
       return arrIstr;
     },
@@ -1012,7 +940,7 @@ export default {
         this.send.posz = 0;
         this.btm.posz = 2;
         this.log.posz = 0;
-      } else if (tipo === 'log') {
+      } else if (tipo === "log") {
         this.rec.posz = 0;
         this.send.posz = 0;
         this.btm.posz = 0;
@@ -1140,17 +1068,17 @@ export default {
         this.log.posy = y;
       }
     },
-  signalChangeColor(){
-      this.connectionPage=new WebSocket('ws://localhost:3000');
-      this.connectionPage.onerror=()=>{
-        this.received.errorConfig="no server available"
-      }
+    signalChangeColor() {
+      this.connectionPage = new WebSocket("ws://localhost:3000");
+      this.connectionPage.onerror = () => {
+        this.received.errorConfig = "no server available";
+      };
       this.connectionPage.onclose = () => {
-        this.received.errorConfig="server save/open closed"
-      }
+        this.received.errorConfig = "server save/open closed";
+      };
       this.connectionPage.onopen = () => {
-        this.connectionPage.send('CHANGE_COLOR###'+this.mainColor);
-      }    
+        this.connectionPage.send("CHANGE_COLOR###" + this.mainColor);
+      };
     },
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color);
@@ -1161,22 +1089,22 @@ export default {
     setThemeColor(theme) {
       document.documentElement.classList.replace(this.themeColor, theme);
       this.themeColor = theme;
-      if(theme == 'theme-dark'){
-        this.bgColor = 'grey darken-4'
-        this.contColor = 'grey darken-3'
-        this.darkMode = true
+      if (theme == "theme-dark") {
+        this.bgColor = "grey darken-4";
+        this.contColor = "grey darken-3";
+        this.darkMode = true;
       } else {
-        this.bgColor = 'grey lighten-5'
-        this.contColor = 'white'
-        this.darkMode = false
+        this.bgColor = "grey lighten-5";
+        this.contColor = "white";
+        this.darkMode = false;
       }
       this.setCookie("theme-color", theme, 30);
     },
     setStyle(style) {
-      if(style === 'full'){
-        this.outlined = true
+      if (style === "full") {
+        this.outlined = true;
       } else {
-        this.outlined = false
+        this.outlined = false;
       }
       this.setCookie("style", style, 30);
     },
@@ -1224,8 +1152,7 @@ export default {
         this.generatePage(JSONInPrettyFormat);
       } else {
         console.log(textToChange);
-        let startE =
-          textToChange.indexOf("#@TREE-DRAW@#") + "#@TREE-DRAW@#".length;
+        let startE = textToChange.indexOf("#@TREE-DRAW@#") + "#@TREE-DRAW@#".length;
         let endE = textToChange.indexOf("###");
         let title = textToChange.substring(startE, endE);
         if (title == "Filter") title = "Temporary Collection";
@@ -1247,9 +1174,7 @@ export default {
         this.received.listIRCol = JSONInPrettyFormat;
       } else {
         this.received.listIRCol = [];
-        const startE =
-          textToChange.indexOf("IRList") +
-          "IRList\":".length;
+        const startE = textToChange.indexOf("IRList") + 'IRList":'.length;
         const endE = textToChange.lastIndexOf("#@END-IR-LIST@#") - 2;
         var textChanged = textToChange.substring(startE, endE);
         /*.replace('","','\n')*/ var json_data = JSON.parse(textChanged);
@@ -1257,53 +1182,70 @@ export default {
       }
     },
 
-    generatePage(title,textToSend){
-      let dateGen=new Date();
-      let millis=dateGen.getTime();
-      this.connectionPage=new WebSocket('ws://localhost:3000');
-      this.connectionPage.onerror=()=>{
-        this.received.errorConfig="no server available"
-      }
+    generatePage(title, textToSend) {
+      let dateGen = new Date();
+      let millis = dateGen.getTime();
+      this.connectionPage = new WebSocket("ws://localhost:3000");
+      this.connectionPage.onerror = () => {
+        this.received.errorConfig = "no server available";
+      };
       this.connectionPage.onclose = () => {
-        this.received.errorConfig="server save/open closed"
-      }
+        this.received.errorConfig = "server save/open closed";
+      };
       this.connectionPage.onopen = () => {
-        console.log(this.connectionPage.readyState)
-        this.connectionPage.send('SAVE###'+"textTree_"+millis+"###"+JSON.stringify({datetime: dateGen.toISOString(),name:title,tree:textToSend}));
-        this.received.errorConfig=""
-        localStorage.setItem("textTree_"+millis,JSON.stringify({datetime: dateGen.toISOString(),name:title}))
-        let routeData = this.$router.resolve({name: 'StaticTree',query:{id:millis}});
+        console.log(this.connectionPage.readyState);
+        this.connectionPage.send(
+          "SAVE###" +
+            "textTree_" +
+            millis +
+            "###" +
+            JSON.stringify({
+              datetime: dateGen.toISOString(),
+              name: title,
+              tree: textToSend,
+            })
+        );
+        this.received.errorConfig = "";
+        localStorage.setItem(
+          "textTree_" + millis,
+          JSON.stringify({ datetime: dateGen.toISOString(), name: title })
+        );
+        let routeData = this.$router.resolve({
+          name: "StaticTree",
+          query: { id: millis },
+        });
         console.log(routeData);
-        setTimeout(function() {
-          window.open(routeData.href, '_blank');
-        },1000);
-      }
+        setTimeout(function () {
+          window.open(routeData.href, "_blank");
+        }, 1000);
+      };
     },
 
-    startServer(){
+    startServer() {
       /*let array = new Uint32Array(15);
       this.randomNumber=String(window.crypto.getRandomValues(array)[Math.floor(Math.random()*10)]);*/
-      this.randomNumber=this.generatePassword(50);
-      
-      this.connectionPage=new WebSocket('ws://localhost:3000');
-      this.connectionPage.onopen = () =>{
-        console.log("wizard partito")
-      }
-      this.connectionPage.onclose = () =>{
-        console.log("wizard spento")
-      }
-      this.connectionPage.onerror = () =>{
-        console.log("wizard error")
-      }
-      this.connectionPage.onmessage = ({data}) =>{
-        console.log(data)
-        let command=data.split("###")[0];
-        if(command=="WIZARD"){
-          if(data.split("###")[1]==this.randomNumber){
+      this.randomNumber = this.generatePassword(50);
+
+      this.connectionPage = new WebSocket("ws://localhost:3000");
+      this.connectionPage.onopen = () => {
+        console.log("wizard partito");
+      };
+      this.connectionPage.onclose = () => {
+        console.log("wizard spento");
+      };
+      this.connectionPage.onerror = () => {
+        console.log("wizard error");
+      };
+      this.connectionPage.onmessage = ({ data }) => {
+        console.log(data);
+        let command = data.split("###")[0];
+        if (command == "WIZARD") {
+          if (data.split("###")[1] == this.randomNumber) {
             //this.showWizard=true;
-            let typeUpdate=data.split("###")[2];
-            this.textWizard=data.split("###")[3];
-            this.textToCommand = typeUpdate + '###' + this.textWizard + '###' + Date.now()
+            let typeUpdate = data.split("###")[2];
+            this.textWizard = data.split("###")[3];
+            this.textToCommand =
+              typeUpdate + "###" + this.textWizard + "###" + Date.now();
             /*if(typeUpdate=="RESET")
               document.getElementById("div_send").innerHTML=this.textWizard;
             if(typeUpdate=="APPEND")
@@ -1311,11 +1253,10 @@ export default {
             this.wizardAlert = true;
           }
         }
-      }
+      };
     },
     changeErrLog(textToChange) {
-      const startE =
-        textToChange.indexOf("#@ERR-LOGS@#") + "#@ERR-LOGS@#".length;
+      const startE = textToChange.indexOf("#@ERR-LOGS@#") + "#@ERR-LOGS@#".length;
       const endE = textToChange.lastIndexOf("#@END-ERR-LOGS@#");
       this.arrayLog.newLog(textToChange.substring(startE, endE), "ERR");
       this.received.textLog += textToChange.substring(startE, endE);
@@ -1338,9 +1279,7 @@ export default {
           sended = true;
         } else {
           this.connection.close();
-          this.connection = new WebSocket(
-            "ws://" + process.env.VUE_APP_ENGINE_SERVER
-          );
+          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
           if (!sended) {
             this.connection.onopen = () => {
               console.log("onopen send");
@@ -1361,9 +1300,7 @@ export default {
           sended = true;
         } else {
           this.connection.close();
-          this.connection = new WebSocket(
-            "ws://" + process.env.VUE_APP_ENGINE_SERVER
-          );
+          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
           if (!sended) {
             this.connection.onopen = () => {
               this.connection.send("##BACKTRACK##");
@@ -1380,9 +1317,7 @@ export default {
           sended = true;
         } else {
           this.connection.close();
-          this.connection = new WebSocket(
-            "ws://" + process.env.VUE_APP_ENGINE_SERVER
-          );
+          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
           if (!sended) {
             this.connection.onopen = () => {
               this.connection.send("##GET-TEMPORARY-COLLECTION##");
@@ -1392,23 +1327,27 @@ export default {
         }
       }
     },
-    sendIRSelCol(selectedItem){
-            if(isPreDone() && selectedItem!=""){
-                if(isConnected()){
-                        this.connection.send('##GET-IR-COLLECTION##\n'+selectedItem+"\n##END-IR-COLLECTION##");
-                        sended=true;
-                }else{
-                    this.connection.close();
-                    this.connection=new WebSocket('ws://'+process.env.VUE_APP_ENGINE_SERVER);
-                    if(!sended){
-                      this.connection.onopen = () => {
-                        this.connection.send('##GET-IR-COLLECTION##\n'+selectedItem+"\n##END-IR-COLLECTION##");
-                        sended=true;
-                      }
-                    }
-                }
-            }
-      },
+    sendIRSelCol(selectedItem) {
+      if (isPreDone() && selectedItem != "") {
+        if (isConnected()) {
+          this.connection.send(
+            "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
+          );
+          sended = true;
+        } else {
+          this.connection.close();
+          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
+          if (!sended) {
+            this.connection.onopen = () => {
+              this.connection.send(
+                "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
+              );
+              sended = true;
+            };
+          }
+        }
+      }
+    },
     sendIRList() {
       if (isPreDone()) {
         if (isConnected()) {
@@ -1416,9 +1355,7 @@ export default {
           sended = true;
         } else {
           this.connection.close();
-          this.connection = new WebSocket(
-            "ws://" + process.env.VUE_APP_ENGINE_SERVER
-          );
+          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
           if (!sended) {
             this.connection.onopen = () => {
               this.connection.send("##GET-IR-LIST##");
@@ -1433,15 +1370,11 @@ export default {
         if (isConnected()) {
           console.log("onopen send");
           console.log("Sending data");
-          this.connection.send(
-            "##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##"
-          );
+          this.connection.send("##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##");
           sended = true;
         } else {
           this.connection.close();
-          this.connection = new WebSocket(
-            "ws://" + process.env.VUE_APP_ENGINE_SERVER
-          );
+          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
           if (!sended) {
             this.connection.onopen = () => {
               console.log("onopen send");
@@ -1549,56 +1482,56 @@ export default {
 }
 
 :root.red {
-  --border-color: #D50000;
-  --bg-color: #D50000;
+  --border-color: #d50000;
+  --bg-color: #d50000;
   --textarea-color: red;
 }
 
 :root.pink {
-  --border-color: #C51162;
-  --bg-color: #C51162;
+  --border-color: #c51162;
+  --bg-color: #c51162;
   --textarea-color: pink;
 }
 
 :root.cyan {
-  --border-color: #00B8D4;
-  --bg-color: #00B8D4;
+  --border-color: #00b8d4;
+  --bg-color: #00b8d4;
   --textarea-color: cyan;
 }
 
 :root.teal {
-  --border-color: #00BFA5;
-  --bg-color: #00BFA5;
+  --border-color: #00bfa5;
+  --bg-color: #00bfa5;
   --textarea-color: teal;
 }
 
 :root.green {
-  --border-color: #00C853;
-  --bg-color: #00C853;
+  --border-color: #00c853;
+  --bg-color: #00c853;
   --textarea-color: green;
 }
 
 :root.light-green {
-  --border-color: #64DD17;
-  --bg-color: #64DD17;
+  --border-color: #64dd17;
+  --bg-color: #64dd17;
   --textarea-color: light-green;
 }
 
 :root.amber {
-  --border-color: #FFAB00;
-  --bg-color: #FFAB00;
+  --border-color: #ffab00;
+  --bg-color: #ffab00;
   --textarea-color: amber;
 }
 
 :root.orange {
-  --border-color: #FF6D00;
-  --bg-color: #FF6D00;
+  --border-color: #ff6d00;
+  --bg-color: #ff6d00;
   --textarea-color: orange;
 }
 
 :root.deep-orange {
-  --border-color: #DD2C00;
-  --bg-color: #DD2C00;
+  --border-color: #dd2c00;
+  --bg-color: #dd2c00;
   --textarea-color: deep-orange;
 }
 
