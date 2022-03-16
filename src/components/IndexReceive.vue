@@ -2,7 +2,7 @@
 <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd; border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'rec')">
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{TITLE}}</h4>
-        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
+        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" @click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-sheet :dark="darkMode" style="border-top-left-radius: 3px;border-top-right-radius: 3px;">
         <v-container style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;" fluid>
@@ -76,6 +76,16 @@
 import lang from '../env/lang.en'
 export default {
     name: "ReceiveComp",
+    props: {
+        recText: String,
+        recArr: Array,
+        height: Number,
+        width: Number,
+        browser: String,
+        rapporto: Number,
+        bgcolor: String,
+        darkMode: Boolean
+    },
     data: () => ({
         isDisabled: true,
         expanded: [],
@@ -90,23 +100,13 @@ export default {
             title: 'Response'
         }],
 
+        
         TITLE: lang.RECEIVE_COMP.TITLE,
         BTN_SPAN_SAVE: lang.RECEIVE_COMP.BTN_SPAN_SAVE,
         BTN_SPAN_BACKTRACK: lang.RECEIVE_COMP.BTN_SPAN_BACKTRACK,
         BTN_SPAN_BACKTRACK_UNDO: lang.RECEIVE_COMP.BTN_SPAN_BACKTRACK_UNDO
 
     }),
-    props: {
-        recText: String,
-        recArr: Array,
-        height: Number,
-        width: Number,
-        browser: String,
-        rapporto: Number,
-        bgcolor: String,
-        darkMode: Boolean
-    },
-    mounted() {},
     methods: {
         dimCols(numCol) {
             if (numCol === 1) {

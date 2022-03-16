@@ -2,7 +2,7 @@
 <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet :dark="darkMode" style="border-bottom: 1px solid #dddddd; border-top-left-radius: 3px;border-top-right-radius: 3px;" elevation="14" class="topbar" @click="$emit('set-z-click', 'send')">
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">{{TITLE}}</h4>
-        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">mdi-close</v-icon>
+        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" @click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-sheet :dark="darkMode" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
         <v-container fluid style="border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;">

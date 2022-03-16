@@ -3,7 +3,7 @@
       <center>
         <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="90%">
             <v-select  v-model="modulo.selected" :items="arrayModel"  label="Modules"></v-select>
-            <modules :select="modulo.selected" :maincol="mainColor" :indice="modulo.index" v-on:changeValue="changeValue($event)"></modules><br>
+            <modules :select="modulo.selected" :maincol="mainColor" :indice="modulo.index" @changeValue="changeValue($event)"></modules><br>
         </v-sheet> 
         <br>
         <v-btn
@@ -79,7 +79,7 @@
     
 </template>
 <script>
-import modules from '../modules/modules.vue'
+import modules from '../modules/WizardModules.vue'
 import lang from '../env/lang.en'
 export default {
     data:()=> ({

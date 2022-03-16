@@ -2,15 +2,15 @@
 <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet :dark="darkMode" elevation="14" class="topbar" @click="$emit('set-z-click', 'btm')">
         <h4 class="noselect moderndesign header_topbar">{{TITLE}}</h4>
-        <v-icon color="red darken-4" class="icon_topbar" v-on:click="closeWindow()">mdi-close</v-icon>
+        <v-icon color="red darken-4" class="icon_topbar" @click="closeWindow()">mdi-close</v-icon>
     </v-sheet>
     <v-sheet id="sheet_container" :dark="darkMode">
         <v-container id="container" fluid>
             <v-row align="center" class="text-center">
                 <v-col v-if="conf" :cols="dimCols(1)">
                     <v-textarea class="pb-2" readonly outlined :dark="darkMode" id="div_send" :height="height - diffHeightConf()" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
-                    <input type="file" id="file_config" v-on:change="loadFile()"/>
-                    <v-btn block height="32px" v-on:click="uploadConf()">
+                    <input type="file" id="file_config" @change="loadFile()"/>
+                    <v-btn block height="32px" @click="uploadConf()">
                         <v-icon small>{{BTN_UPLOAD_CONFIG}}</v-icon>
                         <span>{{BTN_SPAN_UPLOAD}}</span>
                     </v-btn>
@@ -44,15 +44,15 @@
                 <v-col :cols="dimCols(2)">
                     <v-row align="center">
                         <v-col :cols="dimColsBtn()">
-                            <v-btn v-if="ratioMode() === 'small'" :width="width/2 -  24" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised v-on:click="setConf()">
+                            <v-btn v-if="ratioMode() === 'small'" :width="width/2 -  24" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="setConf()">
                                 <v-icon small>{{BTN_CONFIGURATION}}</v-icon>
                                 <span>{{BTN_SPAN_CONFIG_SHORT}}</span>
                             </v-btn>
                             <v-sheet v-if="ratioMode() !== 'small'" :dark="darkMode" :height="(height-80)/2">
-                                <v-btn v-if="ratioMode() === 'medium'" @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                <v-btn v-if="ratioMode() === 'medium'" @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised @click="setConf()">
                                     <v-icon :size="width/20">{{BTN_CONFIGURATION}}</v-icon>
                                 </v-btn>
-                                <v-btn v-if="ratioMode() === 'big'" @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised v-on:click="setConf()">
+                                <v-btn v-if="ratioMode() === 'big'" @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised @click="setConf()">
                                     <v-icon small>{{BTN_CONFIGURATION}}</v-icon>
                                     <span>{{BTN_SPAN_CONFIG_SHORT}}</span>
                                 </v-btn>

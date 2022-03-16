@@ -4,7 +4,7 @@
         <h4 class="noselect moderndesign" style="float: left; margin-left: 10px; margin-top:2px">
             {{ TITLE }}
         </h4>
-        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" v-on:click="closeWindow()">
+        <v-icon color="red darken-4" style="float: right; margin-right:5px; margin-top: 2px" @click="closeWindow()">
             mdi-close
         </v-icon>
     </v-sheet>

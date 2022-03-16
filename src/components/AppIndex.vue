@@ -17,7 +17,7 @@
           color: var(--border-color);
         "
         large
-        v-on:click="settings = true"
+        @click="settings = true"
         @mouseover="tip = TIP_SETTINGS"
         @mouseleave="tip = ''"
       >
@@ -31,8 +31,13 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
+<<<<<<< Updated upstream:src/components/AppIndex.vue
         v-on:click="
           clickDragResize('btm');
+=======
+        @click="
+          clickDragResize('btm')
+>>>>>>> Stashed changes:src/components/index.vue
           selBtm = !selBtm;
         "
       >
@@ -51,7 +56,13 @@
           color: var(--border-color);
         "
         large
+<<<<<<< Updated upstream:src/components/AppIndex.vue
         v-on:click="selBtm = !selBtm"
+=======
+        @click="
+          selBtm = !selBtm;
+        "
+>>>>>>> Stashed changes:src/components/index.vue
       >
         mdi-toolbox
       </v-icon>
@@ -63,8 +74,13 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
+<<<<<<< Updated upstream:src/components/AppIndex.vue
         v-on:click="
           clickDragResize('log');
+=======
+        @click="
+          clickDragResize('log')
+>>>>>>> Stashed changes:src/components/index.vue
           selLog = !selLog;
         "
       >
@@ -83,7 +99,13 @@
           color: var(--border-color);
         "
         large
+<<<<<<< Updated upstream:src/components/AppIndex.vue
         v-on:click="selLog = !selLog"
+=======
+        @click="
+          selLog = !selLog;
+        "
+>>>>>>> Stashed changes:src/components/index.vue
       >
         mdi-text-box
       </v-icon>
@@ -95,8 +117,13 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
+<<<<<<< Updated upstream:src/components/AppIndex.vue
         v-on:click="
           clickDragResize('rec');
+=======
+        @click="
+          clickDragResize('rec')
+>>>>>>> Stashed changes:src/components/index.vue
           selRec = !selRec;
         "
       >
@@ -115,7 +142,13 @@
         "
         id="SaveBack"
         large
+<<<<<<< Updated upstream:src/components/AppIndex.vue
         v-on:click="selRec = !selRec"
+=======
+        @click="
+          selRec = !selRec;
+        "
+>>>>>>> Stashed changes:src/components/index.vue
       >
         mdi-content-save
       </v-icon>
@@ -128,8 +161,13 @@
         id="execute"
         large
         :dark="darkMode"
+<<<<<<< Updated upstream:src/components/AppIndex.vue
         v-on:click="
           clickDragResize('send');
+=======
+        @click="
+          clickDragResize('send')
+>>>>>>> Stashed changes:src/components/index.vue
           selSend = !selSend;
         "
       >
@@ -148,7 +186,7 @@
         "
         id="execute"
         large
-        v-on:click="
+        @click="
           send.posz = 30;
           rec.posz = 0;
           btm.posz = 0;
@@ -175,11 +213,18 @@
             <span>{{ BTN_SPAN_SETTINGS }}</span>
           </v-btn>
           <Settings
+<<<<<<< Updated upstream:src/components/AppIndex.vue
             v-on:set-main-color="setMainColor"
             v-on:set-theme-color="setThemeColor"
             v-on:set-style="setStyle"
             :darkMode="darkMode"
           >
+=======
+           @set-main-color="setMainColor"
+            @set-theme-color="setThemeColor"
+            @set-style="setStyle"
+            :darkMode="darkMode">
+>>>>>>> Stashed changes:src/components/index.vue
           </Settings>
         </v-sheet>
       </v-bottom-sheet>
@@ -211,9 +256,9 @@
         :recText="textRec"
         :recArr="arrRec"
         :darkMode="darkMode"
-        v-on:click-back-index="sendBck()"
-        v-on:set-z-click="setZ"
-        v-on:close-rec="selRec = !selRec"
+        @click-back-index="sendBck()"
+        @set-z-click="setZ"
+        @close-rec="selRec = !selRec"
       ></bar-rec>
     </VueDragResize>
 
@@ -247,12 +292,21 @@
         :textRec="textToCommand"
         :disable="disBtn"
         :randomNumberString="randomNumber"
+<<<<<<< Updated upstream:src/components/AppIndex.vue
         v-on:click-send="sendMsg($event)"
         v-on:set-z-click="setZ"
         v-on:close-send="selSend = !selSend"
         v-on:send-text="sendText()"
         v-on:share-text="shareText"
         :textShare="send.textShare"
+=======
+        @click-send="sendMsg($event)"
+        @set-z-click="setZ"
+        @close-send="selSend = !selSend"
+        @send-text='sendText()'
+        @share-text='shareText'
+        :textShare='send.textShare'
+>>>>>>> Stashed changes:src/components/index.vue
       ></bar-send>
     </VueDragResize>
 
@@ -280,8 +334,8 @@
         :width="log.width"
         :darkMode="darkMode"
         :rapporto="log.width / log.height"
-        v-on:set-z-click="setZ"
-        v-on:close-log="selLog = !selLog"
+        @set-z-click="setZ"
+        @close-log="selLog = !selLog"
         :arrayLog="arrayLog"
       >
       </bar-log>
@@ -311,14 +365,14 @@
         :width="btm.width"
         :rapporto="btm.width / btm.height"
         :darkMode="darkMode"
-        v-on:file-upload-index="sendConfigFile($event)"
-        v-on:click-ir="sendIRList()"
-        v-on:click-tc="sendIRTempCol()"
-        v-on:click-irc="sendIRSelCol($event)"
-        v-on:click-back-index="sendBck()"
-        v-on:set-z-click="setZ"
-        v-on:close-btm="selBtm = !selBtm"
-        v-on:save-status="saveStatus($event)"
+        @file-upload-index="sendConfigFile($event)"
+        @click-ir="sendIRList()"
+        @click-tc="sendIRTempCol()"
+        @click-irc="sendIRSelCol($event)"
+        @click-back-index="sendBck()"
+        @set-z-click="setZ"
+        @close-btm="selBtm = !selBtm"
+        @save-status="saveStatus($event)"
         :bottomText="received"
         :arrayLog="arrayLog"
       >
@@ -357,6 +411,7 @@
             :width="send.widthSm"
             :disable="disBtn"
             :textRec="textToCommand"
+<<<<<<< Updated upstream:src/components/AppIndex.vue
             v-on:send-text="sendText()"
             :textChange="send.textSend"
             :randomNumberString="randomNumber"
@@ -366,6 +421,17 @@
             v-on:close-send="selSend = !selSend"
             v-on:share-text="shareText"
             :textShare="send.textShare"
+=======
+            @send-text='sendText()'
+            :textChange="send.textSend"
+            :randomNumberString="randomNumber"
+            :darkMode="darkMode"
+            @click-send="sendMsg($event)"
+            @set-z-click="setZ"
+            @close-send="selSend = !selSend"
+            @share-text='shareText'
+            :textShare='send.textShare'
+>>>>>>> Stashed changes:src/components/index.vue
           ></bar-send>
         </v-col>
         <v-col v-if="selLog" class="" :key="2" :cols="12" :sm="12">
@@ -375,8 +441,8 @@
             :height="log.heightSm"
             :width="log.widthSm"
             :rapporto="log.widthSm / log.heightSm"
-            v-on:set-z-click="setZ"
-            v-on:close-log="selLog = !selLog"
+            @set-z-click="setZ"
+            @close-log="selLog = !selLog"
             :darkMode="darkMode"
             :arrayLog="arrayLog"
           >
@@ -392,9 +458,9 @@
             :recText="textRec"
             :recArr="arrRec"
             :darkMode="darkMode"
-            v-on:click-back-index="sendBck()"
-            v-on:set-z-click="setZ"
-            v-on:close-rec="selRec = !selRec"
+            @click-back-index="sendBck()"
+            @set-z-click="setZ"
+            @close-rec="selRec = !selRec"
           ></bar-rec>
         </v-col>
         <v-col v-if="selBtm" class="" id="third" :key="4" :cols="12" :sm="12">
@@ -405,13 +471,13 @@
             :width="btm.widthSm"
             :rapporto="btm.widthSm / btm.heightSm"
             :darkMode="darkMode"
-            v-on:file-upload-index="sendConfigFile($event)"
-            v-on:click-ir="sendIRList()"
-            v-on:click-tc="sendIRTempCol()"
-            v-on:click-irc="sendIRSelCol($event)"
-            v-on:click-back-index="sendBck()"
-            v-on:set-z-click="setZ"
-            v-on:close-btm="selBtm = !selBtm"
+            @file-upload-index="sendConfigFile($event)"
+            @click-ir="sendIRList()"
+            @click-tc="sendIRTempCol()"
+            @click-irc="sendIRSelCol($event)"
+            @click-back-index="sendBck()"
+            @set-z-click="setZ"
+            @close-btm="selBtm = !selBtm"
             :bottomText="received"
             :arrayLog="arrayLog"
           >
