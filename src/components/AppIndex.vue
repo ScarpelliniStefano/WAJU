@@ -490,7 +490,7 @@ export var isPreDone = () => {
 
 import BarRec from "./IndexReceive.vue";
 import BarSend from "./IndexSend.vue";
-
+import BottomBar from "./IndexConfigurationCollection.vue";
 import BarLog from "./IndexLog.vue";
 
 export default {

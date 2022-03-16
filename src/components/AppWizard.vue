@@ -51,7 +51,7 @@
             :disabled="disabledBtn"
             class="tooltip btnstyle"
             id="btnAppend"
-            width="200px"
+            width="100mm"
             style="color: white;background-color: var(--bg-color);" 
             @click="transferMessage('APPEND')" 
         >
@@ -59,10 +59,11 @@
           <span style="color: white">&nbsp;APPEND MESSAGE</span>
         </v-btn>
       </center>
+
         <v-snackbar
-        v-model="wizardAlert" elevation="5" light
+        v-model="wizardAlert" elevation="5" light timeout="100000"
         >
-            {{lblPopup}}
+            <p class="v-snack__content">{{lblPopupAppend}}</p>
 
         <template v-slot:action="{ attrs }">
           <v-btn
@@ -88,8 +89,7 @@ export default {
             selected:'',
             value:''
         }],
-        lblPopup:'',
-        wizardAlert: false,
+        
         numberWizard:'',
         mainColor: "black",
         colHex:"",
@@ -110,8 +110,13 @@ export default {
                     ],
         valueString : '',
         disabledBtn:true,
+
+        //longClick
         isLongClick:false,
-        timerId:''
+        timerId:'',
+        lblPopupAppend:'Transfer the text in the main view, append that to the previuos content in the command view',
+        lblPopupReset:'Transfer the text in the main view, cleaning all previuos content in the command view',
+        wizardAlert: false,
     }),
     components:{
         modules
@@ -139,8 +144,8 @@ export default {
     mounted(){
       console.log(this.$route.query.id)
       this.numberWizard=this.$route.query.id
-      this.addMouseOverEvent('btnAppend','Transfer the text in the main view, append that to the previuos content in the command view');
-      this.addMouseOverEvent('btnReset','Transfer the text in the main view, cleaning all previuos content in the command view');
+      this.addMouseOverEvent('btnAppend',this.lblPopupAppend);
+      this.addMouseOverEvent('btnReset',this.lblPopupReset);
     },
     methods:{
         changeColor(){
@@ -206,6 +211,7 @@ export default {
 
           var fn = (args) => {
             console.log('onmousedown args', args)
+            this.wizardAlert=false;
             this.lblPopup=message;
             this.wizardAlert=true;
             this.isLongClick=true;
@@ -218,7 +224,65 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-resolution: 70dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 10px;
+  }
+}
 
+@media screen and (min-resolution: 71dpi) and (max-resolution: 80dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 11px;
+  }
+}
+
+@media screen and (min-resolution: 81dpi) and (max-resolution: 90dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-resolution: 91dpi) and (max-resolution: 95dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 13px;
+  }
+}
+
+@media (min-resolution: 96dpi) and (max-resolution: 100dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-resolution: 111dpi) and (max-resolution: 120dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-resolution: 121dpi) and (max-resolution: 130dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-resolution: 131dpi) and (max-resolution: 140dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 17px;
+  }
+}
+
+@media screen and (min-resolution: 141dpi) and (max-resolution: 150dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-resolution: 151dpi) {
+  ::v-deep .v-snack__content {
+    font-size: 20px;
+  }
+}
 
 
 :root {
