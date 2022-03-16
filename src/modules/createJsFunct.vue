@@ -1,15 +1,15 @@
 <template>
   <v-sheet>
       <v-container fluid>
-            <v-text-field :rules="[rules.required]" label="ID javascript function" v-model="idJSFunct"></v-text-field>
+            <v-text-field :rules="[rules.required]" :label="TXT_FUZZY_OP" v-model="idJSFunct"></v-text-field>
             <br>
             <v-container style="border-style: outset;">
             <v-row  v-for="collect in parameterList" :key="collect.index">
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterParam]" label="id parameter" v-model="collect.idParam"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_ID" v-model="collect.idParam"></v-text-field>
                 </v-col>
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterParam]" label="type of parameter" v-model="collect.typeParam"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_TYPE" v-model="collect.typeParam"></v-text-field>
                 </v-col>
             </v-row>
             <v-container>
@@ -22,7 +22,7 @@
                 @click="setPlusParam()" 
             >
             <v-icon color="white">mdi-plus</v-icon>
-            <span style="color: white">&nbsp;ADD PARAMETER</span>
+            <span style="color: white">&nbsp;{{BTN_SPAN_ADD_PARAM}}</span>
             </v-btn>
             &nbsp;&nbsp;
             <v-btn
@@ -34,18 +34,19 @@
                 @click="checkMinusParam()" 
             >
             <v-icon color="white">mdi-minus</v-icon>
-            <span style="color: white">&nbsp;DELETE PARAMETER</span>
+            <span style="color: white">&nbsp;{{BTN_SPAN_DEL_PARAM}}</span>
             </v-btn>
             </v-container>
             </v-container>
-            <v-checkbox color="var(--bg-color)" v-model="precondition" label="do you want to set preconditions?"></v-checkbox>
-            <v-textarea :rules="[rules.required]" v-if="precondition" label="precondition" rows="1" v-model="preconditionText"></v-textarea>
-            <v-textarea :rules="[rules.required]" label="body of function" rows="3" v-model="jsBody"></v-textarea>
+            <v-checkbox color="var(--bg-color)" v-model="precondition" :label="CHECK_SET_PRECOND"></v-checkbox>
+            <v-textarea :rules="[rules.required]" v-if="precondition" :label="TXT_PRECOND" rows="1" v-model="preconditionText"></v-textarea>
+            <v-textarea :rules="[rules.required]" :label="TXT_BODY_FUNCTION" rows="3" v-model="jsBody"></v-textarea>
         </v-container>
   </v-sheet>
 </template>
 
 <script>
+import lang from '../env/lang.en'
 export default {
     
     props:{
@@ -63,7 +64,17 @@ export default {
             rules: {
                 required: value => !!value || 'Required.',
                 counterParam: value => this.counterParam(value)
-            }
+            },
+
+            //LABEL
+            TXT_FUZZY_OP: lang.WIZARD.MODULES.JS_FUNCT.TXT_FUZZY_OP,
+            TXT_PARAM_ID: lang.WIZARD.MODULES.JS_FUNCT.TXT_PARAM_ID,
+            TXT_PARAM_TYPE: lang.WIZARD.MODULES.JS_FUNCT.TXT_PARAM_TYPE,
+            BTN_SPAN_ADD_PARAM: lang.WIZARD.MODULES.JS_FUNCT.BTN_SPAN_ADD_PARAM,
+            BTN_SPAN_DEL_PARAM: lang.WIZARD.MODULES.JS_FUNCT.BTN_SPAN_DEL_PARAM,
+            CHECK_SET_PRECOND: lang.WIZARD.MODULES.JS_FUNCT.CHECK_SET_PRECOND,
+            TXT_PRECOND: lang.WIZARD.MODULES.JS_FUNCT.TXT_PRECOND,
+            TXT_BODY_FUNCTION: lang.WIZARD.MODULES.JS_FUNCT.TXT_BODY_FUNCTION,
       }
     },
     

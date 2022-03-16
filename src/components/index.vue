@@ -1,7 +1,7 @@
 <template>
   <v-sheet :color="bgColor" id="body">
     <v-sheet :dark="darkMode" elevation="10" name="c1" class="divheader" style="height: 50px; padding-y: 0 25px; ">
-      <h1 id="title" class="display-2 font-weight-bold">JCOUIweb</h1>
+      <h1 id="title" class="display-2 font-weight-bold">{{TITLE}}</h1>
       <v-icon
         style="
           float: right;
@@ -12,7 +12,7 @@
         "
         large
         v-on:click="settings = true"
-        @mouseover="tip = 'Settings'"
+        @mouseover="tip = TIP_SETTINGS"
         @mouseleave="tip = ''"
       >
         mdi-cog-outline
@@ -20,7 +20,7 @@
 
       <v-icon
         v-if="!selBtm"
-        @mouseover="tip = 'Config. & Collection'"
+        @mouseover="tip = TIP_CONFIG_COLL"
         @mouseleave="tip = ''"
         style="
           float: right;
@@ -39,7 +39,7 @@
       </v-icon>
 
       <v-icon
-        @mouseover="tip = 'Config. & Collection'"
+        @mouseover="tip = TIP_CONFIG_COLL"
         @mouseleave="tip = ''"
         v-if="selBtm"
         style="
@@ -59,7 +59,7 @@
 
       <v-icon
         v-if="!selLog"
-        @mouseover="tip = 'Log'"
+        @mouseover="tip = TIP_LOG"
         @mouseleave="tip = ''"
         style="
           float: right;
@@ -78,7 +78,7 @@
       </v-icon>
 
       <v-icon
-        @mouseover="tip = 'Log'"
+        @mouseover="tip = TIP_LOG"
         @mouseleave="tip = ''"
         v-if="selLog"
         style="
@@ -98,7 +98,7 @@
 
       <v-icon
         v-if="!selRec"
-        @mouseover="tip = 'Save & Back'"
+        @mouseover="tip = TIP_SAVE_UNDO"
         @mouseleave="tip = ''"
         style="
           float: right;
@@ -117,7 +117,7 @@
       </v-icon>
       <v-icon
         v-if="selRec"
-        @mouseover="tip = 'Save & Back'"
+        @mouseover="tip = TIP_SAVE_UNDO"
         @mouseleave="tip = ''"
         style="
           float: right;
@@ -137,7 +137,7 @@
 
       <v-icon
         v-if="!selSend"
-        @mouseover="tip = 'Execute'"
+        @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
         @mouseleave="tip = ''"
         style="
           float: right;
@@ -157,7 +157,7 @@
       </v-icon>
       <v-icon
         v-if="selSend"
-        @mouseover="tip = 'Execute'"
+        @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
         @mouseleave="tip = ''"
         style="
           float: right;
@@ -196,7 +196,7 @@
             color="red"
             @click="settings = !settings"
           >
-            save
+            <span>{{BTN_SPAN_SETTINGS}}</span>
           </v-btn>
           <Settings
            v-on:set-main-color="setMainColor"
@@ -206,56 +206,6 @@
           </Settings>
         </v-sheet>
       </v-bottom-sheet>
-
-      <!--
-      <v-dialog
-        v-model="settings"
-        scrollable
-        max-width="400px"
-        max-height="400px"
-      >
-        <v-container>
-          <Settings
-            v-on:set-main-color="setMainColor"
-            v-on:set-theme-color="setThemeColor"
-          />
-          <v-sheet align="center" color="transparent">
-            <v-btn
-              align="right"
-              max-width="200px"
-              color="orange lighten-2"
-              v-on:click="settings = false"
-            >
-              Close settings
-            </v-btn>
-          </v-sheet>
-        </v-container>
-      </v-dialog>
-      -->
-      <!--<v-dialog v-model="showWizard" width="500px">
-        <v-card>
-        <v-card-title class="text-h5 grey lighten-2">
-          WIZARD TEXT
-        </v-card-title>
-
-        <v-card-text>
-          {{textWizard}}
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            text
-            @click="showWizard = false"
-          >
-            Close
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-      </v-dialog>-->
     </v-sheet>
     <VueDragResize
       :key="rec.idRecChange"
@@ -522,6 +472,7 @@
 import { timeString } from "../functions/functionTools";
 import Settings from "../components/Settings.vue";
 import VueDragResize from "vue-draggable-resizable";
+import lang from '../env/lang.en'
 //import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 //'vue-draggable-resizable'
 //vue-drag-resize
@@ -582,7 +533,7 @@ import BottomBar from "./BottomBar.vue";
 import BarLog from './logComp.vue'
 
 export default {
-  name: "PaginaPrincipale",
+  name: "IndexPage",
 
   components: {
     BarRec,
@@ -683,7 +634,16 @@ export default {
       },
 
       textToCommand: "",
-      wizardAlert: false
+      wizardAlert: false,
+
+      //LABEL
+      TITLE: lang.INDEX.TITLE,
+      TIP_SETTINGS: lang.INDEX.TIP_SETTINGS,
+      TIP_CONFIG_COLL: lang.INDEX.TIP_CONFIG_COLL,
+      TIP_LOG: lang.INDEX.TIP_LOG,
+      TIP_SAVE_UNDO: lang.INDEX.TIP_SAVE_UNDO,
+      TIP_EXE_COMMAND_WIZARD: lang.INDEX.TIP_EXE_COMMAND_WIZARD,
+      BTN_SPAN_SETTINGS: lang.INDEX.BTN_SPAN_SETTINGS
     };
   },
   watch: {

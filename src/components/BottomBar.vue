@@ -94,7 +94,7 @@
 import lang from '../env/lang.en'
 import icons from '../env/icon'
 export default {
-    name: 'barConfigColl',
+    name: 'ConfigCollComp',
     components: {},
     props: {
         bottomText: Object,

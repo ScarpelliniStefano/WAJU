@@ -15,8 +15,7 @@
           </center>
           <center>
             <h4>
-              Total item:{{ this.valTotal }} - Initial document:
-              {{ this.valInitial }} - Final document: {{ this.valFinal }}
+              {{ H_TOTAL_ITEM + this.valTotal }} - {{H_INITIAL_DOCUMENT + this.valInitial}} - {{H_FINAL_DOCUMENT + this.valFinal }}
             </h4>
           </center>
           <v-row>
@@ -32,7 +31,7 @@
               <v-select
                 v-model="size"
                 :items="itemsSize"
-                label="Size"
+                :label="SELECT_SIZE"
                 dense
               ></v-select>
             </v-col>
@@ -52,7 +51,7 @@
                       width="100%"
                     >
                       <v-icon color="white">mdi-content-save-outline</v-icon>
-                      <span style="color: white;">Save Tree...</span>
+                      <span style="color: white;">{{BTN_SPAN_SAVE_TREE}}</span>
                     </v-btn>
               </v-col>
               <v-col cols="6">
@@ -78,33 +77,25 @@
                       width="100%"
                     >
                       <v-icon color="white">mdi-circle-expand</v-icon>
-                      <span style="color: white;">Expand</span>
+                      <span style="color: white;">{{BTN_SPAN_EXPAND}}</span>
                     </v-btn>
               </v-col>
           </v-row>
         </v-sheet>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <v-sheet rounded height="350px" elevation="5" id="treeViewer" style="overflow: auto;">
-          <!--<json-view
-            rootKey="documents"
-            :key="numDepth"
-            :max-depth="numDepth"
-            :data="this.textIRTreeCol"
-          />-->
-        </v-sheet>
+        <v-sheet rounded height="350px" elevation="5" id="treeViewer" style="overflow: auto;"></v-sheet>
       </v-col>
     </v-row>
     </v-container>
   </v-sheet>
 </template>
 <script>
-//import { JSONView } from 'vue-json-component'
-//import Settings from '../components/Settings.vue';
 import jsonview from '@pgrabovets/json-view';
+import lang from '../env/lang.en'
 
 export default {
-  name: 'IRCompTree',
+  name: 'IRtreeComp',
   //components: { 'json-view': JSONView },
   data: function () {
     return {
@@ -131,6 +122,14 @@ export default {
       fontSize: 0,
       error: '', 
       //promise: ''
+
+      //LABEL
+      H_TOTAL_ITEM: lang.PAGE_TREE.H_TOTAL_ITEM,
+      H_INITIAL_DOCUMENT: lang.PAGE_TREE.H_INITIAL_DOCUMENT,
+      H_FINAL_DOCUMENT: lang.PAGE_TREE.H_FINAL_DOCUMENT,
+      SELECT_SIZE: lang.PAGE_TREE.SELECT_SIZE,
+      BTN_SPAN_SAVE_TREE: lang.PAGE_TREE.BTN_SPAN_SAVE_TREE,
+      BTN_SPAN_EXPAND: lang.PAGE_TREE.BTN_SPAN_EXPAND
     }
   },
   watch: {
@@ -315,11 +314,6 @@ export default {
             this.textIRTreeCol = jsonData.tree
             this.calculatePageSize();
             document.title = this.title + ' | JCOUI Web'
-            /*this.promise=setInterval(() => {
-              console.log("finito!");
-              this.overlay = false;
-              alert("Request failed for long time");
-            }, 10000);*/
           }
         }
       }

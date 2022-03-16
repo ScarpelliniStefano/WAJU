@@ -1,12 +1,13 @@
 <template>
   <v-sheet>
         <case-clause v-on:changeValue="changeValue($event)"/>
-        <v-checkbox color="var(--bg-color)" v-model="removeDup" label="Remove duplicates?"></v-checkbox>
+        <v-checkbox color="var(--bg-color)" v-model="removeDup" :label="CHECK_REMOVE_DUPL"></v-checkbox>
   </v-sheet>
 </template>
 
 <script>
 import caseClause from "./submodules/caseClause.vue";
+import lang from '../env/lang.en'
 export default {
     props:{
         maincol: String
@@ -18,6 +19,9 @@ export default {
       return {
         valueString:';',
         removeDup: false,
+
+        //LABEL
+        CHECK_REMOVE_DUPL: lang.WIZARD.MODULES.FILTER.CHECK_REMOVE_DUPL
       }
     },
     

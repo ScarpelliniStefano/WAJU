@@ -1,14 +1,14 @@
 <template>
   <v-sheet>
       <v-container fluid>
-            <v-text-field :rules="[rules.required]" label="ID fuzzy operator" v-model="idFuzzyOp"></v-text-field><br>
+            <v-text-field :rules="[rules.required]" :label="TXT_FUZZY_OP" v-model="idFuzzyOp"></v-text-field><br>
             <v-container style="border-style: outset;">
             <v-row  v-for="collect in parameterList" :key="collect.index">
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterParam]" label="id parameter" v-model="collect.idParam"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_ID" v-model="collect.idParam"></v-text-field>
                 </v-col>
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterParam]" label="type of parameter" v-model="collect.typeParam"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_TYPE" v-model="collect.typeParam"></v-text-field>
                 </v-col>
             </v-row>
             <v-container>
@@ -21,7 +21,7 @@
                 @click="setPlusParam()" 
             >
             <v-icon color="white">mdi-plus</v-icon>
-            <span style="color: white">&nbsp;ADD PARAMETER</span>
+            <span style="color: white">&nbsp;{{BTN_SPAN_ADD_PARAM}}</span>
             </v-btn>
             &nbsp;&nbsp;
             <v-btn
@@ -33,22 +33,22 @@
                 @click="checkMinusParam()" 
             >
             <v-icon color="white">mdi-minus</v-icon>
-            <span style="color: white">&nbsp;DELETE PARAMETER</span>
+            <span style="color: white">&nbsp;{{BTN_SPAN_DEL_PARAM}}</span>
             </v-btn>
             </v-container>
             </v-container>
-            <v-checkbox color="var(--bg-color)" v-model="precondition" label="do you want to set preconditions?"></v-checkbox>
-            <v-textarea :rules="[rules.required]" v-if="precondition" label="precondition" rows="1" v-model="preconditionText"></v-textarea>
-            <v-textarea :rules="[rules.required]" label="expression to evaluate" rows="1" v-model="jfExpression"></v-textarea>
+            <v-checkbox color="var(--bg-color)" v-model="precondition" :label="CHECK_SET_PRECOND"></v-checkbox>
+            <v-textarea :rules="[rules.required]" v-if="precondition" :label="TXT_PRECOND" rows="1" v-model="preconditionText"></v-textarea>
+            <v-textarea :rules="[rules.required]" :label="TXT_EXPR_EVALUATE" rows="1" v-model="jfExpression"></v-textarea>
             <br>
             <v-container style="border-style: outset;">
-            <p align="left">Polyline:</p>
+            <p align="left">{{P_POLYLINE}}</p>
             <v-row  v-for="collect in polylineList" :key="collect.index">
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterPoly]" label="first number" v-model="collect.firstNum"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterPoly]" :label="TXT_FIRST_NUM" v-model="collect.firstNum"></v-text-field>
                 </v-col>
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterPoly]" label="second number" v-model="collect.secondNum"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterPoly]" :label="TXT_SECOND_NUM" v-model="collect.secondNum"></v-text-field>
                 </v-col>
             </v-row>
             <v-container>
@@ -61,7 +61,7 @@
                 @click="setPlusPolyline()" 
             >
             <v-icon color="white">mdi-plus</v-icon>
-            <span style="color: white">&nbsp;ADD POLYLINE COORDINATES</span>
+            <span style="color: white">&nbsp;{{BTN_SPAN_ADD_POLY}}</span>
             </v-btn>
             &nbsp;&nbsp;
             <v-btn
@@ -73,7 +73,7 @@
                 @click="checkMinusPolyline()" 
             >
             <v-icon color="white">mdi-minus</v-icon>
-            <span style="color: white">&nbsp;DELETE POLYLINE COORDINATES</span>
+            <span style="color: white">&nbsp;{{BTN_SPAN_DEL_POLY}}</span>
             </v-btn>
             </v-container>
             </v-container>
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import lang from '../env/lang.en'
 export default {
     
     props:{
@@ -103,7 +104,22 @@ export default {
                 required: value => !!value || 'Required.',
                 counterParam: value => this.counterParam(value),
                 counterPoly: value => this.counterPoly(value),
-            }
+            },
+
+            //LABEL
+            TXT_FUZZY_OP: lang.WIZARD.MODULES.FUZZY_OP.TXT_FUZZY_OP,
+            TXT_PARAM_ID: lang.WIZARD.MODULES.FUZZY_OP.TXT_PARAM_ID,
+            TXT_PARAM_TYPE: lang.WIZARD.MODULES.FUZZY_OP.TXT_PARAM_TYPE,
+            BTN_SPAN_ADD_PARAM: lang.WIZARD.MODULES.FUZZY_OP.BTN_SPAN_ADD_PARAM,
+            BTN_SPAN_DEL_PARAM: lang.WIZARD.MODULES.FUZZY_OP.BTN_SPAN_DEL_PARAM,
+            CHECK_SET_PRECOND: lang.WIZARD.MODULES.FUZZY_OP.CHECK_SET_PRECOND,
+            TXT_PRECOND: lang.WIZARD.MODULES.FUZZY_OP.TXT_PRECOND,
+            TXT_EXPR_EVALUATE: lang.WIZARD.MODULES.FUZZY_OP.TXT_EXPR_EVALUATE,
+            P_POLYLINE: lang.WIZARD.MODULES.FUZZY_OP.P_POLYLINE,
+            TXT_FIRST_NUM: lang.WIZARD.MODULES.FUZZY_OP.TXT_FIRST_NUM,
+            TXT_SECOND_NUM: lang.WIZARD.MODULES.FUZZY_OP.TXT_SECOND_NUM,
+            BTN_SPAN_ADD_POLY: lang.WIZARD.MODULES.FUZZY_OP.BTN_SPAN_ADD_POLY,
+            BTN_SPAN_DEL_POLY: lang.WIZARD.MODULES.FUZZY_OP.BTN_SPAN_DEL_POLY
       }
     },
     

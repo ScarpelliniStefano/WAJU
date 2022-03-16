@@ -1,18 +1,20 @@
 <template>
   <v-sheet>
-      <v-checkbox color="var(--bg-color)" v-model="fromWeb" label="From web?"></v-checkbox>
+      <v-checkbox color="var(--bg-color)" v-model="fromWeb" :label="CHECK_FROM_WEB"></v-checkbox>
       <v-sheet v-if="fromWeb">
-          <v-text-field :rules="[rules.required]" v-model="url" label="url"/>
+          <v-text-field :rules="[rules.required]" v-model="url" :label="TXT_URL"/>
       </v-sheet>
       <v-sheet v-if="!fromWeb">
           <v-row>
-          <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col><v-col><v-text-field v-if="collection!=''" label="db" v-model="db"/></v-col>
+          <v-col><v-text-field :rules="[rules.required]" v-model="collection" :label="TXT_COLLECTION"/></v-col>
+          <v-col><v-text-field v-if="collection!=''" :label="TXT_DB" v-model="db"/></v-col>
           </v-row>
       </v-sheet>
   </v-sheet>
 </template>
 
 <script>
+import lang from '../env/lang.en'
 export default {
    data () {
       return {
@@ -23,7 +25,13 @@ export default {
         db:'',
         rules: {
           required: value => !!value || 'Required.'
-        }
+        },
+
+        //LABEL
+        CHECK_FROM_WEB: lang.WIZARD.MODULES.GET_COLLECTION.CHECK_FROM_WEB,
+        TXT_URL: lang.WIZARD.MODULES.GET_COLLECTION.TXT_URL,
+        TXT_COLLECTION: lang.WIZARD.MODULES.GET_COLLECTION.TXT_COLLECTION,
+        TXT_DB: lang.WIZARD.MODULES.GET_COLLECTION.TXT_DB
       }
     },
     watch:{

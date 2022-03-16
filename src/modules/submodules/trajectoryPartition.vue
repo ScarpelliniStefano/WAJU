@@ -1,7 +1,7 @@
 <template>
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" label="conditions" rows="2" auto-grow v-model="orCondPart"></v-textarea>
+                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCondPart"></v-textarea>
                 <br>
                 
                 <v-row v-for="collect in collectionsPartMatch" :key="collect.index">
@@ -21,7 +21,7 @@
                     @click="setPlusPartMatch()" 
                 >
                 <v-icon color="white">mdi-plus</v-icon>
-                <span style="color: white">&nbsp;ADD MATCHING PARTITION</span>
+                <span style="color: white">&nbsp;{{BTN_SPAN_ADD}}</span>
                 </v-btn>
                 &nbsp;&nbsp;
                 <v-btn
@@ -33,7 +33,7 @@
                     @click="checkMinusPartMatch()" 
                 >
                 <v-icon color="white">mdi-minus</v-icon>
-                <span style="color: white">&nbsp;DELETE MATCHING PARTITION</span>
+                <span style="color: white">&nbsp;{{BTN_SPAN_DELETE}}</span>
                 </v-btn>
                 
                 
@@ -42,6 +42,7 @@
 
 <script>
 import partitionMatching from "./partitionMatching.vue";
+import lang from '../../env/lang.en'
 export default {
     props:{
         mytrajectoryPartIndex: String
@@ -64,7 +65,12 @@ export default {
         ],
         rules: {
           required: value => !!value || 'Required.'
-        }
+        },
+
+        //LABEL
+        TXT_CONDITIONS: lang.WIZARD.SUBMODULES.TRAJECTORY_PARTITION.TXT_CONDITIONS,
+        BTN_SPAN_ADD: lang.WIZARD.SUBMODULES.TRAJECTORY_PARTITION.BTN_SPAN_ADD,
+        BTN_SPAN_DELETE: lang.WIZARD.SUBMODULES.TRAJECTORY_PARTITION.BTN_SPAN_DELETE,
       }
     },
     

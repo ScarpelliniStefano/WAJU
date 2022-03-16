@@ -1,8 +1,8 @@
 <template>
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" label="collections clause" rows="2" auto-grow v-model="whereClause"></v-textarea>
-                <v-checkbox color="var(--bg-color)" v-model="generateSect" label="add a generate section?"></v-checkbox>
+                <v-textarea :rules="[rules.required]" :label="TXT_COLLECT_CLAUSE" rows="2" auto-grow v-model="whereClause"></v-textarea>
+                <v-checkbox color="var(--bg-color)" v-model="generateSect" :label="CHECK_GEN_SECTION"></v-checkbox>
                 <generate-section v-if="generateSect" v-on:changeValue="changeText($event)"/>
             </v-container>
             
@@ -10,6 +10,7 @@
 
 <script>
 import generateSection from './generateSection.vue';
+import lang from '../../env/lang.en'
 export default {
     props:{
         mywhereIndex: Number
@@ -28,7 +29,10 @@ export default {
                     ],
         rules: {
             required: value => !!value || 'Required.'
-        }
+        },
+
+        TXT_COLLECT_CLAUSE: lang.WIZARD.SUBMODULES.WHERE_CASE.TXT_COLLECT_CLAUSE,
+        CHECK_GEN_SECTION: lang.WIZARD.SUBMODULES.WHERE_CASE.CHECK_GEN_SECTION
       }
     },
     

@@ -59,7 +59,7 @@
 <script>
 import lang from '../env/lang.en'
 export default {
-    name: 'barSend',
+    name: 'SendComp',
     data() {
         return {
             overlay: false,

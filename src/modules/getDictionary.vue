@@ -1,14 +1,15 @@
 <template>
   <v-sheet>
           <v-row>
-            <v-col><v-text-field :rules="[rules.required]" v-model="collection" label="collection"/></v-col>
-            <v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" label="db" v-model="db"/></v-col>
-            <v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" label="alias" v-model="alias"/></v-col>
+            <v-col><v-text-field :rules="[rules.required]" v-model="collection" :label="TXT_COLLECTION"/></v-col>
+            <v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" :label="TXT_DB" v-model="db"/></v-col>
+            <v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" :label="TXT_ALIAS" v-model="alias"/></v-col>
           </v-row>
   </v-sheet>
 </template>
 
 <script>
+import lang from '../env/lang.en'
 export default {
    data () {
       return {
@@ -18,7 +19,12 @@ export default {
         db:'',
         rules: {
           required: value => !!value || 'Required.'
-        }
+        },
+
+        //LABEL
+        TXT_COLLECTION: lang.WIZARD.MODULES.GET_DICTIONARY.TXT_COLLECTION,
+        TXT_DB: lang.WIZARD.MODULES.GET_DICTIONARY.TXT_DB,
+        TXT_ALIAS: lang.WIZARD.MODULES.GET_DICTIONARY.TXT_ALIAS
       }
     },
     watch:{

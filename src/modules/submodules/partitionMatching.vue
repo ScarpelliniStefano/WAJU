@@ -3,32 +3,32 @@
             <v-container fluid >
                 <v-row>
                     <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterFields]" label="field of matching" v-model="fieldMatch"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_MATCHING" v-model="fieldMatch"></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterFields]" label="field of wrt" v-model="fieldWrt"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_WRT" v-model="fieldWrt"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterFields]" label="id of threshold" v-model="idThreshold"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_ID_THRESHOLD" v-model="idThreshold"></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterFields]" label="numeric of threshold" v-model="numThreshold"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_NUMERIC_THRESHOLD" v-model="numThreshold"></v-text-field>
                     </v-col>
                 </v-row>
-                <v-checkbox color="var(--bg-color)" v-model="whereMatching" label="do you want to set where conditions of matching?"></v-checkbox>
-                <v-textarea :rules="[rules.required,rules.counterFields]" v-if="whereMatching" label="where conditions" rows="1" v-model="whereMatchingText"></v-textarea>
-                <v-text-field :rules="[rules.required,rules.counterFields]" label="field of destination" v-model="fieldInto"></v-text-field>
-                <v-checkbox color="var(--bg-color)" v-model="addingToInput" label="do you want to add field to input?"></v-checkbox>
-                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="addingToInput" label="field to add to input" v-model="addingToInputText"></v-text-field>
-                <v-checkbox color="var(--bg-color)" v-model="minSimilarity" label="do you want to set min similarity?"></v-checkbox>
-                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="minSimilarity" label="min similarity numeric" v-model="minSimilarityText"></v-text-field>
+                <v-checkbox color="var(--bg-color)" v-model="whereMatching" :label="CHECK_WHERE_COND"></v-checkbox>
+                <v-textarea :rules="[rules.required,rules.counterFields]" v-if="whereMatching" :label="TXT_WHERE_COND" rows="1" v-model="whereMatchingText"></v-textarea>
+                <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_DEST" v-model="fieldInto"></v-text-field>
+                <v-checkbox color="var(--bg-color)" v-model="addingToInput" :label="CHECK_ADD_FIELD"></v-checkbox>
+                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="addingToInput" :label="TXT_ADD_FIELD" v-model="addingToInputText"></v-text-field>
+                <v-checkbox color="var(--bg-color)" v-model="minSimilarity" :label="CHECK_SET_MIN_SIM"></v-checkbox>
+                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="minSimilarity" :label="TXT_MIN_SIM" v-model="minSimilarityText"></v-text-field>
             </v-container>
 </template>
 
 <script>
-
+import lang from '../../env/lang.en'
 export default {
     props:{
         mypartmatchIndex: String
@@ -51,7 +51,20 @@ export default {
         rules: {
           required: value => !!value || 'Required.',
           counterFields: value => value!="" ? this.refreshStringMatch() : false,
-        }
+        },
+
+        //LABEL
+        TXT_FIELD_MATCHING: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.TXT_FIELD_MATCHING,
+        TXT_FIELD_WRT: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.TXT_FIELD_WRT,
+        TXT_ID_THRESHOLD: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.TXT_ID_THRESHOLD,
+        TXT_NUMERIC_THRESHOLD: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.TXT_NUMERIC_THRESHOLD,
+        CHECK_WHERE_COND: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.CHECK_WHERE_COND,
+        TXT_WHERE_COND: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.TXT_WHERE_COND,
+        TXT_FIELD_DEST: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.TXT_FIELD_DEST,
+        CHECK_ADD_FIELD: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.CHECK_ADD_FIELD,
+        TXT_ADD_FIELD: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.TXT_ADD_FIELD,
+        CHECK_SET_MIN_SIM: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.CHECK_SET_MIN_SIM,
+        TXT_MIN_SIM: lang.WIZARD.SUBMODULES.PARTITION_MATCHING.TXT_MIN_SIM
       }
     },
     

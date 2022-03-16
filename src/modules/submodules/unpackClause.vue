@@ -3,9 +3,9 @@
             {{this.mywhereIndex}}-->
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" label="conditions" rows="2" auto-grow v-model="orCond"></v-textarea>
-                <v-text-field :rules="[rules.required]" label="fields of source array" v-model="sourceFields"></v-text-field>
-                <v-text-field :rules="[rules.required]" label="fields of destination array" v-model="destFields"></v-text-field>
+                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCond"></v-textarea>
+                <v-text-field :rules="[rules.required]" :label="TXT_FIELDS_SRC_ARR" v-model="sourceFields"></v-text-field>
+                <v-text-field :rules="[rules.required]" :label="TXT_FIELDS_DEST_ARR" v-model="destFields"></v-text-field>
             </v-container>
             
             
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import lang from '../../env/lang.en'
 export default {
     props:{
         myunpackIndex: Number
@@ -28,7 +29,12 @@ export default {
         stringVett:['','',''],
         rules: {
           required: value => !!value || 'Required.'
-        }
+        },
+
+        //LABEL
+        TXT_CONDITIONS: lang.WIZARD.SUBMODULES.UNPACK_CLAUSE.TXT_CONDITIONS,
+        TXT_FIELDS_SRC_ARR: lang.WIZARD.SUBMODULES.UNPACK_CLAUSE.TXT_FIELDS_SRC_ARR,
+        TXT_FIELDS_DEST_ARR: lang.WIZARD.SUBMODULES.UNPACK_CLAUSE.TXT_FIELDS_DEST_ARR
       }
     },
     

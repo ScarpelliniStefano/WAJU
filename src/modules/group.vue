@@ -14,7 +14,7 @@
                 @click="setPlus()" 
             >
             <v-icon color="white">mdi-plus</v-icon>
-            <span style="color: white">&nbsp;ADD PARTITION CLAUSE</span>
+            <span style="color: white">&nbsp;{{BTN_SPAN_ADD_PART_CLAUSE}}</span>
             </v-btn>
             &nbsp;&nbsp;
             <v-btn
@@ -26,7 +26,7 @@
                 @click="checkMinus()" 
             >
             <v-icon color="white">mdi-minus</v-icon>
-            <span style="color: white">&nbsp;DELETE PARTITION CLAUSE</span>
+            <span style="color: white">&nbsp;{{BTN_SPAN_DEL_PART_CLAUSE}}</span>
             </v-btn>
         <v-container
                 class="px-0"
@@ -35,17 +35,17 @@
                 <v-radio-group v-model="radioGroup" row>
                 <v-radio
                     :key=1
-                    label="keep others"
+                    :label="RADIO_KEEP_OTHERS"
                     value="KEEP OTHERS"
                 ></v-radio>
                 <v-radio
                     :key=2
-                    label="drop others"
+                    :label="RADIO_DROP_OTHERS"
                     value="DROP OTHERS"
                 ></v-radio>
                  <v-radio
                     :key=3
-                    label="none"
+                    :label="RADIO_NONE"
                     value="NONE"
                 ></v-radio>
                 </v-radio-group>
@@ -56,6 +56,7 @@
 
 <script>
 import partitionClause from "./submodules/partitionClause.vue";
+import lang from '../env/lang.en'
 export default {
     
     props:{
@@ -74,7 +75,14 @@ export default {
                 index:1,
                 stringa:"1##"
             }
-        ]
+        ],
+
+        //LABEL
+        BTN_SPAN_ADD_PART_CLAUSE: lang.WIZARD.MODULES.GROUP.BTN_SPAN_ADD_PART_CLAUSE,
+        BTN_SPAN_DEL_PART_CLAUSE: lang.WIZARD.MODULES.GROUP.BTN_SPAN_DEL_PART_CLAUSE,
+        RADIO_KEEP_OTHERS: lang.WIZARD.MODULES.GROUP.RADIO_KEEP_OTHERS,
+        RADIO_DROP_OTHERS: lang.WIZARD.MODULES.GROUP.RADIO_DROP_OTHERS,
+        RADIO_NONE: lang.WIZARD.MODULES.GROUP.RADIO_NONE
       }
     },
     

@@ -75,7 +75,7 @@
 <script>
 import lang from '../env/lang.en'
 export default {
-    name: "barRec",
+    name: "ReceiveComp",
     data: () => ({
         isDisabled: true,
         expanded: [],
