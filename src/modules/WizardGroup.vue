@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import partitionClause from "./submodules/partitionClause.vue";
+import partitionClause from "./submodules/ModulePartitionClause.vue";
 import lang from '../env/lang.en'
 export default {
     

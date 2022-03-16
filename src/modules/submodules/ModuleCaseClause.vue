@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import whereCase from "./whereCase.vue";
+import whereCase from "./ModuleWhereCase.vue";
 import lang from '../../env/lang.en'
 export default {
     props:{

@@ -31,13 +31,8 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-        v-on:click="
-          clickDragResize('btm');
-=======
         @click="
           clickDragResize('btm')
->>>>>>> Stashed changes:src/components/index.vue
           selBtm = !selBtm;
         "
       >
@@ -56,13 +51,9 @@
           color: var(--border-color);
         "
         large
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-        v-on:click="selBtm = !selBtm"
-=======
         @click="
           selBtm = !selBtm;
         "
->>>>>>> Stashed changes:src/components/index.vue
       >
         mdi-toolbox
       </v-icon>
@@ -74,13 +65,8 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-        v-on:click="
-          clickDragResize('log');
-=======
         @click="
           clickDragResize('log')
->>>>>>> Stashed changes:src/components/index.vue
           selLog = !selLog;
         "
       >
@@ -99,13 +85,9 @@
           color: var(--border-color);
         "
         large
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-        v-on:click="selLog = !selLog"
-=======
         @click="
           selLog = !selLog;
         "
->>>>>>> Stashed changes:src/components/index.vue
       >
         mdi-text-box
       </v-icon>
@@ -117,13 +99,8 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-        v-on:click="
-          clickDragResize('rec');
-=======
         @click="
           clickDragResize('rec')
->>>>>>> Stashed changes:src/components/index.vue
           selRec = !selRec;
         "
       >
@@ -142,13 +119,9 @@
         "
         id="SaveBack"
         large
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-        v-on:click="selRec = !selRec"
-=======
         @click="
           selRec = !selRec;
         "
->>>>>>> Stashed changes:src/components/index.vue
       >
         mdi-content-save
       </v-icon>
@@ -161,13 +134,8 @@
         id="execute"
         large
         :dark="darkMode"
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-        v-on:click="
-          clickDragResize('send');
-=======
         @click="
           clickDragResize('send')
->>>>>>> Stashed changes:src/components/index.vue
           selSend = !selSend;
         "
       >
@@ -213,18 +181,10 @@
             <span>{{ BTN_SPAN_SETTINGS }}</span>
           </v-btn>
           <Settings
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-            v-on:set-main-color="setMainColor"
-            v-on:set-theme-color="setThemeColor"
-            v-on:set-style="setStyle"
-            :darkMode="darkMode"
-          >
-=======
            @set-main-color="setMainColor"
             @set-theme-color="setThemeColor"
             @set-style="setStyle"
             :darkMode="darkMode">
->>>>>>> Stashed changes:src/components/index.vue
           </Settings>
         </v-sheet>
       </v-bottom-sheet>
@@ -292,21 +252,12 @@
         :textRec="textToCommand"
         :disable="disBtn"
         :randomNumberString="randomNumber"
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-        v-on:click-send="sendMsg($event)"
-        v-on:set-z-click="setZ"
-        v-on:close-send="selSend = !selSend"
-        v-on:send-text="sendText()"
-        v-on:share-text="shareText"
-        :textShare="send.textShare"
-=======
         @click-send="sendMsg($event)"
         @set-z-click="setZ"
         @close-send="selSend = !selSend"
         @send-text='sendText()'
         @share-text='shareText'
         :textShare='send.textShare'
->>>>>>> Stashed changes:src/components/index.vue
       ></bar-send>
     </VueDragResize>
 
@@ -411,17 +362,6 @@
             :width="send.widthSm"
             :disable="disBtn"
             :textRec="textToCommand"
-<<<<<<< Updated upstream:src/components/AppIndex.vue
-            v-on:send-text="sendText()"
-            :textChange="send.textSend"
-            :randomNumberString="randomNumber"
-            :darkMode="darkMode"
-            v-on:click-send="sendMsg($event)"
-            v-on:set-z-click="setZ"
-            v-on:close-send="selSend = !selSend"
-            v-on:share-text="shareText"
-            :textShare="send.textShare"
-=======
             @send-text='sendText()'
             :textChange="send.textSend"
             :randomNumberString="randomNumber"
@@ -431,7 +371,6 @@
             @close-send="selSend = !selSend"
             @share-text='shareText'
             :textShare='send.textShare'
->>>>>>> Stashed changes:src/components/index.vue
           ></bar-send>
         </v-col>
         <v-col v-if="selLog" class="" :key="2" :cols="12" :sm="12">
@@ -492,7 +431,7 @@
 <script>
 //import Vue from 'vue'
 import { timeString } from "../functions/functionTools";
-import Settings from "./Settings.vue";
+import Settings from "./IndexSettings.vue";
 import VueDragResize from "vue-draggable-resizable";
 import lang from "../env/lang.en";
 //import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
@@ -549,10 +488,10 @@ export var isPreDone = () => {
   return preDone;
 };
 
-import BarRec from "./AppReceive.vue";
-import BarSend from "./AppSend.vue";
-import BottomBar from "./AppConfigurationCollection.vue";
-import BarLog from "./logComp.vue";
+import BarRec from "./IndexReceive.vue";
+import BarSend from "./IndexSend.vue";
+
+import BarLog from "./IndexLog.vue";
 
 export default {
   name: "IndexPage",

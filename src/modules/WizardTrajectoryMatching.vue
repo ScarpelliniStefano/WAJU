@@ -65,7 +65,7 @@
 
 <script>
 import lang from '../env/lang.en'
-import trajectoryPartition from "./submodules/trajectoryPartition.vue";
+import trajectoryPartition from "./submodules/ModuleTrajectoryPartition.vue";
 export default {
     
     props:{

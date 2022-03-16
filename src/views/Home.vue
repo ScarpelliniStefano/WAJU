@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import indexC from '../components/index'
+  import indexC from '../components/AppIndex'
 
   export default {
     name: 'Home',

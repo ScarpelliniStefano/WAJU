@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import StaticTree from '../views/StaticTree.vue'
-import Wizard from '../components/wizard.vue'
+import Wizard from '../components/AppWizard.vue'
 
 Vue.use(VueRouter)
 

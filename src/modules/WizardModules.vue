@@ -20,18 +20,18 @@
 <script>
 import getColl from "./WizardGetCollection.vue";
 import getDict from "./WizardGetDictionary.vue";
-import saveAs from "./saveAs.vue";
+import saveAs from "./WizardSaveAs.vue";
 import mergeColl from "./WizardMergeCollections.vue";
 import intersectColl from "./WizardIntersectCollections.vue";
-import subtractColl from "./subtractCollections.vue";
-import useDb from "./useDB.vue";
+import subtractColl from "./WizardSubtractCollections.vue";
+import useDb from "./WizardUseDB.vue";
 import filterClause from "./WizardFilter.vue";
 import expandClause from "./WizardExpand.vue";
 import groupClause from "./WizardGroup.vue";
 import joinCollClause from "./WizardJoinCollections.vue";
 import createFuzzyOp from "./WizardCreateFuzzyOperator.vue";
 import createJavascriptFunction from "./WizardCreateJavaScriptFunction.vue"
-import trajectoryMatch from "./trajectoryMatch.vue";
+import trajectoryMatch from "./WizardTrajectoryMatching.vue";
 
 import lang from '../env/lang.en'
 

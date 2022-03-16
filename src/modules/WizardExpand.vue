@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import unpackClause from "./submodules/unpackClause.vue";
+import unpackClause from "./submodules/ModuleUnpackClause.vue";
 import lang from '../env/lang.en'
 export default {
     

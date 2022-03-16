@@ -146,7 +146,7 @@
 </template>
 
 <script>
-import keepDropFuzzySet from './keepdropFS.vue';
+import keepDropFuzzySet from './ModuleKeepDropFuzzySets.vue';
 import lang from '../../env/lang.en'
 export default {
     components:{

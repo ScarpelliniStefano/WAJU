@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import caseClause from "./submodules/caseClause.vue";
+import caseClause from "./submodules/ModuleCaseClause.vue";
 import lang from '../env/lang.en'
 export default {
     props:{
