@@ -9,6 +9,7 @@
 import caseClause from "./submodules/ModuleCaseClause.vue";
 import lang from '../env/lang.en'
 export default {
+    name:"WizardFilter",
     props:{
         maincol: String
     },

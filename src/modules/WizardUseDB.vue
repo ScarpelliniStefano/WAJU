@@ -38,6 +38,7 @@
 import {delDoubleArrayViaIndex} from '../functions/functionTools';
 import lang from '../env/lang.en'
 export default {
+    name:"WizardUseDB",
     props: {
         maincol: String
     },

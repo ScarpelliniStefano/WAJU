@@ -33,7 +33,7 @@
                         value="KEEPING FUZZY SETS"
                     ></v-radio>
                     </v-radio-group>
-                    <v-text-field v-if="radioFS=='DROPPING FUZZY SETS' || radioFS=='KEEPING FUZZY SETS'" :label="TXT_LIST_ID" v-model="textRadio"></v-text-field>
+                    <v-text-field v-if="radioFS=='DROPPING FUZZY SETS' || radioFS=='KEEPING FUZZY SETS'" :label="TXT_LIST_ID" v-model="textRadio"/>
                 </v-container>
             </div>
             
@@ -44,6 +44,7 @@
 <script>
 import lang from '../../env/lang.en'
 export default {
+    name:"ModuleKeepDropFuzzySets",
    data () {
       return {
         radioFS:'',

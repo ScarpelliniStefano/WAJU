@@ -76,7 +76,7 @@
 import lang from '../env/lang.en'
 import icon from '../env/icon'
 export default {
-    name: "ReceiveComp",
+    name: "IndexReceive",
     props: {
         recText: String,
         recArr: Array,

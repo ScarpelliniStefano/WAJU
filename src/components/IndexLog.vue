@@ -35,7 +35,7 @@
 <script>
 import lang from '../env/lang.en'
 export default {
-    name: "LogComp",
+    name: "IndexLog",
     components: {},
     props: {
         arrayLog: Object,

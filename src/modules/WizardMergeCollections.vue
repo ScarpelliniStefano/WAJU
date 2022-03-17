@@ -37,6 +37,7 @@
 import lang from '../env/lang.en'
 
 export default {
+    name:"WizardMergeCollections",
    data () {
       return {
         valueString:'',

@@ -94,7 +94,7 @@
 import lang from '../env/lang.en'
 import icons from '../env/icon'
 export default {
-    name: 'ConfigCollComp',
+    name: 'IndexConfigurationCollection',
     components: {},
     props: {
         bottomText: Object,

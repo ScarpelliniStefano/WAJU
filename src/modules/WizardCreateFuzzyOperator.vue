@@ -1,14 +1,14 @@
 <template>
   <v-sheet>
       <v-container fluid>
-            <v-text-field :rules="[rules.required]" :label="TXT_FUZZY_OP" v-model="idFuzzyOp"></v-text-field><br>
+            <v-text-field :rules="[rules.required]" :label="TXT_FUZZY_OP" v-model="idFuzzyOp"/><br>
             <v-container style="border-style: outset;">
             <v-row  v-for="collect in parameterList" :key="collect.index">
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_ID" v-model="collect.idParam"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_ID" v-model="collect.idParam"/>
                 </v-col>
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_TYPE" v-model="collect.typeParam"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_TYPE" v-model="collect.typeParam"/>
                 </v-col>
             </v-row>
             <v-container>
@@ -38,17 +38,17 @@
             </v-container>
             </v-container>
             <v-checkbox color="var(--bg-color)" v-model="precondition" :label="CHECK_SET_PRECOND"></v-checkbox>
-            <v-textarea :rules="[rules.required]" v-if="precondition" :label="TXT_PRECOND" rows="1" v-model="preconditionText"></v-textarea>
-            <v-textarea :rules="[rules.required]" :label="TXT_EXPR_EVALUATE" rows="1" v-model="jfExpression"></v-textarea>
+            <v-textarea :rules="[rules.required]" v-if="precondition" :label="TXT_PRECOND" rows="1" v-model="preconditionText"/>
+            <v-textarea :rules="[rules.required]" :label="TXT_EXPR_EVALUATE" rows="1" v-model="jfExpression"/>
             <br>
             <v-container style="border-style: outset;">
             <p align="left">{{P_POLYLINE}}</p>
             <v-row  v-for="collect in polylineList" :key="collect.index">
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterPoly]" :label="TXT_FIRST_NUM" v-model="collect.firstNum"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterPoly]" :label="TXT_FIRST_NUM" v-model="collect.firstNum"/>
                 </v-col>
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterPoly]" :label="TXT_SECOND_NUM" v-model="collect.secondNum"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterPoly]" :label="TXT_SECOND_NUM" v-model="collect.secondNum"/>
                 </v-col>
             </v-row>
             <v-container>
@@ -85,7 +85,7 @@
 <script>
 import lang from '../env/lang.en'
 export default {
-    
+    name:"WizardCreateFuzzyOperator",
     props:{
         maincol: String
     },

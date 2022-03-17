@@ -12,6 +12,7 @@
 import lang from '../env/lang.en'
 
 export default {
+    name:"WizardIntersectCollections",
    data () {
       return {
         valueString:'',

@@ -3,33 +3,34 @@
             <v-container fluid >
                 <v-row>
                     <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_MATCHING" v-model="fieldMatch"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_MATCHING" v-model="fieldMatch"/>
                     </v-col>
                     <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_WRT" v-model="fieldWrt"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_WRT" v-model="fieldWrt"/>
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_ID_THRESHOLD" v-model="idThreshold"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_ID_THRESHOLD" v-model="idThreshold"/>
                     </v-col>
                     <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_NUMERIC_THRESHOLD" v-model="numThreshold"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_NUMERIC_THRESHOLD" v-model="numThreshold"/>
                     </v-col>
                 </v-row>
                 <v-checkbox color="var(--bg-color)" v-model="whereMatching" :label="CHECK_WHERE_COND"></v-checkbox>
-                <v-textarea :rules="[rules.required,rules.counterFields]" v-if="whereMatching" :label="TXT_WHERE_COND" rows="1" v-model="whereMatchingText"></v-textarea>
-                <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_DEST" v-model="fieldInto"></v-text-field>
+                <v-textarea :rules="[rules.required,rules.counterFields]" v-if="whereMatching" :label="TXT_WHERE_COND" rows="1" v-model="whereMatchingText"/>
+                <v-text-field :rules="[rules.required,rules.counterFields]" :label="TXT_FIELD_DEST" v-model="fieldInto"/>
                 <v-checkbox color="var(--bg-color)" v-model="addingToInput" :label="CHECK_ADD_FIELD"></v-checkbox>
-                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="addingToInput" :label="TXT_ADD_FIELD" v-model="addingToInputText"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="addingToInput" :label="TXT_ADD_FIELD" v-model="addingToInputText"/>
                 <v-checkbox color="var(--bg-color)" v-model="minSimilarity" :label="CHECK_SET_MIN_SIM"></v-checkbox>
-                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="minSimilarity" :label="TXT_MIN_SIM" v-model="minSimilarityText"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterFields]" v-if="minSimilarity" :label="TXT_MIN_SIM" v-model="minSimilarityText"/>
             </v-container>
 </template>
 
 <script>
 import lang from '../../env/lang.en'
 export default {
+    name:"ModulePartitionMatching",
     props:{
         mypartmatchIndex: String
     },

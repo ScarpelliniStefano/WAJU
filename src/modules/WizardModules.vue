@@ -36,6 +36,7 @@ import trajectoryMatch from "./WizardTrajectoryMatching.vue";
 import lang from '../env/lang.en'
 
 export default {
+    name:"WizardModules",
     data:()=>({
         valueString:'',
 

@@ -1,7 +1,7 @@
 <template>
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCondPart"></v-textarea>
+                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCondPart"/>
                 <br>
                 
                 <v-row v-for="collect in collectionsPartMatch" :key="collect.index">
@@ -44,6 +44,7 @@
 import partitionMatching from "./ModulePartitionMatching.vue";
 import lang from '../../env/lang.en'
 export default {
+    name:"ModuleTrajectoryPartition",
     props:{
         mytrajectoryPartIndex: String
     },

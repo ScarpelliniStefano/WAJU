@@ -14,6 +14,7 @@
 <script>
 import lang from '../env/lang.en'
 export default {
+    name:"WizardSaveAs",
    data () {
       return {
         valueString:'',

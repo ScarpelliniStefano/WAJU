@@ -1,10 +1,10 @@
 <template>
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCond"></v-textarea>
+                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCond"/>
                 <v-container fluid style="border-style: outset;">
                 <v-row v-for="collect in fieldRefSource" :key="collect.index">
-                    <v-text-field :rules="[rules.required,rules.counterSource]" :label="TXT_SOURCE_FIELDS" v-model="collect.sourceFields"></v-text-field>
+                    <v-text-field :rules="[rules.required,rules.counterSource]" :label="TXT_SOURCE_FIELDS" v-model="collect.sourceFields"/>
                 </v-row>
                 </v-container>
                 <br>
@@ -31,13 +31,13 @@
                 <v-icon color="white">mdi-minus</v-icon>
                 <span style="color: white">{{BTN_SPAN_REMOVE_SOURCE_FIELDS}}</span>
                 </v-btn>
-                <v-text-field :rules="[rules.required]" :label="TXT_FIELD_DESTINATION" v-model="destFields"></v-text-field>
+                <v-text-field :rules="[rules.required]" :label="TXT_FIELD_DESTINATION" v-model="destFields"/>
                 <v-checkbox color="var(--bg-color)" v-model="dropGroup" :label="CHECK_DROP_GROUPING_FIELDS"></v-checkbox>
                 <v-checkbox color="var(--bg-color)" v-model="orderSelection" :label="CHECK_ORDER_FIELDS"></v-checkbox>
                 <v-container v-if="orderSelection" style="border-style: outset;">
                     <v-row  v-for="collect in fieldRefOrd" :key="collect.index" >
                         <v-col>
-                        <v-text-field :rules="[rules.required,rules.counterOrdT]" :label="TXT_ORDER_FIELDS" v-model="collect.fieldsOrder"></v-text-field>
+                        <v-text-field :rules="[rules.required,rules.counterOrdT]" :label="TXT_ORDER_FIELDS" v-model="collect.fieldsOrder"/>
                         </v-col>
                         <v-col>
                         <v-container
@@ -99,6 +99,7 @@
 import lang from '../../env/lang.en'
 
 export default {
+    name:"ModulePartitionClause",
     props:{
         mypartitionIndex: Number
     },

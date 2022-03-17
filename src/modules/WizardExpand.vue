@@ -58,7 +58,7 @@
 import unpackClause from "./submodules/ModuleUnpackClause.vue";
 import lang from '../env/lang.en'
 export default {
-    
+    name:"WizardExpand",
     props:{
         maincol: String
     },

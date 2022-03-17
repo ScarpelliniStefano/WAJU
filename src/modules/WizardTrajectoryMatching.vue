@@ -67,7 +67,7 @@
 import lang from '../env/lang.en'
 import trajectoryPartition from "./submodules/ModuleTrajectoryPartition.vue";
 export default {
-    
+    name:"WizardTrajectoryMatching",
     props:{
         maincol: String
     },
@@ -75,6 +75,7 @@ export default {
         trajectoryPartition
     },
    data () {
+       
       return {
             collections:[{
                 index:1,

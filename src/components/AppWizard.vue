@@ -15,7 +15,7 @@
             @click="setPlus()" 
         >
           <v-icon color="white">mdi-plus</v-icon>
-          <span style="color: white">{{BTN_SPAN_ADD_MODULE}}</span>
+          <span style="color: white">&nbsp;{{BTN_SPAN_ADD_MODULE}}</span>
         </v-btn>
         &nbsp;&nbsp;
         <v-btn
@@ -27,7 +27,7 @@
             @click="checkMinus()" 
         >
           <v-icon color="white">mdi-minus</v-icon>
-          <span style="color: white">{{BTN_SPAN_REMOVE_MODULE}}</span>
+          <span style="color: white">&nbsp;{{BTN_SPAN_REMOVE_MODULE}}</span>
         </v-btn>
       
         <v-textarea readonly v-model="valueString"/>
@@ -37,13 +37,13 @@
             dark large
             :disabled="disabledBtn"
             class="tooltip btnstyle"
-            width="300px"
+            width="280px"
             id="btnReset"
             style="color: white;background-color: var(--bg-color);" 
             @click="transferMessage('RESET')" 
         >
           <v-icon color="white">mdi-send</v-icon>
-          <span style="color: white">{{BTN_SPAN_RESET_SEND}}</span>
+          <span style="color: white">&nbsp;{{BTN_SPAN_RESET_SEND}}</span>
         </v-btn>&nbsp;&nbsp;
         <v-btn
             tile fab depressed elevation="5" raised
@@ -51,17 +51,17 @@
             :disabled="disabledBtn"
             class="tooltip btnstyle"
             id="btnAppend"
-            width="100mm"
+            width="220px"
             style="color: white;background-color: var(--bg-color);" 
             @click="transferMessage('APPEND')" 
         >
           <v-icon color="white">mdi-send</v-icon>
-          <span style="color: white">{{BTN_SPAN_APPEND}}</span>
+          <span style="color: white">&nbsp;{{BTN_SPAN_APPEND}}</span>
         </v-btn>
       </center>
 
         <v-snackbar
-        v-model="wizardAlert" elevation="5" light timeout="4000"
+        v-model="wizardAlert" elevation="5" light timeout="1000000" max-width="70%"
         >
             <p class="v-snack__content">{{lblPopup}}</p>
 
@@ -83,6 +83,7 @@
 import modules from '../modules/WizardModules.vue'
 import lang from '../env/lang.en'
 export default {
+    name: "AppWizard",
     data:()=> ({
         modulesData:[{
             index:1,
@@ -233,65 +234,70 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (max-resolution: 70dpi) {
-  ::v-deep .v-snack__content {
-    font-size: 10px;
-  }
-}
 
-@media screen and (min-resolution: 71dpi) and (max-resolution: 80dpi) {
-  ::v-deep .v-snack__content {
-    font-size: 11px;
-  }
+.v-snack__content {
+    font-size: 1.8vh;
 }
-
-@media screen and (min-resolution: 81dpi) and (max-resolution: 90dpi) {
-  ::v-deep .v-snack__content {
-    font-size: 12px;
-  }
-}
-
-@media screen and (min-resolution: 91dpi) and (max-resolution: 95dpi) {
-  ::v-deep .v-snack__content {
-    font-size: 13px;
-  }
-}
-
-@media (min-resolution: 96dpi) and (max-resolution: 100dpi) {
+/*@media screen and (max-height: 600px) {
   ::v-deep .v-snack__content {
     font-size: 14px;
   }
 }
 
-@media screen and (min-resolution: 111dpi) and (max-resolution: 120dpi) {
-  ::v-deep .v-snack__content {
-    font-size: 15px;
-  }
-}
-
-@media screen and (min-resolution: 121dpi) and (max-resolution: 130dpi) {
-  ::v-deep .v-snack__content {
-    font-size: 16px;
-  }
-}
-
-@media screen and (min-resolution: 131dpi) and (max-resolution: 140dpi) {
-  ::v-deep .v-snack__content {
-    font-size: 17px;
-  }
-}
-
-@media screen and (min-resolution: 141dpi) and (max-resolution: 150dpi) {
+@media screen and (min-height: 601px) and (max-height: 900px) {
   ::v-deep .v-snack__content {
     font-size: 18px;
   }
 }
 
-@media screen and (min-resolution: 151dpi) {
+@media screen and (min-height: 901px) and (max-height: 1080px) {
   ::v-deep .v-snack__content {
-    font-size: 20px;
+    font-size: 22px;
   }
 }
+
+@media screen and (min-height: 1081px) and (max-height: 1260px) {
+  ::v-deep .v-snack__content {
+    font-size: 25px;
+  }
+}
+
+@media screen and (min-height: 1261px) and (max-height: 1440px) {
+  ::v-deep .v-snack__content {
+    font-size: 29px;
+  }
+}
+
+@media screen and (min-height: 1441px) and (max-height: 1620px) {
+  ::v-deep .v-snack__content {
+    font-size: 32px;
+  }
+}
+
+@media screen and (min-height: 1621px) and (max-height: 1800px) {
+  ::v-deep .v-snack__content {
+    font-size: 35px;
+  }
+}
+
+@media screen and (min-height: 1801px) and (max-height: 1980px) {
+  ::v-deep .v-snack__content {
+    font-size: 38px;
+  }
+}
+
+@media screen and (min-height: 1981px) and (max-height: 2160px) {
+  ::v-deep .v-snack__content {
+    font-size: 41px;
+  }
+}
+
+
+@media screen and (min-height: 2161px) {
+  ::v-deep .v-snack__content {
+    font-size: 44px;
+  }
+}*/
 
 
 :root {

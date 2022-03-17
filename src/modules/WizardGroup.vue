@@ -58,7 +58,7 @@
 import partitionClause from "./submodules/ModulePartitionClause.vue";
 import lang from '../env/lang.en'
 export default {
-    
+    name:"WizardGroup",
     props:{
         maincol: String
     },

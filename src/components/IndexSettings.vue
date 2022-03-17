@@ -37,7 +37,7 @@
 <script>
 import lang from '../env/lang.en'
 export default {
-    name: 'SettingsComp',
+    name: 'IndexSettings',
     data(){
         return{
             slider: 0,

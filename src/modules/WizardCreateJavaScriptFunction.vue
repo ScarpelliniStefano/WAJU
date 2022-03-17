@@ -1,15 +1,15 @@
 <template>
   <v-sheet>
       <v-container fluid>
-            <v-text-field :rules="[rules.required]" :label="TXT_FUZZY_OP" v-model="idJSFunct"></v-text-field>
+            <v-text-field :rules="[rules.required]" :label="TXT_FUZZY_OP" v-model="idJSFunct"/>
             <br>
             <v-container style="border-style: outset;">
             <v-row  v-for="collect in parameterList" :key="collect.index">
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_ID" v-model="collect.idParam"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_ID" v-model="collect.idParam"/>
                 </v-col>
                 <v-col>
-                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_TYPE" v-model="collect.typeParam"></v-text-field>
+                <v-text-field :rules="[rules.required,rules.counterParam]" :label="TXT_PARAM_TYPE" v-model="collect.typeParam"/>
                 </v-col>
             </v-row>
             <v-container>
@@ -39,8 +39,8 @@
             </v-container>
             </v-container>
             <v-checkbox color="var(--bg-color)" v-model="precondition" :label="CHECK_SET_PRECOND"></v-checkbox>
-            <v-textarea :rules="[rules.required]" v-if="precondition" :label="TXT_PRECOND" rows="1" v-model="preconditionText"></v-textarea>
-            <v-textarea :rules="[rules.required]" :label="TXT_BODY_FUNCTION" rows="3" v-model="jsBody"></v-textarea>
+            <v-textarea :rules="[rules.required]" v-if="precondition" :label="TXT_PRECOND" rows="1" v-model="preconditionText"/>
+            <v-textarea :rules="[rules.required]" :label="TXT_BODY_FUNCTION" rows="3" v-model="jsBody"/>
         </v-container>
   </v-sheet>
 </template>
@@ -48,7 +48,7 @@
 <script>
 import lang from '../env/lang.en'
 export default {
-    
+    name:"WizardCreateJavaScriptFunction",
     props:{
         maincol: String
     },

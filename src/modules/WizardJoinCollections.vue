@@ -111,10 +111,10 @@
             <v-container style="border-style: outset;" v-if="addFields">
             <v-row  v-for="collect in fieldsAddColl" :key="collect.index">
                     <v-col>
-                    <v-textarea :rules="[rules.required,rules.counter]" v-if="addFields" :label="TXT_ADD_FIELD_NON_FUZZY_FUNCT" rows="1" v-model="collect.nonFuzzyF"></v-textarea>
+                    <v-textarea :rules="[rules.required,rules.counter]" v-if="addFields" :label="TXT_ADD_FIELD_NON_FUZZY_FUNCT" rows="1" v-model="collect.nonFuzzyF"/>
                     </v-col>
                     <v-col>
-                    <v-text-field :rules="[rules.required,rules.counter]" v-if="addFields" :label="TXT_ADD_FIELD_FIELD_REF" v-model="collect.fieldRef"></v-text-field>
+                    <v-text-field :rules="[rules.required,rules.counter]" v-if="addFields" :label="TXT_ADD_FIELD_FIELD_REF" v-model="collect.fieldRef"/>
                     </v-col>
                 </v-row>
                 <v-container>
@@ -144,7 +144,7 @@
                 </v-container>
             </v-container>
             <v-checkbox color="var(--bg-color)" v-model="setFuzzySets" :label="CHECK_FUZZY_SETS"></v-checkbox>
-            <v-textarea :rules="[rules.required]" v-if="setFuzzySets" :label="TXT_FUZZY_SETS" rows="2" v-model="setFuzzySetsText"></v-textarea>
+            <v-textarea :rules="[rules.required]" v-if="setFuzzySets" :label="TXT_FUZZY_SETS" rows="2" v-model="setFuzzySetsText"/>
             <v-checkbox color="var(--bg-color)" v-model="caseClauseSel" :label="CHECK_CASE_CLAUSE"></v-checkbox>
             <case-clause v-if="caseClauseSel" @changeValue="changeValue($event)"/>
             <v-checkbox color="var(--bg-color)" v-model="removeDup" :label="CHECK_REMOVE_DUPLICATES"></v-checkbox>
@@ -157,6 +157,7 @@ import caseClause from "./submodules/ModuleCaseClause.vue";
 import lang from '../env/lang.en'
 
 export default {
+    name:"WizardJoinCollections",
     props:{
         maincol: String
     },

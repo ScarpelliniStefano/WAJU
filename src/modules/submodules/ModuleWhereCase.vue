@@ -1,7 +1,7 @@
 <template>
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" :label="TXT_COLLECT_CLAUSE" rows="2" auto-grow v-model="whereClause"></v-textarea>
+                <v-textarea :rules="[rules.required]" :label="TXT_COLLECT_CLAUSE" rows="2" auto-grow v-model="whereClause"/>
                 <v-checkbox color="var(--bg-color)" v-model="generateSect" :label="CHECK_GEN_SECTION"></v-checkbox>
                 <generate-section v-if="generateSect" @changeValue="changeText($event)"/>
             </v-container>
@@ -12,6 +12,7 @@
 import generateSection from './ModuleGenerateSection.vue';
 import lang from '../../env/lang.en'
 export default {
+    name:"ModuleWhereCase",
     props:{
         mywhereIndex: Number
     },

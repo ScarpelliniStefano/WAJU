@@ -59,6 +59,7 @@
 import whereCase from "./ModuleWhereCase.vue";
 import lang from '../../env/lang.en'
 export default {
+    name:"ModuleCaseClause",
     props:{
         maincol: String
     },

@@ -96,7 +96,7 @@ import lang from '../env/lang.en'
 import icon from '../env/icon'
 
 export default {
-  name: 'IRtreeComp',
+  name: 'AppPageTree',
   //components: { 'json-view': JSONView },
   data: function () {
     return {

@@ -59,21 +59,21 @@
                     ></v-radio>
                     </v-radio-group>
                     <v-row v-if="setGeometrySetting=='POINT'"><v-col>
-                    <v-text-field :label="VTXT_GEOMETRY_SETTING_POINT_FIRST_COORDINATE" v-model="textRadioBtn1"></v-text-field>
+                    <v-text-field :label="VTXT_GEOMETRY_SETTING_POINT_FIRST_COORDINATE" v-model="textRadioBtn1"/>
                     </v-col><v-col>
-                    <v-text-field :label="GEOMETRY.TXT_GEOMETRY_SETTING_POINT_SECOND_COORDINATE" v-model="textRadioBtn2"></v-text-field>
+                    <v-text-field :label="GEOMETRY.TXT_GEOMETRY_SETTING_POINT_SECOND_COORDINATE" v-model="textRadioBtn2"/>
                     </v-col></v-row>
-                    <v-text-field v-if="setGeometrySetting!='POINT'" :label="GEOMETRY.TXT_GEOMETRY_SETTING_NO_POINT_FIELD" v-model="textRadioBtn1"></v-text-field> 
+                    <v-text-field v-if="setGeometrySetting!='POINT'" :label="GEOMETRY.TXT_GEOMETRY_SETTING_NO_POINT_FIELD" v-model="textRadioBtn1"/> 
             </v-row>
             </v-container>
         <v-checkbox color="var(--bg-color)" v-model="fuzzyCheck" :label="CHECK_FUZZY_CHECK"></v-checkbox>
         <v-container style="border-style: inset;" v-if="fuzzyCheck">
         <v-row v-for="collect in collectionsFuzzy" :key="collect.index">
             <v-col>
-            <v-text-field :rules="[rules.counter]" :label="TXT_COLL_FUZZY_ID_ISTR" v-model="collect.idFuzzyInstr"></v-text-field>
+            <v-text-field :rules="[rules.counter]" :label="TXT_COLL_FUZZY_ID_ISTR" v-model="collect.idFuzzyInstr"/>
             </v-col>
             <v-col>
-            <v-textarea :rules="[rules.counter]" :label="TXT_COLL_FUZZY_CONDITION" rows="1" v-model="collect.fuzzyInstr"></v-textarea>
+            <v-textarea :rules="[rules.counter]" :label="TXT_COLL_FUZZY_CONDITION" rows="1" v-model="collect.fuzzyInstr"/>
             </v-col>
         </v-row>
         <v-container>
@@ -106,10 +106,10 @@
         <v-container style="border-style: inset;" v-if="alphaCut">
         <v-row v-for="collect in collectionsAlpha" :key="collect.index">
             <v-col>
-            <v-text-field :rules="[rules.counterA]" :label="TXT_ALPHACUT_NUMERIC_EXPR" v-model="collect.numericIstr"></v-text-field>
+            <v-text-field :rules="[rules.counterA]" :label="TXT_ALPHACUT_NUMERIC_EXPR" v-model="collect.numericIstr"/>
             </v-col>
             <v-col>
-            <v-text-field :rules="[rules.counterA]" :label="TXT_ALPHACUT_ID" v-model="collect.idAlpha"></v-text-field>
+            <v-text-field :rules="[rules.counterA]" :label="TXT_ALPHACUT_ID" v-model="collect.idAlpha"/>
             </v-col>
         </v-row>
         <v-container>
@@ -141,7 +141,7 @@
         <v-checkbox color="var(--bg-color)" v-model="keepDropFuzzy" :label="CHECK_KEEP_DROP_FUZZY"></v-checkbox>
         <keepDropFuzzySet v-if="keepDropFuzzy" @changeValueKDFS="changeTextKeepDropFuzzy($event)"/>
         <v-checkbox color="var(--bg-color)" v-model="buildAction" :label="CHECK_BUILD_ACTION"></v-checkbox>
-        <v-textarea rows=2 v-if="buildAction" color="var(--bg-color)" v-model="textBuild" :rules="[rules.required]" :label="TXT_BUILD_ACTION_FIELD"></v-textarea>
+        <v-textarea rows=2 v-if="buildAction" color="var(--bg-color)" v-model="textBuild" :rules="[rules.required]" :label="TXT_BUILD_ACTION_FIELD"/>
     </v-container>
 </template>
 
@@ -149,6 +149,7 @@
 import keepDropFuzzySet from './ModuleKeepDropFuzzySets.vue';
 import lang from '../../env/lang.en'
 export default {
+    name:"ModuleGenerateSection",
     components:{
         keepDropFuzzySet
     },

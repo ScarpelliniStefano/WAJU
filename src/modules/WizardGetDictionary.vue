@@ -11,6 +11,7 @@
 <script>
 import lang from '../env/lang.en'
 export default {
+    name:"WizardGetDictionary",
    data () {
       return {
         valueString:'',

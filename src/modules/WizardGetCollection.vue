@@ -16,7 +16,8 @@
 <script>
 import lang from '../env/lang.en'
 export default {
-   data () {
+    name:"WizardGetCollection",
+    data () {
       return {
         valueString:'',
         fromWeb: false,
