@@ -28,8 +28,8 @@
                 </v-col>
                 <v-col :key="1.31" :cols="dimCols(2)">
                     <v-row align="center" class="text-center">
-                        <v-col>
-                            <v-btn v-if="ratioMode() === 'small'" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised :disabled="this.recArr.length==0" @click="download('script', recText)">
+                        <v-col cols="6">
+                            <v-btn v-if="ratioMode() === 'small'" :width="(width-48)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised :disabled="this.recArr.length==0" @click="download('script', recText)">
                                 <v-icon color="white">{{ BTN_SAVE }}</v-icon>
                                 <span v-if="this.recArr.length==0" style="color: gray">{{BTN_SPAN_SAVE}}</span>
                                 <span v-else style="color: white">{{BTN_SPAN_SAVE}}</span>
@@ -44,8 +44,8 @@
                                 </v-btn>
                             </v-sheet>
                         </v-col>
-                        <v-col v-if="ratioMode() === 'small'">
-                            <v-btn :width="(width-100)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised :disabled="this.recArr.length==0" @click="$emit('click-back-index')">
+                        <v-col v-if="ratioMode() === 'small'" cols="6">
+                            <v-btn :width="(width-48)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised :disabled="this.recArr.length==0" @click="$emit('click-back-index')">
                                 <v-icon color="white">{{ BTN_BACKTRACK }}</v-icon>
                                 <span v-if="this.recArr.length==0" style="color: gray">{{BTN_SPAN_BACKTRACK}}</span>
                                 <span v-else style="color: white">{{BTN_SPAN_BACKTRACK}}</span>
