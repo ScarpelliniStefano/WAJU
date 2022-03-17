@@ -61,7 +61,7 @@
       </center>
 
         <v-snackbar
-        v-model="wizardAlert" elevation="5" light timeout="1000000" max-width="70%"
+        v-model="wizardAlert" elevation="5" light timeout="4000" max-width="70%"
         >
             <p class="v-snack__content">{{lblPopup}}</p>
 

@@ -40,6 +40,7 @@
           <v-row align="center" class="text-center">
               <v-col cols="3" class="pl-9">
                     <v-btn
+                      id="btnSave"
                       color="var(--border-color)"
                       elevation="2"
                       style="
@@ -66,6 +67,7 @@
               </v-col>
               <v-col cols="3" class="pr-9">
                     <v-btn
+                      id="btnExpand"
                       color="var(--border-color)"
                       elevation="2"
                       style="
@@ -88,6 +90,22 @@
       </v-col>
     </v-row>
     </v-container>
+    <v-snackbar
+        v-model="wizardAlert" elevation="5" light timeout="4000" max-width="70%"
+        >
+            <p class="v-snack__content">{{lblPopup}}</p>
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="var(--border-color)"
+            text
+            v-bind="attrs"
+            @click="wizardAlert = false"
+          >
+            Ok
+          </v-btn>
+        </template>
+      </v-snackbar>
   </v-sheet>
 </template>
 <script>
@@ -131,10 +149,18 @@ export default {
       SELECT_SIZE: lang.PAGE_TREE.SELECT_SIZE,
       BTN_SPAN_SAVE_TREE: lang.PAGE_TREE.BTN_SPAN_SAVE_TREE,
       BTN_SPAN_EXPAND: lang.PAGE_TREE.BTN_SPAN_EXPAND,
+      HINT_EXPAND:lang.PAGE_TREE.HINT_EXPAND,
+      HINT_SAVE:lang.PAGE_TREE.HINT_SAVE,
 
       //ICON
       BTN_SAVE: icon.PAGE_TREE.BTN_SAVE,
-      BTN_EXPAND: icon.PAGE_TREE.BTN_EXPAND
+      BTN_EXPAND: icon.PAGE_TREE.BTN_EXPAND,
+
+      //longClick
+      isLongClick:false,
+      timerId:'',
+      lblPopup:'',
+      wizardAlert: false,
     }
   },
   watch: {
@@ -198,6 +224,8 @@ export default {
   },
   mounted() {
     this.changeDimension()
+    this.addMouseOverEvent('btnExpand',this.HINT_EXPAND);
+    this.addMouseOverEvent('btnSave',this.HINT_SAVE);
   },
   methods: {
     calculatePageSize(){
@@ -326,35 +354,57 @@ export default {
      
     },
     setDepth() { 
-      if(this.numDepth<2) jsonview.expand(this.tree);
-      else{
-        jsonview.collapse(this.tree);
-        jsonview.expandDepth(this.tree,1);
-      } 
-      this.numDepth = this.numDepth < 2 ? 10 : 1;
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        if(this.numDepth<2) jsonview.expand(this.tree);
+        else{
+          jsonview.collapse(this.tree);
+          jsonview.expandDepth(this.tree,1);
+        } 
+        this.numDepth = this.numDepth < 2 ? 10 : 1;
+      }
       
      
     },
     download(filename) {
-      var element = document.createElement('a')
-      element.setAttribute(
-        'href',
-        'data:application/json,' +
-          encodeURIComponent(
-            '{ \n "documents" : \n ' +
-              JSON.stringify(this.textIRTreeCol, null, '\t') +
-              '\n}',
-          ),
-      )
-      element.setAttribute('download', filename + '.json')
+      if(!this.isLongClick){
+        clearTimeout(this.timerId)
+        var element = document.createElement('a')
+        element.setAttribute(
+          'href',
+          'data:application/json,' +
+            encodeURIComponent(
+              '{ \n "documents" : \n ' +
+                JSON.stringify(this.textIRTreeCol, null, '\t') +
+                '\n}',
+            ),
+        )
+        element.setAttribute('download', filename + '.json')
 
-      element.style.display = 'none'
-      document.body.appendChild(element)
+        element.style.display = 'none'
+        document.body.appendChild(element)
 
-      element.click()
+        element.click()
 
-      document.body.removeChild(element)
+        document.body.removeChild(element)
+      }
     },
+
+    addMouseOverEvent(idElement,message){
+      document.getElementById(idElement).onmousedown = (args) =>{
+        this.isLongClick=false;
+        this.timerId=setTimeout(() => fn.apply(null, [args]), 500)
+      }
+    
+
+      var fn = (args) => {
+        console.log('onmousedown args', args)
+        this.wizardAlert=false;
+        this.lblPopup=message;
+        this.wizardAlert=true;
+        this.isLongClick=true;
+      }
+    }
   },
 }
 </script>
@@ -607,6 +657,10 @@ div.boxInfo {
 </style>
 
 <style scoped>
+.v-snack__content {
+    font-size: 1.8vh;
+}
+
 .tooltip .tooltiptext {
   visibility: hidden;
   background-color: white;

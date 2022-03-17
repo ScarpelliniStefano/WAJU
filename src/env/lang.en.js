@@ -44,7 +44,9 @@ const lang = Object.freeze({
         H_FINAL_DOCUMENT: 'Final Document: ',
         SELECT_SIZE: 'Size',
         BTN_SPAN_SAVE_TREE: 'Save Tree...',
-        BTN_SPAN_EXPAND: 'Expand'
+        BTN_SPAN_EXPAND: 'Expand',
+        HINT_EXPAND:'Expand all documents and fields',
+        HINT_SAVE:'Save the documents in a local file'
     }),
     SETTINGS: Object.freeze({
         MAIN_COLOR: 'Main Color',
