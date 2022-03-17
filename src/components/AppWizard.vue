@@ -140,7 +140,7 @@ export default {
     created(){
       document.title = this.LBL_TITLE
         this.changeColor();
-        this.connectionPage=new WebSocket('ws://localhost:3000');
+        this.connectionPage=new WebSocket('ws://'+process.env.VUE_APP_WEB_SOCKET_SERVER);
         this.connectionPage.onmessage = (data) =>{
             console.log(data.data)
             if(data.data.split('###')[0]=="CHANGE_COLOR"){ 

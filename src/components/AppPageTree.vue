@@ -246,7 +246,7 @@ export default {
     changeDimension() {
       console.log(this.page + ' ' + this.size)
       if (localStorage.getItem('textTree_' + this.$route.query.id)) {
-        this.connectionPage = new WebSocket('ws://localhost:3000')
+        this.connectionPage = new WebSocket('ws://'+process.env.VUE_APP_WEB_SOCKET_SERVER)
         if (this.connectionPage.readyState != 1) {
           this.overlay = false
         }

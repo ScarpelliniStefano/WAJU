@@ -1069,7 +1069,7 @@ export default {
       }
     },
     signalChangeColor() {
-      this.connectionPage = new WebSocket("ws://localhost:3000");
+      this.connectionPage = new WebSocket("ws://"+process.env.VUE_APP_WEB_SOCKET_SERVER);
       this.connectionPage.onerror = () => {
         this.received.errorConfig = "no server available";
       };
@@ -1185,7 +1185,7 @@ export default {
     generatePage(title, textToSend) {
       let dateGen = new Date();
       let millis = dateGen.getTime();
-      this.connectionPage = new WebSocket("ws://localhost:3000");
+      this.connectionPage = new WebSocket("ws://"+process.env.VUE_APP_WEB_SOCKET_SERVER);
       this.connectionPage.onerror = () => {
         this.received.errorConfig = "no server available";
       };
@@ -1226,7 +1226,7 @@ export default {
       this.randomNumber=String(window.crypto.getRandomValues(array)[Math.floor(Math.random()*10)]);*/
       this.randomNumber = this.generatePassword(50);
 
-      this.connectionPage = new WebSocket("ws://localhost:3000");
+      this.connectionPage = new WebSocket("ws://"+process.env.VUE_APP_WEB_SOCKET_SERVER);
       this.connectionPage.onopen = () => {
         console.log("wizard partito");
       };
