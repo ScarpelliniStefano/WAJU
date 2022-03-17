@@ -2,7 +2,7 @@
     <v-sheet>
       <center>
         <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="90%">
-            <v-select  v-model="modulo.selected" :items="arrayModel"  label="Modules"></v-select>
+            <v-select  v-model="modulo.selected" :items="arrayModel"  :label="SEL_TXT_MODULES"></v-select>
             <modules :select="modulo.selected" :maincol="mainColor" :indice="modulo.index" @changeValue="changeValue($event)"></modules><br>
         </v-sheet> 
         <br>
@@ -15,7 +15,7 @@
             @click="setPlus()" 
         >
           <v-icon color="white">mdi-plus</v-icon>
-          <span style="color: white">&nbsp;ADD MODULE</span>
+          <span style="color: white">{{BTN_SPAN_ADD_MODULE}}</span>
         </v-btn>
         &nbsp;&nbsp;
         <v-btn
@@ -27,7 +27,7 @@
             @click="checkMinus()" 
         >
           <v-icon color="white">mdi-minus</v-icon>
-          <span style="color: white">&nbsp;DELETE MODULE</span>
+          <span style="color: white">{{BTN_SPAN_REMOVE_MODULE}}</span>
         </v-btn>
       
         <v-textarea readonly v-model="valueString"/>
@@ -43,7 +43,7 @@
             @click="transferMessage('RESET')" 
         >
           <v-icon color="white">mdi-send</v-icon>
-          <span style="color: white">&nbsp;RESET & SEND MESSAGE</span>
+          <span style="color: white">{{BTN_SPAN_RESET_SEND}}</span>
         </v-btn>&nbsp;&nbsp;
         <v-btn
             tile fab depressed elevation="5" raised
@@ -56,14 +56,14 @@
             @click="transferMessage('APPEND')" 
         >
           <v-icon color="white">mdi-send</v-icon>
-          <span style="color: white">&nbsp;APPEND MESSAGE</span>
+          <span style="color: white">{{BTN_SPAN_APPEND}}</span>
         </v-btn>
       </center>
 
         <v-snackbar
-        v-model="wizardAlert" elevation="5" light timeout="100000"
+        v-model="wizardAlert" elevation="5" light timeout="4000"
         >
-            <p class="v-snack__content">{{lblPopupAppend}}</p>
+            <p class="v-snack__content">{{lblPopup}}</p>
 
         <template v-slot:action="{ attrs }">
           <v-btn
@@ -93,29 +93,38 @@ export default {
         numberWizard:'',
         mainColor: "black",
         colHex:"",
-        arrayModel : [lang.WIZARD.SPECIFICATION.SEL_GET_COLL,
-                      lang.WIZARD.SPECIFICATION.SEL_GET_DICT,
-                      lang.WIZARD.SPECIFICATION.SEL_SAVE_AS,
-                      lang.WIZARD.SPECIFICATION.SEL_MERGE_COLL,
-                      lang.WIZARD.SPECIFICATION.SEL_INTERSECT_COLL,
-                      lang.WIZARD.SPECIFICATION.SEL_SUBTRACT_COLL,
-                      lang.WIZARD.SPECIFICATION.SEL_USE_DB,
-                      lang.WIZARD.SPECIFICATION.SEL_FILTER,
-                      lang.WIZARD.SPECIFICATION.SEL_EXPAND,
-                      lang.WIZARD.SPECIFICATION.SEL_GROUP,
-                      lang.WIZARD.SPECIFICATION.SEL_JOIN,
-                      lang.WIZARD.SPECIFICATION.SEL_FUZZY_OP,
-                      lang.WIZARD.SPECIFICATION.SEL_JS_FUNCTION,
-                      lang.WIZARD.SPECIFICATION.SEL_TRAJECTORY_MATCHING
+        arrayModel : [lang.WIZARD.SPECIFICATION.SELECTOR.SEL_GET_COLL,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_GET_DICT,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_SAVE_AS,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_MERGE_COLL,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_INTERSECT_COLL,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_SUBTRACT_COLL,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_USE_DB,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_FILTER,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_EXPAND,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_GROUP,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_JOIN,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_FUZZY_OP,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_JS_FUNCTION,
+                      lang.WIZARD.SPECIFICATION.SELECTOR.SEL_TRAJECTORY_MATCHING
                     ],
         valueString : '',
         disabledBtn:true,
 
+        //LABEL
+        LBL_TITLE:lang.WIZARD.SPECIFICATION.LBL_TITLE,
+        SEL_TXT_MODULES:lang.WIZARD.SPECIFICATION.SEL_TXT_MODULES,
+        BTN_SPAN_ADD_MODULE:lang.WIZARD.SPECIFICATION.BTN_SPAN_ADD_MODULE,
+        BTN_SPAN_REMOVE_MODULE:lang.WIZARD.SPECIFICATION.BTN_SPAN_REMOVE_MODULE,
+        BTN_SPAN_RESET_SEND:lang.WIZARD.SPECIFICATION.BTN_SPAN_RESET_SEND,
+        BTN_SPAN_APPEND:lang.WIZARD.SPECIFICATION.BTN_SPAN_APPEND,
+        HINT_RESET:lang.WIZARD.SPECIFICATION.HINT_RESET,
+        HINT_APPEND:lang.WIZARD.SPECIFICATION.HINT_APPEND,
+
         //longClick
         isLongClick:false,
         timerId:'',
-        lblPopupAppend:'Transfer the text in the main view, append that to the previuos content in the command view',
-        lblPopupReset:'Transfer the text in the main view, cleaning all previuos content in the command view',
+        lblPopup:'',
         wizardAlert: false,
     }),
     components:{
@@ -129,7 +138,7 @@ export default {
       }
     },
     created(){
-      document.title = 'Wizard - JCOUI Web'
+      document.title = this.LBL_TITLE
         this.changeColor();
         this.connectionPage=new WebSocket('ws://localhost:3000');
         this.connectionPage.onmessage = (data) =>{
@@ -144,8 +153,8 @@ export default {
     mounted(){
       console.log(this.$route.query.id)
       this.numberWizard=this.$route.query.id
-      this.addMouseOverEvent('btnAppend',this.lblPopupAppend);
-      this.addMouseOverEvent('btnReset',this.lblPopupReset);
+      this.addMouseOverEvent('btnAppend',this.HINT_APPEND);
+      this.addMouseOverEvent('btnReset',this.HINT_RESET);
     },
     methods:{
         changeColor(){

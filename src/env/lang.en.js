@@ -273,20 +273,30 @@ const lang = Object.freeze({
             }
         },
         SPECIFICATION:{  
-            SEL_GET_COLL:'GET A COLLECTION',
-            SEL_GET_DICT:'GET A DICTIONARY',
-            SEL_SAVE_AS:'SAVE LOCALLY OR IN A DATABASE',
-            SEL_MERGE_COLL:'MERGE TWO OR MORE COLLECTIONS',
-            SEL_INTERSECT_COLL:'INTERSECT TWO COLLECTIONS',
-            SEL_SUBTRACT_COLL:'SUBTRACT TWO COLLECTIONS',
-            SEL_USE_DB:'USE A DATABASE',
-            SEL_FILTER:'FILTER ON FIELD',
-            SEL_EXPAND:'EXPAND COLLECTIONS',
-            SEL_GROUP:'GROUP COLLECTIONS',
-            SEL_JOIN:'JOIN OF COLLECTIONS',
-            SEL_FUZZY_OP:'CREATE FUZZY OPERATOR',
-            SEL_JS_FUNCTION:'CREATE JAVASCRIPT FUNCTION',
-            SEL_TRAJECTORY_MATCHING:'TRAJECTORY MATCHING'
+            LBL_TITLE:'Wizard - JCOUI Web',
+            SEL_TXT_MODULES:'Modules',
+            SELECTOR:{
+                SEL_GET_COLL:'GET A COLLECTION',
+                SEL_GET_DICT:'GET A DICTIONARY',
+                SEL_SAVE_AS:'SAVE LOCALLY OR IN A DATABASE',
+                SEL_MERGE_COLL:'MERGE TWO OR MORE COLLECTIONS',
+                SEL_INTERSECT_COLL:'INTERSECT TWO COLLECTIONS',
+                SEL_SUBTRACT_COLL:'SUBTRACT TWO COLLECTIONS',
+                SEL_USE_DB:'USE A DATABASE',
+                SEL_FILTER:'FILTER ON FIELD',
+                SEL_EXPAND:'EXPAND COLLECTIONS',
+                SEL_GROUP:'GROUP COLLECTIONS',
+                SEL_JOIN:'JOIN OF COLLECTIONS',
+                SEL_FUZZY_OP:'CREATE FUZZY OPERATOR',
+                SEL_JS_FUNCTION:'CREATE JAVASCRIPT FUNCTION',
+                SEL_TRAJECTORY_MATCHING:'TRAJECTORY MATCHING'
+            },
+            BTN_SPAN_ADD_MODULE:' ADD MODULE',
+            BTN_SPAN_REMOVE_MODULE:' DELETE MODULE',
+            BTN_SPAN_RESET_SEND:' RESET & SEND MESSAGE',
+            BTN_SPAN_APPEND:' APPEND MESSAGE',
+            HINT_RESET:'Transfer the text in the main view, cleaning all previuos content in the command view',
+            HINT_APPEND:'Transfer the text in the main view, append that to the previuos content in the command view'
         }
     })
 })
