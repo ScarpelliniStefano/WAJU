@@ -21,7 +21,7 @@
         @mouseover="tip = TIP_SETTINGS"
         @mouseleave="tip = ''"
       >
-        mdi-cog-outline
+        {{ BTN_SETTINGS }}
       </v-icon>
 
       <v-icon
@@ -36,7 +36,7 @@
           selBtm = !selBtm;
         "
       >
-        mdi-toolbox-outline
+        {{ BTN_CONFIG_COLL_OFF }}
       </v-icon>
 
       <v-icon
@@ -53,7 +53,7 @@
         large
         @click="selBtm = !selBtm"
       >
-        mdi-toolbox
+        {{ BTN_CONFIG_COLL_ON }}
       </v-icon>
 
       <v-icon
@@ -68,7 +68,7 @@
           selLog = !selLog;
         "
       >
-        mdi-text-box-outline
+        {{ BTN_LOG_OFF }}
       </v-icon>
 
       <v-icon
@@ -85,7 +85,7 @@
         large
         @click="selLog = !selLog"
       >
-        mdi-text-box
+        {{ BTN_LOG_ON }}
       </v-icon>
 
       <v-icon
@@ -100,7 +100,7 @@
           selRec = !selRec;
         "
       >
-        mdi-content-save-outline
+        {{ BTN_RECEIVE_OFF }}
       </v-icon>
       <v-icon
         v-if="selRec"
@@ -117,7 +117,7 @@
         large
         @click="selRec = !selRec"
       >
-        mdi-content-save
+        {{ BTN_RECEIVE_ON }}
       </v-icon>
 
       <v-icon
@@ -133,7 +133,7 @@
           selSend = !selSend;
         "
       >
-        mdi-play-circle-outline
+        {{ BTN_SEND_OFF }}
       </v-icon>
       <v-icon
         v-if="selSend"
@@ -149,13 +149,11 @@
         id="execute"
         large
         @click="
-          send.posz = 30;
-          rec.posz = 0;
-          btm.posz = 0;
+          clickDragResize('send');
           selSend = !selSend;
         "
       >
-        mdi-play-circle
+        {{ BTN_SEND_ON }}
       </v-icon>
 
       <h4
@@ -487,6 +485,7 @@ import BarRec from "./IndexReceive.vue";
 import BarSend from "./IndexSend.vue";
 import BottomBar from "./IndexConfigurationCollection.vue";
 import BarLog from "./IndexLog.vue";
+import icon from '../env/icon'
 
 export default {
   name: "IndexPage",
@@ -600,6 +599,17 @@ export default {
       TIP_SAVE_UNDO: lang.INDEX.TIP_SAVE_UNDO,
       TIP_EXE_COMMAND_WIZARD: lang.INDEX.TIP_EXE_COMMAND_WIZARD,
       BTN_SPAN_SETTINGS: lang.INDEX.BTN_SPAN_SETTINGS,
+
+      //ICON
+      BTN_SETTINGS: icon.INDEX.BTN_SETTINGS,
+      BTN_CONFIG_COLL_OFF: icon.INDEX.BTN_CONFIG_COLL_OFF,
+      BTN_CONFIG_COLL_ON: icon.INDEX.BTN_CONFIG_COLL_ON,
+      BTN_LOG_OFF: icon.INDEX.BTN_LOG_OFF,
+      BTN_LOG_ON: icon.INDEX.BTN_LOG_ON,
+      BTN_RECEIVE_OFF: icon.INDEX.BTN_RECEIVE_OFF,
+      BTN_RECEIVE_ON: icon.INDEX.BTN_RECEIVE_ON,
+      BTN_SEND_OFF: icon.INDEX.BTN_SEND_OFF,
+      BTN_SEND_ON: icon.INDEX.BTN_SEND_ON,
     };
   },
   watch: {

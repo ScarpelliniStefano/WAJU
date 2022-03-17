@@ -61,7 +61,7 @@
                   raised
                   @click="openWizard()"
                 >
-                  <v-icon>mdi-auto-fix</v-icon>
+                  <v-icon>{{ BTN_WIZARD }}</v-icon>
                   <span>{{ BTN_SPAN_WIZARD }}</span>
                 </v-btn>
                 <v-sheet
@@ -91,7 +91,7 @@
                     elevation="5"
                     @click="sendMessageArr()"
                   >
-                    <v-icon color="white" :size="width / 15">mdi-play</v-icon>
+                    <v-icon color="white" :size="width / 15">{{BTN_EXECUTE}}</v-icon>
                   </v-btn>
                   <v-btn
                     v-if="ratioMode() === 'big'"
@@ -112,7 +112,7 @@
                     elevation="5"
                     @click="sendMessageArr()"
                   >
-                    <v-icon color="white">mdi-play</v-icon>
+                    <v-icon color="white">{{ BTN_EXECUTE }}</v-icon>
                     <span>{{ BTN_SPAN_EXECUTE }}</span>
                   </v-btn>
                 </v-sheet>
@@ -131,7 +131,7 @@
                   raised
                   @click="sendMessageArr()"
                 >
-                  <v-icon color="white">mdi-play</v-icon>
+                  <v-icon color="white">{{ BTN_EXECUTE }}</v-icon>
                   <span style="color: white">{{ BTN_SPAN_EXECUTE }}</span>
                 </v-btn>
               </v-col>
@@ -160,7 +160,7 @@
                     elevation="5"
                     @click="openWizard()"
                   >
-                    <v-icon color="white" :size="width / 20">mdi-auto-fix</v-icon>
+                    <v-icon color="white" :size="width / 20">{{BTN_WIZARD}}</v-icon>
                   </v-btn>
                   <v-btn
                     v-if="ratioMode() === 'big'"
@@ -180,7 +180,7 @@
                     elevation="5"
                     @click="openWizard()"
                   >
-                    <v-icon color="white">mdi-auto-fix</v-icon>
+                    <v-icon color="white">{{ BTN_WIZARD }}</v-icon>
                     <span>{{ BTN_SPAN_WIZARD }}</span>
                   </v-btn>
                 </v-sheet>
@@ -195,6 +195,7 @@
 
 <script>
 import lang from "../env/lang.en";
+import icon from "../env/icon";
 export default {
   name: "SendComp",
   data() {
@@ -209,6 +210,10 @@ export default {
       TITLE: lang.SEND_COMP.TITLE,
       BTN_SPAN_EXECUTE: lang.SEND_COMP.BTN_SPAN_EXECUTE,
       BTN_SPAN_WIZARD: lang.SEND_COMP.BTN_SPAN_WIZARD,
+
+      //ICON
+      BTN_EXECUTE: icon.SEND.BTN_EXECUTE,
+      BTN_WIZARD: icon.SEND.BTN_WIZARD,
     };
   },
   props: {
@@ -398,6 +403,4 @@ export default {
     font-size: 18px;
   }
 }
-
-
 </style>

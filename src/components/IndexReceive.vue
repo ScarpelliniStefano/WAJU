@@ -30,23 +30,23 @@
                     <v-row align="center" class="text-center">
                         <v-col>
                             <v-btn v-if="ratioMode() === 'small'" :width="(width-100)/2" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised :disabled="this.recArr.length==0" @click="download('script', recText)">
-                                <v-icon color="white">mdi-content-save-outline</v-icon>
+                                <v-icon color="white">{{ BTN_SAVE }}</v-icon>
                                 <span v-if="this.recArr.length==0" style="color: gray">{{BTN_SPAN_SAVE}}</span>
                                 <span v-else style="color: white">{{BTN_SPAN_SAVE}}</span>
                             </v-btn>
                             <v-sheet v-if="ratioMode() !== 'small'" :dark="darkMode" :height="(height-80)/2">
                                 <v-btn v-if="ratioMode() === 'medium'" @mouseenter="changeTitle('Save')" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 -24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " fab depressed elevation="5" :disabled="this.recArr.length==0" @click="download('script', recText)">
-                                    <v-icon color="white" :size="width/20">mdi-content-save-outline</v-icon>
+                                    <v-icon color="white" :size="width/20">{{ BTN_SAVE }}</v-icon>
                                 </v-btn>
                                 <v-btn v-if="ratioMode() === 'big'" :width="width/6 - 24" x-large class="btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " fab depressed elevation="5" :disabled="this.recArr.length==0" @click="download('script', recText)">
-                                    <v-icon>mdi-content-save-outline</v-icon>
+                                    <v-icon>{{ BTN_SAVE }}</v-icon>
                                     <span>{{BTN_SPAN_SAVE}}</span>
                                 </v-btn>
                             </v-sheet>
                         </v-col>
                         <v-col v-if="ratioMode() === 'small'">
                             <v-btn :width="(width-100)/2" color="var(--border-color)" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised :disabled="this.recArr.length==0" @click="$emit('click-back-index')">
-                                <v-icon color="white">mdi-history</v-icon>
+                                <v-icon color="white">{{ BTN_BACKTRACK }}</v-icon>
                                 <span v-if="this.recArr.length==0" style="color: gray">{{BTN_SPAN_BACKTRACK}}</span>
                                 <span v-else style="color: white">{{BTN_SPAN_BACKTRACK}}</span>
                             </v-btn>
@@ -56,10 +56,10 @@
                         <v-col>
                             <v-sheet :dark="darkMode" :height="(height-80)/2">
                                 <v-btn v-if="ratioMode() === 'medium'" @mouseenter="changeTitle('Back Instruction')" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" x-large class="tooltip btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " fab depressed elevation="5" :disabled="this.recArr.length==0" @click="$emit('click-back-index')">
-                                    <v-icon color="white" :size="width/20">mdi-history</v-icon>
+                                    <v-icon color="white" :size="width/20">{{ BTN_BACKTRACK }}</v-icon>
                                 </v-btn>
                                 <v-btn v-if="ratioMode() === 'big'" :width="width/6 - 24" x-large class="btnstyle" tile style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " fab depressed elevation="5" :disabled="this.recArr.length==0" @click="download('script', recText)">
-                                    <v-icon>mdi-history</v-icon>
+                                    <v-icon>{{ BTN_BACKTRACK }}</v-icon>
                                     <span>{{BTN_SPAN_BACKTRACK_UNDO}}</span>
                                 </v-btn>
                             </v-sheet>
@@ -74,6 +74,7 @@
 
 <script>
 import lang from '../env/lang.en'
+import icon from '../env/icon'
 export default {
     name: "ReceiveComp",
     props: {
@@ -100,11 +101,15 @@ export default {
             title: 'Response'
         }],
 
-        
+        //LABEL
         TITLE: lang.RECEIVE_COMP.TITLE,
         BTN_SPAN_SAVE: lang.RECEIVE_COMP.BTN_SPAN_SAVE,
         BTN_SPAN_BACKTRACK: lang.RECEIVE_COMP.BTN_SPAN_BACKTRACK,
-        BTN_SPAN_BACKTRACK_UNDO: lang.RECEIVE_COMP.BTN_SPAN_BACKTRACK_UNDO
+        BTN_SPAN_BACKTRACK_UNDO: lang.RECEIVE_COMP.BTN_SPAN_BACKTRACK_UNDO,
+
+        //ICON
+        BTN_SAVE: icon.RECEIVE.BTN_SAVE,
+        BTN_BACKTRACK: icon.RECEIVE.BTN_BACKTRACK
 
     }),
     methods: {

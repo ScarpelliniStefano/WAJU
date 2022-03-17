@@ -50,7 +50,7 @@
                       @click="download('TreeColl')"
                       width="100%"
                     >
-                      <v-icon color="white">mdi-content-save-outline</v-icon>
+                      <v-icon color="white">{{ BTN_SAVE }}</v-icon>
                       <span style="color: white;">{{BTN_SPAN_SAVE_TREE}}</span>
                     </v-btn>
               </v-col>
@@ -76,7 +76,7 @@
                       @click="setDepth()"
                       width="100%"
                     >
-                      <v-icon color="white">mdi-circle-expand</v-icon>
+                      <v-icon color="white">{{ BTN_EXPAND }}</v-icon>
                       <span style="color: white;">{{BTN_SPAN_EXPAND}}</span>
                     </v-btn>
               </v-col>
@@ -93,6 +93,7 @@
 <script>
 import jsonview from '@pgrabovets/json-view';
 import lang from '../env/lang.en'
+import icon from '../env/icon'
 
 export default {
   name: 'IRtreeComp',
@@ -129,7 +130,11 @@ export default {
       H_FINAL_DOCUMENT: lang.PAGE_TREE.H_FINAL_DOCUMENT,
       SELECT_SIZE: lang.PAGE_TREE.SELECT_SIZE,
       BTN_SPAN_SAVE_TREE: lang.PAGE_TREE.BTN_SPAN_SAVE_TREE,
-      BTN_SPAN_EXPAND: lang.PAGE_TREE.BTN_SPAN_EXPAND
+      BTN_SPAN_EXPAND: lang.PAGE_TREE.BTN_SPAN_EXPAND,
+
+      //ICON
+      BTN_SAVE: icon.PAGE_TREE.BTN_SAVE,
+      BTN_EXPAND: icon.PAGE_TREE.BTN_EXPAND
     }
   },
   watch: {
