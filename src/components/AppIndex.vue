@@ -1,5 +1,5 @@
 <template>
-  <v-sheet :color="bgColor" id="body">
+  <v-sheet :dark="darkMode" id="body">
     <v-sheet
       :dark="darkMode"
       elevation="10"
@@ -167,9 +167,9 @@
         {{ this.tip }}
       </h4>
 
-      <v-bottom-sheet v-model="settings">
+      <v-bottom-sheet v-model="settings" :dark="darkMode">
         <v-sheet class="text-center" height="350px" min-width="700px">
-          <v-btn class="mt-6" text color="red" @click="settings = !settings">
+          <v-btn class="mt-6" text color="var(--border-color)" @click="settings = !settings">
             <span>{{ BTN_SPAN_SETTINGS }}</span>
           </v-btn>
           <Settings
@@ -666,6 +666,12 @@ export default {
     if (!this.themeColor) {
       this.themeColor = "theme-light";
       this.setCookie("theme-color", "theme-light", 30);
+      this.darkMode = false;
+    }
+    if (this.themeColor === 'theme-light') {
+      this.darkMode = false
+    } else if (this.themeColor === 'theme-dark') {
+      this.darkMode = true
     }
     document.documentElement.classList.add("theme-light");
 

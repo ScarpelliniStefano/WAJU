@@ -39,7 +39,6 @@ export default {
   padding: 10px;
 }
 #body {
-  background-color: white;
   min-width: 700px;
   min-height: 500px;
   display: flex;
