@@ -210,6 +210,8 @@
         :recArr="arrRec"
         :darkMode="darkMode"
         @click-back-index="sendBck()"
+        @long-click="longClickEvent($event)"
+        @save-istruction="saveIstructions($event)"
         @set-z-click="setZ"
         @close-rec="selRec = !selRec"
       ></bar-rec>
@@ -246,6 +248,8 @@
         :disable="disBtn"
         :randomNumberString="randomNumber"
         @click-send="sendMsg($event)"
+        @long-click="longClickEvent($event)"
+        @open-wizard="openWizard()"
         @set-z-click="setZ"
         @close-send="selSend = !selSend"
         @send-text="sendText()"
@@ -314,9 +318,11 @@
         @click-tc="sendIRTempCol()"
         @click-irc="sendIRSelCol($event)"
         @click-back-index="sendBck()"
+        @upload-config="uploadConfig()"
         @set-z-click="setZ"
         @close-btm="selBtm = !selBtm"
         @save-status="saveStatus($event)"
+        @long-click="longClickEvent($event)"
         :bottomText="received"
         :arrayLog="arrayLog"
       >
@@ -337,6 +343,22 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-snackbar
+        v-model="wizardAlertHint" elevation="5" light timeout="4000" max-width="70%"
+        >
+            <p class="v-snack__content">{{lblPopup}}</p>
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="var(--border-color)"
+            text
+            v-bind="attrs"
+            @click="wizardAlertHint = false"
+          >
+            Ok
+          </v-btn>
+        </template>
+      </v-snackbar>
 
     <v-container
       v-if="$vuetify.breakpoint.smAndDown"
@@ -360,6 +382,8 @@
             :randomNumberString="randomNumber"
             :darkMode="darkMode"
             @click-send="sendMsg($event)"
+            @long-click="longClickEvent($event)"
+            @open-wizard="openWizard()"
             @set-z-click="setZ"
             @close-send="selSend = !selSend"
             @share-text="shareText"
@@ -391,6 +415,8 @@
             :recArr="arrRec"
             :darkMode="darkMode"
             @click-back-index="sendBck()"
+            @long-click="longClickEvent($event)"
+            @save-istruction="saveIstructions($event)"
             @set-z-click="setZ"
             @close-rec="selRec = !selRec"
           ></bar-rec>
@@ -408,6 +434,8 @@
             @click-tc="sendIRTempCol()"
             @click-irc="sendIRSelCol($event)"
             @click-back-index="sendBck()"
+            @long-click="longClickEvent($event)"
+            @upload-config="uploadConfig()"
             @set-z-click="setZ"
             @close-btm="selBtm = !selBtm"
             :bottomText="received"
@@ -418,6 +446,7 @@
         <v-spacer></v-spacer>
       </v-row>
     </v-container>
+    
   </v-sheet>
 </template>
 
@@ -610,6 +639,12 @@ export default {
       BTN_RECEIVE_ON: icon.INDEX.BTN_RECEIVE_ON,
       BTN_SEND_OFF: icon.INDEX.BTN_SEND_OFF,
       BTN_SEND_ON: icon.INDEX.BTN_SEND_ON,
+
+      //longClick
+      isLongClick:false,
+      timerId:'',
+      lblPopup:'',
+      wizardAlertHint: false,
     };
   },
   watch: {
@@ -1303,8 +1338,15 @@ export default {
         }
       }
     },
+    uploadConfig(){
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        document.getElementById('file_config').click()
+      }
+    },
     sendBck() {
-      if (isPreDone()) {
+      if (isPreDone() && !this.isLongClick) {
+        clearTimeout(this.timerId);
         if (isConnected()) {
           this.connection.send("##BACKTRACK##");
           sended = true;
@@ -1321,7 +1363,8 @@ export default {
       }
     },
     sendIRTempCol() {
-      if (isPreDone()) {
+      if (isPreDone() && !this.isLongClick) {
+        clearTimeout(this.timerId)
         if (isConnected()) {
           this.connection.send("##GET-TEMPORARY-COLLECTION##");
           sended = true;
@@ -1338,7 +1381,7 @@ export default {
       }
     },
     sendIRSelCol(selectedItem) {
-      if (isPreDone() && selectedItem != "") {
+      if (isPreDone() && selectedItem != "" ) {
         if (isConnected()) {
           this.connection.send(
             "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
@@ -1359,7 +1402,8 @@ export default {
       }
     },
     sendIRList() {
-      if (isPreDone()) {
+      if (isPreDone() && !this.isLongClick) {
+        clearTimeout(this.timerId);
         if (isConnected()) {
           this.connection.send("##GET-IR-LIST##");
           sended = true;
@@ -1375,8 +1419,46 @@ export default {
         }
       }
     },
+    openWizard(){
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        let routeData = this.$router.resolve({
+          name: "Wizard",
+          query: {
+            id: this.randomNumberString,
+          },
+        });
+        setTimeout(function () {
+          window.open(routeData.href, "_blank");
+        }, 50);
+      }
+
+    },
+
+    saveIstructions(textToSave){
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        let filename=textToSave.split("###")[0];
+        let text=textToSave.split("###")[1];
+        var element = document.createElement("a");
+        element.setAttribute(
+            "href",
+            "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+        );
+        element.setAttribute("download", filename);
+
+        element.style.display = "none";
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+      }
+      
+    },
     sendMsg(textSend) {
-      if (isPreDone() && textSend.length > 0) {
+      if (isPreDone() && textSend.length > 0 && !this.isLongClick) {
+        clearTimeout(this.timerId);
         if (isConnected()) {
           console.log("onopen send");
           console.log("Sending data");
@@ -1398,11 +1480,35 @@ export default {
         }
       }
     },
+
+    longClickEvent(stringMessage){
+      let idElement=stringMessage.split("###")[0];
+      let message=stringMessage.split("###")[1];
+      console.log(stringMessage);
+      document.getElementById(idElement).onmousedown = (args) =>{
+        this.isLongClick=false;
+        this.timerId=setTimeout(() => fn.apply(null, [args]), 500)
+      }
+    
+
+      var fn = (args) => {
+        console.log('onmousedown args', args)
+        this.wizardAlertHint=false;
+        this.lblPopup=message;
+        this.wizardAlertHint=true;
+        this.isLongClick=true;
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
+
+.v-snack__content {
+    font-size: 1.8vh;
+}
+
 #title {
   display: inline-block;
   justify-content: center;

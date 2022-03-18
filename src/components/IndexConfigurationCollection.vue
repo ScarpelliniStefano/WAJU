@@ -44,22 +44,22 @@
                 <v-col :cols="dimCols(2)">
                     <v-row align="center">
                         <v-col :cols="dimColsBtn()">
-                            <v-btn v-if="ratioMode() === 'small'" :width="width/2 -  24" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="setConf()">
+                            <v-btn id="btnConfig" v-if="ratioMode() === 'small'" :width="width/2 -  24" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="setConf()">
                                 <v-icon small>{{BTN_CONFIGURATION}}</v-icon>
                                 <span>{{BTN_SPAN_CONFIG_SHORT}}</span>
                             </v-btn>
                             <v-sheet v-if="ratioMode() !== 'small'" :dark="darkMode" :height="(height-80)/2">
-                                <v-btn v-if="ratioMode() === 'medium'" @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised @click="setConf()">
+                                <v-btn id="btnConfig" v-if="ratioMode() === 'medium'" @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -45%); " tile fab depressed elevation="5" raised @click="setConf()">
                                     <v-icon :size="width/20">{{BTN_CONFIGURATION}}</v-icon>
                                 </v-btn>
-                                <v-btn v-if="ratioMode() === 'big'" @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised @click="setConf()">
+                                <v-btn id="btnConfig" v-if="ratioMode() === 'big'" @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -40%); " tile fab depressed elevation="5" raised @click="setConf()">
                                     <v-icon small>{{BTN_CONFIGURATION}}</v-icon>
                                     <span>{{BTN_SPAN_CONFIG_SHORT}}</span>
                                 </v-btn>
                             </v-sheet>
                         </v-col>
                         <v-col :cols="dimColsBtn()">
-                            <v-btn v-if="ratioMode() === 'small'" :width="width/2 - 24" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="
+                            <v-btn id="btnCollections" v-if="ratioMode() === 'small'" :width="width/2 - 24" class="tooltip btnstyle" style="color: white;background-color: var(--border-color);" tile fab depressed elevation="5" raised @click="
                             irPressed = true
                             setIR()
                             $emit('click-ir')">
@@ -67,13 +67,13 @@
                                 <span>{{BTN_SPAN_IR_REQUEST}}</span>
                             </v-btn>
                             <v-sheet v-if="ratioMode() !== 'small'" :dark="darkMode" :height="(height-80)/2">
-                                <v-btn v-if="ratioMode() === 'medium'" @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " tile fab depressed elevation="5" raised @click="
+                                <v-btn id="btnCollections" v-if="ratioMode() === 'medium'" @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" :height="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -55%); " tile fab depressed elevation="5" raised @click="
                                 irPressed = true
                                 setIR()
                                 $emit('click-ir')">
                                     <v-icon :size="width/20">{{BTN_IR_COLLECTIONS}}</v-icon>
                                 </v-btn>
-                                <v-btn v-if="ratioMode() === 'big'" @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " tile fab depressed elevation="5" raised @click="
+                                <v-btn id="btnCollections" v-if="ratioMode() === 'big'" @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)" @mouseleave="title = defaultTitle" :width="width/6 - 24" class="tooltip btnstyle" style="color: white; background-color: var(--border-color); position: relative; top:50%; transform: translate(0, -60%); " tile fab depressed elevation="5" raised @click="
                                 irPressed = true
                                 setIR()
                                 $emit('click-ir')">
@@ -128,6 +128,8 @@ export default {
         BTN_SPAN_COLL_FULL: lang.CONFIG_COLL_COMP.BTN_SPAN_COLL_FULL,
         BTN_TEMPORARY_COLL: lang.CONFIG_COLL_COMP.COLLECTION.BTN_SPAN_TEMPORARY_COLLECTION,
         BTN_SPAN_IR_REQUEST: lang.CONFIG_COLL_COMP.BTN_SPAN_IR_REQUEST,
+        HINT_CONFIG: lang.CONFIG_COLL_COMP.HINT_CONFIG,
+        HINT_COLLECTIONS: lang.CONFIG_COLL_COMP.HINT_COLLECTIONS,
 
         //ICON
         BTN_CONFIGURATION: icons.CONFIG_COLL.BTN_CONFIG,
@@ -147,6 +149,10 @@ export default {
                 }
             }
         }
+    },
+    mounted(){
+        this.addMouseOverEvent('btnConfig',this.HINT_CONFIG);
+        this.addMouseOverEvent('btnCollections',this.HINT_COLLECTIONS);
     },
     methods: {
         dimCols(numCol) {
@@ -233,8 +239,12 @@ export default {
         },
         uploadConf() {
             this.setConf()
-            document.getElementById('file_config').click()
+            this.$emit('upload-config');
         },
+
+        addMouseOverEvent(idElement,message){
+            this.$emit("long-click",idElement+"###"+message);
+        }
     },
 }
 </script>

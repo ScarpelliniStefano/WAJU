@@ -410,6 +410,11 @@ export default {
 </script>
 
 <style scoped>
+
+.v-snack__content {
+    font-size: 1.8vh;
+}
+
 .label {
   color: white;
   padding: 8px;

@@ -48,6 +48,7 @@
             <v-row align="center" class="text-center">
               <v-col cols="6">
                 <v-btn
+                  id="btnWizard"
                   v-if="ratioMode() === 'small'"
                   :dark="darkMode"
                   :width="(width - 48) / 2"
@@ -70,6 +71,7 @@
                   :height="(height - 80) / 2"
                 >
                   <v-btn
+                    id="btnExecute"
                     v-if="ratioMode() === 'medium'"
                     @mouseenter="changeTitle('Execute')"
                     @mouseleave="title = defaultTitle"
@@ -94,6 +96,7 @@
                     <v-icon color="white" :size="width / 15">{{BTN_EXECUTE}}</v-icon>
                   </v-btn>
                   <v-btn
+                    id="btnExecute"
                     v-if="ratioMode() === 'big'"
                     :loading="exec"
                     :width="width / 6 - 24"
@@ -119,6 +122,7 @@
               </v-col>
               <v-col v-if="ratioMode() === 'small'" cols="6">
                 <v-btn
+                  id="btnExecute"
                   :dark="darkMode"
                   :loading="exec"
                   :width="(width - 48) / 2"
@@ -140,6 +144,7 @@
               <v-col>
                 <v-sheet :dark="darkMode" :height="(height - 80) / 2">
                   <v-btn
+                    id="btnWizard"
                     v-if="ratioMode() === 'medium'"
                     @mouseenter="changeTitle('Wizard')"
                     @mouseleave="title = defaultTitle"
@@ -163,6 +168,7 @@
                     <v-icon color="white" :size="width / 20">{{BTN_WIZARD}}</v-icon>
                   </v-btn>
                   <v-btn
+                    id="btnWizard"
                     v-if="ratioMode() === 'big'"
                     :width="width / 6 - 24"
                     x-large
@@ -210,6 +216,8 @@ export default {
       TITLE: lang.SEND_COMP.TITLE,
       BTN_SPAN_EXECUTE: lang.SEND_COMP.BTN_SPAN_EXECUTE,
       BTN_SPAN_WIZARD: lang.SEND_COMP.BTN_SPAN_WIZARD,
+      HINT_EXECUTE: lang.SEND_COMP.HINT_EXECUTE,
+      HINT_WIZARD: lang.SEND_COMP.HINT_WIZARD,
 
       //ICON
       BTN_EXECUTE: icon.SEND.BTN_EXECUTE,
@@ -240,6 +248,8 @@ export default {
   },
   mounted() {
     this.textSend = this.textShare;
+    this.addMouseOverEvent('btnExecute',this.HINT_EXECUTE);
+    this.addMouseOverEvent('btnWizard',this.HINT_WIZARD);
   },
   methods: {
     dimCols(numCol) {
@@ -311,18 +321,10 @@ export default {
       this.exec = false;
     },
     openWizard() {
-      let routeData = this.$router.resolve({
-        name: "Wizard",
-        query: {
-          id: this.randomNumberString,
-        },
-      });
-      setTimeout(function () {
-        window.open(routeData.href, "_blank");
-      }, 50);
+      this.$emit('open-wizard');
     },
     sendMessageArr() {
-      this.$emit("click-send", this.textSend);
+          this.$emit("click-send", this.textSend);
     },
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
@@ -337,6 +339,10 @@ export default {
     closeWindow() {
       this.$emit("close-send");
     },
+
+    addMouseOverEvent(idElement,message){
+      this.$emit("long-click",idElement+"###"+message);
+    }
   },
 };
 </script>

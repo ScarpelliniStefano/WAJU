@@ -3,12 +3,16 @@ const lang = Object.freeze({
         TITLE: 'Command',
         BTN_SPAN_EXECUTE: 'Execute',
         BTN_SPAN_WIZARD: 'Wizard',
+        HINT_EXECUTE: 'Execute the istructions written in the box',
+        HINT_WIZARD: 'Open a new tab for creating your personalized istructions with hints'
     }),
     RECEIVE_COMP: Object.freeze({
         TITLE: 'Response',
         BTN_SPAN_SAVE: 'Save',
         BTN_SPAN_BACKTRACK: 'Backtrack',
-        BTN_SPAN_BACKTRACK_UNDO: 'Undo'
+        BTN_SPAN_BACKTRACK_UNDO: 'Undo',
+        HINT_SAVE: 'Save the istructions written in the box',
+        HINT_BACKTRACK: 'Brings back the work done by one instruction'
     }),
     CONFIG_COLL_COMP: Object.freeze({
         CONFIG: Object.freeze({
@@ -23,7 +27,9 @@ const lang = Object.freeze({
         BTN_SPAN_CONFIG_FULL: 'Configuration',
         BTN_SPAN_COLL_SHORT: 'IR Coll.',
         BTN_SPAN_COLL_FULL: 'IR Collections',
-        BTN_SPAN_IR_REQUEST: 'IR Request'
+        BTN_SPAN_IR_REQUEST: 'IR Request',
+        HINT_CONFIG: 'View all configurations',
+        HINT_COLLECTIONS: 'View all collections saved with possibility to navigate them',
     }),
     LOG_COMP: Object.freeze({
         TITLE: 'Log'
