@@ -191,16 +191,16 @@
         >
           <v-card>
             <v-card-title class="text-h5">
-              Information
+              {{FIRST_DIALOG.DIALOG_TITLE}}
             </v-card-title>
             <v-card-text>
-              1. If you hold down a button (except Upload Configuration and Temporary Collection), will appear an explanation of what the button can do.
+              {{FIRST_DIALOG.DIALOG_TEXT_FIRST}}
               <br/>
-              2. Settings are updated and saved in real time.
+              {{FIRST_DIALOG.DIALOG_TEXT_SECOND}}
               <br/>
-              3. Wizard will be open in a new Tab.
+              {{FIRST_DIALOG.DIALOG_TEXT_THIRD}}
               <br/>
-              4. Every collection will be open in a new Tab.
+              {{FIRST_DIALOG.DIALOG_TEXT_FOURTH}}
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -665,6 +665,13 @@ export default {
       TIP_SAVE_UNDO: lang.INDEX.TIP_SAVE_UNDO,
       TIP_EXE_COMMAND_WIZARD: lang.INDEX.TIP_EXE_COMMAND_WIZARD,
       BTN_SPAN_SETTINGS: lang.INDEX.BTN_SPAN_SETTINGS,
+      FIRST_DIALOG:{
+        DIALOG_TITLE:lang.INDEX.DIALOG.DIALOG_TITLE,
+        DIALOG_TEXT_FIRST:lang.INDEX.DIALOG.DIALOG_TEXT_FIRST,
+        DIALOG_TEXT_SECOND:lang.INDEX.DIALOG.DIALOG_TEXT_SECOND,
+        DIALOG_TEXT_THIRD:lang.INDEX.DIALOG.DIALOG_TEXT_THIRD,
+        DIALOG_TEXT_FOURTH:lang.INDEX.DIALOG.DIALOG_TEXT_FOURTH
+      },
 
       //ICON
       BTN_SETTINGS: icon.INDEX.BTN_SETTINGS,

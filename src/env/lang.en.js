@@ -41,8 +41,15 @@ const lang = Object.freeze({
         TIP_LOG: 'Log',
         TIP_SAVE_UNDO: 'Save & BackTrack',
         TIP_EXE_COMMAND_WIZARD: 'Execute a command & Wizard',
-        BTN_SPAN_SETTINGS: 'Close'
-
+        BTN_SPAN_SETTINGS: 'Close',
+        DIALOG:{
+            DIALOG_TITLE: 'Information',
+            DIALOG_TEXT_FIRST: '1. If you hold down a button (except Upload Configuration and Temporary Collection), will appear an explanation of what the button can do.',
+            DIALOG_TEXT_SECOND: '2. Settings are updated and saved in real time.',
+            DIALOG_TEXT_THIRD: '3. Wizard will be open in a new Tab.',
+            DIALOG_TEXT_FOURTH: '4. Every collection will be open in a new Tab.'
+        }
+        
     }),
     PAGE_TREE: Object.freeze({
         H_TOTAL_ITEM: 'Total item: ',
