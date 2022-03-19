@@ -181,6 +181,42 @@
           </Settings>
         </v-sheet>
       </v-bottom-sheet>
+
+      <v-row justify="center">
+        <v-dialog
+          v-model="firstDialog"
+          persistent
+          max-width="500"
+          :dark="darkMode"
+        >
+          <v-card>
+            <v-card-title class="text-h5">
+              Information
+            </v-card-title>
+            <v-card-text>
+              1. If you hold down a button (except Upload Configuration and Temporary Collection), will appear an explanation of what the button can do.
+              <br/>
+              2. Settings are updated and saved in real time.
+              <br/>
+              3. Wizard will be open in a new Tab.
+              <br/>
+              4. Every collection will be open in a new Tab.
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="var(--border-color)"
+                text
+                @click="setFirstDialog()"
+              >
+                OK
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+
+
     </v-sheet>
     <VueDragResize
       :key="rec.idRecChange"
@@ -329,7 +365,7 @@
       </bottom-bar>
     </VueDragResize>
 
-    <v-snackbar v-model="wizardAlert" elevation="5" light>
+    <v-snackbar v-model="wizardAlert" elevation="5" :dark="darkMode">
       Wizard forwarded an istruction
 
       <template v-slot:action="{ attrs }">
@@ -344,7 +380,7 @@
       </template>
     </v-snackbar>
     <v-snackbar
-        v-model="wizardAlertHint" elevation="5" light timeout="4000" max-width="70%"
+        v-model="wizardAlertHint" elevation="5" :dark="darkMode" timeout="4000" max-width="70%"
         >
             <p class="v-snack__content">{{lblPopup}}</p>
 
@@ -364,11 +400,11 @@
       v-if="$vuetify.breakpoint.smAndDown"
       name="c2"
       id="main-container"
-      class="colcontainer"
+      class="pt-3"
       fluid
     >
-      <v-row class="text-center" align="center" align-content="center">
-        <v-col v-if="selSend" class="" :key="1" :cols="12" :sm="12">
+      <v-row class="text-center" align="center">
+        <v-col v-if="selSend" :key="1" :cols="12" :sm="12">
           <bar-send
             :bgcolor="contColor"
             :rapporto="send.widthSm / send.heightSm"
@@ -562,6 +598,7 @@ export default {
       selLog: false,
 
       tip: "",
+      firstDialog: true,
 
       showWizard: false,
       textWizard: "",
@@ -689,6 +726,11 @@ export default {
     }
     document.documentElement.classList.add(this.fontColor);
 
+    if(!this.getCookie('firstDialog')){
+      this.setCookie('firstDialog','true', 30)
+    }
+    this.firstDialog = (this.getCookie('firstDialog') === 'true')
+    
     this.fontSize = this.getCookie("font-size");
     if (!this.fontSize) {
       this.fontSize = 14;
@@ -809,6 +851,10 @@ export default {
     };
   },
   methods: {
+    setFirstDialog(){
+      this.firstDialog = false
+      this.setCookie('firstDialog','false', 30)
+    },
     shareText(text) {
       this.send.textShare = text;
     },
@@ -1585,10 +1631,6 @@ export default {
 
 .tastyle {
   color: var(--textarea-color);
-}
-
-.colcontainer {
-  background-color: var(--bg-theme-color);
 }
 
 :root {
