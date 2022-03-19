@@ -1,5 +1,5 @@
 <template>
-  <v-sheet :dark="darkMode" id="body">
+  <v-sheet :dark="darkMode" id="body" >
     <v-sheet
       :dark="darkMode"
       elevation="10"
@@ -1509,25 +1509,28 @@ export default {
       
     },
     sendMsg(textSend) {
-      if (isPreDone() && textSend.length > 0 && !this.isLongClick) {
+      if(!this.isLongClick){
         clearTimeout(this.timerId);
-        if (isConnected()) {
-          console.log("onopen send");
-          console.log("Sending data");
-          this.connection.send("##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##");
-          sended = true;
-        } else {
-          this.connection.close();
-          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
-          if (!sended) {
-            this.connection.onopen = () => {
-              console.log("onopen send");
-              console.log("Sending data");
-              this.connection.send(
-                "##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##"
-              );
-              sended = true;
-            };
+        if (isPreDone() && textSend.length > 0) {
+          
+          if (isConnected()) {
+            console.log("onopen send");
+            console.log("Sending data");
+            this.connection.send("##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##");
+            sended = true;
+          } else {
+            this.connection.close();
+            this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
+            if (!sended) {
+              this.connection.onopen = () => {
+                console.log("onopen send");
+                console.log("Sending data");
+                this.connection.send(
+                  "##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##"
+                );
+                sended = true;
+              };
+            }
           }
         }
       }

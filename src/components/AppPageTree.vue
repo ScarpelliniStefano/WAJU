@@ -1,12 +1,12 @@
 <template>
-  <v-sheet>
+  <v-sheet :dark="darkMode" height="100%">
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="200"></v-progress-circular>
     </v-overlay>
     <v-container>
     <v-row>
       <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <v-sheet rounded elevation="10" width="100%">
+        <v-sheet rounded elevation="10" width="100%" :dark="darkMode">
           <center>
             <h1>{{ this.title }}</h1>
           </center>
@@ -19,7 +19,7 @@
             </h4>
           </center>
           <v-row>
-            <v-sheet v-if="this.error != ''">
+            <v-sheet v-if="this.error != ''" :dark="darkMode">
               <center>
                 <span class="label danger">{{ this.error }}</span>
               </center>
@@ -28,7 +28,8 @@
           <v-row align="center" class="text-center pt-3">
             <v-spacer></v-spacer>
             <v-col cols="1">
-              <v-select
+              <v-select 
+                :dark="darkMode"
                 v-model="size"
                 :items="itemsSize"
                 :label="SELECT_SIZE"
@@ -39,7 +40,7 @@
           </v-row>
           <v-row align="center" class="text-center">
               <v-col cols="3" class="pl-9">
-                    <v-btn
+                    <v-btn :dark="darkMode"
                       id="btnSave"
                       color="var(--border-color)"
                       elevation="2"
@@ -57,6 +58,7 @@
               </v-col>
               <v-col cols="6">
                 <v-pagination
+                :dark="darkMode"
                   v-model="page"
                   :length="pageCount"
                   :total-visible="7"
@@ -67,6 +69,7 @@
               </v-col>
               <v-col cols="3" class="pr-9">
                     <v-btn
+                      :dark="darkMode"
                       id="btnExpand"
                       color="var(--border-color)"
                       elevation="2"
@@ -86,17 +89,18 @@
         </v-sheet>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <v-sheet rounded height="350px" elevation="5" id="treeViewer" style="overflow: auto;"></v-sheet>
+        <v-sheet :dark="darkMode" rounded min-height="350px" height="calc(60vh)" elevation="5" id="treeViewer" style="overflow: auto;"></v-sheet>
       </v-col>
     </v-row>
     </v-container>
     <v-snackbar
-        v-model="wizardAlert" elevation="5" light timeout="4000" max-width="70%"
+        v-model="wizardAlert" elevation="5" timeout="4000" max-width="70%" :dark="darkMode"
         >
             <p class="v-snack__content">{{lblPopup}}</p>
 
         <template v-slot:action="{ attrs }">
           <v-btn
+            :dark="darkMode"
             color="var(--border-color)"
             text
             v-bind="attrs"
@@ -139,7 +143,8 @@ export default {
       mainColor: '',
       fontColor: '',
       fontSize: 0,
-      error: '', 
+      error: '',
+      darkMode:false,
       //promise: ''
 
       //LABEL
@@ -199,7 +204,9 @@ export default {
       this.themeColor = 'theme-light'
       this.setCookie('theme-color', 'theme-light', 30)
     }
-    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.add(this.themeColor)
+    console.log(this.themeColor)
+    if(this.themeColor=='theme-dark') this.darkMode=true;
 
     this.mainColor = this.getCookie('main-color')
     if (!this.mainColor) {
@@ -230,9 +237,9 @@ export default {
   methods: {
     calculatePageSize(){
       if((this.valTotal%this.size)!=0){
-        this.pageCount=Math.floor((this.valTotal/this.size) + 1)
+        this.pageCount=(Number)(Math.floor((this.valTotal/this.size) + 1))
       }else{
-        this.pageCount=(this.valTotal/this.size).toFixed()
+        this.pageCount=(Number)((this.valTotal/this.size).toFixed())
       }
     },
     setMainColor(color) {
@@ -339,8 +346,7 @@ export default {
               if (this.valTotal < 25) this.size = this.valTotal
               else this.size = 25
             }
-            console.log(jsonData.tree)
-            this.tree = jsonview.createWithInitial(jsonData.tree,this.valInitial+1);
+            this.tree = jsonview.createWithInitial(jsonData.tree,this.valInitial+1,this.darkMode);
             document.querySelector('#treeViewer').innerHTML='';
               jsonview.render(this.tree, document.querySelector('#treeViewer'));
               jsonview.expandDepth(this.tree,this.numDepth);
@@ -397,8 +403,7 @@ export default {
       }
     
 
-      var fn = (args) => {
-        console.log('onmousedown args', args)
+      var fn = () => {
         this.wizardAlert=false;
         this.lblPopup=message;
         this.wizardAlert=true;
