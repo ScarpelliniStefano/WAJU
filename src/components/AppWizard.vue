@@ -1,14 +1,14 @@
 <template>
-    <v-sheet>
+    <v-sheet :dark="darkMode" height="100%">
       <center>
-        <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="90%">
-            <v-select  v-model="modulo.selected" :items="arrayModel"  :label="SEL_TXT_MODULES"></v-select>
-            <modules :select="modulo.selected" :maincol="mainColor" :indice="modulo.index" @changeValue="changeValue($event)"></modules><br>
+        <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="90%" :dark="darkMode">
+            <v-select :dark="darkMode" v-model="modulo.selected" :items="arrayModel" :label="SEL_TXT_MODULES"></v-select>
+            <modules :dark="darkMode" :select="modulo.selected" :maincol="mainColor" :indice="modulo.index" @changeValue="changeValue($event)"></modules><br>
         </v-sheet> 
         <br>
-        <v-btn
+        <v-btn :dark="darkMode"
             tile fab depressed elevation="5" raised
-            dark large
+            large
             class="tooltip btnstyle"
             width="200px"
             style="color: white;background-color: var(--bg-color);" 
@@ -20,7 +20,7 @@
         &nbsp;&nbsp;
         <v-btn
             tile fab depressed elevation="5" raised
-            dark large
+            :dark="darkMode" large
             class="tooltip btnstyle"
             width="200px"
             style="color: white;background-color: var(--bg-color);" 
@@ -30,11 +30,11 @@
           <span style="color: white">&nbsp;{{BTN_SPAN_REMOVE_MODULE}}</span>
         </v-btn>
       
-        <v-textarea readonly v-model="valueString"/>
+        <v-textarea readonly v-model="valueString" :dark="darkMode"/>
         <br>
         <v-btn
             tile fab depressed elevation="5" raised
-            dark large
+            :dark="darkMode" large
             :disabled="disabledBtn"
             class="tooltip btnstyle"
             width="280px"
@@ -47,7 +47,7 @@
         </v-btn>&nbsp;&nbsp;
         <v-btn
             tile fab depressed elevation="5" raised
-            dark large
+            :dark="darkMode" large
             :disabled="disabledBtn"
             class="tooltip btnstyle"
             id="btnAppend"
@@ -61,7 +61,7 @@
       </center>
 
         <v-snackbar
-        v-model="wizardAlert" elevation="5" light timeout="4000" max-width="70%"
+        v-model="wizardAlert" elevation="5" :dark="darkMode" timeout="4000" max-width="70%"
         >
             <p class="v-snack__content">{{lblPopup}}</p>
 
@@ -69,6 +69,7 @@
           <v-btn
             color="var(--border-color)"
             text
+            :dark="darkMode"
             v-bind="attrs"
             @click="wizardAlert = false"
           >
@@ -93,6 +94,8 @@ export default {
         
         numberWizard:'',
         mainColor: "black",
+        themeColor: '',
+        darkMode:false,
         colHex:"",
         arrayModel : [lang.WIZARD.SPECIFICATION.SELECTOR.SEL_GET_COLL,
                       lang.WIZARD.SPECIFICATION.SELECTOR.SEL_GET_DICT,
@@ -166,6 +169,29 @@ export default {
             }
             console.log(this.mainColor);
             document.documentElement.classList.add(this.mainColor);
+            this.themeColor = this.getCookie('theme-color')
+            if (!this.themeColor) {
+              this.themeColor = 'theme-light'
+              this.setCookie('theme-color', 'theme-light', 30)
+            }
+            document.documentElement.classList.add(this.themeColor)
+            console.log(this.themeColor)
+            if(this.themeColor=='theme-dark') this.darkMode=true;
+        },
+        setThemeColor(theme) {
+          document.documentElement.classList.replace(this.themeColor, theme)
+          this.themeColor = theme
+          this.setCookie('theme-color', theme, 30)
+        },
+        setCookie(name, value, daysToLive) {
+          // Encode value in order to escape semicolons, commas, and whitespace
+          var cookie = name + '=' + encodeURIComponent(value)
+          if (typeof daysToLive === 'number') {
+            /* Sets the max-age attribute so that the cookie expires
+                after the specified number of days */
+            cookie += ';secure; max-age=' + daysToLive * 24 * 60 * 60
+            document.cookie = cookie
+          }
         },
         getCookie(name) {
             // Split cookie string and get all individual name=value pairs in an array

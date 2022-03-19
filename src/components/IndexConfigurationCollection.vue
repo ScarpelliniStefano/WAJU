@@ -103,7 +103,9 @@ export default {
         browser: String,
         rapporto: Number,
         darkMode: Boolean,
-        outlined: Boolean
+        outlined: Boolean,
+        longClicked:Boolean,
+        timerId:String
     },
     data: () => ({
         value: 1,
@@ -218,23 +220,30 @@ export default {
             this.$emit('file-upload-index', filetext);
         },
         setConf() {
-            if (!this.conf) {
-                this.conf = true,
-                this.ispectstate = false
-                this.title = 'Configuration'
-                this.defaultTitle = 'Configuration'
-                this.TITLE = lang.CONFIG_COLL_COMP.CONFIG.TITLE
-                this.textButton = 'Configuration'
+            if(!this.longClicked){
+                clearTimeout(this.timerId)
+                if (!this.conf) {
+                    this.conf = true,
+                    this.ispectstate = false
+                    this.title = 'Configuration'
+                    this.defaultTitle = 'Configuration'
+                    this.TITLE = lang.CONFIG_COLL_COMP.CONFIG.TITLE
+                    this.textButton = 'Configuration'
+                }
             }
+            
         },
         setIR() {
-            if (!this.ispectstate) {
-                this.conf = false,
-                this.ispectstate = true
-                this.title = 'IR Collection'
-                this.defaultTitle = 'IR Collection'
-                this.TITLE = lang.CONFIG_COLL_COMP.COLLECTION.TITLE
-                this.textButton = 'IR Collection'
+            if(!this.longClicked){
+                clearTimeout(this.timerId)
+                if (!this.ispectstate) {
+                    this.conf = false,
+                    this.ispectstate = true
+                    this.title = 'IR Collection'
+                    this.defaultTitle = 'IR Collection'
+                    this.TITLE = lang.CONFIG_COLL_COMP.COLLECTION.TITLE
+                    this.textButton = 'IR Collection'
+                }
             }
         },
         uploadConf() {
