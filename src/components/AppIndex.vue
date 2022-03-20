@@ -367,7 +367,7 @@
       </bottom-bar>
     </VueDragResize>
 
-    <v-snackbar v-model="wizardAlert" elevation="5" :dark="darkMode">
+    <v-snackbar v-model="wizardAlert" elevation="5" :dark="darkMode" :light="!darkMode">
       Wizard forwarded an istruction
 
       <template v-slot:action="{ attrs }">
@@ -382,7 +382,7 @@
       </template>
     </v-snackbar>
     <v-snackbar
-        v-model="wizardAlertHint" elevation="5" :dark="darkMode" timeout="4000" max-width="70%"
+        v-model="wizardAlertHint" elevation="5" :dark="darkMode" :light="!darkMode" timeout="4000" max-width="70%"
         >
             <p class="v-snack__content">{{lblPopup}}</p>
 
