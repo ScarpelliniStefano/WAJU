@@ -31,9 +31,7 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
-        @click="
-          showSheet('btm')
-        "
+        @click="showSheet('btm')"
       >
         {{ BTN_CONFIG_COLL_OFF }}
       </v-icon>
@@ -62,9 +60,7 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
-        @click="
-          showSheet('log')
-        "
+        @click="showSheet('log')"
       >
         {{ BTN_LOG_OFF }}
       </v-icon>
@@ -93,9 +89,7 @@
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
         :dark="darkMode"
-        @click="
-          showSheet('rec')
-        "
+        @click="showSheet('rec')"
       >
         {{ BTN_RECEIVE_OFF }}
       </v-icon>
@@ -125,9 +119,7 @@
         id="execute"
         large
         :dark="darkMode"
-        @click="
-          showSheet('send')
-        "
+        @click="showSheet('send')"
       >
         {{ BTN_SEND_OFF }}
       </v-icon>
@@ -144,15 +136,13 @@
         "
         id="execute"
         large
-        @click="
-          hideSheet('send')
-        "
+        @click="hideSheet('send')"
       >
         {{ BTN_SEND_ON }}
       </v-icon>
 
       <h4
-      class="noselect"
+        class="noselect"
         style="
           float: right;
           margin-right: 20px;
@@ -165,7 +155,12 @@
 
       <v-bottom-sheet v-model="settings" :dark="darkMode">
         <v-sheet class="text-center" height="175px" min-width="700px">
-          <v-btn class="mt-6" text color="var(--border-color)" @click="settings = !settings">
+          <v-btn
+            class="mt-6"
+            text
+            color="var(--border-color)"
+            @click="settings = !settings"
+          >
             <span>{{ BTN_SPAN_SETTINGS }}</span>
           </v-btn>
           <Settings
@@ -179,43 +174,31 @@
       </v-bottom-sheet>
 
       <v-row justify="center">
-        <v-dialog
-          v-model="firstDialog"
-          persistent
-          max-width="500"
-          :dark="darkMode"
-        >
+        <v-dialog v-model="firstDialog" persistent max-width="500" :dark="darkMode">
           <v-card>
             <v-card-title class="text-h5">
-              {{FIRST_DIALOG.DIALOG_TITLE}}
+              {{ FIRST_DIALOG.DIALOG_TITLE }}
             </v-card-title>
             <v-card-text>
-              {{FIRST_DIALOG.DIALOG_TEXT_FIRST}}
-              <br/>
-              {{FIRST_DIALOG.DIALOG_TEXT_SECOND}}
-              <br/>
-              {{FIRST_DIALOG.DIALOG_TEXT_THIRD}}
-              <br/>
-              {{FIRST_DIALOG.DIALOG_TEXT_FOURTH}}
-              <br/>
-              {{FIRST_DIALOG.DIALOG_TEXT_FIFTH}}
+              {{ FIRST_DIALOG.DIALOG_TEXT_FIRST }}
+              <br />
+              {{ FIRST_DIALOG.DIALOG_TEXT_SECOND }}
+              <br />
+              {{ FIRST_DIALOG.DIALOG_TEXT_THIRD }}
+              <br />
+              {{ FIRST_DIALOG.DIALOG_TEXT_FOURTH }}
+              <br />
+              {{ FIRST_DIALOG.DIALOG_TEXT_FIFTH }}
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn
-                color="var(--border-color)"
-                text
-                @click="setFirstDialog()"
-              >
+              <v-btn color="var(--border-color)" text @click="setFirstDialog()">
                 OK
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
-        
       </v-row>
-
-
     </v-sheet>
     <VueDragResize
       :key="rec.idRecChange"
@@ -381,21 +364,26 @@
       </template>
     </v-snackbar>
     <v-snackbar
-        v-model="wizardAlertHint" elevation="5" :dark="darkMode" :light="!darkMode" timeout="4000" max-width="70%"
-        >
-            <p class="v-snack__content">{{lblPopup}}</p>
+      v-model="wizardAlertHint"
+      elevation="5"
+      :dark="darkMode"
+      :light="!darkMode"
+      timeout="4000"
+      max-width="70%"
+    >
+      <p class="v-snack__content">{{ lblPopup }}</p>
 
-        <template v-slot:action="{ attrs }">
-          <v-btn
-            color="var(--border-color)"
-            text
-            v-bind="attrs"
-            @click="wizardAlertHint = false"
-          >
-            Ok
-          </v-btn>
-        </template>
-      </v-snackbar>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="var(--border-color)"
+          text
+          v-bind="attrs"
+          @click="wizardAlertHint = false"
+        >
+          Ok
+        </v-btn>
+      </template>
+    </v-snackbar>
 
     <v-container
       v-if="$vuetify.breakpoint.smAndDown"
@@ -485,7 +473,6 @@
         <v-spacer></v-spacer>
       </v-row>
     </v-container>
-    
   </v-sheet>
 </template>
 
@@ -553,7 +540,7 @@ import BarRec from "./IndexReceive.vue";
 import BarSend from "./IndexSend.vue";
 import BottomBar from "./IndexConfigurationCollection.vue";
 import BarLog from "./IndexLog.vue";
-import icon from '../env/icon'
+import icon from "../env/icon";
 
 export default {
   name: "IndexPage",
@@ -668,13 +655,13 @@ export default {
       TIP_SAVE_UNDO: lang.INDEX.TIP_SAVE_UNDO,
       TIP_EXE_COMMAND_WIZARD: lang.INDEX.TIP_EXE_COMMAND_WIZARD,
       BTN_SPAN_SETTINGS: lang.INDEX.BTN_SPAN_SETTINGS,
-      FIRST_DIALOG:{
-        DIALOG_TITLE:lang.INDEX.DIALOG.DIALOG_TITLE,
-        DIALOG_TEXT_FIRST:lang.INDEX.DIALOG.DIALOG_TEXT_FIRST,
-        DIALOG_TEXT_SECOND:lang.INDEX.DIALOG.DIALOG_TEXT_SECOND,
-        DIALOG_TEXT_THIRD:lang.INDEX.DIALOG.DIALOG_TEXT_THIRD,
-        DIALOG_TEXT_FOURTH:lang.INDEX.DIALOG.DIALOG_TEXT_FOURTH,
-        DIALOG_TEXT_FIFTH:lang.INDEX.DIALOG.DIALOG_TEXT_FIFTH
+      FIRST_DIALOG: {
+        DIALOG_TITLE: lang.INDEX.DIALOG.DIALOG_TITLE,
+        DIALOG_TEXT_FIRST: lang.INDEX.DIALOG.DIALOG_TEXT_FIRST,
+        DIALOG_TEXT_SECOND: lang.INDEX.DIALOG.DIALOG_TEXT_SECOND,
+        DIALOG_TEXT_THIRD: lang.INDEX.DIALOG.DIALOG_TEXT_THIRD,
+        DIALOG_TEXT_FOURTH: lang.INDEX.DIALOG.DIALOG_TEXT_FOURTH,
+        DIALOG_TEXT_FIFTH: lang.INDEX.DIALOG.DIALOG_TEXT_FIFTH,
       },
 
       //ICON
@@ -689,14 +676,171 @@ export default {
       BTN_SEND_ON: icon.INDEX.BTN_SEND_ON,
 
       //longClick
-      isLongClick:false,
-      timerId:'',
-      lblPopup:'',
+      isLongClick: false,
+      timerId: "",
+      lblPopup: "",
       wizardAlertHint: false,
     };
   },
   watch: {
     wizardAlert: function (newVal) {
+      this.changeIcon(newVal);
+    },
+  },
+  created() {
+    //ADD Commenti
+    this.setTheme();
+    this.setColor();
+    this.setDialog();
+    this.setStartWidth();
+  },
+  mounted() {
+    this.getBrowser();
+    window.addEventListener("resize", this.setPositions);
+    this.startServer();
+    this.loadSettings();
+    this.setConnection();
+  },
+  methods: {
+    setConnection() {
+      this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
+      this.connection.onmessage = (message) => {
+        const text = message.data;
+        if (text.includes("##BEGIN-ERROR##")) {
+          const startE = text.indexOf("##BEGIN-ERROR##") + "##BEGIN-ERROR##".length;
+          const endE = text.lastIndexOf("##END-ERROR##");
+          this.changeLog(
+            "#@LOGS@#" + timeString("ERROR IN JOBS. SEE ERROR LOG BELOW") + "#@END-LOGS@#"
+          );
+          this.changeErrLog(
+            "#@ERR-LOGS@#" + timeString(text.substring(startE, endE)) + "#@END-ERR-LOGS@#"
+          );
+        } else if (text.includes("##ACK##")) {
+          console.log("ACK");
+          this.arrRec.pop();
+          this.changeLog("#@LOGS@#" + timeString("BACKTRACK DONE") + "#@END-LOGS@#");
+        } else if (text.includes("##BEGIN-COLLECTION##")) {
+          const startE =
+            text.indexOf("##BEGIN-COLLECTION##") + "##BEGIN-COLLECTION##".length + 1;
+          const endE = text.lastIndexOf("##END-COLLECTION##");
+          this.changeIRTree(
+            "#@TREE-DRAW@#" + text.substring(startE, endE) + "#@END-TREE-DRAW@#"
+          );
+          this.changeLog("#@LOGS@#" + timeString("TREE DREW") + "#@END-LOGS@#");
+        } else if (text.includes("##BEGIN-IR-LIST##")) {
+          const startE = text.indexOf("##BEGIN-IR-LIST##") + "##BEGIN-IR-LIST##".length;
+          const endE = text.lastIndexOf("##END-IR-LIST##");
+          this.changeIRList(
+            "#@IR-LIST@#" + text.substring(startE, endE) + "#@END-IR-LIST@#"
+          );
+          this.changeLog("#@LOGS@#" + timeString("IR LIST ARRIVED") + "#@END-LOGS@#");
+        } else if (text.includes("##SUCCESS##")) {
+          console.log("successo");
+          this.changeLog("#@LOGS@#" + timeString("JOB DONE") + "#@END-LOGS@#");
+        } else if (text.includes("##BEGIN-PROCESS##")) {
+          console.log("end messages");
+          const startP =
+            text.indexOf("##BEGIN-PROCESS##") + "##BEGIN-PROCESS##".length + 1;
+          const endP = text.indexOf("##END-PROCESS##");
+          this.textRec = text.substring(startP, endP);
+          if (text.substring(startP, endP).length > 0) {
+            this.textToCommand = text.substring(startP, endP);
+            this.arrRec = this.fromTextRecToArrRec(text.substring(startP, endP));
+            this.sendIRList();
+          }
+          this.disBtn = false;
+          //disconnect();
+        } else if (text.includes("##BEGIN-SERVER-CONF##")) {
+          const startE =
+            text.indexOf("##BEGIN-SERVER-CONF##") + "##BEGIN-SERVER-CONF##".length + 1;
+          const endE = text.lastIndexOf("##END-SERVER-CONF##");
+          this.changeConfig(text.substring(startE, endE));
+          console.log("config");
+          if (!isPreDone()) {
+            console.log("disconnect in config");
+            //disconnect();
+            setPreDone();
+          }
+        }
+      };
+
+      this.connection.onopen = () => {
+        if (!isConnected()) {
+          setConnected();
+          console.log("opopen rec");
+        }
+      };
+
+      this.connection.onclose = () => {
+        if (isConnected()) {
+          setConnected();
+          console.log("disconnect");
+        }
+      };
+
+      this.connection.onerror = () => {
+        if (isConnected) {
+          this.changeConfig("Configurazione non presente");
+          this.changeLog(
+            "#@LOGS@#" + timeString("Connection with engine crashed") + "\n#@END-LOGS@#"
+          );
+          setConnected();
+        }
+      };
+    },
+    getBrowser() {
+      let userAgent = navigator.userAgent;
+      if (userAgent.match(/chrome|chromium|crios/i)) {
+        this.browserName = "chrome";
+      } else if (userAgent.match(/firefox|fxios/i)) {
+        this.browserName = "firefox";
+      } else if (userAgent.match(/safari/i)) {
+        this.browserName = "safari";
+      } else if (userAgent.match(/opr\//i)) {
+        this.browserName = "opera";
+      } else if (userAgent.match(/edg/i)) {
+        this.browserName = "edge";
+      } else {
+        this.browserName = "No browser detection";
+      }
+    },
+    setStartWidth() {
+      if (window.innerWidth < 960 && window.innerWidth >= 700) {
+        this.send.widthSm = window.innerWidth - 12;
+        this.rec.widthSm = window.innerWidth - 12;
+        this.log.widthSm = window.innerWidth - 12;
+        this.btm.widthSm = window.innerWidth - 12;
+      }
+    },
+    setDialog() {
+      if (!this.getCookie("firstDialog")) {
+        this.setCookie("firstDialog", "true", 30);
+      }
+      this.firstDialog = this.getCookie("firstDialog") === "true";
+    },
+    setColor() {
+      this.mainColor = this.getCookie("main-color");
+      if (!this.mainColor) {
+        this.mainColor = "document-color";
+        this.setCookie("main-color", "document-color", 30);
+      }
+      document.documentElement.classList.add(this.mainColor);
+    },
+    setTheme() {
+      this.themeColor = this.getCookie("theme-color");
+      if (this.themeColor === null) {
+        this.themeColor = "theme-light";
+        this.setCookie("theme-color", "theme-light", 30);
+        this.darkMode = false;
+      }
+      if (this.themeColor === "theme-light") {
+        this.darkMode = false;
+      } else if (this.themeColor === "theme-dark") {
+        this.darkMode = true;
+      }
+      document.documentElement.classList.add(this.themeColor);
+    },
+    changeIcon(newVal) {
       var link =
         document.querySelector("link[rel*='icon']") || document.createElement("link");
       link.rel = "icon";
@@ -707,234 +851,84 @@ export default {
       }
       document.getElementsByTagName("head")[0].appendChild(link);
     },
-  },
-  created() {
-    //ADD Commenti
-    this.themeColor = this.getCookie('theme-color');
-    if (this.themeColor === null) {
-      this.themeColor = "theme-light";
-      this.setCookie("theme-color", "theme-light", 30);
-      this.darkMode = false;
-    }
-    if (this.themeColor === 'theme-light') {
-      this.darkMode = false
-    } else if (this.themeColor === 'theme-dark') {
-      this.darkMode = true
-    }
-    document.documentElement.classList.add(this.themeColor);
+    loadSettings() {
+      this.btm.posx =
+        this.getCookie("btm-x") === null ? 4 : parseInt(this.getCookie("btm-x"));
+      this.btm.posy =
+        this.getCookie("btm-y") === null ? 60 : parseInt(this.getCookie("btm-y"));
+      this.btm.width =
+        this.getCookie("btm-w") === null ? 400 : parseInt(this.getCookie("btm-w"));
+      this.btm.height =
+        this.getCookie("btm-h") === null ? 400 : parseInt(this.getCookie("btm-h"));
+      this.selBtm =
+        this.getCookie("btm-v") === null ? false : this.getCookie("btm-v") === "true";
 
-    this.mainColor = this.getCookie("main-color");
-    if (!this.mainColor) {
-      this.mainColor = "document-color";
-      this.setCookie("main-color", "document-color", 30);
-    }
-    document.documentElement.classList.add(this.mainColor);
+      this.rec.posx =
+        this.getCookie("rec-x") === null ? 4 : parseInt(this.getCookie("rec-x"));
+      this.rec.posy =
+        this.getCookie("rec-y") === null ? 60 : parseInt(this.getCookie("rec-y"));
+      this.rec.width =
+        this.getCookie("rec-w") === null ? 400 : parseInt(this.getCookie("rec-w"));
+      this.rec.height =
+        this.getCookie("rec-h") === null ? 400 : parseInt(this.getCookie("rec-h"));
+      this.selRec =
+        this.getCookie("rec-v") === null ? false : this.getCookie("rec-v") === "true";
 
-    this.fontColor = this.getCookie("font-color");
-    if (!this.fontColor) {
-      this.fontColor = "font-black";
-      this.setCookie("font-color", "font-black", 30);
-    }
-    document.documentElement.classList.add(this.fontColor);
+      this.send.posx =
+        this.getCookie("send-x") === null ? 4 : parseInt(this.getCookie("send-x"));
+      this.send.posy =
+        this.getCookie("send-y") === null ? 60 : parseInt(this.getCookie("send-y"));
+      this.send.width =
+        this.getCookie("send-w") === null ? 400 : parseInt(this.getCookie("send-w"));
+      this.send.height =
+        this.getCookie("send-h") === null ? 400 : parseInt(this.getCookie("send-h"));
+      this.selSend =
+        this.getCookie("send-v") === null ? false : this.getCookie("send-v") === "true";
 
-    if(!this.getCookie('firstDialog')){
-      this.setCookie('firstDialog','true', 30)
-    }
-    this.firstDialog = (this.getCookie('firstDialog') === 'true')
-    
-    this.fontSize = this.getCookie("font-size");
-    if (!this.fontSize) {
-      this.fontSize = 14;
-      this.setCookie("font-size", "14", 30);
-    }
-    document.documentElement.classList.add(this.fontSize);
-
-    if (window.innerWidth < 960 && window.innerWidth >= 700) {
-      this.send.widthSm = window.innerWidth - 12;
-      this.rec.widthSm = window.innerWidth - 12;
-      this.log.widthSm = window.innerWidth - 12;
-      this.btm.widthSm = window.innerWidth - 12;
-    }
-  },
-  mounted() {
-    let userAgent = navigator.userAgent;
-    if (userAgent.match(/chrome|chromium|crios/i)) {
-      this.browserName = "chrome";
-    } else if (userAgent.match(/firefox|fxios/i)) {
-      this.browserName = "firefox";
-    } else if (userAgent.match(/safari/i)) {
-      this.browserName = "safari";
-    } else if (userAgent.match(/opr\//i)) {
-      this.browserName = "opera";
-    } else if (userAgent.match(/edg/i)) {
-      this.browserName = "edge";
-    } else {
-      this.browserName = "No browser detection";
-    }
-
-    window.addEventListener("resize", this.setPositions);
-
-    this.startServer();
-    this.loadSettings()
-
-    this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
-    this.connection.onmessage = (message) => {
-      const text = message.data;
-      if (text.includes("##BEGIN-ERROR##")) {
-        const startE = text.indexOf("##BEGIN-ERROR##") + "##BEGIN-ERROR##".length;
-        const endE = text.lastIndexOf("##END-ERROR##");
-        this.changeLog(
-          "#@LOGS@#" + timeString("ERROR IN JOBS. SEE ERROR LOG BELOW") + "#@END-LOGS@#"
-        );
-        this.changeErrLog(
-          "#@ERR-LOGS@#" + timeString(text.substring(startE, endE)) + "#@END-ERR-LOGS@#"
-        );
-      } else if (text.includes("##ACK##")) {
-        console.log("ACK");
-        this.arrRec.pop();
-        this.changeLog("#@LOGS@#" + timeString("BACKTRACK DONE") + "#@END-LOGS@#");
-      } else if (text.includes("##BEGIN-COLLECTION##")) {
-        const startE =
-          text.indexOf("##BEGIN-COLLECTION##") + "##BEGIN-COLLECTION##".length + 1;
-        const endE = text.lastIndexOf("##END-COLLECTION##");
-        this.changeIRTree(
-          "#@TREE-DRAW@#" + text.substring(startE, endE) + "#@END-TREE-DRAW@#"
-        );
-        this.changeLog("#@LOGS@#" + timeString("TREE DREW") + "#@END-LOGS@#");
-      } else if (text.includes("##BEGIN-IR-LIST##")) {
-        const startE = text.indexOf("##BEGIN-IR-LIST##") + "##BEGIN-IR-LIST##".length;
-        const endE = text.lastIndexOf("##END-IR-LIST##");
-        this.changeIRList(
-          "#@IR-LIST@#" + text.substring(startE, endE) + "#@END-IR-LIST@#"
-        );
-        this.changeLog("#@LOGS@#" + timeString("IR LIST ARRIVED") + "#@END-LOGS@#");
-      } else if (text.includes("##SUCCESS##")) {
-        console.log("successo");
-        this.changeLog("#@LOGS@#" + timeString("JOB DONE") + "#@END-LOGS@#");
-      } else if (text.includes("##BEGIN-PROCESS##")) {
-        console.log("end messages");
-        const startP = text.indexOf("##BEGIN-PROCESS##") + "##BEGIN-PROCESS##".length + 1;
-        const endP = text.indexOf("##END-PROCESS##");
-        this.textRec = text.substring(startP, endP);
-        if (text.substring(startP, endP).length > 0) {
-          this.textToCommand = text.substring(startP, endP);
-          this.arrRec = this.fromTextRecToArrRec(text.substring(startP, endP));
-          this.sendIRList();
-        }
-        this.disBtn = false;
-        //disconnect();
-      } else if (text.includes("##BEGIN-SERVER-CONF##")) {
-        const startE =
-          text.indexOf("##BEGIN-SERVER-CONF##") + "##BEGIN-SERVER-CONF##".length + 1;
-        const endE = text.lastIndexOf("##END-SERVER-CONF##");
-        this.changeConfig(text.substring(startE, endE));
-        console.log("config");
-        if (!isPreDone()) {
-          console.log("disconnect in config");
-          //disconnect();
-          setPreDone();
-        }
-      }
-    };
-
-    this.connection.onopen = () => {
-      if (!isConnected()) {
-        //this.changeLog('#@LOGS@#'+timeString('Connection with engine established')+'\n#@END-LOGS@#');
-        setConnected();
-        console.log("opopen rec");
-      }
-    };
-
-    this.connection.onclose = () => {
-      if (isConnected()) {
-        setConnected();
-        console.log("disconnect");
-      }
-    };
-
-    this.connection.onerror = () => {
-      if (isConnected) {
-        this.changeConfig("Configurazione non presente");
-        this.changeLog(
-          "#@LOGS@#" + timeString("Connection with engine crashed") + "\n#@END-LOGS@#"
-        );
-        setConnected();
-      }
-    };
-  },
-  methods: {
-    loadSettings(){
-
-      this.btm.posx = this.getCookie('btm-x') === null ? 4 : parseInt(this.getCookie('btm-x'))
-      this.btm.posy = this.getCookie('btm-y') === null ? 60 : parseInt(this.getCookie('btm-y'))
-      this.btm.width = this.getCookie('btm-w') === null ? 400 : parseInt(this.getCookie('btm-w'))
-      this.btm.height = this.getCookie('btm-h') === null ? 400 : parseInt(this.getCookie('btm-h'))
-      this.selBtm = this.getCookie('btm-v') === null ? false : this.getCookie('btm-v') === 'true'
-
-      this.rec.posx = this.getCookie('rec-x') === null ? 4 : parseInt(this.getCookie('rec-x'))
-      this.rec.posy = this.getCookie('rec-y') === null ? 60 : parseInt(this.getCookie('rec-y'))
-      this.rec.width = this.getCookie('rec-w') === null ? 400 : parseInt(this.getCookie('rec-w'))
-      this.rec.height = this.getCookie('rec-h') === null ? 400 : parseInt(this.getCookie('rec-h'))
-      this.selRec = this.getCookie('rec-v') === null ? false : this.getCookie('rec-v') === 'true'
-
-      this.send.posx = this.getCookie('send-x') === null ? 4 : parseInt(this.getCookie('send-x'))
-      this.send.posy = this.getCookie('send-y') === null ? 60 : parseInt(this.getCookie('send-y'))
-      this.send.width = this.getCookie('send-w') === null ? 400 : parseInt(this.getCookie('send-w'))
-      this.send.height = this.getCookie('send-h') === null ? 400 : parseInt(this.getCookie('send-h'))
-      this.selSend = this.getCookie('send-v') === null ? false : this.getCookie('send-v') === 'true'
-
-      this.log.posx = this.getCookie('log-x') === null ? 4 : parseInt(this.getCookie('log-x'))
-      this.log.posy = this.getCookie('log-y') === null ? 60 : parseInt(this.getCookie('log-y'))
-      this.log.width = this.getCookie('log-w') === null ? 400 : parseInt(this.getCookie('log-w'))
-      this.log.height = this.getCookie('log-h') === null ? 400 : parseInt(this.getCookie('log-h'))
-      this.selLog = this.getCookie('log-v') === null ? false : this.getCookie('log-v') === 'true'
+      this.log.posx =
+        this.getCookie("log-x") === null ? 4 : parseInt(this.getCookie("log-x"));
+      this.log.posy =
+        this.getCookie("log-y") === null ? 60 : parseInt(this.getCookie("log-y"));
+      this.log.width =
+        this.getCookie("log-w") === null ? 400 : parseInt(this.getCookie("log-w"));
+      this.log.height =
+        this.getCookie("log-h") === null ? 400 : parseInt(this.getCookie("log-h"));
+      this.selLog =
+        this.getCookie("log-v") === null ? false : this.getCookie("log-v") === "true";
     },
-    setFirstDialog(){
-      this.firstDialog = false
-      this.setCookie('firstDialog','false', 30)
+    setFirstDialog() {
+      this.firstDialog = false;
+      this.setCookie("firstDialog", "false", 30);
     },
     shareText(text) {
       this.send.textShare = text;
     },
     setPositions() {
       if (this.send.posx + this.send.width > document.documentElement.clientWidth) {
-        if(document.documentElement.clientWidth - this.send.width - 5 > 4) {
+        if (document.documentElement.clientWidth - this.send.width - 5 > 4) {
           this.send.posx = document.documentElement.clientWidth - this.send.width - 5;
-        } /*else if (this.send.width > 400 && document.documentElement.clientWidth - this.send.posx - 4 >= 400) {
-          this.send.width = document.documentElement.clientWidth - this.send.posx - 4
-        }*/
+        }
       }
 
       if (this.rec.posx + this.rec.width > document.documentElement.clientWidth) {
-        if(document.documentElement.clientWidth - this.rec.width - 5 > 4) {
+        if (document.documentElement.clientWidth - this.rec.width - 5 > 4) {
           this.rec.posx = document.documentElement.clientWidth - this.rec.width - 5;
-        } /*else if (this.rec.width > 400 && document.documentElement.clientWidth - this.rec.posx - 4 >= 400) {
-          this.rec.width = document.documentElement.clientWidth - this.rec.posx - 4
-        }*/
+        }
       }
 
       if (this.log.posx + this.log.width > document.documentElement.clientWidth) {
-        if(document.documentElement.clientWidth - this.log.width - 5 > 4) {
+        if (document.documentElement.clientWidth - this.log.width - 5 > 4) {
           this.log.posx = document.documentElement.clientWidth - this.log.width - 5;
-        } /*else if (this.log.width > 400 && document.documentElement.clientWidth - this.log.posx - 4 >= 400) {
-          this.log.width = document.documentElement.clientWidth - this.log.posx - 4
-        }*/
+        }
       }
 
       if (this.btm.posx + this.btm.width > document.documentElement.clientWidth) {
-        if(document.documentElement.clientWidth - this.btm.width - 5 > 4) {
+        if (document.documentElement.clientWidth - this.btm.width - 5 > 4) {
           this.btm.posx = document.documentElement.clientWidth - this.btm.width - 5;
-        } /*else if (this.btm.width > 400 && document.documentElement.clientWidth - this.btm.posx - 4 >= 400) {
-          this.btm.width = document.documentElement.clientWidth - this.btm.posx - 4
-        }*/
+        }
       }
 
-      if (window.innerWidth < 960 && window.innerWidth > 700) {
-        this.send.widthSm = window.innerWidth - 12;
-        this.rec.widthSm = window.innerWidth - 12;
-        this.log.widthSm = window.innerWidth - 12;
-        this.btm.widthSm = window.innerWidth - 12;
-      }
+      this.setStartWidth();
     },
     showSheet(component) {
       this.send.posz = 0;
@@ -945,23 +939,23 @@ export default {
       switch (component) {
         case "send":
           this.send.posz = 2;
-          this.selSend = true
-          this.setCookie('send-v','true',30)
+          this.selSend = true;
+          this.setCookie("send-v", "true", 30);
           break;
         case "rec":
           this.rec.posz = 2;
-          this.selRec = true
-          this.setCookie('rec-v','true',30)
+          this.selRec = true;
+          this.setCookie("rec-v", "true", 30);
           break;
         case "btm":
           this.btm.posz = 2;
-          this.selBtm = true
-          this.setCookie('btm-v','true',30)
+          this.selBtm = true;
+          this.setCookie("btm-v", "true", 30);
           break;
         case "log":
           this.log.posz = 2;
-          this.selLog = true
-          this.setCookie('log-v','true',30)
+          this.selLog = true;
+          this.setCookie("log-v", "true", 30);
           break;
         default:
           alert("Comando non riconosciuto");
@@ -970,20 +964,20 @@ export default {
     hideSheet(component) {
       switch (component) {
         case "send":
-          this.selSend = false
-          this.setCookie('send-v','false',30)
+          this.selSend = false;
+          this.setCookie("send-v", "false", 30);
           break;
         case "rec":
-          this.selRec = false
-          this.setCookie('rec-v','false',30)
+          this.selRec = false;
+          this.setCookie("rec-v", "false", 30);
           break;
         case "btm":
-          this.selBtm = false
-          this.setCookie('btm-v','false',30)
+          this.selBtm = false;
+          this.setCookie("btm-v", "false", 30);
           break;
         case "log":
-          this.selLog = false
-          this.setCookie('log-v','false',30)
+          this.selLog = false;
+          this.setCookie("log-v", "false", 30);
           break;
         default:
           alert("Comando non riconosciuto");
@@ -1106,25 +1100,17 @@ export default {
     },
 
     setZ(tipo) {
+      this.rec.posz = 0;
+      this.send.posz = 0;
+      this.btm.posz = 0;
+      this.log.posz = 0;
       if (tipo === "rec") {
         this.rec.posz = 2;
-        this.send.posz = 0;
-        this.btm.posz = 0;
-        this.log.posz = 0;
       } else if (tipo === "send") {
-        this.rec.posz = 0;
         this.send.posz = 2;
-        this.btm.posz = 0;
-        this.log.posz = 0;
       } else if (tipo === "btm") {
-        this.rec.posz = 0;
-        this.send.posz = 0;
         this.btm.posz = 2;
-        this.log.posz = 0;
       } else if (tipo === "log") {
-        this.rec.posz = 0;
-        this.send.posz = 0;
-        this.btm.posz = 0;
         this.log.posz = 2;
       } else {
         console.log("Comando non riconosciuto");
@@ -1160,10 +1146,10 @@ export default {
         this.rec.posy = y;
       }
 
-      this.setCookie('rec-x',this.rec.posx, 30)
-      this.setCookie('rec-y',this.rec.posy, 30)
-      this.setCookie('rec-w',this.rec.width, 30)
-      this.setCookie('rec-h',this.rec.height, 30)
+      this.setCookie("rec-x", this.rec.posx, 30);
+      this.setCookie("rec-y", this.rec.posy, 30);
+      this.setCookie("rec-w", this.rec.width, 30);
+      this.setCookie("rec-h", this.rec.height, 30);
     },
 
     onResizeStopSend(handle, x, y, width, height) {
@@ -1195,10 +1181,10 @@ export default {
         this.send.posy = y;
       }
 
-      this.setCookie('send-x',this.send.posx, 30)
-      this.setCookie('send-y',this.send.posy, 30)
-      this.setCookie('send-w',this.send.width, 30)
-      this.setCookie('send-h',this.send.height, 30)
+      this.setCookie("send-x", this.send.posx, 30);
+      this.setCookie("send-y", this.send.posy, 30);
+      this.setCookie("send-w", this.send.width, 30);
+      this.setCookie("send-h", this.send.height, 30);
     },
 
     onResizeStopBtm(handle, x, y, width, height) {
@@ -1230,10 +1216,10 @@ export default {
         this.btm.posy = y;
       }
 
-      this.setCookie('btm-x',this.btm.posx, 30)
-      this.setCookie('btm-y',this.btm.posy, 30)
-      this.setCookie('btm-w',this.btm.width, 30)
-      this.setCookie('btm-h',this.btm.height, 30)
+      this.setCookie("btm-x", this.btm.posx, 30);
+      this.setCookie("btm-y", this.btm.posy, 30);
+      this.setCookie("btm-w", this.btm.width, 30);
+      this.setCookie("btm-h", this.btm.height, 30);
     },
 
     onResizeStopLog(handle, x, y, width, height) {
@@ -1264,13 +1250,15 @@ export default {
         this.log.posy = y;
       }
 
-      this.setCookie('log-x',this.log.posx, 30)
-      this.setCookie('log-y',this.log.posy, 30)
-      this.setCookie('log-w',this.log.width, 30)
-      this.setCookie('log-h',this.log.height, 30)
+      this.setCookie("log-x", this.log.posx, 30);
+      this.setCookie("log-y", this.log.posy, 30);
+      this.setCookie("log-w", this.log.width, 30);
+      this.setCookie("log-h", this.log.height, 30);
     },
     signalChangeColor() {
-      this.connectionPage = new WebSocket("ws://"+process.env.VUE_APP_WEB_SOCKET_SERVER);
+      this.connectionPage = new WebSocket(
+        "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
+      );
       this.connectionPage.onerror = () => {
         this.received.errorConfig = "no server available";
       };
@@ -1298,38 +1286,21 @@ export default {
       this.setCookie("theme-color", theme, 30);
       this.signalChangeColor();
     },
-    setStyle(style) {
-      if (style === "full") {
-        this.outlined = true;
-      } else {
-        this.outlined = false;
-      }
-      this.setCookie("style", style, 30);
-    },
     setCookie(name, value, daysToLive) {
-      // Encode value in order to escape semicolons, commas, and whitespace
       var cookie = name + "=" + encodeURIComponent(value);
       if (typeof daysToLive === "number") {
-        /* Sets the max-age attribute so that the cookie expires
-            after the specified number of days */
         cookie += ";secure; max-age=" + daysToLive * 24 * 60 * 60;
         document.cookie = cookie;
       }
     },
     getCookie(name) {
-      // Split cookie string and get all individual name=value pairs in an array
       var cookieArr = document.cookie.split(";");
-      // Loop through the array elements
       for (var i = 0; i < cookieArr.length; i++) {
         var cookiePair = cookieArr[i].split("=");
-        /* Removing whitespace at the beginning of the cookie name
-          and compare it with the given string */
         if (name == cookiePair[0].trim()) {
-          // Decode the cookie value and return
           return decodeURIComponent(cookiePair[1]);
         }
       }
-      // Return null if not found
       return null;
     },
 
@@ -1375,7 +1346,7 @@ export default {
         const startE = textToChange.indexOf("IRList") + 'IRList":'.length;
         const endE = textToChange.lastIndexOf("#@END-IR-LIST@#") - 2;
         var textChanged = textToChange.substring(startE, endE);
-        /*.replace('","','\n')*/ var json_data = JSON.parse(textChanged);
+        var json_data = JSON.parse(textChanged);
         for (var i in json_data) this.received.listIRCol.push(json_data[i]);
       }
     },
@@ -1383,7 +1354,9 @@ export default {
     generatePage(title, textToSend) {
       let dateGen = new Date();
       let millis = dateGen.getTime();
-      this.connectionPage = new WebSocket("ws://"+process.env.VUE_APP_WEB_SOCKET_SERVER);
+      this.connectionPage = new WebSocket(
+        "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
+      );
       this.connectionPage.onerror = () => {
         this.received.errorConfig = "no server available";
       };
@@ -1420,11 +1393,11 @@ export default {
     },
 
     startServer() {
-      /*let array = new Uint32Array(15);
-      this.randomNumber=String(window.crypto.getRandomValues(array)[Math.floor(Math.random()*10)]);*/
       this.randomNumber = this.generatePassword(50);
 
-      this.connectionPage = new WebSocket("ws://"+process.env.VUE_APP_WEB_SOCKET_SERVER);
+      this.connectionPage = new WebSocket(
+        "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
+      );
       this.connectionPage.onopen = () => {
         console.log("wizard partito");
       };
@@ -1439,15 +1412,10 @@ export default {
         let command = data.split("###")[0];
         if (command == "WIZARD") {
           if (data.split("###")[1] == this.randomNumber) {
-            //this.showWizard=true;
             let typeUpdate = data.split("###")[2];
             this.textWizard = data.split("###")[3];
             this.textToCommand =
               typeUpdate + "###" + this.textWizard + "###" + Date.now();
-            /*if(typeUpdate=="RESET")
-              document.getElementById("div_send").innerHTML=this.textWizard;
-            if(typeUpdate=="APPEND")
-              document.getElementById("div_send").innerHTML+=this.textWizard;*/
             this.wizardAlert = true;
           }
         }
@@ -1491,10 +1459,10 @@ export default {
         }
       }
     },
-    uploadConfig(){
-      if(!this.isLongClick){
+    uploadConfig() {
+      if (!this.isLongClick) {
         clearTimeout(this.timerId);
-        document.getElementById('file_config').click()
+        document.getElementById("file_config").click();
       }
     },
     sendBck() {
@@ -1517,7 +1485,7 @@ export default {
     },
     sendIRTempCol() {
       if (isPreDone() && !this.isLongClick) {
-        clearTimeout(this.timerId)
+        clearTimeout(this.timerId);
         if (isConnected()) {
           this.connection.send("##GET-TEMPORARY-COLLECTION##");
           sended = true;
@@ -1534,7 +1502,7 @@ export default {
       }
     },
     sendIRSelCol(selectedItem) {
-      if (isPreDone() && selectedItem != "" ) {
+      if (isPreDone() && selectedItem != "") {
         if (isConnected()) {
           this.connection.send(
             "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
@@ -1572,8 +1540,8 @@ export default {
         }
       }
     },
-    openWizard(){
-      if(!this.isLongClick){
+    openWizard() {
+      if (!this.isLongClick) {
         clearTimeout(this.timerId);
         let routeData = this.$router.resolve({
           name: "Wizard",
@@ -1585,18 +1553,17 @@ export default {
           window.open(routeData.href, "_blank");
         }, 50);
       }
-
     },
 
-    saveIstructions(textToSave){
-      if(!this.isLongClick){
+    saveIstructions(textToSave) {
+      if (!this.isLongClick) {
         clearTimeout(this.timerId);
-        let filename=textToSave.split("###")[0];
-        let text=textToSave.split("###")[1];
+        let filename = textToSave.split("###")[0];
+        let text = textToSave.split("###")[1];
         var element = document.createElement("a");
         element.setAttribute(
-            "href",
-            "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+          "href",
+          "data:text/plain;charset=utf-8," + encodeURIComponent(text)
         );
         element.setAttribute("download", filename);
 
@@ -1607,13 +1574,11 @@ export default {
 
         document.body.removeChild(element);
       }
-      
     },
     sendMsg(textSend) {
-      if(!this.isLongClick){
+      if (!this.isLongClick) {
         clearTimeout(this.timerId);
         if (isPreDone() && textSend.length > 0) {
-          
           if (isConnected()) {
             console.log("onopen send");
             console.log("Sending data");
@@ -1637,32 +1602,30 @@ export default {
       }
     },
 
-    longClickEvent(stringMessage){
-      let idElement=stringMessage.split("###")[0];
-      let message=stringMessage.split("###")[1];
+    longClickEvent(stringMessage) {
+      let idElement = stringMessage.split("###")[0];
+      let message = stringMessage.split("###")[1];
       console.log(stringMessage);
-      document.getElementById(idElement).onmousedown = (args) =>{
-        this.isLongClick=false;
-        this.timerId=setTimeout(() => fn.apply(null, [args]), 500)
-      }
-    
+      document.getElementById(idElement).onmousedown = (args) => {
+        this.isLongClick = false;
+        this.timerId = setTimeout(() => fn.apply(null, [args]), 500);
+      };
 
       var fn = (args) => {
-        console.log('onmousedown args', args)
-        this.wizardAlertHint=false;
-        this.lblPopup=message;
-        this.wizardAlertHint=true;
-        this.isLongClick=true;
-      }
-    }
+        console.log("onmousedown args", args);
+        this.wizardAlertHint = false;
+        this.lblPopup = message;
+        this.wizardAlertHint = true;
+        this.isLongClick = true;
+      };
+    },
   },
 };
 </script>
 
 <style scoped>
-
 .v-snack__content {
-    font-size: 1.8vh;
+  font-size: 1.8vh;
 }
 
 #title {
@@ -1804,21 +1767,8 @@ export default {
 }
 
 :root.theme-dark {
-  --bg-theme-color: #1E1E1E;
-  --bg-div-color: #1E1E1E;
-}
-
-button {
-  background-color: transparent;
-}
-
-i {
-  color: #6a8bb9;
-}
-
-div {
-  margin: 0px;
-  padding: 0px;
+  --bg-theme-color: #1e1e1e;
+  --bg-div-color: #1e1e1e;
 }
 
 .topbar {
@@ -1841,9 +1791,7 @@ div {
 .v-input__slot {
   margin-bottom: 0px;
 }
-</style>
 
-<style>
 vdr {
   touch-action: none;
   position: absolute;
