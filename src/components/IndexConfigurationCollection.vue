@@ -11,7 +11,7 @@
                     <v-textarea class="pb-2" readonly outlined :dark="darkMode" id="div_send" :height="height - diffHeightConf()" no-resize color="var(--border-color)" v-model="bottomText.textConf"></v-textarea>
                     <input type="file" id="file_config" @change="loadFile()"/>
                     <v-btn block height="32px" @click="uploadConf()">
-                        <v-icon small>{{BTN_UPLOAD_CONFIG}}</v-icon>
+                        <v-icon small left>{{BTN_UPLOAD_CONFIG}}</v-icon>
                         <span>{{BTN_SPAN_UPLOAD}}</span>
                     </v-btn>
                 </v-col>
@@ -36,7 +36,7 @@
                         </v-list>
                     </v-sheet>
                     <v-btn class="tooltip btnstyle" block height="32px" :disabled="!this.irPressed||this.bottomText.listIRCol.length < 1 ||this.bottomText.listIRCol == undefined" @click="numDepth = 1; $emit('click-tc')">
-                        <v-icon>{{BTN_TEMP_COLLECTION}}</v-icon>
+                        <v-icon small left>{{BTN_TEMP_COLLECTION}}</v-icon>
                         {{BTN_TEMPORARY_COLL}}
                     </v-btn>
                 </v-col>
