@@ -209,18 +209,23 @@ export default {
             document.documentElement.classList.remove(this.mainColor);
             this.mainColor = this.getCookie("main-color");
             if (!this.mainColor) {
-              this.mainColor = "black";
+              this.mainColor = "document-color";
             }
             console.log(this.mainColor);
             document.documentElement.classList.add(this.mainColor);
-            this.themeColor = this.getCookie('theme-color')
-            if (!this.themeColor) {
-              this.themeColor = 'theme-light'
-              this.setCookie('theme-color', 'theme-light', 30)
+
+            this.themeColor = this.getCookie('theme-color');
+            if (this.themeColor === null) {
+              this.themeColor = "theme-light";
+              this.setCookie("theme-color", "theme-light", 30);
+              this.darkMode = false;
             }
-            document.documentElement.classList.add(this.themeColor)
-            console.log(this.themeColor)
-            if(this.themeColor=='theme-dark') this.darkMode=true;
+            if (this.themeColor === 'theme-light') {
+              this.darkMode = false
+            } else if (this.themeColor === 'theme-dark') {
+              this.darkMode = true
+            }
+            document.documentElement.classList.add(this.themeColor);
         },
         setThemeColor(theme) {
           document.documentElement.classList.replace(this.themeColor, theme)

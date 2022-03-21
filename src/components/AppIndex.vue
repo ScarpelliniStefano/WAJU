@@ -1296,6 +1296,7 @@ export default {
         this.darkMode = false;
       }
       this.setCookie("theme-color", theme, 30);
+      this.signalChangeColor();
     },
     setStyle(style) {
       if (style === "full") {
