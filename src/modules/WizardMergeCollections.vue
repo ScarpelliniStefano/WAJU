@@ -1,5 +1,6 @@
 <template>
   <v-sheet>
+      <v-container fluid>
             <v-row v-for="collect in collections" :key="collect.index">
                 <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`${TXT_COLLECTION_NR + collect.index}`"/></v-col>
                 <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`${TXT_DB + collect.index}`" v-model="collect.db"/></v-col>
@@ -30,6 +31,7 @@
             <span style="color: white">{{BTN_SPAN_REMOVE_COLLECTION}}</span>
             </v-btn>
             <v-checkbox v-model="removeDup" color="var(--bg-color)" :label="CHECK_REMOVE_DUPLICATES"></v-checkbox>
+      </v-container>
   </v-sheet>
 </template>
 

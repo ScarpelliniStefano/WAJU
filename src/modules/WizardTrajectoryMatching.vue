@@ -7,7 +7,7 @@
                 <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`${TXT_ALIAS+collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
             <br>
-            <v-container style="border-style: outset;">
+            <v-container fluid>
             <v-row v-for="collect in collectionsPartitions" :key="collect.index">
                 <trajectory-partition :mytrajectoryPartIndex="collect.index" @changeValueTrajectory="changeTextTrajectory($event)"/>
             </v-row>

@@ -1,5 +1,6 @@
 <template>
   <v-sheet>
+      <v-container fluid>
           <v-row>
           <v-col><v-text-field :rules="[rules.required]" v-model="collection" :label="TXT_COLLECTION"/></v-col></v-row>
           <v-row>
@@ -8,6 +9,7 @@
           <v-row>
             <v-col><v-text-field :rules="[rules.required]" v-if="saveInDB" :label="TXT_DATABASE" v-model="db"/></v-col>
           </v-row>
+      </v-container>
   </v-sheet>
 </template>
 

@@ -1,7 +1,9 @@
 <template>
   <v-sheet>
+      <v-container fluid>
         <case-clause @changeValue="changeValue($event)"/>
         <v-checkbox color="var(--bg-color)" v-model="removeDup" :label="CHECK_REMOVE_DUPL"></v-checkbox>
+      </v-container>
   </v-sheet>
 </template>
 

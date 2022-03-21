@@ -1,9 +1,9 @@
 <template>
   <v-sheet>
-      <v-container fluid>
-            <v-row v-for="collect in collectionsWhere" :key="collect.index">
+      <v-container fluid style="border-style: outset;">
+            <v-container fluid v-for="collect in collectionsWhere" :key="collect.index">
                 <where-case :mywhereIndex="collect.index" @changeValue="changeText($event)"/>
-            </v-row>
+            </v-container>
             <br>
             <v-btn
                 tile fab depressed elevation="5" raised
@@ -29,7 +29,6 @@
             <span style="color: white">{{BTN_SPAN_REMOVE_WHERE_CLAUSE}}</span>
             </v-btn>
             <v-container
-                class="px-0"
                 fluid
             >
                 <v-radio-group v-model="radioGroup" row>

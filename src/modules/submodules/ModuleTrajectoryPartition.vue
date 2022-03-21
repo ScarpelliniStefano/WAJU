@@ -3,13 +3,12 @@
             <v-container fluid style="border-style: outset;">
                 <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCondPart"/>
                 <br>
-                
+                <v-container fluid style="border-style: inset;">
                 <v-row v-for="collect in collectionsPartMatch" :key="collect.index">
-                    <v-container style="border-style: inset;">
                     <partition-matching :mypartmatchIndex="collect.index" @changeValueMatch="changeTextMatch($event)"/>
-                    </v-container>
                     <br>
                 </v-row>
+                </v-container>
                 <br>
                 
                 <v-btn

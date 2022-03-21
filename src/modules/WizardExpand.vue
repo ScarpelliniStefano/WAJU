@@ -1,9 +1,9 @@
 <template>
   <v-sheet>
         <v-container fluid>
-            <v-row v-for="collect in collectionsUnpack" :key="collect.index">
+            <v-container fluid v-for="collect in collectionsUnpack" :key="collect.index">
                 <unpack-clause :myunpackIndex="collect.index" @changeValue="changeText($event)"/>
-            </v-row>
+            </v-container>
             <br>
             <v-btn
                 tile fab depressed elevation="5" raised
@@ -29,7 +29,6 @@
             <span style="color: white">&nbsp;{{BTN_SPAN_DEL_UNP_CLAUSE}}</span>
             </v-btn>
             <v-container
-                class="px-0"
                 fluid
             >
                 <v-radio-group v-model="radioGroup" row>

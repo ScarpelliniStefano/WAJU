@@ -1,10 +1,12 @@
 <template>
   <v-sheet>
+      <v-container fluid>
           <v-row>
             <v-col><v-text-field :rules="[rules.required]" v-model="collection" :label="TXT_COLLECTION"/></v-col>
             <v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" :label="TXT_DB" v-model="db"/></v-col>
             <v-col><v-text-field :rules="[rules.required]" v-if="collection!=''" :label="TXT_ALIAS" v-model="alias"/></v-col>
           </v-row>
+      </v-container>
   </v-sheet>
 </template>
 

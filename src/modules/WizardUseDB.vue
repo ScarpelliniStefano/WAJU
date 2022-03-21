@@ -1,5 +1,6 @@
 <template>
 <v-sheet>
+    <v-container fluid>
     <v-row align="center">
         <v-col cols="12">
             <v-row v-for="collect in collections" :key="collect.index">
@@ -31,6 +32,7 @@
             <v-text-field v-model="connString" :label="TXT_CONNECTION"/>
         </v-col>
     </v-row>
+    </v-container>
 </v-sheet>
 </template>
 

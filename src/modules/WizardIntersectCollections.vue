@@ -1,10 +1,12 @@
 <template>
   <v-sheet>
+      <v-container fluid>
             <v-row v-for="collect in collections" :key="collect.index">
                 <v-col><v-text-field :rules="[rules.required,rules.counter]" v-model="collect.collection" :label="`${TXT_COLLECTION_NR + collect.index}`"/></v-col>
                 <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`${TXT_DB + collect.index}`" v-model="collect.db"/></v-col>
                 <v-col><v-text-field :rules="[rules.counter]" v-if="collect.collection!=''" :label="`${TXT_ALIAS + collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
+      </v-container>
   </v-sheet>
 </template>
 

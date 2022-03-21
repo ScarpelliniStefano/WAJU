@@ -1,5 +1,6 @@
 <template>
   <v-sheet>
+      <v-container fluid>
       <v-checkbox color="var(--bg-color)" v-model="fromWeb" :label="CHECK_FROM_WEB"></v-checkbox>
       <v-sheet v-if="fromWeb">
           <v-text-field :rules="[rules.required]" v-model="url" :label="TXT_URL"/>
@@ -10,6 +11,7 @@
           <v-col><v-text-field v-if="collection!=''" :label="TXT_DB" v-model="db"/></v-col>
           </v-row>
       </v-sheet>
+      </v-container>
   </v-sheet>
 </template>
 

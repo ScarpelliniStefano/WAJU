@@ -7,7 +7,6 @@
                     <v-text-field :rules="[rules.required,rules.counterSource]" :label="TXT_SOURCE_FIELDS" v-model="collect.sourceFields"/>
                 </v-row>
                 </v-container>
-                <br>
                 <v-btn
                     tile fab depressed elevation="5" raised
                     dark small
@@ -64,7 +63,6 @@
                         </v-container>
                         </v-col>
                     </v-row>
-                    <br>
                     <v-btn
                         tile fab depressed elevation="5" raised
                         dark small

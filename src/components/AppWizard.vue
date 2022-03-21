@@ -2,7 +2,7 @@
     <v-sheet class="pt-6" :dark="darkMode" height="100%">
       <center>
         <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="90%" :dark="darkMode">
-            <v-select :dark="darkMode" v-model="modulo.selected" :items="arrayModel" :label="SEL_TXT_MODULES"></v-select>
+            <v-select filled :dark="darkMode" v-model="modulo.selected" :items="arrayModel" :label="SEL_TXT_MODULES"></v-select>
             <modules :dark="darkMode" :select="modulo.selected" :maincol="mainColor" :indice="modulo.index" @changeValue="changeValue($event)"></modules><br>
         </v-sheet> 
         <br>
@@ -30,8 +30,8 @@
           <span style="color: white">&nbsp;{{BTN_SPAN_REMOVE_MODULE}}</span>
         </v-btn>
       
-        <v-textarea readonly v-model="valueString" :dark="darkMode"/>
-        <br>
+        <v-textarea color="var(--border-color)" readonly v-model="valueString" :dark="darkMode" style="width: 90%" />
+        <br/>
         <v-btn
             tile fab depressed elevation="5" raised
             :dark="darkMode" large

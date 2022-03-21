@@ -3,7 +3,7 @@
             {{this.mywhereIndex}}-->
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCond"/>
+                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="1" auto-grow v-model="orCond"/>
                 <v-text-field :rules="[rules.required]" :label="TXT_FIELDS_SRC_ARR" v-model="sourceFields"/>
                 <v-text-field :rules="[rules.required]" :label="TXT_FIELDS_DEST_ARR" v-model="destFields"/>
             </v-container>

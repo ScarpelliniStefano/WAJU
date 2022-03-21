@@ -1,9 +1,9 @@
 <template>
   <v-sheet>
         <v-container fluid>
-            <v-row v-for="collect in collectionsPartitions" :key="collect.index">
+            <v-container fluid v-for="collect in collectionsPartitions" :key="collect.index">
                 <partition-clause :mypartitionIndex="collect.index" @changeValue="changeText($event)"/>
-            </v-row>
+            </v-container>
             <br>
             <v-btn
                 tile fab depressed elevation="5" raised

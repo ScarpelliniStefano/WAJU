@@ -288,7 +288,7 @@ const lang = Object.freeze({
                 TXT_FIELDS_DEST_ARR: 'Destination array\'s array'
             },
             WHERE_CASE: {
-                TXT_COLLECT_CLAUSE: 'Coleections clause',
+                TXT_COLLECT_CLAUSE: 'Collections clause',
                 CHECK_GEN_SECTION: 'Do you want to add a generate Section?'
             }
         },
