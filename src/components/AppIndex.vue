@@ -1637,9 +1637,7 @@ export default {
 #settings {
   text-align: right;
 }
-</style>
 
-<style scoped>
 #body .divheader {
   flex: 0 1 auto;
   justify-items: center;
