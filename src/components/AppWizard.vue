@@ -261,7 +261,9 @@ export default {
         refresh(){
             this.valueString="";
             this.modulesData.forEach((element)=>{
+              if(element.value !== ''){
                 this.valueString+=element.value+"\r\n";
+              }
             })
         },
         checkMinus(){
