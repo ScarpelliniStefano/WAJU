@@ -1,5 +1,5 @@
 <template>
-  <v-sheet :dark="darkMode" id="body" >
+  <v-sheet :dark="darkMode" id="body">
     <v-sheet
       :dark="darkMode"
       elevation="10"
@@ -7,7 +7,7 @@
       class="divheader"
       style="height: 50px; padding-y: 0 25px"
     >
-      <h1 id="title" class="display-2 font-weight-bold">{{ TITLE }}</h1>
+      <h1 id="title" class="display-2 noselect font-weight-bold">{{ TITLE }}</h1>
       <v-icon
         style="
           float: right;
@@ -152,6 +152,7 @@
       </v-icon>
 
       <h4
+      class="noselect"
         style="
           float: right;
           margin-right: 20px;
@@ -163,7 +164,7 @@
       </h4>
 
       <v-bottom-sheet v-model="settings" :dark="darkMode">
-        <v-sheet class="text-center" height="350px" min-width="700px">
+        <v-sheet class="text-center" height="175px" min-width="700px">
           <v-btn class="mt-6" text color="var(--border-color)" @click="settings = !settings">
             <span>{{ BTN_SPAN_SETTINGS }}</span>
           </v-btn>
@@ -196,6 +197,8 @@
               {{FIRST_DIALOG.DIALOG_TEXT_THIRD}}
               <br/>
               {{FIRST_DIALOG.DIALOG_TEXT_FOURTH}}
+              <br/>
+              {{FIRST_DIALOG.DIALOG_TEXT_FIFTH}}
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -209,6 +212,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        
       </v-row>
 
 
@@ -669,7 +673,8 @@ export default {
         DIALOG_TEXT_FIRST:lang.INDEX.DIALOG.DIALOG_TEXT_FIRST,
         DIALOG_TEXT_SECOND:lang.INDEX.DIALOG.DIALOG_TEXT_SECOND,
         DIALOG_TEXT_THIRD:lang.INDEX.DIALOG.DIALOG_TEXT_THIRD,
-        DIALOG_TEXT_FOURTH:lang.INDEX.DIALOG.DIALOG_TEXT_FOURTH
+        DIALOG_TEXT_FOURTH:lang.INDEX.DIALOG.DIALOG_TEXT_FOURTH,
+        DIALOG_TEXT_FIFTH:lang.INDEX.DIALOG.DIALOG_TEXT_FIFTH
       },
 
       //ICON
@@ -705,8 +710,8 @@ export default {
   },
   created() {
     //ADD Commenti
-    this.themeColor = this.getCookie("theme-color");
-    if (!this.themeColor) {
+    this.themeColor = this.getCookie('theme-color');
+    if (this.themeColor === null) {
       this.themeColor = "theme-light";
       this.setCookie("theme-color", "theme-light", 30);
       this.darkMode = false;
@@ -716,12 +721,12 @@ export default {
     } else if (this.themeColor === 'theme-dark') {
       this.darkMode = true
     }
-    document.documentElement.classList.add("theme-light");
+    document.documentElement.classList.add(this.themeColor);
 
     this.mainColor = this.getCookie("main-color");
     if (!this.mainColor) {
-      this.mainColor = "black";
-      this.setCookie("main-color", "black", 30);
+      this.mainColor = "document-color";
+      this.setCookie("main-color", "document-color", 30);
     }
     document.documentElement.classList.add(this.mainColor);
 
@@ -1286,12 +1291,8 @@ export default {
       document.documentElement.classList.replace(this.themeColor, theme);
       this.themeColor = theme;
       if (theme == "theme-dark") {
-        this.bgColor = "grey darken-4";
-        this.contColor = "grey darken-3";
         this.darkMode = true;
       } else {
-        this.bgColor = "grey lighten-5";
-        this.contColor = "white";
         this.darkMode = false;
       }
       this.setCookie("theme-color", theme, 30);
@@ -1675,11 +1676,6 @@ export default {
 </style>
 
 <style scoped>
-#body {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-}
 #body .divheader {
   flex: 0 1 auto;
   justify-items: center;
@@ -1807,8 +1803,8 @@ export default {
 }
 
 :root.theme-dark {
-  --bg-theme-color: #222222;
-  --bg-div-color: #222222;
+  --bg-theme-color: #1E1E1E;
+  --bg-div-color: #1E1E1E;
 }
 
 button {

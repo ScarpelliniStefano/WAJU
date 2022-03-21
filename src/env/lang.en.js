@@ -40,14 +40,15 @@ const lang = Object.freeze({
         TIP_CONFIG_COLL: 'Config. & Collection',
         TIP_LOG: 'Log',
         TIP_SAVE_UNDO: 'Save & BackTrack',
-        TIP_EXE_COMMAND_WIZARD: 'Execute a command & Wizard',
+        TIP_EXE_COMMAND_WIZARD: 'Execute & Wizard',
         BTN_SPAN_SETTINGS: 'Close',
         DIALOG:{
             DIALOG_TITLE: 'Information',
             DIALOG_TEXT_FIRST: '1. If you hold down a button (except Upload Configuration and Temporary Collection), will appear an explanation of what the button can do.',
             DIALOG_TEXT_SECOND: '2. Settings are updated and saved in real time.',
             DIALOG_TEXT_THIRD: '3. Wizard will be open in a new Tab.',
-            DIALOG_TEXT_FOURTH: '4. Every collection will be open in a new Tab.'
+            DIALOG_TEXT_FOURTH: '4. Every collection will be open in a new Tab.',
+            DIALOG_TEXT_FIFTH: '5. From the width of 700px to 960px, tablet mode starts. In this mode, order of components are: [1] Execute & Wizard [2] Log [3] Save & Back [4] Configurations/Collections' 
         }
         
     }),
@@ -66,6 +67,10 @@ const lang = Object.freeze({
         MAIN_THEME: 'Main Theme'
     }),
     WIZARD: Object.freeze({
+        WARNING:{
+            DIALOG_TITLE: 'Warning',
+            DIALOG_TEXT: 'If you log out from Homepage or reload it, Wizard will not send any message to the client because Wizard and Homepage are linked.'
+            },
         MODULES: {
             SAVE_AS: {
                 TXT_COLLECTION: 'Collection\'s name',

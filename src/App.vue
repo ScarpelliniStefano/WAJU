@@ -17,7 +17,7 @@ export default {
   }),
 
   created() {
-    document.title = "Loading...";
+    document.title = "Loading JCOUIweb...";
     if (!isPreDone()) {
       connect();
     }
@@ -45,14 +45,12 @@ export default {
   flex-flow: column;
   height: 100%;
 }
-#body .divheader {
-  flex: 0 1 auto;
-}
+</style>
 
-#body .divcontent {
-  flex: 1 0 auto;
-}
-#third {
-  position: relative;
+<style>
+html {
+  height: 100%;
+  margin: 0;
+  background-color: var(--bg-div-color);
 }
 </style>

@@ -15,10 +15,10 @@
                     <v-sheet :dark="darkMode" class="pa-3" :height="height - 32" id="boxLog">
                         <ul readonly style="font-size: 16px" height="100%" name="log-text" label="Logs" id="ul_send">
                             <li :key="log.id" v-for="log in arrayLog.logs">
-                                <p v-if="log.type == 'LOG'" style="font-family: Consolas; color: var(--border-color)">
+                                <p v-if="log.type === 'LOG'" style="font-family: Consolas; color: var(--border-color)">
                                     {{ log.message }}
                                 </p>
-                                <p v-else style="font-family: Consolas; color: red">
+                                <p v-if="log.type !== 'LOG'" style="font-family: Consolas; color: red">
                                     {{ log.message }}
                                 </p>
                                 <v-divider></v-divider>

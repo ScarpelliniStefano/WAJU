@@ -1,5 +1,5 @@
 <template>
-    <v-sheet :dark="darkMode" height="100%">
+    <v-sheet class="pt-6" :dark="darkMode" height="100%">
       <center>
         <v-sheet v-for="modulo in modulesData" :key="modulo.index" elevation="2" width="90%" :dark="darkMode">
             <v-select :dark="darkMode" v-model="modulo.selected" :items="arrayModel" :label="SEL_TXT_MODULES"></v-select>
@@ -77,6 +77,37 @@
           </v-btn>
         </template>
       </v-snackbar>
+      <v-row justify="center">
+        <v-dialog
+          v-model="firstDialogWizard"
+          persistent
+          max-width="500"
+          :dark="darkMode"
+        >
+          <v-card>
+            <v-card-title class="text-h5 red darken-2">
+              <v-icon left color="black">
+                mdi-alert
+              </v-icon>
+              {{DIALOG_TITLE}}
+            </v-card-title>
+            <v-card-text class="pt-8">
+              {{DIALOG_TEXT}}
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="red darken-2"
+                text
+                @click="setFirstDialogWizard()"
+              >
+                OK
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        
+      </v-row>
     </v-sheet>
     
 </template>
@@ -89,9 +120,9 @@ export default {
         modulesData:[{
             index:1,
             selected:'',
-            value:''
+            value:'',
         }],
-        
+        firstDialogWizard: true,
         numberWizard:'',
         mainColor: "black",
         themeColor: '',
@@ -124,6 +155,8 @@ export default {
         BTN_SPAN_APPEND:lang.WIZARD.SPECIFICATION.BTN_SPAN_APPEND,
         HINT_RESET:lang.WIZARD.SPECIFICATION.HINT_RESET,
         HINT_APPEND:lang.WIZARD.SPECIFICATION.HINT_APPEND,
+        DIALOG_TITLE: lang.WIZARD.WARNING.DIALOG_TITLE,
+        DIALOG_TEXT: lang.WIZARD.WARNING.DIALOG_TEXT,
 
         //longClick
         isLongClick:false,
@@ -142,6 +175,11 @@ export default {
       }
     },
     created(){
+       if(this.getCookie('firstDialogWizard') === null){
+        this.setCookie('firstDialogWizard','true', 30)
+      }
+      this.firstDialogWizard = (this.getCookie('firstDialogWizard') === 'true')
+
       document.title = this.LBL_TITLE
         this.changeColor();
         this.connectionPage=new WebSocket('ws://'+process.env.VUE_APP_WEB_SOCKET_SERVER);
@@ -159,8 +197,14 @@ export default {
       this.numberWizard=this.$route.query.id
       this.addMouseOverEvent('btnAppend',this.HINT_APPEND);
       this.addMouseOverEvent('btnReset',this.HINT_RESET);
+
+     
     },
     methods:{
+      setFirstDialogWizard(){
+        this.firstDialogWizard = false
+        this.setCookie('firstDialogWizard','false', 30)
+      },
         changeColor(){
             document.documentElement.classList.remove(this.mainColor);
             this.mainColor = this.getCookie("main-color");

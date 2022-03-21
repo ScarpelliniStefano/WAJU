@@ -1,14 +1,15 @@
 <template>
     <v-container>
-        <v-row align="center">
+        <v-row align="center" justify="center">
             <v-col cols="2">
-                {{MAIN_COLOR}}
-            </v-col>
-            <v-col cols="1">
-                <v-btn class="theme-btn red accent-4" fab small @click="setMainColor('red')"></v-btn>
-            </v-col>
-            <v-col cols="1">
-                <v-btn class="theme-btn pink accent-3" fab small @click="setMainColor('pink')"></v-btn>
+                <v-chip
+                    class="ma-2"
+                    color="var(--border-color)"
+                    label
+                    outlined
+                    >
+                    {{MAIN_COLOR}}
+                </v-chip>
             </v-col>
             <v-col cols="1">
                 <v-btn class="theme-btn document-color" fab small color="#0b77b8" @click="setMainColor('document-color')"></v-btn>
@@ -19,10 +20,19 @@
             <v-col cols="1">
                 <v-btn class="theme-btn amber accent-4" fab small @click="setMainColor('amber')"></v-btn>
             </v-col>
-        </v-row>
-        <v-row align="center">
+            <v-col cols="1">
+                <v-btn class="theme-btn pink accent-3" fab small @click="setMainColor('pink')"></v-btn>
+            </v-col>
+            <v-divider vertical/>
             <v-col cols="2">
-                {{MAIN_THEME}}
+                <v-chip
+                    class="ma-2"
+                    :dark="darkMode"
+                    label
+                    outlined
+                    >
+                    {{MAIN_THEME}}
+                </v-chip>
             </v-col>
             <v-col cols="1">
                 <v-btn class="theme-btn white" fab small @click="setThemeColor('theme-light')"></v-btn>
