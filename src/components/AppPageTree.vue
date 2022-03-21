@@ -4,61 +4,60 @@
       <v-progress-circular indeterminate size="200"></v-progress-circular>
     </v-overlay>
     <v-container>
-    <v-row>
-      <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <v-sheet rounded elevation="10" width="100%" :dark="darkMode">
-          <center>
-            <h1>{{ this.title }}</h1>
-          </center>
-          <center>
-            <h3>{{ new Date(this.datetime).toLocaleString() }}</h3>
-          </center>
-          <center>
-            <h4>
-              {{ H_TOTAL_ITEM + this.valTotal }} - {{H_INITIAL_DOCUMENT + this.valInitial}} - {{H_FINAL_DOCUMENT + this.valFinal }}
-            </h4>
-          </center>
-          <v-row>
-            <v-sheet v-if="this.error != ''" :dark="darkMode">
-              <center>
-                <span class="label danger">{{ this.error }}</span>
-              </center>
-            </v-sheet>
-          </v-row>
-          <v-row align="center" class="text-center pt-3">
-            <v-spacer></v-spacer>
-            <v-col cols="1">
-              <v-select 
-                :dark="darkMode"
-                v-model="size"
-                :items="itemsSize"
-                :label="SELECT_SIZE"
-                dense
-              ></v-select>
-            </v-col>
-            <v-spacer></v-spacer>
-          </v-row>
-          <v-row align="center" class="text-center">
+      <v-row>
+        <v-col cols="12" sm="12" md="12" lg="12" xl="12">
+          <v-sheet rounded elevation="10" width="100%" :dark="darkMode">
+            <center>
+              <h1>{{ this.title }}</h1>
+            </center>
+            <center>
+              <h3>{{ new Date(this.datetime).toLocaleString() }}</h3>
+            </center>
+            <center>
+              <h4>
+                {{ H_TOTAL_ITEM + this.valTotal }} -
+                {{ H_INITIAL_DOCUMENT + this.valInitial }} -
+                {{ H_FINAL_DOCUMENT + this.valFinal }}
+              </h4>
+            </center>
+            <v-row>
+              <v-sheet v-if="this.error != ''" :dark="darkMode">
+                <center>
+                  <span class="label danger">{{ this.error }}</span>
+                </center>
+              </v-sheet>
+            </v-row>
+            <v-row align="center" class="text-center pt-3">
+              <v-spacer></v-spacer>
+              <v-col cols="1">
+                <v-select
+                  :dark="darkMode"
+                  v-model="size"
+                  :items="itemsSize"
+                  :label="SELECT_SIZE"
+                  dense
+                ></v-select>
+              </v-col>
+              <v-spacer></v-spacer>
+            </v-row>
+            <v-row align="center" class="text-center">
               <v-col cols="3" class="pl-9">
-                    <v-btn :dark="darkMode"
-                      id="btnSave"
-                      color="var(--border-color)"
-                      elevation="2"
-                      style="
-                        border-radius: 4px;
-                        border-style: solid;
-                        border-width: 1px;
-                      "
-                      @click="download('TreeColl')"
-                      width="100%"
-                    >
-                      <v-icon color="white">{{ BTN_SAVE }}</v-icon>
-                      <span style="color: white;">{{BTN_SPAN_SAVE_TREE}}</span>
-                    </v-btn>
+                <v-btn
+                  :dark="darkMode"
+                  id="btnSave"
+                  color="var(--border-color)"
+                  elevation="2"
+                  style="border-radius: 4px; border-style: solid; border-width: 1px"
+                  @click="download('TreeColl')"
+                  width="100%"
+                >
+                  <v-icon color="white">{{ BTN_SAVE }}</v-icon>
+                  <span style="color: white">{{ BTN_SPAN_SAVE_TREE }}</span>
+                </v-btn>
               </v-col>
               <v-col cols="6">
                 <v-pagination
-                :dark="darkMode"
+                  :dark="darkMode"
                   v-model="page"
                   :length="pageCount"
                   :total-visible="7"
@@ -68,83 +67,91 @@
                 ></v-pagination>
               </v-col>
               <v-col cols="3" class="pr-9">
-                    <v-btn
-                      :dark="darkMode"
-                      id="btnExpand"
-                      color="var(--border-color)"
-                      elevation="2"
-                      style="
-                        border-radius: 4px;
-                        border-style: solid;
-                        border-width: 1px;
-                      "
-                      @click="setDepth()"
-                      width="100%"
-                    >
-                      <v-icon color="white">{{ BTN_EXPAND }}</v-icon>
-                      <span style="color: white;">{{BTN_SPAN_EXPAND}}</span>
-                    </v-btn>
+                <v-btn
+                  :dark="darkMode"
+                  id="btnExpand"
+                  color="var(--border-color)"
+                  elevation="2"
+                  style="border-radius: 4px; border-style: solid; border-width: 1px"
+                  @click="setDepth()"
+                  width="100%"
+                >
+                  <v-icon color="white">{{ BTN_EXPAND }}</v-icon>
+                  <span style="color: white">{{ BTN_SPAN_EXPAND }}</span>
+                </v-btn>
               </v-col>
-          </v-row>
-        </v-sheet>
-      </v-col>
-      <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-        <v-sheet :dark="darkMode" rounded min-height="350px" height="calc(60vh)" elevation="5" id="treeViewer" style="overflow: auto;"></v-sheet>
-      </v-col>
-    </v-row>
+            </v-row>
+          </v-sheet>
+        </v-col>
+        <v-col cols="12" sm="12" md="12" lg="12" xl="12">
+          <v-sheet
+            :dark="darkMode"
+            rounded
+            min-height="350px"
+            height="calc(60vh)"
+            elevation="5"
+            id="treeViewer"
+            style="overflow: auto"
+          ></v-sheet>
+        </v-col>
+      </v-row>
     </v-container>
     <v-snackbar
-        v-model="wizardAlert" elevation="5" timeout="4000" max-width="70%" :dark="darkMode"
-        >
-            <p class="v-snack__content">{{lblPopup}}</p>
+      v-model="wizardAlert"
+      elevation="5"
+      timeout="4000"
+      max-width="70%"
+      :dark="darkMode"
+    >
+      <p class="v-snack__content">{{ lblPopup }}</p>
 
-        <template v-slot:action="{ attrs }">
-          <v-btn
-            :dark="darkMode"
-            color="var(--border-color)"
-            text
-            v-bind="attrs"
-            @click="wizardAlert = false"
-          >
-            Ok
-          </v-btn>
-        </template>
-      </v-snackbar>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          :dark="darkMode"
+          color="var(--border-color)"
+          text
+          v-bind="attrs"
+          @click="wizardAlert = false"
+        >
+          Ok
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-sheet>
 </template>
 <script>
-import jsonview from '@pgrabovets/json-view';
-import lang from '../env/lang.en'
-import icon from '../env/icon'
+import jsonview from "@pgrabovets/json-view";
+import lang from "../env/lang.en";
+import icon from "../env/icon";
 
 export default {
-  name: 'AppPageTree',
+  name: "AppPageTree",
   //components: { 'json-view': JSONView },
   data: function () {
     return {
       expand: false,
       numDepth: 1,
-      textIRTreeCol: '',
-      datetime: '',
-      title: '',
+      textIRTreeCol: "",
+      datetime: "",
+      title: "",
       valInitial: 0,
       valFinal: 0,
       valTotal: 0,
       connectionPage: null,
       page: 1,
-      pageCount:0,
+      pageCount: 0,
       size: 25,
-      tree:null,
-      itemsSize:[5,10,15,25,50],
+      tree: null,
+      itemsSize: [5, 10, 15, 25, 50],
       mounted: false,
       overlay: true,
       settings: false,
-      themeColor: '',
-      mainColor: '',
-      fontColor: '',
+      themeColor: "",
+      mainColor: "",
+      fontColor: "",
       fontSize: 0,
-      error: '',
-      darkMode:false,
+      error: "",
+      darkMode: false,
       //promise: ''
 
       //LABEL
@@ -154,270 +161,272 @@ export default {
       SELECT_SIZE: lang.PAGE_TREE.SELECT_SIZE,
       BTN_SPAN_SAVE_TREE: lang.PAGE_TREE.BTN_SPAN_SAVE_TREE,
       BTN_SPAN_EXPAND: lang.PAGE_TREE.BTN_SPAN_EXPAND,
-      HINT_EXPAND:lang.PAGE_TREE.HINT_EXPAND,
-      HINT_SAVE:lang.PAGE_TREE.HINT_SAVE,
+      HINT_EXPAND: lang.PAGE_TREE.HINT_EXPAND,
+      HINT_SAVE: lang.PAGE_TREE.HINT_SAVE,
 
       //ICON
       BTN_SAVE: icon.PAGE_TREE.BTN_SAVE,
       BTN_EXPAND: icon.PAGE_TREE.BTN_EXPAND,
 
       //longClick
-      isLongClick:false,
-      timerId:'',
-      lblPopup:'',
+      isLongClick: false,
+      timerId: "",
+      lblPopup: "",
       wizardAlert: false,
-    }
+    };
   },
   watch: {
     size: function () {
-      this.changeDimension()
+      this.changeDimension();
     },
     page: function () {
-      this.changeDimension()
+      this.changeDimension();
     },
     textIRTreeCol: function (newVal, oldVal) {
       if (newVal != oldVal) {
-        if ((newVal == '' || newVal == undefined) && this.error == '') {
-          this.textTreeEmpty = true
-          this.overlay = true
+        if ((newVal == "" || newVal == undefined) && this.error == "") {
+          this.textTreeEmpty = true;
+          this.overlay = true;
         } else {
-          this.textTreeEmpty = false
-          this.overlay = false
-         /* console.log("pulisci");
+          this.textTreeEmpty = false;
+          this.overlay = false;
+          /* console.log("pulisci");
           clearInterval(this.promise);
           console.log(this.promise)*/
         }
       }
-      console.log(document.getElementById('treeViewer').innerHTML)
+      console.log(document.getElementById("treeViewer").innerHTML);
     },
   },
   computed: {
     isDisable() {
-      return this.irTreeV.length > 0
+      return this.irTreeV.length > 0;
     },
   },
   created() {
-    document.title = this.title + '- JCOUI Web'
+    document.title = this.title + "- JCOUI Web";
     //ADD Commenti
-    this.themeColor = this.getCookie('theme-color')
+    this.themeColor = this.getCookie("theme-color");
     if (!this.themeColor) {
-      this.themeColor = 'theme-light'
-      this.setCookie('theme-color', 'theme-light', 30)
+      this.themeColor = "theme-light";
+      this.setCookie("theme-color", "theme-light", 30);
     }
-    document.documentElement.classList.add(this.themeColor)
-    console.log(this.themeColor)
-    if(this.themeColor=='theme-dark') this.darkMode=true;
+    document.documentElement.classList.add(this.themeColor);
+    console.log(this.themeColor);
+    if (this.themeColor == "theme-dark") this.darkMode = true;
 
-    this.mainColor = this.getCookie('main-color')
+    this.mainColor = this.getCookie("main-color");
     if (!this.mainColor) {
-      this.mainColor = 'black'
-      this.setCookie('main-color', 'black', 30)
+      this.mainColor = "black";
+      this.setCookie("main-color", "black", 30);
     }
-    document.documentElement.classList.add(this.mainColor)
+    document.documentElement.classList.add(this.mainColor);
 
-    this.fontColor = this.getCookie('font-color')
+    this.fontColor = this.getCookie("font-color");
     if (!this.fontColor) {
-      this.fontColor = 'font-black'
-      this.setCookie('font-color', 'font-black', 30)
+      this.fontColor = "font-black";
+      this.setCookie("font-color", "font-black", 30);
     }
-    document.documentElement.classList.add(this.fontColor)
+    document.documentElement.classList.add(this.fontColor);
 
-    this.fontSize = this.getCookie('font-size')
+    this.fontSize = this.getCookie("font-size");
     if (!this.fontSize) {
-      this.fontSize = 14
-      this.setCookie('font-size', '14', 30)
+      this.fontSize = 14;
+      this.setCookie("font-size", "14", 30);
     }
-    document.documentElement.classList.add(this.fontSize)
+    document.documentElement.classList.add(this.fontSize);
   },
   mounted() {
-    this.changeDimension()
-    this.addMouseOverEvent('btnExpand',this.HINT_EXPAND);
-    this.addMouseOverEvent('btnSave',this.HINT_SAVE);
+    this.changeDimension();
+    this.addMouseOverEvent("btnExpand", this.HINT_EXPAND);
+    this.addMouseOverEvent("btnSave", this.HINT_SAVE);
   },
   methods: {
-    calculatePageSize(){
-      if((this.valTotal%this.size)!=0){
-        this.pageCount=(Number)(Math.floor((this.valTotal/this.size) + 1))
-      }else{
-        this.pageCount=(Number)((this.valTotal/this.size).toFixed())
+    calculatePageSize() {
+      if (this.valTotal % this.size != 0) {
+        this.pageCount = Number(Math.floor(this.valTotal / this.size + 1));
+      } else {
+        this.pageCount = Number((this.valTotal / this.size).toFixed());
       }
     },
     setMainColor(color) {
-      document.documentElement.classList.replace(this.mainColor, color)
-      this.mainColor = color
-      this.setCookie('main-color', color, 30)
+      document.documentElement.classList.replace(this.mainColor, color);
+      this.mainColor = color;
+      this.setCookie("main-color", color, 30);
     },
     setThemeColor(theme) {
-      document.documentElement.classList.replace(this.themeColor, theme)
-      this.themeColor = theme
-      this.setCookie('theme-color', theme, 30)
+      document.documentElement.classList.replace(this.themeColor, theme);
+      this.themeColor = theme;
+      this.setCookie("theme-color", theme, 30);
     },
 
     setCookie(name, value, daysToLive) {
       // Encode value in order to escape semicolons, commas, and whitespace
-      var cookie = name + '=' + encodeURIComponent(value)
-      if (typeof daysToLive === 'number') {
+      var cookie = name + "=" + encodeURIComponent(value);
+      if (typeof daysToLive === "number") {
         /* Sets the max-age attribute so that the cookie expires
             after the specified number of days */
-        cookie += ';secure; max-age=' + daysToLive * 24 * 60 * 60
-        document.cookie = cookie
+        cookie += ";secure; max-age=" + daysToLive * 24 * 60 * 60;
+        document.cookie = cookie;
       }
     },
     getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array
-      var cookieArr = document.cookie.split(';')
+      var cookieArr = document.cookie.split(";");
       // Loop through the array elements
       for (var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split('=')
+        var cookiePair = cookieArr[i].split("=");
         /* Removing whitespace at the beginning of the cookie name
           and compare it with the given string */
         if (name == cookiePair[0].trim()) {
           // Decode the cookie value and return
-          return decodeURIComponent(cookiePair[1])
+          return decodeURIComponent(cookiePair[1]);
         }
       }
       // Return null if not found
-      return null
+      return null;
     },
-    maxDimSize(){
-      if(this.valTotal>1000) return 1000;
+    maxDimSize() {
+      if (this.valTotal > 1000) return 1000;
       else return this.valTotal;
     },
     changeDimension() {
-      console.log(this.page + ' ' + this.size)
-      if (localStorage.getItem('textTree_' + this.$route.query.id)) {
-        this.connectionPage = new WebSocket('ws://'+process.env.VUE_APP_WEB_SOCKET_SERVER)
+      console.log(this.page + " " + this.size);
+      if (localStorage.getItem("textTree_" + this.$route.query.id)) {
+        this.connectionPage = new WebSocket(
+          "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
+        );
         if (this.connectionPage.readyState != 1) {
-          this.overlay = false
+          this.overlay = false;
         }
         this.connectionPage.onclose = () => {
-          this.error = 'server save/open closed'
-        }
+          this.error = "server save/open closed";
+        };
         this.connectionPage.onopen = () => {
           this.connectionPage.send(
-            'OPEN###' +
-              'textTree_' +
+            "OPEN###" +
+              "textTree_" +
               this.$route.query.id +
-              '###' +
+              "###" +
               (this.page - 1) +
-              ',' +
+              "," +
               this.size
-          )
-          console.log('OPEN###' +
-              'textTree_' +
+          );
+          console.log(
+            "OPEN###" +
+              "textTree_" +
               this.$route.query.id +
-              '###' +
+              "###" +
               (this.page - 1) +
-              ',' +
-              this.size)
-        }
-        let jsonData = ''
+              "," +
+              this.size
+          );
+        };
+        let jsonData = "";
         this.connectionPage.onmessage = (message) => {
-          if (message == 'SERVER CLOSED') {
-            this.error = 'server save/open closed'
+          if (message == "SERVER CLOSED") {
+            this.error = "server save/open closed";
           } else {
-            jsonData = JSON.parse(message.data)
-            this.datetime = jsonData.datetime
-            this.title = jsonData.name
-            this.valTotal = jsonData.tot
-            this.itemsSize=[5];
-            if(this.valTotal>5){
+            jsonData = JSON.parse(message.data);
+            this.datetime = jsonData.datetime;
+            this.title = jsonData.name;
+            this.valTotal = jsonData.tot;
+            this.itemsSize = [5];
+            if (this.valTotal > 5) {
               this.itemsSize.push(10);
             }
-            if(this.valTotal>10){
+            if (this.valTotal > 10) {
               this.itemsSize.push(15);
             }
-            if(this.valTotal>15){
+            if (this.valTotal > 15) {
               this.itemsSize.push(25);
             }
-            if(this.valTotal>25){
+            if (this.valTotal > 25) {
               this.itemsSize.push(50);
             }
-            if(this.valTotal>50){
+            if (this.valTotal > 50) {
               this.itemsSize.push(100);
             }
-            if(this.valTotal>100){
+            if (this.valTotal > 100) {
               this.itemsSize.push(200);
             }
-            this.valInitial = jsonData.initial
-            this.valFinal = jsonData.final
+            this.valInitial = jsonData.initial;
+            this.valFinal = jsonData.final;
             if (!this.mounted) {
-              this.mounted = true
-              if (this.valTotal < 25) this.size = this.valTotal
-              else this.size = 25
+              this.mounted = true;
+              if (this.valTotal < 25) this.size = this.valTotal;
+              else this.size = 25;
             }
-            this.tree = jsonview.createWithInitial(jsonData.tree,this.valInitial+1,this.darkMode);
-            document.querySelector('#treeViewer').innerHTML='';
-              jsonview.render(this.tree, document.querySelector('#treeViewer'));
-              jsonview.expandDepth(this.tree,this.numDepth);
-            this.textIRTreeCol = jsonData.tree
+            this.tree = jsonview.createWithInitial(
+              jsonData.tree,
+              this.valInitial + 1,
+              this.darkMode
+            );
+            document.querySelector("#treeViewer").innerHTML = "";
+            jsonview.render(this.tree, document.querySelector("#treeViewer"));
+            jsonview.expandDepth(this.tree, this.numDepth);
+            this.textIRTreeCol = jsonData.tree;
             this.calculatePageSize();
-            document.title = this.title + ' | JCOUI Web'
+            document.title = this.title + " | JCOUI Web";
           }
-        }
+        };
       }
-
-     
     },
-    setDepth() { 
-      if(!this.isLongClick){
+    setDepth() {
+      if (!this.isLongClick) {
         clearTimeout(this.timerId);
-        if(this.numDepth<2) jsonview.expand(this.tree);
-        else{
+        if (this.numDepth < 2) jsonview.expand(this.tree);
+        else {
           jsonview.collapse(this.tree);
-          jsonview.expandDepth(this.tree,1);
-        } 
+          jsonview.expandDepth(this.tree, 1);
+        }
         this.numDepth = this.numDepth < 2 ? 10 : 1;
       }
-      
-     
     },
     download(filename) {
-      if(!this.isLongClick){
-        clearTimeout(this.timerId)
-        var element = document.createElement('a')
+      if (!this.isLongClick) {
+        clearTimeout(this.timerId);
+        var element = document.createElement("a");
         element.setAttribute(
-          'href',
-          'data:application/json,' +
+          "href",
+          "data:application/json," +
             encodeURIComponent(
               '{ \n "documents" : \n ' +
-                JSON.stringify(this.textIRTreeCol, null, '\t') +
-                '\n}',
-            ),
-        )
-        element.setAttribute('download', filename + '.json')
+                JSON.stringify(this.textIRTreeCol, null, "\t") +
+                "\n}"
+            )
+        );
+        element.setAttribute("download", filename + ".json");
 
-        element.style.display = 'none'
-        document.body.appendChild(element)
+        element.style.display = "none";
+        document.body.appendChild(element);
 
-        element.click()
+        element.click();
 
-        document.body.removeChild(element)
+        document.body.removeChild(element);
       }
     },
 
-    addMouseOverEvent(idElement,message){
-      document.getElementById(idElement).onmousedown = (args) =>{
-        this.isLongClick=false;
-        this.timerId=setTimeout(() => fn.apply(null, [args]), 500)
-      }
-    
+    addMouseOverEvent(idElement, message) {
+      document.getElementById(idElement).onmousedown = (args) => {
+        this.isLongClick = false;
+        this.timerId = setTimeout(() => fn.apply(null, [args]), 500);
+      };
 
       var fn = () => {
-        this.wizardAlert=false;
-        this.lblPopup=message;
-        this.wizardAlert=true;
-        this.isLongClick=true;
-      }
-    }
+        this.wizardAlert = false;
+        this.lblPopup = message;
+        this.wizardAlert = true;
+        this.isLongClick = true;
+      };
+    },
   },
-}
+};
 </script>
 
 <style scoped>
-
 .v-snack__content {
-    font-size: 1.8vh;
+  font-size: 1.8vh;
 }
 
 .label {
@@ -668,7 +677,7 @@ div.boxInfo {
 
 <style scoped>
 .v-snack__content {
-    font-size: 1.8vh;
+  font-size: 1.8vh;
 }
 
 .tooltip .tooltiptext {
@@ -726,7 +735,7 @@ div.boxInfo {
 }
 
 .darkBG {
-  background-color:#000;
+  background-color: #000;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

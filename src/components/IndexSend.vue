@@ -93,7 +93,7 @@
                     elevation="5"
                     @click="sendMessageArr()"
                   >
-                    <v-icon color="white" :size="width / 15">{{BTN_EXECUTE}}</v-icon>
+                    <v-icon color="white" :size="width / 15">{{ BTN_EXECUTE }}</v-icon>
                   </v-btn>
                   <v-btn
                     id="btnExecute"
@@ -165,7 +165,7 @@
                     elevation="5"
                     @click="openWizard()"
                   >
-                    <v-icon color="white" :size="width / 20">{{BTN_WIZARD}}</v-icon>
+                    <v-icon color="white" :size="width / 20">{{ BTN_WIZARD }}</v-icon>
                   </v-btn>
                   <v-btn
                     id="btnWizard"
@@ -248,8 +248,8 @@ export default {
   },
   mounted() {
     this.textSend = this.textShare;
-    this.addMouseOverEvent('btnExecute',this.HINT_EXECUTE);
-    this.addMouseOverEvent('btnWizard',this.HINT_WIZARD);
+    this.addMouseOverEvent("btnExecute", this.HINT_EXECUTE);
+    this.addMouseOverEvent("btnWizard", this.HINT_WIZARD);
   },
   methods: {
     dimCols(numCol) {
@@ -321,10 +321,10 @@ export default {
       this.exec = false;
     },
     openWizard() {
-      this.$emit('open-wizard');
+      this.$emit("open-wizard");
     },
     sendMessageArr() {
-          this.$emit("click-send", this.textSend);
+      this.$emit("click-send", this.textSend);
     },
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
@@ -340,9 +340,9 @@ export default {
       this.$emit("close-send");
     },
 
-    addMouseOverEvent(idElement,message){
-      this.$emit("long-click",idElement+"###"+message);
-    }
+    addMouseOverEvent(idElement, message) {
+      this.$emit("long-click", idElement + "###" + message);
+    },
   },
 };
 </script>
