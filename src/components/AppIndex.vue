@@ -32,8 +32,7 @@
         large
         :dark="darkMode"
         @click="
-          clickDragResize('btm');
-          selBtm = !selBtm;
+          showSheet('btm')
         "
       >
         {{ BTN_CONFIG_COLL_OFF }}
@@ -51,7 +50,7 @@
           color: var(--border-color);
         "
         large
-        @click="selBtm = !selBtm"
+        @click="hideSheet('btm')"
       >
         {{ BTN_CONFIG_COLL_ON }}
       </v-icon>
@@ -64,8 +63,7 @@
         large
         :dark="darkMode"
         @click="
-          clickDragResize('log');
-          selLog = !selLog;
+          showSheet('log')
         "
       >
         {{ BTN_LOG_OFF }}
@@ -83,7 +81,7 @@
           color: var(--border-color);
         "
         large
-        @click="selLog = !selLog"
+        @click="hideSheet('log')"
       >
         {{ BTN_LOG_ON }}
       </v-icon>
@@ -96,8 +94,7 @@
         large
         :dark="darkMode"
         @click="
-          clickDragResize('rec');
-          selRec = !selRec;
+          showSheet('rec')
         "
       >
         {{ BTN_RECEIVE_OFF }}
@@ -115,7 +112,7 @@
         "
         id="SaveBack"
         large
-        @click="selRec = !selRec"
+        @click="hideSheet('rec')"
       >
         {{ BTN_RECEIVE_ON }}
       </v-icon>
@@ -129,8 +126,7 @@
         large
         :dark="darkMode"
         @click="
-          clickDragResize('send');
-          selSend = !selSend;
+          showSheet('send')
         "
       >
         {{ BTN_SEND_OFF }}
@@ -149,8 +145,7 @@
         id="execute"
         large
         @click="
-          clickDragResize('send');
-          selSend = !selSend;
+          hideSheet('send')
         "
       >
         {{ BTN_SEND_ON }}
@@ -230,7 +225,7 @@
       v-if="selRec && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
-      @click="clickDragResize('rec')"
+      @click="showSheet('rec')"
       :onDrag="onDragStopRec"
       :onResize="onResizeStopRec"
       @dragstop="onModRec"
@@ -249,7 +244,7 @@
         @long-click="longClickEvent($event)"
         @save-istruction="saveIstructions($event)"
         @set-z-click="setZ"
-        @close-rec="selRec = !selRec"
+        @close-rec="hideSheet('rec')"
       ></bar-rec>
     </VueDragResize>
 
@@ -265,7 +260,7 @@
       v-if="selSend && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
-      @click="clickDragResize('send')"
+      @click="showSheet('send')"
       :onDrag="onDragStopSend"
       :onResize="onResizeStopSend"
       @dragstop="onModSend"
@@ -287,7 +282,7 @@
         @long-click="longClickEvent($event)"
         @open-wizard="openWizard()"
         @set-z-click="setZ"
-        @close-send="selSend = !selSend"
+        @close-send="hideSheet('send')"
         @send-text="sendText()"
         @share-text="shareText"
         :textShare="send.textShare"
@@ -303,7 +298,7 @@
       drag-handle=".topbar"
       :z="log.posz"
       style="position: absolute"
-      @click="clickDragResize('log')"
+      @click="showSheet('log')"
       :x="log.posx"
       :y="log.posy"
       :onDrag="onDragStopLog"
@@ -319,7 +314,7 @@
         :darkMode="darkMode"
         :rapporto="log.width / log.height"
         @set-z-click="setZ"
-        @close-log="selLog = !selLog"
+        @close-log="hideSheet('log')"
         :arrayLog="arrayLog"
       >
       </bar-log>
@@ -334,7 +329,7 @@
       drag-handle=".topbar"
       :z="btm.posz"
       style="position: absolute"
-      @click="clickDragResize('btm')"
+      @click="showSheet('btm')"
       :x="btm.posx"
       :y="btm.posy"
       :onDrag="onDragStopBtm"
@@ -358,7 +353,7 @@
         @click-back-index="sendBck()"
         @upload-config="uploadConfig()"
         @set-z-click="setZ"
-        @close-btm="selBtm = !selBtm"
+        @close-btm="hideSheet('btm')"
         @save-status="saveStatus($event)"
         @long-click="longClickEvent($event)"
         :bottomText="received"
@@ -423,7 +418,7 @@
             @long-click="longClickEvent($event)"
             @open-wizard="openWizard()"
             @set-z-click="setZ"
-            @close-send="selSend = !selSend"
+            @close-send="hideSheet('send')"
             @share-text="shareText"
             :textShare="send.textShare"
           ></bar-send>
@@ -436,7 +431,7 @@
             :width="log.widthSm"
             :rapporto="log.widthSm / log.heightSm"
             @set-z-click="setZ"
-            @close-log="selLog = !selLog"
+            @close-log="hideSheet('log')"
             :darkMode="darkMode"
             :arrayLog="arrayLog"
           >
@@ -456,7 +451,7 @@
             @long-click="longClickEvent($event)"
             @save-istruction="saveIstructions($event)"
             @set-z-click="setZ"
-            @close-rec="selRec = !selRec"
+            @close-rec="hideSheet('rec')"
           ></bar-rec>
         </v-col>
         <v-col v-if="selBtm" class="" id="third" :key="4" :cols="12" :sm="12">
@@ -477,7 +472,7 @@
             @long-click="longClickEvent($event)"
             @upload-config="uploadConfig()"
             @set-z-click="setZ"
-            @close-btm="selBtm = !selBtm"
+            @close-btm="hideSheet('btm')"
             :bottomText="received"
             :arrayLog="arrayLog"
           >
@@ -749,11 +744,11 @@ export default {
     }
     document.documentElement.classList.add(this.fontSize);
 
-    if (window.innerWidth < 960 && window.innerWidth > 700) {
-      this.send.widthSm = window.innerWidth;
-      this.rec.widthSm = window.innerWidth;
-      this.log.widthSm = window.innerWidth;
-      this.btm.widthSm = window.innerWidth;
+    if (window.innerWidth < 960 && window.innerWidth >= 700) {
+      this.send.widthSm = window.innerWidth - 12;
+      this.rec.widthSm = window.innerWidth - 12;
+      this.log.widthSm = window.innerWidth - 12;
+      this.btm.widthSm = window.innerWidth - 12;
     }
   },
   mounted() {
@@ -775,6 +770,7 @@ export default {
     window.addEventListener("resize", this.setPositions);
 
     this.startServer();
+    this.loadSettings()
 
     this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
     this.connection.onmessage = (message) => {
@@ -862,6 +858,32 @@ export default {
     };
   },
   methods: {
+    loadSettings(){
+
+      this.btm.posx = this.getCookie('btm-x') === null ? 4 : parseInt(this.getCookie('btm-x'))
+      this.btm.posy = this.getCookie('btm-y') === null ? 60 : parseInt(this.getCookie('btm-y'))
+      this.btm.width = this.getCookie('btm-w') === null ? 400 : parseInt(this.getCookie('btm-w'))
+      this.btm.height = this.getCookie('btm-h') === null ? 400 : parseInt(this.getCookie('btm-h'))
+      this.selBtm = this.getCookie('btm-v') === null ? false : this.getCookie('btm-v') === 'true'
+
+      this.rec.posx = this.getCookie('rec-x') === null ? 4 : parseInt(this.getCookie('rec-x'))
+      this.rec.posy = this.getCookie('rec-y') === null ? 60 : parseInt(this.getCookie('rec-y'))
+      this.rec.width = this.getCookie('rec-w') === null ? 400 : parseInt(this.getCookie('rec-w'))
+      this.rec.height = this.getCookie('rec-h') === null ? 400 : parseInt(this.getCookie('rec-h'))
+      this.selRec = this.getCookie('rec-v') === null ? false : this.getCookie('rec-v') === 'true'
+
+      this.send.posx = this.getCookie('send-x') === null ? 4 : parseInt(this.getCookie('send-x'))
+      this.send.posy = this.getCookie('send-y') === null ? 60 : parseInt(this.getCookie('send-y'))
+      this.send.width = this.getCookie('send-w') === null ? 400 : parseInt(this.getCookie('send-w'))
+      this.send.height = this.getCookie('send-h') === null ? 400 : parseInt(this.getCookie('send-h'))
+      this.selSend = this.getCookie('send-v') === null ? false : this.getCookie('send-v') === 'true'
+
+      this.log.posx = this.getCookie('log-x') === null ? 4 : parseInt(this.getCookie('log-x'))
+      this.log.posy = this.getCookie('log-y') === null ? 60 : parseInt(this.getCookie('log-y'))
+      this.log.width = this.getCookie('log-w') === null ? 400 : parseInt(this.getCookie('log-w'))
+      this.log.height = this.getCookie('log-h') === null ? 400 : parseInt(this.getCookie('log-h'))
+      this.selLog = this.getCookie('log-v') === null ? false : this.getCookie('log-v') === 'true'
+    },
     setFirstDialog(){
       this.firstDialog = false
       this.setCookie('firstDialog','false', 30)
@@ -871,19 +893,35 @@ export default {
     },
     setPositions() {
       if (this.send.posx + this.send.width > document.documentElement.clientWidth) {
-        this.send.posx = document.documentElement.clientWidth - this.send.width - 5;
+        if(document.documentElement.clientWidth - this.send.width - 5 > 4) {
+          this.send.posx = document.documentElement.clientWidth - this.send.width - 5;
+        } /*else if (this.send.width > 400 && document.documentElement.clientWidth - this.send.posx - 4 >= 400) {
+          this.send.width = document.documentElement.clientWidth - this.send.posx - 4
+        }*/
       }
 
       if (this.rec.posx + this.rec.width > document.documentElement.clientWidth) {
-        this.rec.posx = document.documentElement.clientWidth - this.rec.width - 5;
+        if(document.documentElement.clientWidth - this.rec.width - 5 > 4) {
+          this.rec.posx = document.documentElement.clientWidth - this.rec.width - 5;
+        } /*else if (this.rec.width > 400 && document.documentElement.clientWidth - this.rec.posx - 4 >= 400) {
+          this.rec.width = document.documentElement.clientWidth - this.rec.posx - 4
+        }*/
       }
 
       if (this.log.posx + this.log.width > document.documentElement.clientWidth) {
-        this.log.posx = document.documentElement.clientWidth - this.log.width - 5;
+        if(document.documentElement.clientWidth - this.log.width - 5 > 4) {
+          this.log.posx = document.documentElement.clientWidth - this.log.width - 5;
+        } /*else if (this.log.width > 400 && document.documentElement.clientWidth - this.log.posx - 4 >= 400) {
+          this.log.width = document.documentElement.clientWidth - this.log.posx - 4
+        }*/
       }
 
       if (this.btm.posx + this.btm.width > document.documentElement.clientWidth) {
-        this.btm.posx = document.documentElement.clientWidth - this.btm.width - 5;
+        if(document.documentElement.clientWidth - this.btm.width - 5 > 4) {
+          this.btm.posx = document.documentElement.clientWidth - this.btm.width - 5;
+        } /*else if (this.btm.width > 400 && document.documentElement.clientWidth - this.btm.posx - 4 >= 400) {
+          this.btm.width = document.documentElement.clientWidth - this.btm.posx - 4
+        }*/
       }
 
       if (window.innerWidth < 960 && window.innerWidth > 700) {
@@ -893,7 +931,7 @@ export default {
         this.btm.widthSm = window.innerWidth - 12;
       }
     },
-    clickDragResize(component) {
+    showSheet(component) {
       this.send.posz = 0;
       this.rec.posz = 0;
       this.btm.posz = 0;
@@ -902,15 +940,45 @@ export default {
       switch (component) {
         case "send":
           this.send.posz = 2;
+          this.selSend = true
+          this.setCookie('send-v','true',30)
           break;
         case "rec":
           this.rec.posz = 2;
+          this.selRec = true
+          this.setCookie('rec-v','true',30)
           break;
         case "btm":
           this.btm.posz = 2;
+          this.selBtm = true
+          this.setCookie('btm-v','true',30)
           break;
         case "log":
           this.log.posz = 2;
+          this.selLog = true
+          this.setCookie('log-v','true',30)
+          break;
+        default:
+          alert("Comando non riconosciuto");
+      }
+    },
+    hideSheet(component) {
+      switch (component) {
+        case "send":
+          this.selSend = false
+          this.setCookie('send-v','false',30)
+          break;
+        case "rec":
+          this.selRec = false
+          this.setCookie('rec-v','false',30)
+          break;
+        case "btm":
+          this.selBtm = false
+          this.setCookie('btm-v','false',30)
+          break;
+        case "log":
+          this.selLog = false
+          this.setCookie('log-v','false',30)
           break;
         default:
           alert("Comando non riconosciuto");
@@ -1086,6 +1154,11 @@ export default {
       } else {
         this.rec.posy = y;
       }
+
+      this.setCookie('rec-x',this.rec.posx, 30)
+      this.setCookie('rec-y',this.rec.posy, 30)
+      this.setCookie('rec-w',this.rec.width, 30)
+      this.setCookie('rec-h',this.rec.height, 30)
     },
 
     onResizeStopSend(handle, x, y, width, height) {
@@ -1116,6 +1189,11 @@ export default {
       } else {
         this.send.posy = y;
       }
+
+      this.setCookie('send-x',this.send.posx, 30)
+      this.setCookie('send-y',this.send.posy, 30)
+      this.setCookie('send-w',this.send.width, 30)
+      this.setCookie('send-h',this.send.height, 30)
     },
 
     onResizeStopBtm(handle, x, y, width, height) {
@@ -1146,6 +1224,11 @@ export default {
       } else {
         this.btm.posy = y;
       }
+
+      this.setCookie('btm-x',this.btm.posx, 30)
+      this.setCookie('btm-y',this.btm.posy, 30)
+      this.setCookie('btm-w',this.btm.width, 30)
+      this.setCookie('btm-h',this.btm.height, 30)
     },
 
     onResizeStopLog(handle, x, y, width, height) {
@@ -1175,6 +1258,11 @@ export default {
       } else {
         this.log.posy = y;
       }
+
+      this.setCookie('log-x',this.log.posx, 30)
+      this.setCookie('log-y',this.log.posy, 30)
+      this.setCookie('log-w',this.log.width, 30)
+      this.setCookie('log-h',this.log.height, 30)
     },
     signalChangeColor() {
       this.connectionPage = new WebSocket("ws://"+process.env.VUE_APP_WEB_SOCKET_SERVER);
@@ -1488,7 +1576,7 @@ export default {
         let routeData = this.$router.resolve({
           name: "Wizard",
           query: {
-            id: this.randomNumberString,
+            id: this.randomNumber,
           },
         });
         setTimeout(function () {
