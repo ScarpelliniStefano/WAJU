@@ -708,16 +708,13 @@ export default {
         if (text.includes("##BEGIN-ERROR##")) {
           const startE = text.indexOf("##BEGIN-ERROR##") + "##BEGIN-ERROR##".length;
           const endE = text.lastIndexOf("##END-ERROR##");
-          this.changeLog(
-            "#@LOGS@#" + timeString("ERROR IN JOBS. SEE ERROR LOG BELOW") + "#@END-LOGS@#"
-          );
           this.changeErrLog(
             "#@ERR-LOGS@#" + timeString(text.substring(startE, endE)) + "#@END-ERR-LOGS@#"
           );
         } else if (text.includes("##ACK##")) {
           console.log("ACK");
           this.arrRec.pop();
-          this.changeLog("#@LOGS@#" + timeString("BACKTRACK DONE") + "#@END-LOGS@#");
+          this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.BACKTRACK_DONE) + "#@END-LOGS@#");
         } else if (text.includes("##BEGIN-COLLECTION##")) {
           const startE =
             text.indexOf("##BEGIN-COLLECTION##") + "##BEGIN-COLLECTION##".length + 1;
@@ -725,17 +722,17 @@ export default {
           this.changeIRTree(
             "#@TREE-DRAW@#" + text.substring(startE, endE) + "#@END-TREE-DRAW@#"
           );
-          this.changeLog("#@LOGS@#" + timeString("TREE DREW") + "#@END-LOGS@#");
+          this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.TREE_OPENED) + "#@END-LOGS@#");
         } else if (text.includes("##BEGIN-IR-LIST##")) {
           const startE = text.indexOf("##BEGIN-IR-LIST##") + "##BEGIN-IR-LIST##".length;
           const endE = text.lastIndexOf("##END-IR-LIST##");
           this.changeIRList(
             "#@IR-LIST@#" + text.substring(startE, endE) + "#@END-IR-LIST@#"
           );
-          this.changeLog("#@LOGS@#" + timeString("IR List Updated") + "#@END-LOGS@#");
+          this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) + "#@END-LOGS@#");
         } else if (text.includes("##SUCCESS##")) {
           console.log("successo");
-          this.changeLog("#@LOGS@#" + timeString("Job Done") + "#@END-LOGS@#");
+          this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.JOB_DONE) + "#@END-LOGS@#");
         } else if (text.includes("##BEGIN-PROCESS##")) {
           console.log("end messages");
           const startP =
@@ -780,8 +777,8 @@ export default {
       this.connection.onerror = () => {
         if (isConnected) {
           this.changeConfig("Configurazione non presente");
-          this.changeLog(
-            "#@LOGS@#" + timeString("Connection with engine crashed") + "\n#@END-LOGS@#"
+          this.changeErrLog(
+            "#@ERR-LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) + "\n#@END-ERR-LOGS@#"
           );
           setConnected();
         }
@@ -1111,8 +1108,6 @@ export default {
         this.btm.posz = 2;
       } else if (tipo === "log") {
         this.log.posz = 2;
-      } else {
-        console.log("Comando non riconosciuto");
       }
     },
 
@@ -1398,13 +1393,13 @@ export default {
         "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
       );
       this.connectionPage.onopen = () => {
-        this.changeLog("#@LOGS@#" + timeString("Web Socket Server connected") + "#@END-LOGS@#");
+        this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_CONNECTED) + "#@END-LOGS@#");
       };
       this.connectionPage.onclose = () => {
-        this.changeLog("#@LOGS@#" + timeString("Web Socket Server disconnected") + "#@END-LOGS@#");
+        this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_DISCONNECTED) + "#@END-LOGS@#");
       };
       this.connectionPage.onerror = () => {
-        this.changeErrLog("#@ERR-LOGS@#" + timeString("Error on Web Socket Server") + "#@END-ERR-LOGS@#");
+        this.changeErrLog("#@ERR-LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_ERROR) + "#@END-ERR-LOGS@#");
       };
       this.connectionPage.onmessage = ({ data }) => {
         console.log(data);

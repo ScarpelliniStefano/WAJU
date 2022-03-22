@@ -261,11 +261,6 @@ export default {
       }
       document.documentElement.classList.add(this.themeColor);
     },
-    setThemeColor(theme) {
-      document.documentElement.classList.replace(this.themeColor, theme);
-      this.themeColor = theme;
-      this.setCookie("theme-color", theme, 30);
-    },
     setCookie(name, value, daysToLive) {
       // Encode value in order to escape semicolons, commas, and whitespace
       var cookie = name + "=" + encodeURIComponent(value);

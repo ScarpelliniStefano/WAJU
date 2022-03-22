@@ -11,7 +11,7 @@
       color="red darken-2"
       dark
     >
-      {{this.error}}
+      {{ this.error }}
     </v-alert>
     <v-container>
       <v-row>
@@ -99,7 +99,7 @@
         </v-col>
       </v-row>
     </v-container>
-    
+
     <v-snackbar
       v-model="wizardAlert"
       elevation="5"
@@ -209,6 +209,41 @@ export default {
     document.title = this.title + "- JCOUI Web";
 
     this.themeColor = this.getCookie("theme-color");
+    if (this.themeColor === null) {
+      this.themeColor = "theme-light";
+      this.setCookie("theme-color", "theme-light", 30);
+      this.darkMode = false;
+    }
+    if (this.themeColor === "theme-light") {
+      this.darkMode = false;
+    } else if (this.themeColor === "theme-dark") {
+      this.darkMode = true;
+    }
+    document.documentElement.classList.add(this.themeColor);
+
+    this.mainColor = this.getCookie("main-color");
+    if (!this.mainColor) {
+      this.mainColor = "black";
+      this.setCookie("main-color", "document-color", 30);
+    }
+    document.documentElement.classList.add(this.mainColor);
+  },
+  mounted() {
+    this.setConnection();
+    this.addMouseOverEvent("btnExpand", this.HINT_EXPAND);
+    this.addMouseOverEvent("btnSave", this.HINT_SAVE);
+  },
+  methods: {
+    changeColor() {
+      document.documentElement.classList.remove(this.mainColor);
+      this.mainColor = this.getCookie("main-color");
+      if (!this.mainColor) {
+        this.mainColor = "document-color";
+      }
+      console.log(this.mainColor);
+      document.documentElement.classList.add(this.mainColor);
+
+      this.themeColor = this.getCookie("theme-color");
       if (this.themeColor === null) {
         this.themeColor = "theme-light";
         this.setCookie("theme-color", "theme-light", 30);
@@ -220,34 +255,20 @@ export default {
         this.darkMode = true;
       }
       document.documentElement.classList.add(this.themeColor);
-
-    this.mainColor = this.getCookie("main-color");
-    if (!this.mainColor) {
-      this.mainColor = "black";
-      this.setCookie("main-color", "document-color", 30);
-    }
-    document.documentElement.classList.add(this.mainColor);
-
-  },
-  mounted() {
-    this.changeDimension();
-    this.addMouseOverEvent("btnExpand", this.HINT_EXPAND);
-    this.addMouseOverEvent("btnSave", this.HINT_SAVE);
-  },
-  methods: {
-    sendMessage(){
+    },
+    sendMessage() {
       this.connectionPage.send(
-            "OPEN###" +
-              "textTree_" +
-              this.$route.query.id +
-              "###" +
-              (this.page - 1) +
-              "," +
-              this.size
-          );
+        "OPEN###" +
+          "textTree_" +
+          this.$route.query.id +
+          "###" +
+          (this.page - 1) +
+          "," +
+          this.size
+      );
     },
     changeDimensions() {
-      this.sendMessage()
+      this.sendMessage();
     },
     calculatePageSize() {
       if (this.valTotal % this.size != 0) {
@@ -297,7 +318,7 @@ export default {
       if (this.valTotal > 1000) return 1000;
       else return this.valTotal;
     },
-    changeDimension() {
+    setConnection() {
       if (localStorage.getItem("textTree_" + this.$route.query.id)) {
         this.connectionPage = new WebSocket(
           "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
@@ -309,12 +330,14 @@ export default {
           this.error = "server save/open closed";
         };
         this.connectionPage.onopen = () => {
-          this.sendMessage()
+          this.sendMessage();
         };
         let jsonData = "";
         this.connectionPage.onmessage = (message) => {
           if (message == "SERVER CLOSED") {
             this.error = "server save/open closed";
+          } else if (message.data.split("###")[0] == "CHANGE_COLOR") {
+            this.changeColor();
           } else {
             jsonData = JSON.parse(message.data);
             this.datetime = jsonData.datetime;

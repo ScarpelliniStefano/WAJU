@@ -49,6 +49,16 @@ const lang = Object.freeze({
             DIALOG_TEXT_THIRD: '3. Wizard will be open in a new Tab.',
             DIALOG_TEXT_FOURTH: '4. Every collection will be open in a new Tab.',
             DIALOG_TEXT_FIFTH: '5. From the width of 700px to 960px, tablet mode starts. In this mode, order of components are: [1] Execute & Wizard [2] Log [3] Save & Back [4] Configurations/Collections' 
+        },
+        LOG_MESSAGES: {
+            BACKTRACK_DONE: 'Backtrack Done',
+            TREE_OPENED: 'Tree Opened',
+            IR_LIST_UPDATED: 'IR List Updated',
+            JOB_DONE: 'Job Done',
+            CONNECTION_ENGINE_CRASHED: 'Connection with Engine Crashed',
+            WEB_SOCKET_SERVER_CONNECTED: 'Web Socket Server Connected',
+            WEB_SOCKET_SERVER_DISCONNECTED: 'Web Socket Server Disconnected',
+            WEB_SOCKET_SERVER_ERROR: 'Error on Web Socket Server'
         }
         
     }),
