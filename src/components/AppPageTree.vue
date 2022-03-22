@@ -3,6 +3,16 @@
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="200"></v-progress-circular>
     </v-overlay>
+    <v-alert
+      v-if="this.error !== ''"
+      border="bottom"
+      close-text="Close Alert"
+      type="warning"
+      color="red darken-2"
+      dark
+    >
+      {{this.error}}
+    </v-alert>
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" lg="12" xl="12">
@@ -20,13 +30,6 @@
                 {{ H_FINAL_DOCUMENT + this.valFinal }}
               </h4>
             </center>
-            <v-row>
-              <v-sheet v-if="this.error != ''" :dark="darkMode">
-                <center>
-                  <span class="label danger">{{ this.error }}</span>
-                </center>
-              </v-sheet>
-            </v-row>
             <v-row align="center" class="text-center pt-3">
               <v-spacer></v-spacer>
               <v-col cols="1">
@@ -96,12 +99,14 @@
         </v-col>
       </v-row>
     </v-container>
+    
     <v-snackbar
       v-model="wizardAlert"
       elevation="5"
       timeout="4000"
       max-width="70%"
       :dark="darkMode"
+      :light="!darkMode"
     >
       <p class="v-snack__content">{{ lblPopup }}</p>
 
@@ -177,10 +182,10 @@ export default {
   },
   watch: {
     size: function () {
-      this.changeDimension();
+      this.changeDimensions();
     },
     page: function () {
-      this.changeDimension();
+      this.changeDimensions();
     },
     textIRTreeCol: function (newVal, oldVal) {
       if (newVal != oldVal) {
@@ -190,9 +195,6 @@ export default {
         } else {
           this.textTreeEmpty = false;
           this.overlay = false;
-          /* console.log("pulisci");
-          clearInterval(this.promise);
-          console.log(this.promise)*/
         }
       }
       console.log(document.getElementById("treeViewer").innerHTML);
@@ -205,36 +207,27 @@ export default {
   },
   created() {
     document.title = this.title + "- JCOUI Web";
-    //ADD Commenti
+
     this.themeColor = this.getCookie("theme-color");
-    if (!this.themeColor) {
-      this.themeColor = "theme-light";
-      this.setCookie("theme-color", "theme-light", 30);
-    }
-    document.documentElement.classList.add(this.themeColor);
-    console.log(this.themeColor);
-    if (this.themeColor == "theme-dark") this.darkMode = true;
+      if (this.themeColor === null) {
+        this.themeColor = "theme-light";
+        this.setCookie("theme-color", "theme-light", 30);
+        this.darkMode = false;
+      }
+      if (this.themeColor === "theme-light") {
+        this.darkMode = false;
+      } else if (this.themeColor === "theme-dark") {
+        this.darkMode = true;
+      }
+      document.documentElement.classList.add(this.themeColor);
 
     this.mainColor = this.getCookie("main-color");
     if (!this.mainColor) {
       this.mainColor = "black";
-      this.setCookie("main-color", "black", 30);
+      this.setCookie("main-color", "document-color", 30);
     }
     document.documentElement.classList.add(this.mainColor);
 
-    this.fontColor = this.getCookie("font-color");
-    if (!this.fontColor) {
-      this.fontColor = "font-black";
-      this.setCookie("font-color", "font-black", 30);
-    }
-    document.documentElement.classList.add(this.fontColor);
-
-    this.fontSize = this.getCookie("font-size");
-    if (!this.fontSize) {
-      this.fontSize = 14;
-      this.setCookie("font-size", "14", 30);
-    }
-    document.documentElement.classList.add(this.fontSize);
   },
   mounted() {
     this.changeDimension();
@@ -242,6 +235,20 @@ export default {
     this.addMouseOverEvent("btnSave", this.HINT_SAVE);
   },
   methods: {
+    sendMessage(){
+      this.connectionPage.send(
+            "OPEN###" +
+              "textTree_" +
+              this.$route.query.id +
+              "###" +
+              (this.page - 1) +
+              "," +
+              this.size
+          );
+    },
+    changeDimensions() {
+      this.sendMessage()
+    },
     calculatePageSize() {
       if (this.valTotal % this.size != 0) {
         this.pageCount = Number(Math.floor(this.valTotal / this.size + 1));
@@ -291,7 +298,6 @@ export default {
       else return this.valTotal;
     },
     changeDimension() {
-      console.log(this.page + " " + this.size);
       if (localStorage.getItem("textTree_" + this.$route.query.id)) {
         this.connectionPage = new WebSocket(
           "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
@@ -303,24 +309,7 @@ export default {
           this.error = "server save/open closed";
         };
         this.connectionPage.onopen = () => {
-          this.connectionPage.send(
-            "OPEN###" +
-              "textTree_" +
-              this.$route.query.id +
-              "###" +
-              (this.page - 1) +
-              "," +
-              this.size
-          );
-          console.log(
-            "OPEN###" +
-              "textTree_" +
-              this.$route.query.id +
-              "###" +
-              (this.page - 1) +
-              "," +
-              this.size
-          );
+          this.sendMessage()
         };
         let jsonData = "";
         this.connectionPage.onmessage = (message) => {

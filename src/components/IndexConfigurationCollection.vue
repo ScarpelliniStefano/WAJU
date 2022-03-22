@@ -35,7 +35,9 @@
           <v-col v-if="ispectstate" :cols="dimCols(1)">
             <v-sheet :dark="darkMode" id="div_send" :height="height - diffHeightColl()">
               <v-list :dark="darkMode" class="pa-0">
-                <v-list-item v-for="coll in bottomText.listIRCol" :key="coll">
+                <template v-for="(coll, index) in bottomText.listIRCol">
+                <v-list-item :key="coll">
+                  <template>
                   <v-list-item-avatar>
                     <v-icon style="background-color: var(--border-color)" color="white">
                       {{ LIST_IR_ITEM }}
@@ -57,7 +59,13 @@
                       <span>IR</span>
                     </v-btn>
                   </v-list-item-action>
+                  </template>
                 </v-list-item>
+                <v-divider
+                  v-if="index < bottomText.listIRCol.length - 1"
+                  :key="index"
+                ></v-divider>
+                </template>
               </v-list>
             </v-sheet>
             <v-btn

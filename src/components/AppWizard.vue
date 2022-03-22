@@ -109,6 +109,7 @@
       v-model="wizardAlert"
       elevation="5"
       :dark="darkMode"
+      :light="!darkMode"
       timeout="4000"
       max-width="70%"
     >

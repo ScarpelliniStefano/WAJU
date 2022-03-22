@@ -166,7 +166,6 @@
           <Settings
             @set-main-color="setMainColor"
             @set-theme-color="setThemeColor"
-            @set-style="setStyle"
             :darkMode="darkMode"
           >
           </Settings>
@@ -733,10 +732,10 @@ export default {
           this.changeIRList(
             "#@IR-LIST@#" + text.substring(startE, endE) + "#@END-IR-LIST@#"
           );
-          this.changeLog("#@LOGS@#" + timeString("IR LIST ARRIVED") + "#@END-LOGS@#");
+          this.changeLog("#@LOGS@#" + timeString("IR List Updated") + "#@END-LOGS@#");
         } else if (text.includes("##SUCCESS##")) {
           console.log("successo");
-          this.changeLog("#@LOGS@#" + timeString("JOB DONE") + "#@END-LOGS@#");
+          this.changeLog("#@LOGS@#" + timeString("Job Done") + "#@END-LOGS@#");
         } else if (text.includes("##BEGIN-PROCESS##")) {
           console.log("end messages");
           const startP =
@@ -1256,7 +1255,7 @@ export default {
       this.setCookie("log-h", this.log.height, 30);
     },
     signalChangeColor() {
-      this.connectionPage = new WebSocket(
+      /*this.connectionPage = new WebSocket(
         "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
       );
       this.connectionPage.onerror = () => {
@@ -1265,9 +1264,9 @@ export default {
       this.connectionPage.onclose = () => {
         this.received.errorConfig = "server save/open closed";
       };
-      this.connectionPage.onopen = () => {
+      this.connectionPage.onopen = () => {*/
         this.connectionPage.send("CHANGE_COLOR###" + this.mainColor);
-      };
+      //};
     },
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color);
@@ -1354,7 +1353,7 @@ export default {
     generatePage(title, textToSend) {
       let dateGen = new Date();
       let millis = dateGen.getTime();
-      this.connectionPage = new WebSocket(
+      /*this.connectionPage = new WebSocket(
         "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
       );
       this.connectionPage.onerror = () => {
@@ -1364,7 +1363,7 @@ export default {
         this.received.errorConfig = "server save/open closed";
       };
       this.connectionPage.onopen = () => {
-        console.log(this.connectionPage.readyState);
+        console.log(this.connectionPage.readyState);*/
         this.connectionPage.send(
           "SAVE###" +
             "textTree_" +
@@ -1389,7 +1388,7 @@ export default {
         setTimeout(function () {
           window.open(routeData.href, "_blank");
         }, 1000);
-      };
+      //};
     },
 
     startServer() {
@@ -1399,13 +1398,13 @@ export default {
         "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
       );
       this.connectionPage.onopen = () => {
-        console.log("wizard partito");
+        this.changeLog("#@LOGS@#" + timeString("Web Socket Server connected") + "#@END-LOGS@#");
       };
       this.connectionPage.onclose = () => {
-        console.log("wizard spento");
+        this.changeLog("#@LOGS@#" + timeString("Web Socket Server disconnected") + "#@END-LOGS@#");
       };
       this.connectionPage.onerror = () => {
-        console.log("wizard error");
+        this.changeErrLog("#@ERR-LOGS@#" + timeString("Error on Web Socket Server") + "#@END-ERR-LOGS@#");
       };
       this.connectionPage.onmessage = ({ data }) => {
         console.log(data);

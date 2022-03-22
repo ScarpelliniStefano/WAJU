@@ -40,6 +40,9 @@ wss.on('connection', function connection(ws) {
                 let textStr = new TextDecoder().decode(new Uint8Array(dataRes));
                 let jsonData = JSON.parse(textStr);
                 let total = Object.keys(JSON.parse(jsonData.tree)).length;
+                if (page * size > total) {
+                    page = 0
+                }
                 let valI = page * size;
                 let valF = 0;
                 if (total - (page * size) < size)
