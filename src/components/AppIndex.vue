@@ -1,7 +1,7 @@
 <template>
-  <v-sheet :dark="darkMode" id="body">
+  <v-sheet :dark="darkMode" :light="!darkMode" id="body">
     <v-sheet
-      :dark="darkMode"
+      :dark="darkMode" :light="!darkMode"
       elevation="10"
       name="c1"
       class="divheader"
@@ -25,12 +25,12 @@
       </v-icon>
 
       <v-icon
-        v-if="!selBtm"
+        v-if="!btm.selected"
         @mouseover="tip = TIP_CONFIG_COLL"
         @mouseleave="tip = ''"
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         @click="showSheet('btm')"
       >
         {{ BTN_CONFIG_COLL_OFF }}
@@ -39,7 +39,7 @@
       <v-icon
         @mouseover="tip = TIP_CONFIG_COLL"
         @mouseleave="tip = ''"
-        v-if="selBtm"
+        v-if="btm.selected"
         style="
           float: right;
           margin-right: 20px;
@@ -54,12 +54,12 @@
       </v-icon>
 
       <v-icon
-        v-if="!selLog"
+        v-if="!log.selected"
         @mouseover="tip = TIP_LOG"
         @mouseleave="tip = ''"
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         @click="showSheet('log')"
       >
         {{ BTN_LOG_OFF }}
@@ -68,7 +68,7 @@
       <v-icon
         @mouseover="tip = TIP_LOG"
         @mouseleave="tip = ''"
-        v-if="selLog"
+        v-if="log.selected"
         style="
           float: right;
           margin-right: 20px;
@@ -83,18 +83,18 @@
       </v-icon>
 
       <v-icon
-        v-if="!selRec"
+        v-if="!rec.selected"
         @mouseover="tip = TIP_SAVE_UNDO"
         @mouseleave="tip = ''"
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         large
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         @click="showSheet('rec')"
       >
         {{ BTN_RECEIVE_OFF }}
       </v-icon>
       <v-icon
-        v-if="selRec"
+        v-if="rec.selected"
         @mouseover="tip = TIP_SAVE_UNDO"
         @mouseleave="tip = ''"
         style="
@@ -112,19 +112,19 @@
       </v-icon>
 
       <v-icon
-        v-if="!selSend"
+        v-if="!send.selected"
         @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
         @mouseleave="tip = ''"
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
         id="execute"
         large
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         @click="showSheet('send')"
       >
         {{ BTN_SEND_OFF }}
       </v-icon>
       <v-icon
-        v-if="selSend"
+        v-if="send.selected"
         @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
         @mouseleave="tip = ''"
         style="
@@ -153,7 +153,7 @@
         {{ this.tip }}
       </h4>
 
-      <v-bottom-sheet v-model="settings" :dark="darkMode">
+      <v-bottom-sheet v-model="settings" :dark="darkMode" :light="!darkMode">
         <v-sheet class="text-center" height="175px" min-width="700px">
           <v-btn
             class="mt-6"
@@ -173,7 +173,7 @@
       </v-bottom-sheet>
 
       <v-row justify="center">
-        <v-dialog v-model="firstDialog" persistent max-width="500" :dark="darkMode">
+        <v-dialog v-model="firstDialog" persistent max-width="500" :dark="darkMode" :light="!darkMode">
           <v-card>
             <v-card-title class="text-h5">
               {{ FIRST_DIALOG.DIALOG_TITLE }}
@@ -208,10 +208,10 @@
       :z="rec.posz"
       :x="rec.posx"
       :y="rec.posy"
-      v-if="selRec && $vuetify.breakpoint.mdAndUp"
+      v-if="rec.selected && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
-      @click="showSheet('rec')"
+      @click="changeOrder('rec',true)"
       :onDrag="onDragStopRec"
       :onResize="onResizeStopRec"
       @dragstop="onModRec"
@@ -243,10 +243,10 @@
       :z="send.posz"
       :x="send.posx"
       :y="send.posy"
-      v-if="selSend && $vuetify.breakpoint.mdAndUp"
+      v-if="send.selected && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
-      @click="showSheet('send')"
+      @click="changeOrder('send',true)"
       :onDrag="onDragStopSend"
       :onResize="onResizeStopSend"
       @dragstop="onModSend"
@@ -280,11 +280,11 @@
       :min-height="150"
       :w="log.width"
       :h="log.height"
-      v-if="selLog && $vuetify.breakpoint.mdAndUp"
+      v-if="log.selected && $vuetify.breakpoint.mdAndUp"
       drag-handle=".topbar"
       :z="log.posz"
       style="position: absolute"
-      @click="showSheet('log')"
+      @click="changeOrder('log',true)"
       :x="log.posx"
       :y="log.posy"
       :onDrag="onDragStopLog"
@@ -311,11 +311,11 @@
       :min-height="400"
       :w="btm.width"
       :h="btm.height"
-      v-if="selBtm && $vuetify.breakpoint.mdAndUp"
+      v-if="btm.selected && $vuetify.breakpoint.mdAndUp"
       drag-handle=".topbar"
       :z="btm.posz"
       style="position: absolute"
-      @click="showSheet('btm')"
+      @click="changeOrder('btm',true)"
       :x="btm.posx"
       :y="btm.posy"
       :onDrag="onDragStopBtm"
@@ -392,7 +392,7 @@
       fluid
     >
       <v-row class="text-center" align="center">
-        <v-col v-if="selSend" :key="1" :cols="12" :sm="12">
+        <v-col v-if="send.selected" :key="1" :cols="12" :sm="12">
           <bar-send
             :bgcolor="contColor"
             :rapporto="send.widthSm / send.heightSm"
@@ -414,7 +414,7 @@
             :textShare="send.textShare"
           ></bar-send>
         </v-col>
-        <v-col v-if="selLog" class="" :key="2" :cols="12" :sm="12">
+        <v-col v-if="log.selected" class="" :key="2" :cols="12" :sm="12">
           <bar-log
             :bgcolor="contColor"
             :browser="browserName"
@@ -428,7 +428,7 @@
           >
           </bar-log>
         </v-col>
-        <v-col v-if="selRec" class="" :key="3" :cols="12" :sm="12">
+        <v-col v-if="rec.selected" class="" :key="3" :cols="12" :sm="12">
           <bar-rec
             :bgcolor="contColor"
             :rapporto="rec.widthSm / rec.heightSm"
@@ -445,7 +445,7 @@
             @close-rec="hideSheet('rec')"
           ></bar-rec>
         </v-col>
-        <v-col v-if="selBtm" class="" id="third" :key="4" :cols="12" :sm="12">
+        <v-col v-if="btm.selected" class="" id="third" :key="4" :cols="12" :sm="12">
           <bottom-bar
             :bgcolor="contColor"
             :browser="browserName"
@@ -581,11 +581,6 @@ export default {
       darkMode: false,
       outlined: false,
 
-      selRec: false,
-      selSend: false,
-      selBtm: false,
-      selLog: false,
-
       tip: "",
       firstDialog: true,
 
@@ -600,6 +595,7 @@ export default {
         height: 400,
         posz: 0,
         idRecChange: 124,
+        selected: false,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
         heightSm: 400,
@@ -612,6 +608,7 @@ export default {
         height: 400,
         posz: 0,
         idSendChange: 122,
+        selected: false,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
         heightSm: 400,
@@ -626,6 +623,7 @@ export default {
         height: 400,
         posz: 0,
         idBtmChange: 123,
+        selected: false,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
         heightSm: 400,
@@ -638,6 +636,7 @@ export default {
         height: 400,
         posz: 0,
         idLogChange: 123,
+        selected: false,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
         heightSm: 400,
@@ -701,6 +700,44 @@ export default {
     this.setConnection();
   },
   methods: {
+    changeOrder(comp, actv) {
+      var orderComponent = new Map()
+      orderComponent.set('send',this.send.posz)
+      orderComponent.set('rec',this.rec.posz)
+      orderComponent.set('btm',this.btm.posz)
+      orderComponent.set('log',this.log.posz)
+
+      const vOld = orderComponent.get(comp);
+
+      if (actv === true) {
+        orderComponent.set(comp, 4);
+      } else {
+        orderComponent.set(comp, 0);
+      }
+
+      for (var [key, value] of orderComponent) {
+        if (key !== comp && value !== 0) {
+          if (actv === true) {
+            if (value > vOld) {
+              orderComponent.set(key, value - 1);
+            }
+          } else {
+            if(value < vOld)
+            orderComponent.set(key, value + 1);
+          }
+        }
+      }
+
+      this.send.posz = orderComponent.get('send')
+      this.rec.posz = orderComponent.get('rec')
+      this.btm.posz = orderComponent.get('btm')
+      this.log.posz = orderComponent.get('log')
+
+      this.setCookie('send-z',this.send.posz,30)
+      this.setCookie('rec-z',this.rec.posz,30)
+      this.setCookie('btm-z',this.btm.posz,30)
+      this.setCookie('log-z',this.log.posz,30)
+    },
     setConnection() {
       this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
       this.connection.onmessage = (message) => {
@@ -714,7 +751,11 @@ export default {
         } else if (text.includes("##ACK##")) {
           console.log("ACK");
           this.arrRec.pop();
-          this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.BACKTRACK_DONE) + "#@END-LOGS@#");
+          this.changeLog(
+            "#@LOGS@#" +
+              timeString(lang.INDEX.LOG_MESSAGES.BACKTRACK_DONE) +
+              "#@END-LOGS@#"
+          );
         } else if (text.includes("##BEGIN-COLLECTION##")) {
           const startE =
             text.indexOf("##BEGIN-COLLECTION##") + "##BEGIN-COLLECTION##".length + 1;
@@ -722,17 +763,25 @@ export default {
           this.changeIRTree(
             "#@TREE-DRAW@#" + text.substring(startE, endE) + "#@END-TREE-DRAW@#"
           );
-          this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.TREE_OPENED) + "#@END-LOGS@#");
+          this.changeLog(
+            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.TREE_OPENED) + "#@END-LOGS@#"
+          );
         } else if (text.includes("##BEGIN-IR-LIST##")) {
           const startE = text.indexOf("##BEGIN-IR-LIST##") + "##BEGIN-IR-LIST##".length;
           const endE = text.lastIndexOf("##END-IR-LIST##");
           this.changeIRList(
             "#@IR-LIST@#" + text.substring(startE, endE) + "#@END-IR-LIST@#"
           );
-          this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) + "#@END-LOGS@#");
+          this.changeLog(
+            "#@LOGS@#" +
+              timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
+              "#@END-LOGS@#"
+          );
         } else if (text.includes("##SUCCESS##")) {
           console.log("successo");
-          this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.JOB_DONE) + "#@END-LOGS@#");
+          this.changeLog(
+            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.JOB_DONE) + "#@END-LOGS@#"
+          );
         } else if (text.includes("##BEGIN-PROCESS##")) {
           console.log("end messages");
           const startP =
@@ -778,7 +827,9 @@ export default {
         if (isConnected) {
           this.changeConfig("Configurazione non presente");
           this.changeErrLog(
-            "#@ERR-LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) + "\n#@END-ERR-LOGS@#"
+            "#@ERR-LOGS@#" +
+              timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) +
+              "\n#@END-ERR-LOGS@#"
           );
           setConnected();
         }
@@ -856,8 +907,10 @@ export default {
         this.getCookie("btm-w") === null ? 400 : parseInt(this.getCookie("btm-w"));
       this.btm.height =
         this.getCookie("btm-h") === null ? 400 : parseInt(this.getCookie("btm-h"));
-      this.selBtm =
+      this.btm.selected =
         this.getCookie("btm-v") === null ? false : this.getCookie("btm-v") === "true";
+      this.btm.posz =
+        this.getCookie("btm-z") === null ? 0 : parseInt(this.getCookie("btm-z"));  
 
       this.rec.posx =
         this.getCookie("rec-x") === null ? 4 : parseInt(this.getCookie("rec-x"));
@@ -867,8 +920,10 @@ export default {
         this.getCookie("rec-w") === null ? 400 : parseInt(this.getCookie("rec-w"));
       this.rec.height =
         this.getCookie("rec-h") === null ? 400 : parseInt(this.getCookie("rec-h"));
-      this.selRec =
+      this.rec.selected =
         this.getCookie("rec-v") === null ? false : this.getCookie("rec-v") === "true";
+      this.rec.posz =
+        this.getCookie("rec-z") === null ? 0 : parseInt(this.getCookie("rec-z"));
 
       this.send.posx =
         this.getCookie("send-x") === null ? 4 : parseInt(this.getCookie("send-x"));
@@ -878,8 +933,10 @@ export default {
         this.getCookie("send-w") === null ? 400 : parseInt(this.getCookie("send-w"));
       this.send.height =
         this.getCookie("send-h") === null ? 400 : parseInt(this.getCookie("send-h"));
-      this.selSend =
+      this.send.selected =
         this.getCookie("send-v") === null ? false : this.getCookie("send-v") === "true";
+      this.send.posz =
+        this.getCookie("send-z") === null ? 0 : parseInt(this.getCookie("send-z"));
 
       this.log.posx =
         this.getCookie("log-x") === null ? 4 : parseInt(this.getCookie("log-x"));
@@ -889,8 +946,10 @@ export default {
         this.getCookie("log-w") === null ? 400 : parseInt(this.getCookie("log-w"));
       this.log.height =
         this.getCookie("log-h") === null ? 400 : parseInt(this.getCookie("log-h"));
-      this.selLog =
+      this.log.selected =
         this.getCookie("log-v") === null ? false : this.getCookie("log-v") === "true";
+      this.log.posz =
+        this.getCookie("log-z") === null ? 0 : parseInt(this.getCookie("log-z"));
     },
     setFirstDialog() {
       this.firstDialog = false;
@@ -927,57 +986,50 @@ export default {
       this.setStartWidth();
     },
     showSheet(component) {
-      this.send.posz = 0;
-      this.rec.posz = 0;
-      this.btm.posz = 0;
-      this.log.posz = 0;
-
       switch (component) {
         case "send":
-          this.send.posz = 2;
-          this.selSend = true;
+          this.send.selected = true;
           this.setCookie("send-v", "true", 30);
           break;
         case "rec":
-          this.rec.posz = 2;
-          this.selRec = true;
+          this.rec.selected = true;
           this.setCookie("rec-v", "true", 30);
           break;
         case "btm":
-          this.btm.posz = 2;
-          this.selBtm = true;
+          this.btm.selected = true;
           this.setCookie("btm-v", "true", 30);
           break;
         case "log":
-          this.log.posz = 2;
-          this.selLog = true;
+          this.log.selected = true;
           this.setCookie("log-v", "true", 30);
           break;
         default:
           alert("Comando non riconosciuto");
       }
+      this.changeOrder(component, true)
     },
     hideSheet(component) {
       switch (component) {
         case "send":
-          this.selSend = false;
+          this.send.selected = false;
           this.setCookie("send-v", "false", 30);
           break;
         case "rec":
-          this.selRec = false;
+          this.rec.selected = false;
           this.setCookie("rec-v", "false", 30);
           break;
         case "btm":
-          this.selBtm = false;
+          this.btm.selected = false;
           this.setCookie("btm-v", "false", 30);
           break;
         case "log":
-          this.selLog = false;
+          this.log.selected = false;
           this.setCookie("log-v", "false", 30);
           break;
         default:
           alert("Comando non riconosciuto");
       }
+      this.changeOrder(component, false)
     },
     generatePassword(passwordLength) {
       var numberChars = "0123456789";
@@ -1096,19 +1148,7 @@ export default {
     },
 
     setZ(tipo) {
-      this.rec.posz = 0;
-      this.send.posz = 0;
-      this.btm.posz = 0;
-      this.log.posz = 0;
-      if (tipo === "rec") {
-        this.rec.posz = 2;
-      } else if (tipo === "send") {
-        this.send.posz = 2;
-      } else if (tipo === "btm") {
-        this.btm.posz = 2;
-      } else if (tipo === "log") {
-        this.log.posz = 2;
-      }
+      this.changeOrder(tipo, true)
     },
 
     onResizeStopRec(handle, x, y, width, height) {
@@ -1117,16 +1157,12 @@ export default {
       this.rec.posy = y;
       this.rec.width = width;
       this.rec.height = height;
-      if (this.rec.posz != 2) {
-        this.setZ("rec");
-      }
+      this.setZ("rec");
     },
     onDragStopRec(x, y) {
       this.rec.posx = x;
       this.rec.posy = y;
-      if (this.rec.posz != 2) {
-        this.setZ("rec");
-      }
+      this.setZ("rec");
     },
     onModRec(x, y) {
       if (x < 4) {
@@ -1152,16 +1188,12 @@ export default {
       this.send.posy = y;
       this.send.width = width;
       this.send.height = height;
-      if (this.send.posz != 2) {
         this.setZ("send");
-      }
     },
     onDragStopSend(x, y) {
       this.send.posx = x;
       this.send.posy = y;
-      if (this.send.posz != 2) {
         this.setZ("send");
-      }
     },
     onModSend(x, y) {
       if (x < 4) {
@@ -1187,16 +1219,12 @@ export default {
       this.btm.posy = y;
       this.btm.width = width;
       this.btm.height = height;
-      if (this.btm.posz != 2) {
         this.setZ("btm");
-      }
     },
     onDragStopBtm(x, y) {
       this.btm.posx = x;
       this.btm.posy = y;
-      if (this.btm.posz != 2) {
         this.setZ("btm");
-      }
     },
     onModBtm(x, y) {
       if (x < 4) {
@@ -1221,16 +1249,12 @@ export default {
       this.log.posy = y;
       this.log.width = width;
       this.log.height = height;
-      if (this.log.posz != 2) {
-        this.setZ("btm");
-      }
+      this.setZ("log");
     },
     onDragStopLog(x, y) {
       this.log.posx = x;
       this.log.posy = y;
-      if (this.log.posz != 2) {
-        this.setZ("btm");
-      }
+      this.setZ("log");
     },
     onModLog(x, y) {
       if (x < 4) {
@@ -1260,7 +1284,7 @@ export default {
         this.received.errorConfig = "server save/open closed";
       };
       this.connectionPage.onopen = () => {*/
-        this.connectionPage.send("CHANGE_COLOR###" + this.mainColor);
+      this.connectionPage.send("CHANGE_COLOR###" + this.mainColor);
       //};
     },
     setMainColor(color) {
@@ -1359,30 +1383,30 @@ export default {
       };
       this.connectionPage.onopen = () => {
         console.log(this.connectionPage.readyState);*/
-        this.connectionPage.send(
-          "SAVE###" +
-            "textTree_" +
-            millis +
-            "###" +
-            JSON.stringify({
-              datetime: dateGen.toISOString(),
-              name: title,
-              tree: textToSend,
-            })
-        );
-        this.received.errorConfig = "";
-        localStorage.setItem(
-          "textTree_" + millis,
-          JSON.stringify({ datetime: dateGen.toISOString(), name: title })
-        );
-        let routeData = this.$router.resolve({
-          name: "StaticTree",
-          query: { id: millis },
-        });
-        console.log(routeData);
-        setTimeout(function () {
-          window.open(routeData.href, "_blank");
-        }, 1000);
+      this.connectionPage.send(
+        "SAVE###" +
+          "textTree_" +
+          millis +
+          "###" +
+          JSON.stringify({
+            datetime: dateGen.toISOString(),
+            name: title,
+            tree: textToSend,
+          })
+      );
+      this.received.errorConfig = "";
+      localStorage.setItem(
+        "textTree_" + millis,
+        JSON.stringify({ datetime: dateGen.toISOString(), name: title })
+      );
+      let routeData = this.$router.resolve({
+        name: "StaticTree",
+        query: { id: millis },
+      });
+      console.log(routeData);
+      setTimeout(function () {
+        window.open(routeData.href, "_blank");
+      }, 1000);
       //};
     },
 
@@ -1393,13 +1417,25 @@ export default {
         "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
       );
       this.connectionPage.onopen = () => {
-        this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_CONNECTED) + "#@END-LOGS@#");
+        this.changeLog(
+          "#@LOGS@#" +
+            timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_CONNECTED) +
+            "#@END-LOGS@#"
+        );
       };
       this.connectionPage.onclose = () => {
-        this.changeLog("#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_DISCONNECTED) + "#@END-LOGS@#");
+        this.changeLog(
+          "#@LOGS@#" +
+            timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_DISCONNECTED) +
+            "#@END-LOGS@#"
+        );
       };
       this.connectionPage.onerror = () => {
-        this.changeErrLog("#@ERR-LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_ERROR) + "#@END-ERR-LOGS@#");
+        this.changeErrLog(
+          "#@ERR-LOGS@#" +
+            timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_ERROR) +
+            "#@END-ERR-LOGS@#"
+        );
       };
       this.connectionPage.onmessage = ({ data }) => {
         console.log(data);
@@ -1618,9 +1654,6 @@ export default {
 </script>
 
 <style scoped>
-.v-snack__content {
-  font-size: 1.8vh;
-}
 
 #title {
   display: inline-block;
@@ -1650,6 +1683,8 @@ export default {
 </style>
 
 <style>
+
+
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;

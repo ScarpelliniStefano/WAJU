@@ -1,7 +1,7 @@
 <template>
-  <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
+  <v-sheet :dark="darkMode" :light="!darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet
-      :dark="darkMode"
+      :dark="darkMode" :light="!darkMode"
       elevation="14"
       class="topbar"
       @click="$emit('set-z-click', 'btm')"
@@ -11,7 +11,7 @@
         >mdi-close</v-icon
       >
     </v-sheet>
-    <v-sheet id="sheet_container" :dark="darkMode">
+    <v-sheet id="sheet_container" :dark="darkMode" :light="!darkMode">
       <v-container id="container" fluid>
         <v-row align="center" class="text-center">
           <v-col v-if="conf" :cols="dimCols(1)">
@@ -19,7 +19,7 @@
               class="pb-2"
               readonly
               outlined
-              :dark="darkMode"
+              :dark="darkMode" :light="!darkMode"
               id="div_send"
               :height="height - diffHeightConf()"
               no-resize
@@ -33,8 +33,8 @@
             </v-btn>
           </v-col>
           <v-col v-if="ispectstate" :cols="dimCols(1)">
-            <v-sheet :dark="darkMode" id="div_send" :height="height - diffHeightColl()">
-              <v-list :dark="darkMode" class="pa-0">
+            <v-sheet :dark="darkMode" :light="!darkMode" id="div_send" :height="height - diffHeightColl()">
+              <v-list :dark="darkMode" :light="!darkMode" class="pa-0">
                 <template v-for="(coll, index) in bottomText.listIRCol">
                 <v-list-item :key="coll">
                   <template>
@@ -108,7 +108,7 @@
                 </v-btn>
                 <v-sheet
                   v-if="ratioMode() !== 'small'"
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   :height="(height - 80) / 2"
                 >
                   <v-btn
@@ -184,7 +184,7 @@
                 </v-btn>
                 <v-sheet
                   v-if="ratioMode() !== 'small'"
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   :height="(height - 80) / 2"
                 >
                   <v-btn

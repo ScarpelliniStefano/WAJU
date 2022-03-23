@@ -53,4 +53,8 @@ html {
   margin: 0;
   background-color: var(--bg-div-color);
 }
+
+.v-snack__content {
+  font-size: 2vh;
+}
 </style>

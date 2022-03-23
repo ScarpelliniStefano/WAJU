@@ -41,7 +41,7 @@
       </v-col>
       <v-divider vertical />
       <v-col cols="2">
-        <v-chip class="ma-2" :dark="darkMode" label outlined>
+        <v-chip class="ma-2" :dark="darkMode" :light="!darkMode" label outlined>
           {{ MAIN_THEME }}
         </v-chip>
       </v-col>

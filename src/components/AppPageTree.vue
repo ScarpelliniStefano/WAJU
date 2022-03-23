@@ -1,5 +1,5 @@
 <template>
-  <v-sheet :dark="darkMode" height="100%">
+  <v-sheet :dark="darkMode" :light="!darkMode" height="100%">
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="200"></v-progress-circular>
     </v-overlay>
@@ -16,7 +16,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-          <v-sheet rounded elevation="10" width="100%" :dark="darkMode">
+          <v-sheet rounded elevation="10" width="100%" :dark="darkMode" :light="!darkMode">
             <center>
               <h1>{{ this.title }}</h1>
             </center>
@@ -34,7 +34,7 @@
               <v-spacer></v-spacer>
               <v-col cols="1">
                 <v-select
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   v-model="size"
                   :items="itemsSize"
                   :label="SELECT_SIZE"
@@ -46,12 +46,12 @@
             <v-row align="center" class="text-center">
               <v-col cols="3" class="pl-9">
                 <v-btn
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   id="btnSave"
                   color="var(--border-color)"
                   elevation="2"
-                  style="border-radius: 4px; border-style: solid; border-width: 1px"
-                  @click="download('TreeColl')"
+                  style="border-radius: 4px;"
+                  @click="download()"
                   width="100%"
                 >
                   <v-icon color="white">{{ BTN_SAVE }}</v-icon>
@@ -60,7 +60,7 @@
               </v-col>
               <v-col cols="6">
                 <v-pagination
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   v-model="page"
                   :length="pageCount"
                   :total-visible="7"
@@ -71,11 +71,11 @@
               </v-col>
               <v-col cols="3" class="pr-9">
                 <v-btn
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   id="btnExpand"
                   color="var(--border-color)"
                   elevation="2"
-                  style="border-radius: 4px; border-style: solid; border-width: 1px"
+                  style="border-radius: 4px;"
                   @click="setDepth()"
                   width="100%"
                 >
@@ -88,10 +88,10 @@
         </v-col>
         <v-col cols="12" sm="12" md="12" lg="12" xl="12">
           <v-sheet
-            :dark="darkMode"
+            :dark="darkMode" :light="!darkMode"
             rounded
             min-height="350px"
-            height="calc(60vh)"
+            height="calc(55vh)"
             elevation="5"
             id="treeViewer"
             style="overflow: auto"
@@ -112,7 +112,7 @@
 
       <template v-slot:action="{ attrs }">
         <v-btn
-          :dark="darkMode"
+          :dark="darkMode" :light="!darkMode"
           color="var(--border-color)"
           text
           v-bind="attrs"
@@ -125,9 +125,10 @@
   </v-sheet>
 </template>
 <script>
-import jsonview from "@pgrabovets/json-view";
+import jsonview from "../plugins/json-view";
 import lang from "../env/lang.en";
 import icon from "../env/icon";
+import latinize from 'latinize/latinize';
 
 export default {
   name: "AppPageTree",
@@ -181,8 +182,13 @@ export default {
     };
   },
   watch: {
-    size: function () {
-      this.changeDimensions();
+    size: function (newVal) {
+      if (this.page * newVal > this.valTotal)
+      {
+        this.page = 1
+      } else {
+        this.changeDimensions();
+      }
     },
     page: function () {
       this.changeDimensions();
@@ -197,7 +203,6 @@ export default {
           this.overlay = false;
         }
       }
-      console.log(document.getElementById("treeViewer").innerHTML);
     },
   },
   computed: {
@@ -240,7 +245,6 @@ export default {
       if (!this.mainColor) {
         this.mainColor = "document-color";
       }
-      console.log(this.mainColor);
       document.documentElement.classList.add(this.mainColor);
 
       this.themeColor = this.getCookie("theme-color");
@@ -332,7 +336,7 @@ export default {
         this.connectionPage.onopen = () => {
           this.sendMessage();
         };
-        let jsonData = "";
+        let jsonData = null
         this.connectionPage.onmessage = (message) => {
           if (message == "SERVER CLOSED") {
             this.error = "server save/open closed";
@@ -395,7 +399,7 @@ export default {
         this.numDepth = this.numDepth < 2 ? 10 : 1;
       }
     },
-    download(filename) {
+    download() {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
         var element = document.createElement("a");
@@ -404,11 +408,11 @@ export default {
           "data:application/json," +
             encodeURIComponent(
               '{ \n "documents" : \n ' +
-                JSON.stringify(this.textIRTreeCol, null, "\t") +
+                latinize(String(JSON.stringify(this.textIRTreeCol, null, "\t")).replace('Â','').replace('Â','')) +
                 "\n}"
             )
         );
-        element.setAttribute("download", filename + ".json");
+        element.setAttribute("download", this.title + ".json");
 
         element.style.display = "none";
         document.body.appendChild(element);
@@ -437,9 +441,6 @@ export default {
 </script>
 
 <style scoped>
-.v-snack__content {
-  font-size: 1.8vh;
-}
 
 .label {
   color: white;
@@ -688,9 +689,6 @@ div.boxInfo {
 </style>
 
 <style scoped>
-.v-snack__content {
-  font-size: 1.8vh;
-}
 
 .tooltip .tooltiptext {
   visibility: hidden;

@@ -1,7 +1,7 @@
 <template>
-  <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
+  <v-sheet :dark="darkMode" :light="!darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet
-      :dark="darkMode"
+      :dark="darkMode" :light="!darkMode"
       style="
         border-bottom: 1px solid #dddddd;
         border-top-left-radius: 3px;
@@ -25,7 +25,7 @@
       >
     </v-sheet>
     <v-sheet
-      :dark="darkMode"
+      :dark="darkMode" :light="!darkMode"
       style="border-top-left-radius: 3px; border-top-right-radius: 3px"
     >
       <v-container
@@ -36,7 +36,7 @@
           <v-col :cols="dimCols(1)">
             <v-textarea
               outlined
-              :dark="darkMode"
+              :dark="darkMode" :light="!darkMode"
               id="div_send"
               :height="height - diffHeight()"
               no-resize
@@ -50,7 +50,7 @@
                 <v-btn
                   id="btnWizard"
                   v-if="ratioMode() === 'small'"
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   :width="(width - 48) / 2"
                   color="var(--border-color)"
                   class="tooltip btnstyle"
@@ -67,7 +67,7 @@
                 </v-btn>
                 <v-sheet
                   v-if="ratioMode() !== 'small'"
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   :height="(height - 80) / 2"
                 >
                   <v-btn
@@ -123,7 +123,7 @@
               <v-col v-if="ratioMode() === 'small'" cols="6">
                 <v-btn
                   id="btnExecute"
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   :loading="exec"
                   :width="(width - 48) / 2"
                   class="tooltip btnstyle"
@@ -142,7 +142,7 @@
             </v-row>
             <v-row v-if="ratioMode() !== 'small'" align="center">
               <v-col>
-                <v-sheet :dark="darkMode" :height="(height - 80) / 2">
+                <v-sheet :dark="darkMode" :light="!darkMode" :height="(height - 80) / 2">
                   <v-btn
                     id="btnWizard"
                     v-if="ratioMode() === 'medium'"

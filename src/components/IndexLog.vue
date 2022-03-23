@@ -1,7 +1,7 @@
 <template>
-  <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
+  <v-sheet :dark="darkMode" :light="!darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet
-      :dark="darkMode"
+      :dark="darkMode" :light="!darkMode"
       style="
         border-bottom: 1px solid #dddddd;
         border-bottom-left-radius: 3px;
@@ -26,7 +26,7 @@
       </v-icon>
     </v-sheet>
     <v-sheet
-      :dark="darkMode"
+      :dark="darkMode" :light="!darkMode"
       style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px"
     >
       <v-container
@@ -35,7 +35,7 @@
       >
         <v-row class="py-0" align="center">
           <v-col class="pa-0" cols="12">
-            <v-sheet :dark="darkMode" class="pa-3" :height="height - 32" id="boxLog">
+            <v-sheet :dark="darkMode" :light="!darkMode" class="pa-3" :height="height - 32" id="boxLog">
               <ul
                 readonly
                 style="font-size: 16px"

@@ -1,22 +1,22 @@
 <template>
-  <v-sheet class="pt-6" :dark="darkMode" height="100%">
+  <v-sheet class="pt-6" :dark="darkMode" :light="!darkMode" height="100%">
     <center>
       <v-sheet
         v-for="modulo in modulesData"
         :key="modulo.index"
         elevation="2"
         width="90%"
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
       >
         <v-select
           filled
-          :dark="darkMode"
+          :dark="darkMode" :light="!darkMode"
           v-model="modulo.selected"
           :items="arrayModel"
           :label="SEL_TXT_MODULES"
         ></v-select>
         <modules
-          :dark="darkMode"
+          :dark="darkMode" :light="!darkMode"
           :select="modulo.selected"
           :maincol="mainColor"
           :indice="modulo.index"
@@ -26,7 +26,7 @@
       </v-sheet>
       <br />
       <v-btn
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         tile
         fab
         depressed
@@ -48,7 +48,7 @@
         depressed
         elevation="5"
         raised
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         large
         class="tooltip btnstyle"
         width="200px"
@@ -63,7 +63,7 @@
         color="var(--border-color)"
         readonly
         v-model="valueString"
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         style="width: 90%"
       />
       <br />
@@ -73,7 +73,7 @@
         depressed
         elevation="5"
         raised
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         large
         :disabled="disabledBtn"
         class="tooltip btnstyle"
@@ -91,7 +91,7 @@
         depressed
         elevation="5"
         raised
-        :dark="darkMode"
+        :dark="darkMode" :light="!darkMode"
         large
         :disabled="disabledBtn"
         class="tooltip btnstyle"
@@ -119,7 +119,7 @@
         <v-btn
           color="var(--border-color)"
           text
-          :dark="darkMode"
+          :dark="darkMode" :light="!darkMode"
           v-bind="attrs"
           @click="wizardAlert = false"
         >
@@ -128,7 +128,7 @@
       </template>
     </v-snackbar>
     <v-row justify="center">
-      <v-dialog v-model="firstDialogWizard" persistent max-width="500" :dark="darkMode">
+      <v-dialog v-model="firstDialogWizard" persistent max-width="500" :dark="darkMode" :light="!darkMode">
         <v-card>
           <v-card-title class="text-h5 red darken-2">
             <v-icon left color="black"> mdi-alert </v-icon>
@@ -342,9 +342,6 @@ export default {
 </script>
 
 <style scoped>
-.v-snack__content {
-  font-size: 1.8vh;
-}
 /*@media screen and (max-height: 600px) {
   ::v-deep .v-snack__content {
     font-size: 14px;

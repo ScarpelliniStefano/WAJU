@@ -1,7 +1,7 @@
 <template>
-  <v-sheet :dark="darkMode" elevation="17" id="recDiv" class="divstyle">
+  <v-sheet :dark="darkMode" :light="!darkMode" elevation="17" id="recDiv" class="divstyle">
     <v-sheet
-      :dark="darkMode"
+      :dark="darkMode" :light="!darkMode"
       style="
         border-bottom: 1px solid #dddddd;
         border-top-left-radius: 3px;
@@ -25,7 +25,7 @@
       >
     </v-sheet>
     <v-sheet
-      :dark="darkMode"
+      :dark="darkMode" :light="!darkMode"
       style="border-top-left-radius: 3px; border-top-right-radius: 3px"
     >
       <v-container
@@ -37,7 +37,7 @@
             <v-row align="center">
               <v-col class="pa-3" :key="'recKey_middle'" :cols="12">
                 <v-sheet
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   id="div_send"
                   :height="height - diffHeight()"
                   style="
@@ -50,7 +50,7 @@
                     :page.sync="page"
                     :items-per-page="itemsPerPage"
                     @page-count="pageCount = $event"
-                    :dark="darkMode"
+                    :dark="darkMode" :light="!darkMode"
                     class="tastyle pt-0 mt-0"
                     no-resize
                     name="input-7-1"
@@ -84,7 +84,7 @@
               <v-divider v-if="dividerBool()" vertical></v-divider>
               <v-col :key="1.21" cols="12" class="pt-0">
                 <v-pagination
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   v-model="page"
                   :length="pageCount"
                   :total-visible="7"
@@ -120,7 +120,7 @@
                 </v-btn>
                 <v-sheet
                   v-if="ratioMode() !== 'small'"
-                  :dark="darkMode"
+                  :dark="darkMode" :light="!darkMode"
                   :height="(height - 80) / 2"
                 >
                   <v-btn
@@ -198,7 +198,7 @@
             </v-row>
             <v-row v-if="ratioMode() !== 'small'" align="center">
               <v-col>
-                <v-sheet :dark="darkMode" :height="(height - 80) / 2">
+                <v-sheet :dark="darkMode" :light="!darkMode" :height="(height - 80) / 2">
                   <v-btn
                     id="btnBacktrack"
                     v-if="ratioMode() === 'medium'"
