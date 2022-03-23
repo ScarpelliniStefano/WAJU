@@ -1,6 +1,16 @@
 <template>
   <v-sheet class="pt-6" :dark="darkMode" :light="!darkMode" height="100%">
     <center>
+      <v-alert
+      v-if="this.error !== ''"
+      border="bottom"
+      close-text="Close Alert"
+      type="warning"
+      color="red darken-2"
+      dark
+    >
+      {{ this.error }}
+    </v-alert>
       <v-sheet
         v-for="modulo in modulesData"
         :key="modulo.index"
@@ -201,6 +211,9 @@ export default {
     timerId: "",
     lblPopup: "",
     wizardAlert: false,
+
+    randomNumber: '',
+    error: ''
   }),
   components: {
     modules,
@@ -218,13 +231,17 @@ export default {
     }
     this.firstDialogWizard = this.getCookie("firstDialogWizard") === "true";
 
+    this.randomNumber = this.generatePassword(20);
+
     document.title = this.LBL_TITLE;
     this.changeColor();
-    this.connectionPage = new WebSocket("ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER);
+    this.connectionPage = new WebSocket("ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER, this.$route.query.id + '###' + this.randomNumber);
     this.connectionPage.onmessage = (data) => {
       console.log(data.data);
-      if (data.data.split("###")[0] == "CHANGE_COLOR") {
+      if (data.data.split("###")[0] === "CHANGE_COLOR") {
         this.changeColor();
+      } else if (data.data.split("###")[0] === "CLOSE_HOME") {
+        this.error = data.data.split("###")[1];
       }
     };
   },
@@ -235,6 +252,31 @@ export default {
     this.addMouseOverEvent("btnReset", this.HINT_RESET);
   },
   methods: {
+    generatePassword(passwordLength) {
+      var numberChars = "0123456789";
+      var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      var lowerChars = "abcdefghijklmnopqrstuvwxyz";
+      var allChars = numberChars + upperChars + lowerChars;
+      var randPasswordArray = Array(passwordLength);
+      randPasswordArray[0] = numberChars;
+      randPasswordArray[1] = upperChars;
+      randPasswordArray[2] = lowerChars;
+      randPasswordArray = randPasswordArray.fill(allChars, 3);
+      return this.shuffleArray(
+        randPasswordArray.map(function (x) {
+          return x[Math.floor(Math.random() * x.length)];
+        })
+      ).join("");
+    },
+    shuffleArray(array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+      return array;
+    },
     setFirstDialogWizard() {
       this.firstDialogWizard = false;
       this.setCookie("firstDialogWizard", "false", 30);

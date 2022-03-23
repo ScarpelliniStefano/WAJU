@@ -1414,7 +1414,8 @@ export default {
       this.randomNumber = this.generatePassword(50);
 
       this.connectionPage = new WebSocket(
-        "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
+        "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER,
+        this.randomNumber
       );
       this.connectionPage.onopen = () => {
         this.changeLog(

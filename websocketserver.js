@@ -1,16 +1,48 @@
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port: 3000 });
-let users = [];
+let users = new Map();
 const fs = require('fs');
 
 console.log("started on port 3000")
 
 wss.on('connection', function connection(ws) {
-    users.push(ws);
-    console.log(`Utente connesso`)
+    const arrData = String(ws.protocol).split('###')
+    var isThereHome = false
+    if (arrData.length > 1){
+        wss.clients.forEach((client) => {
+            const arrClientData = String(client.protocol).split('###')
+            if(arrClientData.length === 1 && isThereHome === false){
+                if(arrData[0] === arrClientData[0]){
+                    isThereHome = true
+                }
+            }
+        });
+        if(isThereHome){
+            console.log(`Wizard ID: [${arrData[1]}] User ID: [${arrData[0]}] connected`);
+        } else {
+            ws.send('CLOSE_HOME###Homepage was closed.');
+        }
+        
+    } else if (arrData.length === 1) {
+        console.log(`User ID: [${arrData[0]}] connected`);
+    }
 
-    ws.on('close', (data) => {
-        console.log(`Utente disconnesso`);
+    ws.on('close', () => {
+        const arrData = String(ws.protocol).split('###')
+        if (arrData.length > 1){
+            console.log(`Wizard ID: [${arrData[1]}] User ID: [${arrData[0]}] disconnected`);
+        } else if (arrData.length === 1) {
+            console.log(`User ID: [${arrData[0]}] disconnected`);
+        }
+
+        wss.clients.forEach((client) => {
+            const arrClientData = String(client.protocol).split('###')
+            if(arrClientData.length > 1 && client !== ws && client.readyState === WebSocket.OPEN){
+                if(arrData[0] === arrClientData[0]){
+                    client.send('CLOSE_HOME###Homepage was closed.');
+                }
+            }
+        });
     });
 
     ws.on('open', (data) => {
@@ -76,7 +108,8 @@ wss.on('connection', function connection(ws) {
     });
 
 });
-const fsExtra = require('fs-extra')
+const fsExtra = require('fs-extra');
+//const { use } = require("vue/types/umd");
 process.on('SIGINT', function () {
     fsExtra.emptyDirSync("./src/temp");
     wss.clients.forEach((client) => {
