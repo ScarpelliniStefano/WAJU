@@ -1,5 +1,5 @@
 import '../scss/jsonview.scss';
-import latinize from 'latinize';
+//import latinize from 'latinize';
 
 import getDataType from './utils/getDataType';
 import { listen, detach, element } from './utils/dom';
@@ -124,7 +124,8 @@ function createNodeElement(node) {
   } else {
     el.innerHTML = notExpandedTemplate({
       key: node.key,
-      value: latinize(String(node.value).replace('Â','').replace('Â','')),
+      //value: latinize(String(node.value).replace('Â','').replace('Â','')),
+      value: (String(node.value).replace('Â','').replace('Â','')),
       type: typeof node.value
     })
   }

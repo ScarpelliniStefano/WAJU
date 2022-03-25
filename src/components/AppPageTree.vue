@@ -128,7 +128,7 @@
 import jsonview from "../plugins/json-view";
 import lang from "../env/lang.en";
 import icon from "../env/icon";
-import latinize from 'latinize/latinize';
+//import latinize from 'latinize/latinize';
 
 export default {
   name: "AppPageTree",
@@ -408,7 +408,8 @@ export default {
           "data:application/json," +
             encodeURIComponent(
               '{ \n "documents" : \n ' +
-                latinize(String(JSON.stringify(this.textIRTreeCol, null, "\t")).replace('Â','').replace('Â','')) +
+                //latinize(String(JSON.stringify(this.textIRTreeCol, null, "\t")).replace('Â','').replace('Â',''))
+                (String(JSON.stringify(this.textIRTreeCol, null, "\t")).replace('Â','').replace('Â','')) +
                 "\n}"
             )
         );
