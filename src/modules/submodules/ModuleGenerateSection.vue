@@ -59,7 +59,7 @@
                     ></v-radio>
                     </v-radio-group>
                     <v-row v-if="setGeometrySetting=='POINT'"><v-col>
-                    <v-text-field :label="VTXT_GEOMETRY_SETTING_POINT_FIRST_COORDINATE" v-model="textRadioBtn1"/>
+                    <v-text-field :label="GEOMETRY.TXT_GEOMETRY_SETTING_POINT_FIRST_COORDINATE" v-model="textRadioBtn1"/>
                     </v-col><v-col>
                     <v-text-field :label="GEOMETRY.TXT_GEOMETRY_SETTING_POINT_SECOND_COORDINATE" v-model="textRadioBtn2"/>
                     </v-col></v-row>
@@ -73,7 +73,7 @@
             <v-text-field :rules="[rules.counter]" :label="TXT_COLL_FUZZY_ID_ISTR" v-model="collect.idFuzzyInstr"/>
             </v-col>
             <v-col>
-            <v-textarea :rules="[rules.counter]" :label="TXT_COLL_FUZZY_CONDITION" rows="1" v-model="collect.fuzzyInstr"/>
+            <v-textarea id="textarea" :rules="[rules.counter]" :label="TXT_COLL_FUZZY_CONDITION" rows="1" v-model="collect.fuzzyInstr"/>
             </v-col>
         </v-row>
         <v-container>
@@ -437,6 +437,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+::v-deep #textarea{
+    line-height: 1.25rem;
+    height: 17px;
+    margin-top: 5px;
+    min-height: 27px;
+}
 </style>

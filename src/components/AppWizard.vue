@@ -8,6 +8,7 @@
       type="warning"
       color="red darken-2"
       dark
+      width="90%"
     >
       {{ this.error }}
     </v-alert>

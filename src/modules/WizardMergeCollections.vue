@@ -90,8 +90,9 @@ export default {
         checkMinus(){
             if(this.collections.length>2){
                 this.collections.pop()
+                this.valueArr.pop()
             }
-            this.valueArr.pop()
+            this.counterText(this.collections.length)
         },
         setPlus(){
             if(this.collections[this.collections.length-1].collection!=''){

@@ -1,12 +1,13 @@
 <template>
             
             <v-container fluid style="border-style: outset;">
-                <v-textarea :rules="[rules.required]" :label="TXT_CONDITIONS" rows="2" auto-grow v-model="orCond"/>
+                <v-textarea class="pb-3" :rules="[rules.required]" :label="TXT_CONDITIONS" rows="1" auto-grow v-model="orCond"/>
                 <v-container fluid style="border-style: outset;">
                 <v-row v-for="collect in fieldRefSource" :key="collect.index">
-                    <v-text-field :rules="[rules.required,rules.counterSource]" :label="TXT_SOURCE_FIELDS" v-model="collect.sourceFields"/>
+                    <v-text-field class="pa-3" :rules="[rules.required,rules.counterSource]" :label="TXT_SOURCE_FIELDS" v-model="collect.sourceFields"/>
                 </v-row>
                 </v-container>
+                <br>
                 <v-btn
                     tile fab depressed elevation="5" raised
                     dark small
@@ -40,7 +41,7 @@
                         </v-col>
                         <v-col>
                         <v-container
-                                class="px-0"
+                                class="pa-0"
                                 fluid
                             >
                                 <v-radio-group v-model="collect.order" :rules="[rules.counterOrdT]" row>
@@ -95,11 +96,15 @@
 
 <script>
 import lang from '../../env/lang.en'
+import generateSection from './ModuleGenerateSection.vue'
 
 export default {
     name:"ModulePartitionClause",
     props:{
         mypartitionIndex: Number
+    },
+    components: {
+        generateSection
     },
     
    data () {
@@ -119,8 +124,8 @@ export default {
         //LABEL
         TXT_CONDITIONS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.TXT_CONDITIONS,
         TXT_SOURCE_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.TXT_SOURCE_FIELDS,
-        BTN_SPAN_ADD_SOURCE_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.BTN_SPAN_ADD_ORDER_FIELDS,
-        BTN_SPAN_REMOVE_SOURCE_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.BTN_SPAN_REMOVE_ORDER_FIELDS,
+        BTN_SPAN_ADD_SOURCE_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.BTN_SPAN_ADD_SOURCE_FIELDS,
+        BTN_SPAN_REMOVE_SOURCE_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.BTN_SPAN_REMOVE_SOURCE_FIELDS,
         TXT_FIELD_DESTINATION:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.TXT_FIELD_DESTINATION,
         CHECK_DROP_GROUPING_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.CHECK_DROP_GROUPING_FIELDS,
         CHECK_ORDER_FIELDS:lang.WIZARD.SUBMODULES.PARTITION_CLAUSE.CHECK_ORDER_FIELDS,
