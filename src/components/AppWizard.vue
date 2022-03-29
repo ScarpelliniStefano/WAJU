@@ -2,53 +2,63 @@
   <v-sheet class="pt-6" :dark="darkMode" :light="!darkMode" height="100%">
     <center>
       <v-alert
-      v-if="this.error !== ''"
-      border="bottom"
-      close-text="Close Alert"
-      type="warning"
-      color="red darken-2"
-      dark
-      width="90%"
-    >
-      {{ this.error }}
-    </v-alert>
-      <draggable v-model="modulesData" group="modules" @start="drag=true" @end="drag=false" v-bind="dragOptions">
+        v-if="this.error !== ''"
+        border="bottom"
+        close-text="Close Alert"
+        type="warning"
+        color="red darken-2"
+        dark
+        width="90%"
+      >
+        {{ this.error }}
+      </v-alert>
+      <draggable
+        v-model="modulesData"
+        group="modules"
+        @start="drag = true"
+        @end="drag = false"
+        v-bind="dragOptions"
+        :move="checkMove"
+      >
         <v-sheet
           v-for="modulo in modulesData"
           :key="modulo.index"
           elevation="2"
           width="90%"
-          :dark="darkMode" :light="!darkMode"
+          :dark="darkMode"
+          :light="!darkMode"
         >
           <v-btn
-          v-if="modulesData.length>1"
-              icon
-              color="grey"
-              @click="removeAt(modulo.index)"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
+            v-if="modulesData.length > 1"
+            icon
+            color="grey"
+            @click="removeAt(modulo.index)"
+          >
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
           <v-select
             filled
-            :dark="darkMode" :light="!darkMode"
+            :dark="darkMode"
+            :light="!darkMode"
             v-model="modulo.selected"
             :items="arrayModel"
             :label="SEL_TXT_MODULES"
           ></v-select>
           <modules
-            :dark="darkMode" :light="!darkMode"
+            :dark="darkMode"
+            :light="!darkMode"
             :select="modulo.selected"
             :maincol="mainColor"
             :indice="modulo.index"
             @changeValue="changeValue($event)"
-          ></modules
-          >
+          ></modules>
         </v-sheet>
       </draggable>
-      
+
       <br />
       <v-btn
-        :dark="darkMode" :light="!darkMode"
+        :dark="darkMode"
+        :light="!darkMode"
         tile
         fab
         depressed
@@ -70,7 +80,8 @@
         depressed
         elevation="5"
         raised
-        :dark="darkMode" :light="!darkMode"
+        :dark="darkMode"
+        :light="!darkMode"
         large
         class="tooltip btnstyle"
         width="200px"
@@ -85,7 +96,8 @@
         color="var(--border-color)"
         readonly
         v-model="valueString"
-        :dark="darkMode" :light="!darkMode"
+        :dark="darkMode"
+        :light="!darkMode"
         style="width: 90%"
       />
       <br />
@@ -95,7 +107,8 @@
         depressed
         elevation="5"
         raised
-        :dark="darkMode" :light="!darkMode"
+        :dark="darkMode"
+        :light="!darkMode"
         large
         :disabled="disabledBtn"
         class="tooltip btnstyle"
@@ -113,7 +126,8 @@
         depressed
         elevation="5"
         raised
-        :dark="darkMode" :light="!darkMode"
+        :dark="darkMode"
+        :light="!darkMode"
         large
         :disabled="disabledBtn"
         class="tooltip btnstyle"
@@ -141,7 +155,8 @@
         <v-btn
           color="var(--border-color)"
           text
-          :dark="darkMode" :light="!darkMode"
+          :dark="darkMode"
+          :light="!darkMode"
           v-bind="attrs"
           @click="wizardAlert = false"
         >
@@ -150,7 +165,13 @@
       </template>
     </v-snackbar>
     <v-row justify="center">
-      <v-dialog v-model="firstDialogWizard" persistent max-width="500" :dark="darkMode" :light="!darkMode">
+      <v-dialog
+        v-model="firstDialogWizard"
+        persistent
+        max-width="500"
+        :dark="darkMode"
+        :light="!darkMode"
+      >
         <v-card>
           <v-card-title class="text-h5 red darken-2">
             <v-icon left color="black"> mdi-alert </v-icon>
@@ -171,7 +192,7 @@
 <script>
 import modules from "../modules/WizardModules.vue";
 import lang from "../env/lang.en";
-import draggable from 'vuedraggable'
+import draggable from "vuedraggable";
 export default {
   name: "AppWizard",
   data: () => ({
@@ -225,12 +246,12 @@ export default {
     lblPopup: "",
     wizardAlert: false,
 
-    randomNumber: '',
-    error: ''
+    randomNumber: "",
+    error: "",
   }),
   components: {
     modules,
-    draggable
+    draggable,
   },
   watch: {
     valueString: function (newVal) {
@@ -245,9 +266,9 @@ export default {
         animation: 200,
         group: "modules",
         disabled: false,
-        ghostClass: "ghost"
+        ghostClass: "ghost",
       };
-    }
+    },
   },
   created() {
     if (this.getCookie("firstDialogWizard") === null) {
@@ -259,7 +280,10 @@ export default {
 
     document.title = this.LBL_TITLE;
     this.changeColor();
-    this.connectionPage = new WebSocket("ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER, this.$route.query.id + '###' + this.randomNumber);
+    this.connectionPage = new WebSocket(
+      "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER,
+      this.$route.query.id + "###" + this.randomNumber
+    );
     this.connectionPage.onmessage = (data) => {
       console.log(data.data);
       if (data.data.split("###")[0] === "CHANGE_COLOR") {
@@ -277,8 +301,30 @@ export default {
   },
   methods: {
     removeAt(idx) {
-      this.modulesData.splice(idx-1, 1);
+      this.modulesData.splice(idx - 1, 1);
       this.refresh();
+    },
+    checkMove: function(e) {
+      let pastIndex=e.draggedContext.index;
+      let futureIndex=e.draggedContext.futureIndex;
+      this.scambia(this.modulesData,pastIndex,futureIndex);
+      console.log(this.modulesData);
+      this.refresh();
+    },
+    scambia(T,v,n){
+    var x;//variabile ausiliaria
+    x=T[n];
+    let index=T[v].index;
+    console.log(index);
+    console.log(x.index);
+    T[n]=T[v];
+    console.log(T[n].index);
+    T[n].index=x.index;
+    console.log(T[n].index);
+    T[v]=x;
+    console.log(T[v].index);
+    T[v].index=index;
+    console.log(T[v].index);
     },
     generatePassword(passwordLength) {
       var numberChars = "0123456789";
