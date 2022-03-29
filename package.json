@@ -26,6 +26,7 @@
     "vue-native-websocket-es5": "^2.0.14",
     "vue-router": "^3.2.0",
     "vue-styleguidist": "^4.44.22",
+    "vuedraggable": "^2.24.3",
     "vuetify": "^2.5.10",
     "vuex": "^3.4.0"
   },

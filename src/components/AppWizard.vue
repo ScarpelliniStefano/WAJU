@@ -12,29 +12,40 @@
     >
       {{ this.error }}
     </v-alert>
-      <v-sheet
-        v-for="modulo in modulesData"
-        :key="modulo.index"
-        elevation="2"
-        width="90%"
-        :dark="darkMode" :light="!darkMode"
-      >
-        <v-select
-          filled
+      <draggable v-model="modulesData" group="modules" @start="drag=true" @end="drag=false" v-bind="dragOptions">
+        <v-sheet
+          v-for="modulo in modulesData"
+          :key="modulo.index"
+          elevation="2"
+          width="90%"
           :dark="darkMode" :light="!darkMode"
-          v-model="modulo.selected"
-          :items="arrayModel"
-          :label="SEL_TXT_MODULES"
-        ></v-select>
-        <modules
-          :dark="darkMode" :light="!darkMode"
-          :select="modulo.selected"
-          :maincol="mainColor"
-          :indice="modulo.index"
-          @changeValue="changeValue($event)"
-        ></modules
-        ><br />
-      </v-sheet>
+        >
+          <v-btn
+          v-if="modulesData.length>1"
+              icon
+              color="grey"
+              @click="removeAt(modulo.index)"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          <v-select
+            filled
+            :dark="darkMode" :light="!darkMode"
+            v-model="modulo.selected"
+            :items="arrayModel"
+            :label="SEL_TXT_MODULES"
+          ></v-select>
+          <modules
+            :dark="darkMode" :light="!darkMode"
+            :select="modulo.selected"
+            :maincol="mainColor"
+            :indice="modulo.index"
+            @changeValue="changeValue($event)"
+          ></modules
+          >
+        </v-sheet>
+      </draggable>
+      
       <br />
       <v-btn
         :dark="darkMode" :light="!darkMode"
@@ -160,6 +171,7 @@
 <script>
 import modules from "../modules/WizardModules.vue";
 import lang from "../env/lang.en";
+import draggable from 'vuedraggable'
 export default {
   name: "AppWizard",
   data: () => ({
@@ -218,6 +230,7 @@ export default {
   }),
   components: {
     modules,
+    draggable
   },
   watch: {
     valueString: function (newVal) {
@@ -225,6 +238,16 @@ export default {
         this.disabledBtn = false;
       }
     },
+  },
+  computed: {
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "modules",
+        disabled: false,
+        ghostClass: "ghost"
+      };
+    }
   },
   created() {
     if (this.getCookie("firstDialogWizard") === null) {
@@ -253,6 +276,10 @@ export default {
     this.addMouseOverEvent("btnReset", this.HINT_RESET);
   },
   methods: {
+    removeAt(idx) {
+      this.modulesData.splice(idx-1, 1);
+      this.refresh();
+    },
     generatePassword(passwordLength) {
       var numberChars = "0123456789";
       var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -385,6 +412,17 @@ export default {
 </script>
 
 <style scoped>
+.close {
+  float: right;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.handle {
+  float: left;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
 /*@media screen and (max-height: 600px) {
   ::v-deep .v-snack__content {
     font-size: 14px;
