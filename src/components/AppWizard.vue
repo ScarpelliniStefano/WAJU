@@ -15,35 +15,45 @@
       <draggable
         v-model="modulesData"
         group="modules"
-        @start="drag = true"
-        @end="drag = false"
+        @end="updateItemOrder"
         v-bind="dragOptions"
         :move="checkMove"
       >
         <v-sheet
           v-for="modulo in modulesData"
+          class="mb-6"
           :key="modulo.index"
           elevation="2"
           width="90%"
           :dark="darkMode"
           :light="!darkMode"
         >
-          <v-btn
-            v-if="modulesData.length > 1"
-            icon
-            color="grey"
-            @click="removeAt(modulo.index)"
-          >
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-          <v-select
-            filled
-            :dark="darkMode"
-            :light="!darkMode"
-            v-model="modulo.selected"
-            :items="arrayModel"
-            :label="SEL_TXT_MODULES"
-          ></v-select>
+          <v-row align="center">
+            <v-col :cols="modulesData.length>1? 11:12" :class="modulesData.length>1? 'pr-0':'pr-3'">
+              <v-select
+                class="mx-3"
+                filled
+                :dark="darkMode"
+                :light="!darkMode"
+                v-model="modulo.selected"
+                :items="arrayModel"
+                :label="SEL_TXT_MODULES"
+              ></v-select>
+            </v-col>
+            <v-divider vertical v-if="modulesData.length > 1"/>
+            <v-col cols="1" v-if="modulesData.length > 1" class="px-0">
+              <v-btn
+                color="red darken-2"
+                height="56px"
+                
+                
+                @click="removeAt(modulo.index)"
+              >
+                <v-icon>mdi-delete</v-icon>
+                
+              </v-btn>
+            </v-col>
+          </v-row>
           <modules
             :dark="darkMode"
             :light="!darkMode"
@@ -52,21 +62,24 @@
             :indice="modulo.index"
             @changeValue="changeValue($event)"
           ></modules>
+          
         </v-sheet>
+        
       </draggable>
 
-      <br />
+      
+
+      
       <v-btn
         :dark="darkMode"
         :light="!darkMode"
-        tile
-        fab
+        
         depressed
         elevation="5"
         raised
         large
         class="tooltip btnstyle"
-        width="200px"
+        
         style="color: white; background-color: var(--bg-color)"
         @click="setPlus()"
       >
@@ -75,8 +88,7 @@
       </v-btn>
       &nbsp;&nbsp;
       <v-btn
-        tile
-        fab
+        
         depressed
         elevation="5"
         raised
@@ -84,7 +96,7 @@
         :light="!darkMode"
         large
         class="tooltip btnstyle"
-        width="200px"
+        
         style="color: white; background-color: var(--bg-color)"
         @click="checkMinus()"
       >
@@ -95,6 +107,8 @@
       <v-textarea
         color="var(--border-color)"
         readonly
+        outlined
+        class="mt-3"
         v-model="valueString"
         :dark="darkMode"
         :light="!darkMode"
@@ -198,7 +212,7 @@ export default {
   data: () => ({
     modulesData: [
       {
-        index: 1,
+        index: 0,
         selected: "",
         value: "",
       },
@@ -301,30 +315,39 @@ export default {
   },
   methods: {
     removeAt(idx) {
-      this.modulesData.splice(idx - 1, 1);
+      this.modulesData.splice(idx, 1);
       this.refresh();
     },
-    checkMove: function(e) {
-      let pastIndex=e.draggedContext.index;
-      let futureIndex=e.draggedContext.futureIndex;
-      this.scambia(this.modulesData,pastIndex,futureIndex);
-      console.log(this.modulesData);
-      this.refresh();
+    checkMove: function() {
+      //console.log(e);
+      //let pastIndex=e.draggedContext.index;
+      //let futureIndex=e.draggedContext.futureIndex;
+      //this.scambia(this.modulesData,pastIndex,futureIndex);
+      //console.log(this.modulesData);
+      //this.refresh();
     },
     scambia(T,v,n){
     var x;//variabile ausiliaria
     x=T[n];
-    let index=T[v].index;
-    console.log(index);
-    console.log(x.index);
+    //let index=T[v].index;
+    //console.log(index);
+    //console.log(x.index);
     T[n]=T[v];
-    console.log(T[n].index);
-    T[n].index=x.index;
-    console.log(T[n].index);
+    //console.log(T[n].index);
+    //T[n].index=x.index;
+    //console.log(T[n].index);
     T[v]=x;
-    console.log(T[v].index);
-    T[v].index=index;
-    console.log(T[v].index);
+    //console.log(T[v].index);
+   // T[v].index=index;
+    //console.log(T[v].index);
+    },
+    updateItemOrder: function(){
+      const items=this.modulesData.map(function(item){
+        return item;
+      });
+      console.log(items);
+      this.modulesData=items;
+      this.refresh();
     },
     generatePassword(passwordLength) {
       var numberChars = "0123456789";
@@ -405,7 +428,7 @@ export default {
     },
     changeValue(addText) {
       let indiceScript = Number(addText.substring(0, addText.indexOf("##")));
-      this.modulesData[indiceScript - 1].value = addText.substring(
+      this.modulesData[indiceScript].value = addText.substring(
         addText.indexOf("##") + 2,
         addText.length
       );
@@ -427,7 +450,7 @@ export default {
     },
     setPlus() {
       this.modulesData.push({
-        index: this.modulesData.length + 1,
+        index: this.modulesData.length,
         selected: "",
         value: "",
       });
@@ -458,16 +481,9 @@ export default {
 </script>
 
 <style scoped>
-.close {
-  float: right;
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-.handle {
-  float: left;
-  padding-top: 8px;
-  padding-bottom: 8px;
+::v-deep .v-input__slot{
+  padding-left: 0px;
+  padding-right: 0px;
 }
 /*@media screen and (max-height: 600px) {
   ::v-deep .v-snack__content {

@@ -27,7 +27,7 @@
               v-model="bottomText.textConf"
             ></v-textarea>
             <input type="file" id="file_config" @change="loadFile()" />
-            <v-btn block height="32px" @click="uploadConf()">
+            <v-btn block height="32px" @click="uploadConf()" :disabled="engineCrash">
               <v-icon small left>{{ BTN_UPLOAD_CONFIG }}</v-icon>
               <span>{{ BTN_SPAN_UPLOAD }}</span>
             </v-btn>
@@ -48,6 +48,7 @@
                   </v-list-item-content>
                   <v-list-item-action>
                     <v-btn
+                      :disabled="!reconnectSended"
                       icon
                       outlined
                       @click="
@@ -75,7 +76,8 @@
               :disabled="
                 !this.irPressed ||
                 this.bottomText.listIRCol.length < 1 ||
-                this.bottomText.listIRCol == undefined
+                this.bottomText.listIRCol == undefined ||
+                !reconnectSended
               "
               @click="
                 numDepth = 1;
@@ -165,6 +167,7 @@
                 <v-btn
                   id="btnCollections"
                   v-if="ratioMode() === 'small'"
+                  :disabled="engineCrash"
                   :width="width / 2 - 24"
                   class="tooltip btnstyle"
                   style="color: white; background-color: var(--border-color)"
@@ -190,6 +193,7 @@
                   <v-btn
                     id="btnCollections"
                     v-if="ratioMode() === 'medium'"
+                    :disabled="engineCrash"
                     @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)"
                     @mouseleave="title = defaultTitle"
                     :width="width / 6 - 24"
@@ -218,6 +222,7 @@
                   <v-btn
                     id="btnCollections"
                     v-if="ratioMode() === 'big'"
+                    :disabled="engineCrash"
                     @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)"
                     @mouseleave="title = defaultTitle"
                     :width="width / 6 - 24"
@@ -268,7 +273,9 @@ export default {
     darkMode: Boolean,
     outlined: Boolean,
     longClicked: Boolean,
-    timerId: String,
+    timerId: Number,
+    engineCrash:Boolean,
+    reconnectSended:Boolean
   },
   data: () => ({
     value: 1,

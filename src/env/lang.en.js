@@ -56,9 +56,10 @@ const lang = Object.freeze({
             IR_LIST_UPDATED: 'IR List Updated',
             JOB_DONE: 'Job Done',
             CONNECTION_ENGINE_CRASHED: 'Connection with Engine Crashed',
-            WEB_SOCKET_SERVER_CONNECTED: 'Web Socket Server Connected',
-            WEB_SOCKET_SERVER_DISCONNECTED: 'Web Socket Server Disconnected',
-            WEB_SOCKET_SERVER_ERROR: 'Error on Web Socket Server'
+            WEB_SOCKET_SERVER_CONNECTED: 'Local Server Connected',
+            WEB_SOCKET_SERVER_DISCONNECTED: 'Local Server Disconnected',
+            WEB_SOCKET_SERVER_ERROR: 'Error on Local Server',
+            ENGINE_CONNECTED: 'Engine Server Connected',
         }
         
     }),
@@ -322,7 +323,7 @@ const lang = Object.freeze({
                 SEL_TRAJECTORY_MATCHING:'TRAJECTORY MATCHING'
             },
             BTN_SPAN_ADD_MODULE:' ADD MODULE',
-            BTN_SPAN_REMOVE_MODULE:' DELETE MODULE',
+            BTN_SPAN_REMOVE_MODULE:' DELETE LAST MODULE',
             BTN_SPAN_RESET_SEND:' RESET & SEND MESSAGE',
             BTN_SPAN_APPEND:' APPEND MESSAGE',
             HINT_RESET:'Transfer the text in the main view, cleaning all previuos content in the command view',

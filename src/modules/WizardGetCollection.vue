@@ -75,6 +75,9 @@ export default {
                 this.$emit('changeValue', this.valueString);
             }
         }
+    },
+    created:{
+        
     }
 }
 </script>

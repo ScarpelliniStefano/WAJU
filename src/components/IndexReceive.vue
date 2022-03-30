@@ -185,7 +185,7 @@
                   depressed
                   elevation="5"
                   raised
-                  :disabled="this.recArr.length == 0"
+                  :disabled="this.recArr.length == 0 || !this.reconnectSended"
                   @click="$emit('click-back-index')"
                 >
                   <v-icon color="white">{{ BTN_BACKTRACK }}</v-icon>
@@ -219,7 +219,7 @@
                     fab
                     depressed
                     elevation="5"
-                    :disabled="this.recArr.length == 0"
+                    :disabled="this.recArr.length == 0 || !this.reconnectSended"
                     @click="$emit('click-back-index')"
                   >
                     <v-icon color="white" :size="width / 20">{{ BTN_BACKTRACK }}</v-icon>
@@ -241,7 +241,7 @@
                     fab
                     depressed
                     elevation="5"
-                    :disabled="this.recArr.length == 0"
+                    :disabled="this.recArr.length == 0 || !this.reconnectSended"
                     @click="$emit('click-back-index')"
                   >
                     <v-icon>{{ BTN_BACKTRACK }}</v-icon>
@@ -271,6 +271,7 @@ export default {
     rapporto: Number,
     bgcolor: String,
     darkMode: Boolean,
+    reconnectSended:Boolean
   },
   data: () => ({
     isDisabled: true,

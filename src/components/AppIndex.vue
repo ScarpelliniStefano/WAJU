@@ -226,6 +226,7 @@
         :recText="textRec"
         :recArr="arrRec"
         :darkMode="darkMode"
+        :reconnectSended="isReconnectedAndSended"
         @click-back-index="sendBck()"
         @long-click="longClickEvent($event)"
         @save-istruction="saveIstructions($event)"
@@ -264,6 +265,7 @@
         :textRec="textToCommand"
         :disable="disBtn"
         :randomNumberString="randomNumber"
+        :engineCrash="isCrashed"
         @click-send="sendMsg($event)"
         @long-click="longClickEvent($event)"
         @open-wizard="openWizard()"
@@ -332,6 +334,8 @@
         :darkMode="darkMode"
         :timerId="timerId"
         :longClicked="isLongClick"
+        :engineCrash="isCrashed"
+        :reconnectSended="isReconnectedAndSended"
         @file-upload-index="sendConfigFile($event)"
         @click-ir="sendIRList()"
         @click-tc="sendIRTempCol()"
@@ -405,6 +409,7 @@
             :textChange="send.textSend"
             :randomNumberString="randomNumber"
             :darkMode="darkMode"
+            :engineCrash="isCrashed"
             @click-send="sendMsg($event)"
             @long-click="longClickEvent($event)"
             @open-wizard="openWizard()"
@@ -438,6 +443,7 @@
             :recText="textRec"
             :recArr="arrRec"
             :darkMode="darkMode"
+            :reconnectSended="isReconnectedAndSended"
             @click-back-index="sendBck()"
             @long-click="longClickEvent($event)"
             @save-istruction="saveIstructions($event)"
@@ -455,6 +461,8 @@
             :darkMode="darkMode"
             :timerId="timerId"
             :longClicked="isLongClick"
+            :engineCrash="isCrashed"
+            :reconnectSended="isReconnectedAndSended"
             @file-upload-index="sendConfigFile($event)"
             @click-ir="sendIRList()"
             @click-tc="sendIRTempCol()"
@@ -481,6 +489,7 @@ import { timeString } from "../functions/functionTools";
 import Settings from "./IndexSettings.vue";
 import VueDragResize from "vue-draggable-resizable";
 import lang from "../env/lang.en";
+import ReconnectingWebSocket from 'reconnecting-websocket';
 //import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 //'vue-draggable-resizable'
 //vue-drag-resize
@@ -516,9 +525,11 @@ class ArrayLogMessage {
   }
 }
 
-var sended = false;
+//var sended = false;
 var connected = false;
 var preDone = false;
+var firstTimeError=false;
+
 
 export var connect = () => {};
 export var disconnect = () => {};
@@ -557,6 +568,8 @@ export default {
       browserName: "",
       connection: null,
       connectionPage: null,
+      isCrashed:false,
+      isReconnectedAndSended:false,
       textRec: "",
       arrRec: [],
       counterRec: 0,
@@ -675,7 +688,7 @@ export default {
 
       //longClick
       isLongClick: false,
-      timerId: "",
+      timerId: -1,
       lblPopup: "",
       wizardAlertHint: false,
     };
@@ -739,7 +752,7 @@ export default {
       this.setCookie('log-z',this.log.posz,30)
     },
     setConnection() {
-      this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
+      this.connection = new ReconnectingWebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
       this.connection.onmessage = (message) => {
         const text = message.data;
         if (text.includes("##BEGIN-ERROR##")) {
@@ -801,6 +814,11 @@ export default {
           const endE = text.lastIndexOf("##END-SERVER-CONF##");
           this.changeConfig(text.substring(startE, endE));
           console.log("config");
+          firstTimeError=false;
+          this.isCrashed=false;
+          this.changeLog(
+            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.ENGINE_CONNECTED) + "#@END-LOGS@#"
+          );
           if (!isPreDone()) {
             console.log("disconnect in config");
             //disconnect();
@@ -817,20 +835,28 @@ export default {
       };
 
       this.connection.onclose = () => {
-        if (isConnected()) {
+        if (isConnected() && !firstTimeError) {
           setConnected();
           console.log("disconnect");
+          this.changeErrLog(
+            "#@ERR-LOGS@#" +
+              timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) +
+              "\n#@END-ERR-LOGS@#"
+          );
+          firstTimeError=true;
+          this.isCrashed=true;
+          this.isReconnectedAndSended=false;
         }
       };
 
       this.connection.onerror = () => {
         if (isConnected) {
           this.changeConfig("Configurazione non presente");
-          this.changeErrLog(
+          /*this.changeErrLog(
             "#@ERR-LOGS@#" +
               timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) +
               "\n#@END-ERR-LOGS@#"
-          );
+          );*/
           setConnected();
         }
       };
@@ -1466,7 +1492,12 @@ export default {
       this.received.textLog += textToChange.substring(startE, endE);
     },
     sendConfigFile(textSend) {
-      if (isPreDone() && textSend.length > 0) {
+      if(textSend.length>0){
+        this.connection.send(
+                "##ADD-SERVER-CONF##\n" + textSend + "\n##ADD-SERVER-CONF##"
+              );
+      }
+      /*if (isPreDone() && textSend.length > 0) {
         if (isConnected()) {
           console.log("onopen send");
           console.log("Sending data");
@@ -1488,7 +1519,7 @@ export default {
             };
           }
         }
-      }
+      }*/
     },
     uploadConfig() {
       if (!this.isLongClick) {
@@ -1497,7 +1528,11 @@ export default {
       }
     },
     sendBck() {
-      if (isPreDone() && !this.isLongClick) {
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        this.connection.send("##BACKTRACK##");
+      }
+      /*if (isPreDone() && !this.isLongClick) {
         clearTimeout(this.timerId);
         if (isConnected()) {
           this.connection.send("##BACKTRACK##");
@@ -1512,10 +1547,14 @@ export default {
             };
           }
         }
-      }
+      }*/
     },
     sendIRTempCol() {
-      if (isPreDone() && !this.isLongClick) {
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        this.connection.send("##GET-TEMPORARY-COLLECTION##");
+      }
+      /*if (isPreDone() && !this.isLongClick) {
         clearTimeout(this.timerId);
         if (isConnected()) {
           this.connection.send("##GET-TEMPORARY-COLLECTION##");
@@ -1530,10 +1569,15 @@ export default {
             };
           }
         }
-      }
+      }*/
     },
     sendIRSelCol(selectedItem) {
-      if (isPreDone() && selectedItem != "") {
+      if(selectedItem != ""){
+        this.connection.send(
+            "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
+          );
+      }
+      /*if (isPreDone() && selectedItem != "") {
         if (isConnected()) {
           this.connection.send(
             "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
@@ -1551,10 +1595,14 @@ export default {
             };
           }
         }
-      }
+      }*/
     },
     sendIRList() {
-      if (isPreDone() && !this.isLongClick) {
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        this.connection.send("##GET-IR-LIST##");
+      }
+      /*if (isPreDone() && !this.isLongClick) {
         clearTimeout(this.timerId);
         if (isConnected()) {
           this.connection.send("##GET-IR-LIST##");
@@ -1569,7 +1617,7 @@ export default {
             };
           }
         }
-      }
+      }*/
     },
     openWizard() {
       if (!this.isLongClick) {
@@ -1609,7 +1657,13 @@ export default {
     sendMsg(textSend) {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
-        if (isPreDone() && textSend.length > 0) {
+        if(textSend.length > 0){
+           this.connection.send(
+                  "##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##"
+                );
+            this.isReconnectedAndSended=true;
+        }
+        /*if (isPreDone() && textSend.length > 0) {
           if (isConnected()) {
             console.log("onopen send");
             console.log("Sending data");
@@ -1629,7 +1683,7 @@ export default {
               };
             }
           }
-        }
+        }*/
       }
     },
 

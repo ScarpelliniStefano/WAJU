@@ -76,6 +76,7 @@
                     @mouseenter="changeTitle('Execute')"
                     @mouseleave="title = defaultTitle"
                     :loading="exec"
+                    :disabled="this.engineCrash"
                     :width="width / 6 - 24"
                     :height="width / 6 - 24"
                     x-large
@@ -98,6 +99,7 @@
                   <v-btn
                     id="btnExecute"
                     v-if="ratioMode() === 'big'"
+                    :disabled="this.engineCrash"
                     :loading="exec"
                     :width="width / 6 - 24"
                     x-large
@@ -124,6 +126,7 @@
                 <v-btn
                   id="btnExecute"
                   :dark="darkMode" :light="!darkMode"
+                  :disabled="this.engineCrash"
                   :loading="exec"
                   :width="(width - 48) / 2"
                   class="tooltip btnstyle"
@@ -234,6 +237,7 @@ export default {
     darkMode: Boolean,
     outlined: Boolean,
     textShare: String,
+    engineCrash:Boolean
   },
   watch: {
     textRec: function (newVal) {

@@ -17,6 +17,7 @@
     "concurrently": "^6.4.0",
     "core-js": "^3.6.5",
     "latinize": "^0.5.0",
+    "reconnecting-websocket": "^4.4.0",
     "vue": "^2.6.11",
     "vue-auto-complete-textarea": "^0.1.71",
     "vue-draggable-resizable": "^2.3.0",
