@@ -41,7 +41,7 @@ export default {
                     if(this.alias!="")
                         this.valueString+=" AS "+newVal;
                 }
-                this.valueString+=";"
+                this.valueString+=" ;"
                 this.$emit('changeValue', this.valueString);
             }
         },
@@ -55,7 +55,7 @@ export default {
                     if(this.alias!="")
                         this.valueString+=" AS "+this.alias;
                 }
-                this.valueString+=";";
+                this.valueString+=" ;";
                 this.$emit('changeValue', this.valueString);
             }
         },
@@ -69,10 +69,14 @@ export default {
                     if(this.alias!="")
                         this.valueString+=" AS "+this.alias;
                 }
-                this.valueString+=";";
+                this.valueString+=" ;";
                 this.$emit('changeValue', this.valueString);
             }
         }
+    },
+    created(){
+        this.valueString=" ;";
+        this.$emit('changeValue', this.valueString);
     }
 }
 </script>

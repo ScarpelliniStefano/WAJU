@@ -80,6 +80,10 @@ export default {
                 this.$emit('changeValue', this.valueString);
             }
         }
+    },
+    created(){
+        this.valueString=" ;";
+        this.$emit('changeValue', this.valueString);
     }
 }
 </script>

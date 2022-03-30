@@ -41,43 +41,44 @@ export default {
         fromWeb:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal)
-                    this.valueString=" FROM WEB "+this.url+";"
+                    this.valueString=" FROM WEB "+this.url+" ;"
                 else{
                     if(this.db!="" && this.collection!="")
-                        this.valueString=" "+this.collection+"@"+this.db+";"
+                        this.valueString=" "+this.collection+"@"+this.db+" ;"
                     else
-                        this.valueString=" "+this.collection+";"
+                        this.valueString=" "+this.collection+" ;"
                 }
                 this.$emit('changeValue', this.valueString);
             }
         },
         url:function(newVal,oldVal){
             if(newVal!=oldVal){
-                this.valueString=" FROM WEB "+newVal+";";
+                this.valueString=" FROM WEB "+newVal+" ;";
                 this.$emit('changeValue', this.valueString);
             }
         },
         collection:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.db!="" && newVal!="")
-                    this.valueString=" "+newVal+"@"+this.db+";"
+                    this.valueString=" "+newVal+"@"+this.db+" ;"
                 else
-                        this.valueString=" "+newVal+";";
+                        this.valueString=" "+newVal+" ;";
                 this.$emit('changeValue', this.valueString);
             }
         },
         db:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!="")
-                    this.valueString=" "+this.collection+"@"+newVal+";";
+                    this.valueString=" "+this.collection+"@"+newVal+" ;";
                 else
-                    this.valueString=" "+this.collection+";";
+                    this.valueString=" "+this.collection+" ;";
                 this.$emit('changeValue', this.valueString);
             }
         }
     },
-    created:{
-        
+    created(){
+        this.valueString=" ;";
+        this.$emit('changeValue', this.valueString);
     }
 }
 </script>
