@@ -32,9 +32,9 @@ export default {
         removeDup:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal){
-                    this.valueString=this.valueString.substring(0,this.valueString.length-1)+" REMOVE DUPLICATES;"
+                    this.valueString=this.valueString.substring(0,this.valueString.length-2)+" REMOVE DUPLICATES ;"
                 }else{
-                    this.valueString=this.valueString.substring(0,this.valueString.indexOf(" REMOVE DUPLICATES;"))+";";
+                    this.valueString=this.valueString.substring(0,this.valueString.indexOf(" REMOVE DUPLICATES ;"))+" ;";
                 }
             }
             this.$emit('changeValue', this.valueString);
@@ -48,7 +48,7 @@ export default {
             }else{
                 this.valueString=" " + string.split("#$#")[0];
             }
-            this.valueString+=";";
+            this.valueString+=" ;";
             this.$emit('changeValue', this.valueString);
         }
     },

@@ -61,7 +61,7 @@ export default {
                 this.valueString+=", "
             });
             this.valueString=this.valueString.substring(0,this.valueString.length-2);
-            this.valueString+=";"
+            this.valueString+=" ;"
             this.$emit('changeValue', this.valueString);
         },
         counterText(value){

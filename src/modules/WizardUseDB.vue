@@ -158,7 +158,7 @@ export default {
                 if (this.connString != "")
                     this.valueString += " '" + this.connString + "'";
             }
-            this.valueString += ";"
+            this.valueString += " ;"
             this.$emit('changeValue', this.valueString);
         },
         counterText(value) {
