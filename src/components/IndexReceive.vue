@@ -72,9 +72,10 @@
                             padding-bottom: 8px;
                             padding-top: 8px;
                             margin-bottom: 0px;
+                            margin-top: -1.5em;
                           "
                         >
-                          {{ item.value.trim() }}
+                          {{ item.value }}
                         </pre>
                       </td>
                     </template>

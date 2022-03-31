@@ -1164,8 +1164,14 @@ export default {
       var arrTest = textReceived.split("##END INSTRUCTION###");
 
       arrTest.forEach((element) => {
-        if (element.startsWith("\n")) {
-          element = element.slice(1, element.length);
+        //if (element.startsWith("\n")) {
+          //element = element.slice(1, element.length);
+        //}
+        if(!element.startsWith("\n")){
+          element = "\n"+element;
+        }
+        if (element.endsWith("\n")) {
+          element = element.slice(0, element.length-1);
         }
         if (element.match(/GET COLLECTION/gi)) {
           arrIstr.push({
