@@ -765,15 +765,19 @@ export default {
     resetCounter(cat){
       switch (cat) {
         case 'Default':
+          this.newMessages -= this.arrayLog.newLogs
           this.arrayLog.newLogs = 0
           break;
         case 'Tab_2':
+          this.newMessages -= this.arrayLog.newLogsTabTwo
           this.arrayLog.newLogsTabTwo = 0
           break;
         case 'Tab_3':
+          this.newMessages -= this.arrayLog.newLogsTabThree
           this.arrayLog.newLogsTabThree = 0
           break;
         case 'Tab_4':
+          this.newMessages -= this.arrayLog.newLogsTabFour
           this.arrayLog.newLogsTabFour = 0
           break;
         default:
