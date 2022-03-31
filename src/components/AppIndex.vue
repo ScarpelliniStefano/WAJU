@@ -540,26 +540,27 @@ class ArrayLogMessage {
     switch(cMsg){
       case 'Default':
         l = new LogMessage(Msg, tMsg, this.logs.length + 1);
-        this.newLogs++
+        this.newLogs += 1
         this.logs.push(l);
         break
       case 'Tab_2':
         l = new LogMessage(Msg, tMsg, this.logs_tab_two.length + 1);
-        this.newLogsTabTwo++
+        this.newLogsTabTwo += 1
         this.logs_tab_two.push(l);
         break
       case 'Tab_3':
         l = new LogMessage(Msg, tMsg, this.logs_tab_three.length + 1);
-        this.newLogsTabThree++
+        this.newLogsTabThree += 1
         this.logs_tab_three.push(l);
         break
       case 'Tab_4':
         l = new LogMessage(Msg, tMsg, this.logs_tab_four.length + 1);
-        this.newLogsTabFour++
+        this.newLogsTabFour += 1
         this.logs_tab_four.push(l);
         break
       default:
         l = new LogMessage(Msg, tMsg, this.logs.length + 1);
+        this.newLogs += 1
         this.logs.push(l);
     }
   }
@@ -781,6 +782,7 @@ export default {
           this.arrayLog.newLogsTabFour = 0
           break;
         default:
+          this.newMessages -= this.arrayLog.newLogs
           this.arrayLog.newLogs = 0
           break;
       }

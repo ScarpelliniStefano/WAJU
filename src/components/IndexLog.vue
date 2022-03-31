@@ -42,18 +42,18 @@
         class="ma-0 containerstyle"
         style="border-radius: 3px; width: 100%; max-width: 99999px"
       >
-        <v-tabs>
-          <v-tab @click="changeCategory('Default')">
+        <v-tabs v-model="tab">
+          <v-tab>
             <v-badge color="red darken-2" :content="arrayLog.newLogs" :value="arrayLog.newLogs">Log Default</v-badge>
           </v-tab>
-          <v-tab @click="changeCategory('Tab_2')">
-            <v-badge dot color="red darken-2" :content="arrayLog.newLogsTabTwo" :value="arrayLog.newLogsTabTwo">Log Tab 2</v-badge>
+          <v-tab>
+            <v-badge color="red darken-2" :content="arrayLog.newLogsTabTwo" :value="arrayLog.newLogsTabTwo">Log Tab 2</v-badge>
           </v-tab>
-          <v-tab @click="changeCategory('Tab_3')">
-            <v-badge dot color="red darken-2" :content="arrayLog.newLogsTabThree" :value="arrayLog.newLogsTabThree">Log Tab 3</v-badge>
+          <v-tab>
+            <v-badge color="red darken-2" :content="arrayLog.newLogsTabThree" :value="arrayLog.newLogsTabThree">Log Tab 3</v-badge>
           </v-tab>
-          <v-tab @click="changeCategory('Tab_4')">
-            <v-badge dot color="red darken-2" :content="arrayLog.newLogsTabFour" :value="arrayLog.newLogsTabFour">Log Tab 4</v-badge>
+          <v-tab>
+            <v-badge color="red darken-2" :content="arrayLog.newLogsTabFour" :value="arrayLog.newLogsTabFour">Log Tab 4</v-badge>
           </v-tab>
         </v-tabs>
         <v-row class="py-0" align="center">
@@ -185,12 +185,35 @@ export default {
     numDepth: 1,
     listEmpty: true,
     category: "Default",
+    tab: null,
     //LABEL
     TITLE: lang.LOG_COMP.TITLE,
   }),
   created() {},
   mounted() {},
-  watch: {},
+  watch: {
+    tab: function (newVal) {
+      console.log(this.arrayLog)
+      switch(newVal){
+        case 0:
+          this.changeCategory('Default')
+          break
+        case 1:
+          this.changeCategory('Tab_2')
+          break
+        case 2:
+          this.changeCategory('Tab_3')
+          break
+        case 3:
+          this.changeCategory('Tab_4')
+          break
+        default:
+          this.changeCategory('Default')
+          break
+      }
+    },
+    
+  },
   methods: {
     closeWindow() {
       this.$emit("close-log");
