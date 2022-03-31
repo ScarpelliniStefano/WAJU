@@ -54,7 +54,7 @@
       </v-icon>
 
       <v-icon
-        v-if="!log.selected"
+        v-if="!log.selected && newMessages === 0"
         @mouseover="tip = TIP_LOG"
         @mouseleave="tip = ''"
         style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
@@ -64,6 +64,20 @@
       >
         {{ BTN_LOG_OFF }}
       </v-icon>
+
+      <v-icon
+        v-if="!log.selected && newMessages > 0"
+        @mouseover="tip = TIP_LOG"
+        @mouseleave="tip = ''"
+        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
+        large
+        color="red darken-2"
+        :dark="darkMode" :light="!darkMode"
+        @click="showSheet('log')"
+      >
+        {{ BTN_LOG_OFF }}
+      </v-icon>
+
 
       <v-icon
         @mouseover="tip = TIP_LOG"
@@ -303,6 +317,7 @@
         :rapporto="log.width / log.height"
         @set-z-click="setZ"
         @close-log="hideSheet('log')"
+        @resetCounter="resetCounter"
         :arrayLog="arrayLog"
       >
       </bar-log>
@@ -421,6 +436,7 @@
         </v-col>
         <v-col v-if="log.selected" class="" :key="2" :cols="12" :sm="12">
           <bar-log
+            @resetCounter="resetCounter"
             :bgcolor="contColor"
             :browser="browserName"
             :height="log.heightSm"
@@ -509,11 +525,43 @@ class LogMessage {
 class ArrayLogMessage {
   constructor() {
     this.logs = [];
+    this.newLogs = 0
+    this.logs_tab_two = []
+    this.newLogsTabTwo = 0
+    this.logs_tab_three = []
+    this.newLogsTabThree = 0
+    this.logs_tab_four = []
+    this.newLogsTabFour = 0
   }
 
-  newLog(Msg, tMsg) {
-    let l = new LogMessage(Msg, tMsg, this.logs.length + 1);
-    this.logs.push(l);
+  //cMsg: context Message
+  newLog(Msg, tMsg, cMsg){
+    var l = null
+    switch(cMsg){
+      case 'Default':
+        l = new LogMessage(Msg, tMsg, this.logs.length + 1);
+        this.newLogs++
+        this.logs.push(l);
+        break
+      case 'Tab_2':
+        l = new LogMessage(Msg, tMsg, this.logs_tab_two.length + 1);
+        this.newLogsTabTwo++
+        this.logs_tab_two.push(l);
+        break
+      case 'Tab_3':
+        l = new LogMessage(Msg, tMsg, this.logs_tab_three.length + 1);
+        this.newLogsTabThree++
+        this.logs_tab_three.push(l);
+        break
+      case 'Tab_4':
+        l = new LogMessage(Msg, tMsg, this.logs_tab_four.length + 1);
+        this.newLogsTabFour++
+        this.logs_tab_four.push(l);
+        break
+      default:
+        l = new LogMessage(Msg, tMsg, this.logs.length + 1);
+        this.logs.push(l);
+    }
   }
 
   get allLogs() {
@@ -657,6 +705,7 @@ export default {
 
       textToCommand: "",
       wizardAlert: false,
+      newMessages: 0,
 
       //LABEL
       TITLE: lang.INDEX.TITLE,
@@ -713,6 +762,25 @@ export default {
     this.setConnection();
   },
   methods: {
+    resetCounter(cat){
+      switch (cat) {
+        case 'Default':
+          this.arrayLog.newLogs = 0
+          break;
+        case 'Tab_2':
+          this.arrayLog.newLogsTabTwo = 0
+          break;
+        case 'Tab_3':
+          this.arrayLog.newLogsTabThree = 0
+          break;
+        case 'Tab_4':
+          this.arrayLog.newLogsTabFour = 0
+          break;
+        default:
+          this.arrayLog.newLogs = 0
+          break;
+      }
+    },
     changeOrder(comp, actv) {
       var orderComponent = new Map()
       orderComponent.set('send',this.send.posz)
@@ -1027,6 +1095,7 @@ export default {
           break;
         case "log":
           this.log.selected = true;
+          this.newMessages = 0
           this.setCookie("log-v", "true", 30);
           break;
         default:
@@ -1484,12 +1553,14 @@ export default {
       this.arrayLog.newLog(textToChange.substring(startE, endE), "ERR");
       this.received.textLog += textToChange.substring(startE, endE);
       alert(textToChange.substring(startE, endE));
+      this.newMessages++
     },
     changeLog(textToChange) {
       const startE = textToChange.indexOf("#@LOGS@#") + "#@LOGS@#".length;
       const endE = textToChange.lastIndexOf("#@END-LOGS@#");
       this.arrayLog.newLog(textToChange.substring(startE, endE), "LOG");
       this.received.textLog += textToChange.substring(startE, endE);
+      this.newMessages++
     },
     sendConfigFile(textSend) {
       if(textSend.length>0){

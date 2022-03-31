@@ -1,7 +1,14 @@
 <template>
-  <v-sheet :dark="darkMode" :light="!darkMode" elevation="17" id="recDiv" class="divstyle">
+  <v-sheet
+    :dark="darkMode"
+    :light="!darkMode"
+    elevation="17"
+    id="recDiv"
+    class="divstyle"
+  >
     <v-sheet
-      :dark="darkMode" :light="!darkMode"
+      :dark="darkMode"
+      :light="!darkMode"
       style="
         border-bottom: 1px solid #dddddd;
         border-bottom-left-radius: 3px;
@@ -25,18 +32,41 @@
         mdi-close
       </v-icon>
     </v-sheet>
+
     <v-sheet
-      :dark="darkMode" :light="!darkMode"
+      :dark="darkMode"
+      :light="!darkMode"
       style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px"
     >
       <v-container
         class="ma-0 containerstyle"
         style="border-radius: 3px; width: 100%; max-width: 99999px"
       >
+        <v-tabs>
+          <v-tab @click="changeCategory('Default')">
+            <v-badge color="red darken-2" :content="arrayLog.newLogs" :value="arrayLog.newLogs">Log Default</v-badge>
+          </v-tab>
+          <v-tab @click="changeCategory('Tab_2')">
+            <v-badge dot color="red darken-2" :content="arrayLog.newLogsTabTwo" :value="arrayLog.newLogsTabTwo">Log Tab 2</v-badge>
+          </v-tab>
+          <v-tab @click="changeCategory('Tab_3')">
+            <v-badge dot color="red darken-2" :content="arrayLog.newLogsTabThree" :value="arrayLog.newLogsTabThree">Log Tab 3</v-badge>
+          </v-tab>
+          <v-tab @click="changeCategory('Tab_4')">
+            <v-badge dot color="red darken-2" :content="arrayLog.newLogsTabFour" :value="arrayLog.newLogsTabFour">Log Tab 4</v-badge>
+          </v-tab>
+        </v-tabs>
         <v-row class="py-0" align="center">
           <v-col class="pa-0" cols="12">
-            <v-sheet :dark="darkMode" :light="!darkMode" class="pa-3" :height="height - 32" id="boxLog">
+            <v-sheet
+              :dark="darkMode"
+              :light="!darkMode"
+              class="pa-3"
+              :height="height - 32"
+              id="boxLog"
+            >
               <ul
+                v-if="category === 'Default'"
                 readonly
                 style="font-size: 16px"
                 height="100%"
@@ -45,6 +75,75 @@
                 id="ul_send"
               >
                 <li :key="log.id" v-for="log in arrayLog.logs">
+                  <p
+                    v-if="log.type === 'LOG'"
+                    style="font-family: Consolas; color: var(--border-color)"
+                  >
+                    {{ log.message }}
+                  </p>
+                  <p v-if="log.type !== 'LOG'" style="font-family: Consolas; color: red">
+                    {{ log.message }}
+                  </p>
+                  <v-divider></v-divider>
+                </li>
+              </ul>
+
+              <ul
+                v-if="category === 'Tab_2'"
+                readonly
+                style="font-size: 16px"
+                height="100%"
+                name="log-text"
+                label="Logs"
+                id="ul_send"
+              >
+                <li :key="log.id" v-for="log in arrayLog.logs_tab_two">
+                  <p
+                    v-if="log.type === 'LOG'"
+                    style="font-family: Consolas; color: var(--border-color)"
+                  >
+                    {{ log.message }}
+                  </p>
+                  <p v-if="log.type !== 'LOG'" style="font-family: Consolas; color: red">
+                    {{ log.message }}
+                  </p>
+                  <v-divider></v-divider>
+                </li>
+              </ul>
+
+              <ul
+                v-if="category === 'Tab_3'"
+                readonly
+                style="font-size: 16px"
+                height="100%"
+                name="log-text"
+                label="Logs"
+                id="ul_send"
+              >
+                <li :key="log.id" v-for="log in arrayLog.logs_tab_three">
+                  <p
+                    v-if="log.type === 'LOG'"
+                    style="font-family: Consolas; color: var(--border-color)"
+                  >
+                    {{ log.message }}
+                  </p>
+                  <p v-if="log.type !== 'LOG'" style="font-family: Consolas; color: red">
+                    {{ log.message }}
+                  </p>
+                  <v-divider></v-divider>
+                </li>
+              </ul>
+
+              <ul
+                v-if="category === 'Tab_4'"
+                readonly
+                style="font-size: 16px"
+                height="100%"
+                name="log-text"
+                label="Logs"
+                id="ul_send"
+              >
+                <li :key="log.id" v-for="log in arrayLog.logs_tab_four">
                   <p
                     v-if="log.type === 'LOG'"
                     style="font-family: Consolas; color: var(--border-color)"
@@ -85,7 +184,7 @@ export default {
     selectedItem: -1,
     numDepth: 1,
     listEmpty: true,
-
+    category: "Default",
     //LABEL
     TITLE: lang.LOG_COMP.TITLE,
   }),
@@ -95,6 +194,10 @@ export default {
   methods: {
     closeWindow() {
       this.$emit("close-log");
+    },
+    changeCategory(cat) {
+      this.category = cat;
+      this.$emit('resetCounter', cat)
     },
   },
 };
