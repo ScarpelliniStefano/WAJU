@@ -1159,7 +1159,7 @@ export default {
       console.log(textReceived);
       var arrIstr = [];
       this.counterRec = 0;
-      var arrTest = textReceived.split(";");
+      var arrTest = textReceived.split("##END INSTRUCTION###");
 
       arrTest.forEach((element) => {
         if (element.startsWith("\n")) {
@@ -1168,77 +1168,77 @@ export default {
         if (element.match(/GET COLLECTION/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". GET COLLECTION",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/SAVE AS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". SAVE AS",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/SPATIAL JOIN OF COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". SPATIAL JOIN OF COLLECTIONS",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/JOIN OF COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". JOIN OF COLLECTIONS",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/FILTER/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". FILTER",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/GROUP/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". GROUP",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/EXPAND/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". EXPAND",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/MERGE COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". MERGE COLLECTIONS",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/INTERSECT COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". INTERSECT COLLECTIONS",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/SUBTRACT COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". SUBTRACT COLLECTIONS",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/USE DB/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". USE DB",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/TRAJECTORY MATCHING/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". TRAJECTORY MATCHING",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/CREATE_FO/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". CREATE FUZZY OPERATOR",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/CREATE_JF/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". CREATE JAVASCRIPT FUNCTION",
-            value: element + ";",
+            value: element,
           });
         } else if (element.match(/GET DICTIONARY/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". GET DICTIONARY",
-            value: element + ";",
+            value: element,
           });
         }
         this.counterRec += 1;

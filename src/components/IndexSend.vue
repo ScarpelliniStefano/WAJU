@@ -279,7 +279,8 @@ export default {
       else return 56;
     },
     changeText(value) {
-      if (value.split("###").length === 1) {
+      
+      if (value.includes('##END INSTRUCTION###')) {
         this.removeOk(value);
       } else {
         var typeUpdate = value.split("###")[0];

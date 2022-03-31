@@ -67,15 +67,15 @@
                   >
                     <template v-slot:expanded-item="{ headers, item }">
                       <td :colspan="headers.length">
-                        <p
+                        <pre
                           style="
                             padding-bottom: 8px;
                             padding-top: 8px;
                             margin-bottom: 0px;
                           "
                         >
-                          {{ item.value }}
-                        </p>
+                          {{ item.value.trim() }}
+                        </pre>
                       </td>
                     </template>
                   </v-data-table>
