@@ -34,6 +34,7 @@
               <v-spacer></v-spacer>
               <v-col cols="1">
                 <v-select
+                  :disabled="valTotal===0"
                   :dark="darkMode" :light="!darkMode"
                   v-model="size"
                   :items="itemsSize"
@@ -46,6 +47,7 @@
             <v-row align="center" class="text-center">
               <v-col cols="3" class="pl-9">
                 <v-btn
+                  :disabled="valTotal===0"
                   :dark="darkMode" :light="!darkMode"
                   id="btnSave"
                   color="var(--border-color)"
@@ -71,6 +73,7 @@
               </v-col>
               <v-col cols="3" class="pr-9">
                 <v-btn
+                  :disabled="valTotal===0"
                   :dark="darkMode" :light="!darkMode"
                   id="btnExpand"
                   color="var(--border-color)"
@@ -88,6 +91,7 @@
         </v-col>
         <v-col cols="12" sm="12" md="12" lg="12" xl="12">
           <v-sheet
+            v-if="valTotal!==0"
             :dark="darkMode" :light="!darkMode"
             rounded
             min-height="350px"
