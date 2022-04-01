@@ -55,7 +55,7 @@ const lang = Object.freeze({
             TREE_OPENED: 'Tree Opened',
             IR_LIST_UPDATED: 'IR List Updated',
             JOB_DONE: 'Job Done',
-            CONNECTION_ENGINE_CRASHED: 'Connection with Engine Crashed',
+            CONNECTION_ENGINE_CRASHED: 'Connection with Engine Crashed.',
             WEB_SOCKET_SERVER_CONNECTED: 'Local Server Connected',
             WEB_SOCKET_SERVER_DISCONNECTED: 'Local Server Disconnected',
             WEB_SOCKET_SERVER_ERROR: 'Error on Local Server',

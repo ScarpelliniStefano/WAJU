@@ -1,172 +1,149 @@
 <template>
   <v-sheet :dark="darkMode" :light="!darkMode" id="body">
     <v-sheet
-      :dark="darkMode" :light="!darkMode"
+      :dark="darkMode"
+      :light="!darkMode"
       elevation="10"
       name="c1"
       class="divheader"
       style="height: 50px; padding-y: 0 25px"
     >
-      <h1 id="title" class="display-2 noselect font-weight-bold">{{ TITLE }}</h1>
-      <v-icon
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-          color: var(--border-color);
-        "
-        large
-        @click="settings = true"
-        @mouseover="tip = TIP_SETTINGS"
-        @mouseleave="tip = ''"
-      >
-        {{ BTN_SETTINGS }}
-      </v-icon>
+      <v-row>
+        <v-col cols="4">
+          <h1 id="title" class="display-2 noselect font-weight-bold">{{ TITLE }}</h1>
+        </v-col>
 
-      <v-icon
-        v-if="!btm.selected"
-        @mouseover="tip = TIP_CONFIG_COLL"
-        @mouseleave="tip = ''"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
-        large
-        :dark="darkMode" :light="!darkMode"
-        @click="showSheet('btm')"
-      >
-        {{ BTN_CONFIG_COLL_OFF }}
-      </v-icon>
+        <v-col class="d-flex justify-center align-center">
+          <v-spacer />
+          <h4 class="noselect" style="color: var(--border-color); margin-right: 12px">
+            {{ this.tip }}
+          </h4>
+          <v-icon
+            v-if="!send.selected"
+            @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
+            @mouseleave="tip = ''"
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px"
+            id="execute"
+            large
+            :dark="darkMode"
+            :light="!darkMode"
+            @click="showSheet('send')"
+          >
+            {{ BTN_SEND_OFF }}
+          </v-icon>
+          <v-icon
+            v-if="send.selected"
+            @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
+            @mouseleave="tip = ''"
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px; color: var(--border-color)"
+            id="execute"
+            large
+            @click="hideSheet('send')"
+          >
+            {{ BTN_SEND_ON }}
+          </v-icon>
 
-      <v-icon
-        @mouseover="tip = TIP_CONFIG_COLL"
-        @mouseleave="tip = ''"
-        v-if="btm.selected"
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-          color: var(--border-color);
-        "
-        large
-        @click="hideSheet('btm')"
-      >
-        {{ BTN_CONFIG_COLL_ON }}
-      </v-icon>
+          <v-badge
+            :value="rec.newMessages"
+            color="red darken-2"
+            overlap
+            class="noselect"
+          >
+          <v-icon
+            v-if="!rec.selected"
+            @mouseover="tip = TIP_SAVE_UNDO"
+            @mouseleave="tip = ''"
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px"
+            large
+            :dark="darkMode"
+            :light="!darkMode"
+            @click="showSheet('rec')"
+          >
+            {{ BTN_RECEIVE_OFF }}
+          </v-icon>
+          </v-badge>
 
-      <v-icon
-        v-if="!log.selected && newMessages === 0"
-        @mouseover="tip = TIP_LOG"
-        @mouseleave="tip = ''"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
-        large
-        :dark="darkMode" :light="!darkMode"
-        @click="showSheet('log')"
-      >
-        {{ BTN_LOG_OFF }}
-      </v-icon>
+          <v-icon
+            v-if="rec.selected"
+            @mouseover="tip = TIP_SAVE_UNDO"
+            @mouseleave="tip = ''"
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px; color: var(--border-color)"
+            id="SaveBack"
+            large
+            @click="hideSheet('rec')"
+          >
+            {{ BTN_RECEIVE_ON }}
+          </v-icon>
 
-      <v-icon
-        v-if="!log.selected && newMessages > 0"
-        @mouseover="tip = TIP_LOG"
-        @mouseleave="tip = ''"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
-        large
-        color="red darken-2"
-        :dark="darkMode" :light="!darkMode"
-        @click="showSheet('log')"
-      >
-        {{ BTN_LOG_OFF }}
-      </v-icon>
+          <v-badge
+            v-if="!log.selected"
+            :content="arrayLog.newMessages"
+            :value="arrayLog.newMessages"
+            color="red darken-2"
+            overlap
+            class="noselect"
+          >
+          <v-icon
+            v-if="!log.selected"
+            @mouseover="tip = TIP_LOG"
+            @mouseleave="tip = ''"
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px"
+            large
+            :dark="darkMode"
+            :light="!darkMode"
+            @click="showSheet('log')"
+          >
+            {{ BTN_LOG_OFF }}
+          </v-icon>
+          </v-badge>
 
+          <v-icon
+            @mouseover="tip = TIP_LOG"
+            @mouseleave="tip = ''"
+            v-if="log.selected"
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px; color: var(--border-color)"
+            large
+            @click="hideSheet('log')"
+          >
+            {{ BTN_LOG_ON }}
+          </v-icon>
 
-      <v-icon
-        @mouseover="tip = TIP_LOG"
-        @mouseleave="tip = ''"
-        v-if="log.selected"
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-          color: var(--border-color);
-        "
-        large
-        @click="hideSheet('log')"
-      >
-        {{ BTN_LOG_ON }}
-      </v-icon>
+          <v-icon
+            v-if="!btm.selected"
+            @mouseover="tip = TIP_CONFIG_COLL"
+            @mouseleave="tip = ''"
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px"
+            large
+            :dark="darkMode"
+            :light="!darkMode"
+            @click="showSheet('btm')"
+          >
+            {{ BTN_CONFIG_COLL_OFF }}
+          </v-icon>
 
-      <v-icon
-        v-if="!rec.selected"
-        @mouseover="tip = TIP_SAVE_UNDO"
-        @mouseleave="tip = ''"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
-        large
-        :dark="darkMode" :light="!darkMode"
-        @click="showSheet('rec')"
-      >
-        {{ BTN_RECEIVE_OFF }}
-      </v-icon>
-      <v-icon
-        v-if="rec.selected"
-        @mouseover="tip = TIP_SAVE_UNDO"
-        @mouseleave="tip = ''"
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-          color: var(--border-color);
-        "
-        id="SaveBack"
-        large
-        @click="hideSheet('rec')"
-      >
-        {{ BTN_RECEIVE_ON }}
-      </v-icon>
+          <v-icon
+            @mouseover="tip = TIP_CONFIG_COLL"
+            @mouseleave="tip = ''"
+            v-if="btm.selected"
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px; color: var(--border-color)"
+            large
+            @click="hideSheet('btm')"
+          >
+            {{ BTN_CONFIG_COLL_ON }}
+          </v-icon>
 
-      <v-icon
-        v-if="!send.selected"
-        @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
-        @mouseleave="tip = ''"
-        style="float: right; margin-right: 20px; margin-top: 7px; margin-bottom: 7px"
-        id="execute"
-        large
-        :dark="darkMode" :light="!darkMode"
-        @click="showSheet('send')"
-      >
-        {{ BTN_SEND_OFF }}
-      </v-icon>
-      <v-icon
-        v-if="send.selected"
-        @mouseover="tip = TIP_EXE_COMMAND_WIZARD"
-        @mouseleave="tip = ''"
-        style="
-          float: right;
-          margin-right: 20px;
-          margin-top: 7px;
-          margin-bottom: 7px;
-          color: var(--border-color);
-        "
-        id="execute"
-        large
-        @click="hideSheet('send')"
-      >
-        {{ BTN_SEND_ON }}
-      </v-icon>
-
-      <h4
-        class="noselect"
-        style="
-          float: right;
-          margin-right: 20px;
-          color: var(--border-color);
-          margin-top: 12px;
-        "
-      >
-        {{ this.tip }}
-      </h4>
-
+          <v-icon
+            left
+            style="margin-left: 12px; margin-top: 7px; margin-bottom: 7px; color: var(--border-color)"
+            large
+            @click="settings = true"
+            @mouseover="tip = TIP_SETTINGS"
+            @mouseleave="tip = ''"
+          >
+            {{ BTN_SETTINGS }}
+          </v-icon>
+        </v-col>
+      </v-row>
       <v-bottom-sheet v-model="settings" :dark="darkMode" :light="!darkMode">
         <v-sheet class="text-center" height="175px" min-width="700px">
           <v-btn
@@ -187,7 +164,13 @@
       </v-bottom-sheet>
 
       <v-row justify="center">
-        <v-dialog v-model="firstDialog" persistent max-width="500" :dark="darkMode" :light="!darkMode">
+        <v-dialog
+          v-model="firstDialog"
+          persistent
+          max-width="500"
+          :dark="darkMode"
+          :light="!darkMode"
+        >
           <v-card>
             <v-card-title class="text-h5">
               {{ FIRST_DIALOG.DIALOG_TITLE }}
@@ -216,7 +199,7 @@
     <VueDragResize
       :key="rec.idRecChange"
       :min-width="400"
-      :min-height="400"
+      :min-height="500"
       :w="rec.width"
       :h="rec.height"
       :z="rec.posz"
@@ -225,7 +208,7 @@
       v-if="rec.selected && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
-      @click="changeOrder('rec',true)"
+      @click="changeOrder('rec', true)"
       :onDrag="onDragStopRec"
       :onResize="onResizeStopRec"
       @dragstop="onModRec"
@@ -261,7 +244,7 @@
       v-if="send.selected && $vuetify.breakpoint.mdAndUp"
       dragHandle=".topbar"
       style="position: absolute"
-      @click="changeOrder('send',true)"
+      @click="changeOrder('send', true)"
       :onDrag="onDragStopSend"
       :onResize="onResizeStopSend"
       @dragstop="onModSend"
@@ -292,15 +275,15 @@
     </VueDragResize>
 
     <VueDragResize
-      :min-width="400"
-      :min-height="150"
+      :min-width="600"
+      :min-height="300"
       :w="log.width"
       :h="log.height"
       v-if="log.selected && $vuetify.breakpoint.mdAndUp"
       drag-handle=".topbar"
       :z="log.posz"
       style="position: absolute"
-      @click="changeOrder('log',true)"
+      @click="changeOrder('log', true)"
       :x="log.posx"
       :y="log.posy"
       :onDrag="onDragStopLog"
@@ -332,7 +315,7 @@
       drag-handle=".topbar"
       :z="btm.posz"
       style="position: absolute"
-      @click="changeOrder('btm',true)"
+      @click="changeOrder('btm', true)"
       :x="btm.posx"
       :y="btm.posy"
       :onDrag="onDragStopBtm"
@@ -505,7 +488,7 @@ import { timeString } from "../functions/functionTools";
 import Settings from "./IndexSettings.vue";
 import VueDragResize from "vue-draggable-resizable";
 import lang from "../env/lang.en";
-import ReconnectingWebSocket from 'reconnecting-websocket';
+import ReconnectingWebSocket from "reconnecting-websocket";
 //import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 //'vue-draggable-resizable'
 //vue-drag-resize
@@ -522,63 +505,11 @@ class LogMessage {
     return this.type;
   }
 }
-class ArrayLogMessage {
-  constructor() {
-    this.logs = [];
-    this.newLogs = 0
-    this.logs_tab_two = []
-    this.newLogsTabTwo = 0
-    this.logs_tab_three = []
-    this.newLogsTabThree = 0
-    this.logs_tab_four = []
-    this.newLogsTabFour = 0
-  }
-
-  //cMsg: context Message
-  newLog(Msg, tMsg, cMsg){
-    var l = null
-    switch(cMsg){
-      case 'Default':
-        l = new LogMessage(Msg, tMsg, this.logs.length + 1);
-        this.newLogs += 1
-        this.logs.push(l);
-        break
-      case 'Tab_2':
-        l = new LogMessage(Msg, tMsg, this.logs_tab_two.length + 1);
-        this.newLogsTabTwo += 1
-        this.logs_tab_two.push(l);
-        break
-      case 'Tab_3':
-        l = new LogMessage(Msg, tMsg, this.logs_tab_three.length + 1);
-        this.newLogsTabThree += 1
-        this.logs_tab_three.push(l);
-        break
-      case 'Tab_4':
-        l = new LogMessage(Msg, tMsg, this.logs_tab_four.length + 1);
-        this.newLogsTabFour += 1
-        this.logs_tab_four.push(l);
-        break
-      default:
-        l = new LogMessage(Msg, tMsg, this.logs.length + 1);
-        this.newLogs += 1
-        this.logs.push(l);
-    }
-  }
-
-  get allLogs() {
-    return this.logs;
-  }
-
-  get numberOfLogs() {
-    return this.logs.length;
-  }
-}
 
 //var sended = false;
 var connected = false;
 var preDone = false;
-var firstTimeError=false;
-
+var firstTimeError = false;
 
 export var connect = () => {};
 export var disconnect = () => {};
@@ -617,13 +548,12 @@ export default {
       browserName: "",
       connection: null,
       connectionPage: null,
-      isCrashed:false,
-      isReconnectedAndSended:false,
+      isCrashed: false,
+      isReconnectedAndSended: false,
       textRec: "",
       arrRec: [],
       counterRec: 0,
       disBtn: false,
-      arrayLog: new ArrayLogMessage(),
       settings: false,
       received: {
         textConf: "Configurazione non presente",
@@ -654,13 +584,14 @@ export default {
         posx: 4,
         posy: 60,
         width: 400,
-        height: 400,
+        height: 500,
         posz: 0,
         idRecChange: 124,
         selected: false,
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
         heightSm: 400,
+        newMessages: false
       },
 
       send: {
@@ -706,7 +637,6 @@ export default {
 
       textToCommand: "",
       wizardAlert: false,
-      newMessages: 0,
 
       //LABEL
       TITLE: lang.INDEX.TITLE,
@@ -741,6 +671,20 @@ export default {
       timerId: -1,
       lblPopup: "",
       wizardAlertHint: false,
+
+      //Array Log
+      arrayLog: {
+        logs: [],
+        newLogs: 0,
+        logs_tab_two: [],
+        newLogsTabTwo: 0,
+        logs_tab_three: [],
+        newLogsTabThree: 0,
+        logs_tab_four: [],
+        newLogsTabFour: 0,
+        tabActive: null,
+        newMessages: 0,
+      },
     };
   },
   watch: {
@@ -763,36 +707,77 @@ export default {
     this.setConnection();
   },
   methods: {
-    resetCounter(cat){
-      switch (cat) {
-        case 'Default':
-          this.newMessages -= this.arrayLog.newLogs
-          this.arrayLog.newLogs = 0
+    newLog(Msg, tMsg, cMsg) {
+      var l = null;
+      switch (cMsg) {
+        case "Default":
+          l = new LogMessage(Msg, tMsg, this.arrayLog.logs.length + 1);
+          if (this.arrayLog.tabActive !== "Default" || !this.log.selected) {
+            this.arrayLog.newLogs += 1;
+            this.arrayLog.newMessages += 1;
+          }
+          this.arrayLog.logs.push(l);
           break;
-        case 'Tab_2':
-          this.newMessages -= this.arrayLog.newLogsTabTwo
-          this.arrayLog.newLogsTabTwo = 0
+        case "Tab_2":
+          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_tab_two.length + 1);
+          if (this.arrayLog.tabActive !== "Tab_2" || !this.log.selected) {
+            this.arrayLog.newLogsTabTwo += 1;
+            this.arrayLog.newMessages += 1;
+          }
+          this.arrayLog.logs_tab_two.push(l);
           break;
-        case 'Tab_3':
-          this.newMessages -= this.arrayLog.newLogsTabThree
-          this.arrayLog.newLogsTabThree = 0
+        case "Tab_3":
+          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_tab_three.length + 1);
+          if (this.arrayLog.tabActive !== "Tab_3" || !this.log.selected) {
+            this.arrayLog.newLogsTabThree += 1;
+            this.arrayLog.newMessages += 1;
+          }
+          this.arrayLog.logs_tab_three.push(l);
           break;
-        case 'Tab_4':
-          this.newMessages -= this.arrayLog.newLogsTabFour
-          this.arrayLog.newLogsTabFour = 0
+        case "Tab_4":
+          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_tab_four.length + 1);
+          if (this.arrayLog.tabActive !== "Tab_4" || !this.log.selected) {
+            this.arrayLog.newLogsTabFour += 1;
+            this.arrayLog.newMessages += 1;
+          }
+          this.arrayLog.logs_tab_four.push(l);
           break;
         default:
-          this.newMessages -= this.arrayLog.newLogs
-          this.arrayLog.newLogs = 0
+          l = new LogMessage(Msg, tMsg, this.arrayLog.logs.length + 1);
+          if (this.arrayLog.tabActive !== "Default" || !this.log.selected) {
+            this.arrayLog.newLogs += 1;
+            this.arrayLog.newMessages += 1;
+          }
+          this.arrayLog.logs.push(l);
+      }
+    },
+    resetCounter(cat) {
+      this.arrayLog.tabActive = (cat === undefined) | null ? "Default" : cat;
+      switch (cat) {
+        case "Default":
+          this.arrayLog.newMessages -= this.arrayLog.newLogs;
+          this.arrayLog.newLogs = 0;
+          break;
+        case "Tab_2":
+          this.arrayLog.newMessages -= this.arrayLog.newLogsTabTwo;
+          this.arrayLog.newLogsTabTwo = 0;
+          break;
+        case "Tab_3":
+          this.arrayLog.newMessages -= this.arrayLog.newLogsTabThree;
+          this.arrayLog.newLogsTabThree = 0;
+          break;
+        case "Tab_4":
+          this.arrayLog.newMessages -= this.arrayLog.newLogsTabFour;
+          this.arrayLog.newLogsTabFour = 0;
           break;
       }
     },
     changeOrder(comp, actv) {
-      var orderComponent = new Map()
-      orderComponent.set('send',this.send.posz)
-      orderComponent.set('rec',this.rec.posz)
-      orderComponent.set('btm',this.btm.posz)
-      orderComponent.set('log',this.log.posz)
+      var orderComponent = new Map();
+      orderComponent.set("send", this.send.posz);
+      orderComponent.set("rec", this.rec.posz);
+      orderComponent.set("btm", this.btm.posz);
+      orderComponent.set("log", this.log.posz);
 
       const vOld = orderComponent.get(comp);
 
@@ -809,24 +794,25 @@ export default {
               orderComponent.set(key, value - 1);
             }
           } else {
-            if(value < vOld)
-            orderComponent.set(key, value + 1);
+            if (value < vOld) orderComponent.set(key, value + 1);
           }
         }
       }
 
-      this.send.posz = orderComponent.get('send')
-      this.rec.posz = orderComponent.get('rec')
-      this.btm.posz = orderComponent.get('btm')
-      this.log.posz = orderComponent.get('log')
+      this.send.posz = orderComponent.get("send");
+      this.rec.posz = orderComponent.get("rec");
+      this.btm.posz = orderComponent.get("btm");
+      this.log.posz = orderComponent.get("log");
 
-      this.setCookie('send-z',this.send.posz,30)
-      this.setCookie('rec-z',this.rec.posz,30)
-      this.setCookie('btm-z',this.btm.posz,30)
-      this.setCookie('log-z',this.log.posz,30)
+      this.setCookie("send-z", this.send.posz, 30);
+      this.setCookie("rec-z", this.rec.posz, 30);
+      this.setCookie("btm-z", this.btm.posz, 30);
+      this.setCookie("log-z", this.log.posz, 30);
     },
     setConnection() {
-      this.connection = new ReconnectingWebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
+      this.connection = new ReconnectingWebSocket(
+        "ws://" + process.env.VUE_APP_ENGINE_SERVER
+      );
       this.connection.onmessage = (message) => {
         const text = message.data;
         if (text.includes("##BEGIN-ERROR##")) {
@@ -836,12 +822,12 @@ export default {
             "#@ERR-LOGS@#" + timeString(text.substring(startE, endE)) + "#@END-ERR-LOGS@#"
           );
         } else if (text.includes("##ACK##")) {
-          console.log("ACK");
           this.arrRec.pop();
           this.changeLog(
             "#@LOGS@#" +
               timeString(lang.INDEX.LOG_MESSAGES.BACKTRACK_DONE) +
-              "#@END-LOGS@#"
+              "#@END-LOGS@#",
+            "Default"
           );
         } else if (text.includes("##BEGIN-COLLECTION##")) {
           const startE =
@@ -851,7 +837,8 @@ export default {
             "#@TREE-DRAW@#" + text.substring(startE, endE) + "#@END-TREE-DRAW@#"
           );
           this.changeLog(
-            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.TREE_OPENED) + "#@END-LOGS@#"
+            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.TREE_OPENED) + "#@END-LOGS@#",
+            "Default"
           );
         } else if (text.includes("##BEGIN-IR-LIST##")) {
           const startE = text.indexOf("##BEGIN-IR-LIST##") + "##BEGIN-IR-LIST##".length;
@@ -862,15 +849,15 @@ export default {
           this.changeLog(
             "#@LOGS@#" +
               timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
-              "#@END-LOGS@#"
+              "#@END-LOGS@#",
+            "Default"
           );
         } else if (text.includes("##SUCCESS##")) {
-          console.log("successo");
           this.changeLog(
-            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.JOB_DONE) + "#@END-LOGS@#"
+            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.JOB_DONE) + "#@END-LOGS@#",
+            "Default"
           );
         } else if (text.includes("##BEGIN-PROCESS##")) {
-          console.log("end messages");
           const startP =
             text.indexOf("##BEGIN-PROCESS##") + "##BEGIN-PROCESS##".length + 1;
           const endP = text.indexOf("##END-PROCESS##");
@@ -878,6 +865,7 @@ export default {
           if (text.substring(startP, endP).length > 0) {
             this.textToCommand = text.substring(startP, endP);
             this.arrRec = this.fromTextRecToArrRec(text.substring(startP, endP));
+            if(!this.rec.selected) this.rec.newMessages = true
             this.sendIRList();
           }
           this.disBtn = false;
@@ -887,14 +875,15 @@ export default {
             text.indexOf("##BEGIN-SERVER-CONF##") + "##BEGIN-SERVER-CONF##".length + 1;
           const endE = text.lastIndexOf("##END-SERVER-CONF##");
           this.changeConfig(text.substring(startE, endE));
-          console.log("config");
-          firstTimeError=false;
-          this.isCrashed=false;
+          firstTimeError = false;
+          this.isCrashed = false;
           this.changeLog(
-            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.ENGINE_CONNECTED) + "#@END-LOGS@#"
+            "#@LOGS@#" +
+              timeString(lang.INDEX.LOG_MESSAGES.ENGINE_CONNECTED) +
+              "#@END-LOGS@#",
+            "Default"
           );
           if (!isPreDone()) {
-            console.log("disconnect in config");
             //disconnect();
             setPreDone();
           }
@@ -904,22 +893,20 @@ export default {
       this.connection.onopen = () => {
         if (!isConnected()) {
           setConnected();
-          console.log("opopen rec");
         }
       };
 
       this.connection.onclose = () => {
         if (isConnected() && !firstTimeError) {
           setConnected();
-          console.log("disconnect");
           this.changeErrLog(
             "#@ERR-LOGS@#" +
               timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) +
               "\n#@END-ERR-LOGS@#"
           );
-          firstTimeError=true;
-          this.isCrashed=true;
-          this.isReconnectedAndSended=false;
+          firstTimeError = true;
+          this.isCrashed = true;
+          this.isReconnectedAndSended = false;
         }
       };
 
@@ -1010,7 +997,7 @@ export default {
       this.btm.selected =
         this.getCookie("btm-v") === null ? false : this.getCookie("btm-v") === "true";
       this.btm.posz =
-        this.getCookie("btm-z") === null ? 0 : parseInt(this.getCookie("btm-z"));  
+        this.getCookie("btm-z") === null ? 0 : parseInt(this.getCookie("btm-z"));
 
       this.rec.posx =
         this.getCookie("rec-x") === null ? 4 : parseInt(this.getCookie("rec-x"));
@@ -1093,6 +1080,7 @@ export default {
           break;
         case "rec":
           this.rec.selected = true;
+          this.rec.newMessages = false;
           this.setCookie("rec-v", "true", 30);
           break;
         case "btm":
@@ -1101,13 +1089,13 @@ export default {
           break;
         case "log":
           this.log.selected = true;
-          this.newMessages = 0
+          this.resetCounter("Default");
           this.setCookie("log-v", "true", 30);
           break;
         default:
           alert("Comando non riconosciuto");
       }
-      this.changeOrder(component, true)
+      this.changeOrder(component, true);
     },
     hideSheet(component) {
       switch (component) {
@@ -1130,7 +1118,7 @@ export default {
         default:
           alert("Comando non riconosciuto");
       }
-      this.changeOrder(component, false)
+      this.changeOrder(component, false);
     },
     generatePassword(passwordLength) {
       var numberChars = "0123456789";
@@ -1158,20 +1146,19 @@ export default {
       return array;
     },
     fromTextRecToArrRec(textReceived) {
-      console.log(textReceived);
       var arrIstr = [];
       this.counterRec = 0;
       var arrTest = textReceived.split("##END INSTRUCTION###");
 
       arrTest.forEach((element) => {
         //if (element.startsWith("\n")) {
-          //element = element.slice(1, element.length);
+        //element = element.slice(1, element.length);
         //}
-        if(!element.startsWith("\n")){
-          element = "\n"+element;
+        if (!element.startsWith("\n")) {
+          element = "\n" + element;
         }
         if (element.endsWith("\n")) {
-          element = element.slice(0, element.length-1);
+          element = element.slice(0, element.length - 1);
         }
         if (element.match(/GET COLLECTION/gi)) {
           arrIstr.push({
@@ -1255,7 +1242,7 @@ export default {
     },
 
     setZ(tipo) {
-      this.changeOrder(tipo, true)
+      this.changeOrder(tipo, true);
     },
 
     onResizeStopRec(handle, x, y, width, height) {
@@ -1295,12 +1282,12 @@ export default {
       this.send.posy = y;
       this.send.width = width;
       this.send.height = height;
-        this.setZ("send");
+      this.setZ("send");
     },
     onDragStopSend(x, y) {
       this.send.posx = x;
       this.send.posy = y;
-        this.setZ("send");
+      this.setZ("send");
     },
     onModSend(x, y) {
       if (x < 4) {
@@ -1326,12 +1313,12 @@ export default {
       this.btm.posy = y;
       this.btm.width = width;
       this.btm.height = height;
-        this.setZ("btm");
+      this.setZ("btm");
     },
     onDragStopBtm(x, y) {
       this.btm.posx = x;
       this.btm.posy = y;
-        this.setZ("btm");
+      this.setZ("btm");
     },
     onModBtm(x, y) {
       if (x < 4) {
@@ -1445,7 +1432,6 @@ export default {
         var JSONInPrettyFormat = JSON.stringify(parseJSON, undefined, 4);
         this.generatePage(JSONInPrettyFormat);
       } else {
-        console.log(textToChange);
         let startE = textToChange.indexOf("#@TREE-DRAW@#") + "#@TREE-DRAW@#".length;
         let endE = textToChange.indexOf("###");
         let title = textToChange.substring(startE, endE);
@@ -1453,7 +1439,6 @@ export default {
         startE = endE + '  { "documents" : '.length;
         endE = textToChange.lastIndexOf("#@END-TREE-DRAW@#") - 3;
         let textConv = textToChange.substring(startE, endE);
-        console.log(textConv);
         textConv = textConv
           .replace(/POINT /g, '{\n\t\t"type" : "POINT",\n\t\t"coordinates":"')
           .replaceAll(")", ')"\n\t}');
@@ -1510,7 +1495,6 @@ export default {
         name: "StaticTree",
         query: { id: millis },
       });
-      console.log(routeData);
       setTimeout(function () {
         window.open(routeData.href, "_blank");
       }, 1000);
@@ -1528,14 +1512,16 @@ export default {
         this.changeLog(
           "#@LOGS@#" +
             timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_CONNECTED) +
-            "#@END-LOGS@#"
+            "#@END-LOGS@#",
+          "Default"
         );
       };
       this.connectionPage.onclose = () => {
         this.changeLog(
           "#@LOGS@#" +
             timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_DISCONNECTED) +
-            "#@END-LOGS@#"
+            "#@END-LOGS@#",
+          "Default"
         );
       };
       this.connectionPage.onerror = () => {
@@ -1546,7 +1532,6 @@ export default {
         );
       };
       this.connectionPage.onmessage = ({ data }) => {
-        console.log(data);
         let command = data.split("###")[0];
         if (command == "WIZARD") {
           if (data.split("###")[1] == this.randomNumber) {
@@ -1559,26 +1544,24 @@ export default {
         }
       };
     },
-    changeErrLog(textToChange) {
+    changeErrLog(textToChange, cat) {
       const startE = textToChange.indexOf("#@ERR-LOGS@#") + "#@ERR-LOGS@#".length;
       const endE = textToChange.lastIndexOf("#@END-ERR-LOGS@#");
-      this.arrayLog.newLog(textToChange.substring(startE, endE), "ERR");
+      this.newLog(textToChange.substring(startE, endE), "ERR", cat);
       this.received.textLog += textToChange.substring(startE, endE);
       alert(textToChange.substring(startE, endE));
-      this.newMessages++
     },
-    changeLog(textToChange) {
+    changeLog(textToChange, cat) {
       const startE = textToChange.indexOf("#@LOGS@#") + "#@LOGS@#".length;
       const endE = textToChange.lastIndexOf("#@END-LOGS@#");
-      this.arrayLog.newLog(textToChange.substring(startE, endE), "LOG");
+      this.newLog(textToChange.substring(startE, endE), "LOG", cat);
       this.received.textLog += textToChange.substring(startE, endE);
-      this.newMessages++
     },
     sendConfigFile(textSend) {
-      if(textSend.length>0){
+      if (textSend.length > 0) {
         this.connection.send(
-                "##ADD-SERVER-CONF##\n" + textSend + "\n##ADD-SERVER-CONF##"
-              );
+          "##ADD-SERVER-CONF##\n" + textSend + "\n##ADD-SERVER-CONF##"
+        );
       }
       /*if (isPreDone() && textSend.length > 0) {
         if (isConnected()) {
@@ -1611,7 +1594,7 @@ export default {
       }
     },
     sendBck() {
-      if(!this.isLongClick){
+      if (!this.isLongClick) {
         clearTimeout(this.timerId);
         this.connection.send("##BACKTRACK##");
       }
@@ -1633,7 +1616,7 @@ export default {
       }*/
     },
     sendIRTempCol() {
-      if(!this.isLongClick){
+      if (!this.isLongClick) {
         clearTimeout(this.timerId);
         this.connection.send("##GET-TEMPORARY-COLLECTION##");
       }
@@ -1655,10 +1638,10 @@ export default {
       }*/
     },
     sendIRSelCol(selectedItem) {
-      if(selectedItem != ""){
+      if (selectedItem != "") {
         this.connection.send(
-            "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
-          );
+          "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
+        );
       }
       /*if (isPreDone() && selectedItem != "") {
         if (isConnected()) {
@@ -1681,7 +1664,7 @@ export default {
       }*/
     },
     sendIRList() {
-      if(!this.isLongClick){
+      if (!this.isLongClick) {
         clearTimeout(this.timerId);
         this.connection.send("##GET-IR-LIST##");
       }
@@ -1740,11 +1723,9 @@ export default {
     sendMsg(textSend) {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
-        if(textSend.length > 0){
-           this.connection.send(
-                  "##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##"
-                );
-            this.isReconnectedAndSended=true;
+        if (textSend.length > 0) {
+          this.connection.send("##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##");
+          this.isReconnectedAndSended = true;
         }
         /*if (isPreDone() && textSend.length > 0) {
           if (isConnected()) {
@@ -1773,14 +1754,12 @@ export default {
     longClickEvent(stringMessage) {
       let idElement = stringMessage.split("###")[0];
       let message = stringMessage.split("###")[1];
-      console.log(stringMessage);
       document.getElementById(idElement).onmousedown = (args) => {
         this.isLongClick = false;
         this.timerId = setTimeout(() => fn.apply(null, [args]), 500);
       };
 
-      var fn = (args) => {
-        console.log("onmousedown args", args);
+      var fn = () => {
         this.wizardAlertHint = false;
         this.lblPopup = message;
         this.wizardAlertHint = true;
@@ -1792,7 +1771,9 @@ export default {
 </script>
 
 <style scoped>
-
+::v-deep .col > span.v-badge > span.v-badge__wrapper > span.v-badge__badge{
+  inset: auto auto calc(100% - 22px) calc(100% - 16px) !important
+}
 #title {
   display: inline-block;
   justify-content: center;
@@ -1821,8 +1802,6 @@ export default {
 </style>
 
 <style>
-
-
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
@@ -1861,8 +1840,8 @@ export default {
 }
 
 :root {
-  --border-color: #2b2b2b;
-  --bg-color: #2b2b2b;
+  --border-color: #0b77b8;
+  --bg-color: #0b77b8;
   --textarea-color: black;
 }
 

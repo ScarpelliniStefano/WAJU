@@ -42,9 +42,10 @@
         class="ma-0 containerstyle"
         style="border-radius: 3px; width: 100%; max-width: 99999px"
       >
-        <v-tabs v-model="tab">
+        <v-tabs color="var(--border-color)" v-model="tab" class="mb-3">
+          <v-tabs-slider></v-tabs-slider>
           <v-tab>
-            <v-badge color="red darken-2" :content="arrayLog.newLogs" :value="arrayLog.newLogs">Log Default</v-badge>
+            <v-badge color="red darken-2" :content="arrayLog.newLogs" :value="arrayLog.newLogs">Main</v-badge>
           </v-tab>
           <v-tab>
             <v-badge color="red darken-2" :content="arrayLog.newLogsTabTwo" :value="arrayLog.newLogsTabTwo">Log Tab 2</v-badge>
@@ -59,10 +60,11 @@
         <v-row class="py-0" align="center">
           <v-col class="pa-0" cols="12">
             <v-sheet
+            outlined
               :dark="darkMode"
               :light="!darkMode"
-              class="pa-3"
-              :height="height - 32"
+              class="ma-3 pa-0"
+              :height="height - 116"
               id="boxLog"
             >
               <ul
@@ -77,7 +79,7 @@
                 <li :key="log.id" v-for="log in arrayLog.logs">
                   <p
                     v-if="log.type === 'LOG'"
-                    style="font-family: Consolas; color: var(--border-color)"
+                    style="font-family: Consolas;"
                   >
                     {{ log.message }}
                   </p>
@@ -206,9 +208,6 @@ export default {
           break
         case 3:
           this.changeCategory('Tab_4')
-          break
-        default:
-          this.changeCategory('Default')
           break
       }
     },
@@ -370,6 +369,8 @@ div.box {
 }
 
 #boxLog {
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
   overflow: auto;
 }
 </style>
