@@ -4,6 +4,7 @@ const app = express();
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port: 3000 });
 let users = new Map();
+var dir = './tmp';
 const fs = require('fs');
 
 //Web Server
@@ -21,6 +22,12 @@ app.listen(port, () => {
 });
 
 //Web Socket Server
+function binaryToText(binary) {
+    //Convert the binary into an array of binary strings separated by whitespace.
+     binary = binary.split(' ');
+    //convert from binary to decimals, then to characters. 
+    return binary.map(elem => String.fromCharCode(parseInt(elem, 2))).join("");
+    }
 wss.on('connection', function connection(ws) {
     const arrData = String(ws.protocol).split('###')
     var isThereHome = false
@@ -65,12 +72,12 @@ wss.on('connection', function connection(ws) {
         console.log(`Utente connesso`);
     });
 
-    ws.on('error', (data) => {
-        console.log(data)
-    })
-
     ws.on("message", (data, isBinary) => {
+        data=data.toString();
         var command = data.split('###')[0];
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
         if (command == "SAVE") {
             var title = data.split('###')[1];
             var text = data.split('###')[2];
@@ -84,7 +91,7 @@ wss.on('connection', function connection(ws) {
             let title = data.split('###')[1];
             let page = Number(data.split('###')[2].split(',')[0]);
             let size = Number(data.split('###')[2].split(',')[1]);
-            fs.readFile(`./src/temp/${title}.txt`, (error, dataRes) => {
+            fs.readFileSync(`./src/temp/${title}.txt`, (error, dataRes) => {
                 if (error) {
                     console.error(error);
                     return;
@@ -139,3 +146,13 @@ process.on('SIGINT', function () {
     });
     process.exit(0);
 });
+
+function sendToWS(message, toWho) {
+    let founded = false;
+    for (var i = 0; i < users.length && !founded; i++) {
+        if (users[i] === toWho) {
+            founded = true;
+            users[i].send(message);
+        }
+    }
+}
