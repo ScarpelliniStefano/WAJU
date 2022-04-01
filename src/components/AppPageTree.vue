@@ -275,7 +275,9 @@ export default {
       this.sendMessage();
     },
     calculatePageSize() {
-      if (this.valTotal % this.size != 0) {
+      if(this.valTotal === 0){
+        this.pageCount = 1
+      } else if (this.valTotal % this.size != 0) {
         this.pageCount = Number(Math.floor(this.valTotal / this.size + 1));
       } else {
         this.pageCount = Number((this.valTotal / this.size).toFixed());
