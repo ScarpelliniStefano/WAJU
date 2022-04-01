@@ -64,7 +64,7 @@ wss.on('connection', function connection(ws) {
             let title = data.split('###')[1];
             let page = Number(data.split('###')[2].split(',')[0]);
             let size = Number(data.split('###')[2].split(',')[1]);
-            fs.readFile(`./src/temp/${title}.txt`, (error, dataRes) => {
+            fs.readFileSync(`./src/temp/${title}.txt`, (error, dataRes) => {
                 if (error) {
                     console.error(error);
                     return;
