@@ -18,6 +18,7 @@
         @end="updateItemOrder"
         v-bind="dragOptions"
         :move="checkMove"
+        handle=".drag"
       >
         <v-sheet
           v-for="modulo in modulesData"
@@ -30,8 +31,9 @@
         >
           <v-row align="center">
             <v-col :cols="modulesData.length>1? 11:12" :class="modulesData.length>1? 'pr-0':'pr-3'">
+              <v-sheet height="10px" color="red darken-2" class="drag"/>
               <v-select
-                class="mx-0"
+                class="mx-0 select-modules"
                 filled
                 :dark="darkMode"
                 :light="!darkMode"
@@ -494,6 +496,9 @@ export default {
 </script>
 
 <style scoped>
+::v-deep .select-modules{
+  max-width: calc(100% - 24px);
+}
 ::v-deep .v-input__slot{
   padding-left: 0px;
   padding-right: 0px;
