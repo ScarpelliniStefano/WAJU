@@ -52,7 +52,7 @@ export default {
                     if(this.db!="")
                         this.valueString+="@"+this.db;
                 }
-                this.valueString+=";"
+                this.valueString+=" ;"
                 this.$emit('changeValue', this.valueString);
             }
         },
@@ -64,7 +64,7 @@ export default {
                     if(this.db!="")
                         this.valueString+="@"+this.db;
                 }
-                this.valueString+=";";
+                this.valueString+=" ;";
                 this.$emit('changeValue', this.valueString);
             }
         },
@@ -76,7 +76,7 @@ export default {
                     if(this.db!="")
                         this.valueString+="@"+newVal;
                 }
-                this.valueString+=";";
+                this.valueString+=" ;";
                 this.$emit('changeValue', this.valueString);
             }
         }

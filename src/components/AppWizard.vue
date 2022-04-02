@@ -54,14 +54,14 @@
               </v-btn>
             </v-col>
           </v-row>
-          <modules
+          <keep-alive><modules
             :dark="darkMode"
             :light="!darkMode"
             :select="modulo.selected"
             :maincol="mainColor"
             :indice="modulo.index"
             @changeValue="changeValue($event)"
-          ></modules>
+          ></modules></keep-alive>
           
         </v-sheet>
         
@@ -207,6 +207,7 @@
 import modules from "../modules/WizardModules.vue";
 import lang from "../env/lang.en";
 import draggable from "vuedraggable";
+
 export default {
   name: "AppWizard",
   data: () => ({
@@ -315,8 +316,17 @@ export default {
   },
   methods: {
     removeAt(idx) {
-      this.modulesData.splice(idx, 1);
+      this.modulesData.forEach((item)=> {console.log(item.index)})
+      for(var i=idx;i<this.modulesData.length-1;i++){
+          this.modulesData[i].selected=this.modulesData[i+1].selected;
+          this.modulesData[i].value=this.modulesData[i+1].value;
+          console.log(this.modulesData[i])
+      } 
+      this.modulesData.forEach((item)=> {console.log(item.index)})
+      this.modulesData.splice(this.modulesData.length-1, 1);
+      this.modulesData.forEach((item)=> {console.log(item.index)})
       this.refresh();
+      this.modulesData.forEach((item)=> {console.log(item.index)})
     },
     checkMove: function() {
       //console.log(e);
@@ -427,6 +437,7 @@ export default {
       return null;
     },
     changeValue(addText) {
+      console.log(addText)
       let indiceScript = Number(addText.substring(0, addText.indexOf("##")));
       this.modulesData[indiceScript].value = addText.substring(
         addText.indexOf("##") + 2,
