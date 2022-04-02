@@ -628,8 +628,8 @@ export default {
       log: {
         posx: 4,
         posy: 60,
-        width: 400,
-        height: 400,
+        width: 600,
+        height: 300,
         posz: 0,
         idLogChange: 123,
         selected: false,
