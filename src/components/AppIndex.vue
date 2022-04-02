@@ -185,6 +185,9 @@
               {{ FIRST_DIALOG.DIALOG_TEXT_FOURTH }}
               <br />
               {{ FIRST_DIALOG.DIALOG_TEXT_FIFTH }}
+              <br />
+              <br />
+              {{FIRST_DIALOG.DIALOG_COOKIES}}
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>

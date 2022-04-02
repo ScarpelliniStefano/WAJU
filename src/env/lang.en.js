@@ -48,7 +48,8 @@ const lang = Object.freeze({
             DIALOG_TEXT_SECOND: '2. Settings are updated and saved in real time.',
             DIALOG_TEXT_THIRD: '3. Wizard will be open in a new Tab.',
             DIALOG_TEXT_FOURTH: '4. Every collection will be open in a new Tab.',
-            DIALOG_TEXT_FIFTH: '5. From the width of 700px to 960px, tablet mode starts. In this mode, order of components are: [1] Execute & Wizard [2] Log [3] Save & Back [4] Configurations/Collections' 
+            DIALOG_TEXT_FIFTH: '5. From the width of 700px to 960px, tablet mode starts. In this mode, order of components are: [1] Execute & Wizard [2] Log [3] Save & Back [4] Configurations/Collections', 
+            DIALOG_COOKIES: 'By clicking “OK”, you agree to Ryanair using cookies to personalize content.'
         },
         LOG_MESSAGES: {
             BACKTRACK_DONE: 'Backtrack Done',
