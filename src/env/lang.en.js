@@ -35,7 +35,7 @@ const lang = Object.freeze({
         TITLE: 'Log'
     }),
     INDEX: Object.freeze({
-        TITLE: 'JCOUIweb',
+        TITLE: 'JcoUIWeb',
         TIP_SETTINGS: 'Settings',
         TIP_CONFIG_COLL: 'Config. & Collection',
         TIP_LOG: 'Log',

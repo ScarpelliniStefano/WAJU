@@ -17,7 +17,7 @@ export default {
   }),
 
   created() {
-    document.title = "Loading JCOUIweb...";
+    document.title = "Loading JcoUIWeb...";
     if (!isPreDone()) {
       connect();
     }
