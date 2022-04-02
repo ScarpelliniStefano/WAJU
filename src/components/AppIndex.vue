@@ -1010,7 +1010,7 @@ export default {
       this.rec.width =
         this.getCookie("rec-w") === null ? 400 : parseInt(this.getCookie("rec-w"));
       this.rec.height =
-        this.getCookie("rec-h") === null ? 400 : parseInt(this.getCookie("rec-h"));
+        this.getCookie("rec-h") === null ? 500 : parseInt(this.getCookie("rec-h"));
       this.rec.selected =
         this.getCookie("rec-v") === null ? false : this.getCookie("rec-v") === "true";
       this.rec.posz =
@@ -1034,9 +1034,9 @@ export default {
       this.log.posy =
         this.getCookie("log-y") === null ? 60 : parseInt(this.getCookie("log-y"));
       this.log.width =
-        this.getCookie("log-w") === null ? 400 : parseInt(this.getCookie("log-w"));
+        this.getCookie("log-w") === null ? 600 : parseInt(this.getCookie("log-w"));
       this.log.height =
-        this.getCookie("log-h") === null ? 400 : parseInt(this.getCookie("log-h"));
+        this.getCookie("log-h") === null ? 300 : parseInt(this.getCookie("log-h"));
       this.log.selected =
         this.getCookie("log-v") === null ? false : this.getCookie("log-v") === "true";
       this.log.posz =
