@@ -359,7 +359,7 @@ export default {
       return this.isDisabled;
     },
     download(filename, text) {
-      this.$emit("save-istruction", filename + "###" + text);
+      this.$emit("save-istruction", filename + "##SAVE####" + text);
     },
 
     addMouseOverEvent(idElement, message) {

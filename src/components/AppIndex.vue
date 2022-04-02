@@ -1153,7 +1153,7 @@ export default {
       var arrIstr = [];
       this.counterRec = 0;
       var arrTest = textReceived.split("##END INSTRUCTION###");
-
+      this.textRec="";
       arrTest.forEach((element) => {
         //if (element.startsWith("\n")) {
         //element = element.slice(1, element.length);
@@ -1163,6 +1163,7 @@ export default {
         }
         if (element.endsWith("\n")) {
           element = element.slice(0, element.length - 1);
+          this.textRec+= element.slice(0, element.length - 1)+";";
         }
         if (element.match(/GET COLLECTION/gi)) {
           arrIstr.push({
@@ -1242,6 +1243,7 @@ export default {
         }
         this.counterRec += 1;
       });
+      this.textRec= this.textRec.slice(1, this.textRec.length-1);
       return arrIstr;
     },
 
@@ -1707,8 +1709,8 @@ export default {
     saveIstructions(textToSave) {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
-        let filename = textToSave.split("###")[0];
-        let text = textToSave.split("###")[1];
+        let filename = textToSave.split("##SAVE####")[0];
+        let text = textToSave.split("##SAVE####")[1];
         var element = document.createElement("a");
         element.setAttribute(
           "href",
