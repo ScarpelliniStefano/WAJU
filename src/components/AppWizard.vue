@@ -31,7 +31,7 @@
           <v-row align="center">
             <v-col :cols="modulesData.length>1? 11:12" :class="modulesData.length>1? 'pr-0':'pr-3'">
               <v-select
-                class="mx-3"
+                class="mx-0"
                 filled
                 :dark="darkMode"
                 :light="!darkMode"
@@ -316,17 +316,15 @@ export default {
   },
   methods: {
     removeAt(idx) {
-      this.modulesData.forEach((item)=> {console.log(item.index)})
-      for(var i=idx;i<this.modulesData.length-1;i++){
-          this.modulesData[i].selected=this.modulesData[i+1].selected;
-          this.modulesData[i].value=this.modulesData[i+1].value;
-          console.log(this.modulesData[i])
-      } 
-      this.modulesData.forEach((item)=> {console.log(item.index)})
-      this.modulesData.splice(this.modulesData.length-1, 1);
-      this.modulesData.forEach((item)=> {console.log(item.index)})
+      this.modulesData.splice(this.getIndex(idx), 1);
       this.refresh();
-      this.modulesData.forEach((item)=> {console.log(item.index)})
+    },
+    getIndex(idx){
+      for(var i = 0; i < this.modulesData.length; i++){
+        if(this.modulesData[i].index === idx){
+          return i
+        }
+      }
     },
     checkMove: function() {
       //console.log(e);
@@ -351,12 +349,16 @@ export default {
    // T[v].index=index;
     //console.log(T[v].index);
     },
-    updateItemOrder: function(){
-      const items=this.modulesData.map(function(item){
+    updateItemOrder() {
+      const items = this.modulesData.map(function(item){
         return item;
       });
+      console.log('Sono qui')
       console.log(items);
       this.modulesData=items;
+      /*for(var i = 0; i < this.modulesData.length; i++){
+        this.modulesData[i].index = i
+      }*/
       this.refresh();
     },
     generatePassword(passwordLength) {
