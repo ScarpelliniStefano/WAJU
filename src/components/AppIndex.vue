@@ -850,12 +850,7 @@ export default {
           this.changeIRList(
             "#@IR-LIST@#" + text.substring(startE, endE) + "#@END-IR-LIST@#"
           );
-          this.changeLog(
-            "#@LOGS@#" +
-              timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
-              "#@END-LOGS@#",
-            "Default"
-          );
+          
         } else if (text.includes("##SUCCESS##")) {
           this.changeLog(
             "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.JOB_DONE) + "#@END-LOGS@#",
@@ -1175,6 +1170,12 @@ export default {
             name: this.counterRec + 1 + ". SAVE AS",
             value: element,
           });
+          this.changeLog(
+            "#@LOGS@#" +
+              timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
+              "#@END-LOGS@#",
+            "Default"
+          );
         } else if (element.match(/SPATIAL JOIN OF COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". SPATIAL JOIN OF COLLECTIONS",
