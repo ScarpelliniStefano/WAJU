@@ -1757,16 +1757,20 @@ export default {
         }*/
       }
     },
+    
 
     longClickEvent(stringMessage) {
+      console.log(stringMessage)
       let idElement = stringMessage.split("###")[0];
       let message = stringMessage.split("###")[1];
-      document.getElementById(idElement).onmousedown = (args) => {
+      document.getElementById(idElement).onmousedown = () => {
+        console.log("stai premendo pulsante")
         this.isLongClick = false;
-        this.timerId = setTimeout(() => fn.apply(null, [args]), 500);
+        this.timerId = setTimeout(fn, 500);
       };
 
       var fn = () => {
+        console.log("sono qui")
         this.wizardAlertHint = false;
         this.lblPopup = message;
         this.wizardAlertHint = true;

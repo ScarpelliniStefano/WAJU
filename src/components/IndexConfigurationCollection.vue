@@ -93,7 +93,7 @@
             <v-row align="center">
               <v-col :cols="dimColsBtn()">
                 <v-btn
-                  id="btnConfig"
+                  id="btnConfigSmall"
                   v-if="ratioMode() === 'small'"
                   :width="width / 2 - 24"
                   class="tooltip btnstyle"
@@ -114,7 +114,7 @@
                   :height="(height - 80) / 2"
                 >
                   <v-btn
-                    id="btnConfig"
+                    id="btnConfigMedium"
                     v-if="ratioMode() === 'medium'"
                     @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)"
                     @mouseleave="title = defaultTitle"
@@ -138,7 +138,7 @@
                     <v-icon :size="width / 20">{{ BTN_CONFIGURATION }}</v-icon>
                   </v-btn>
                   <v-btn
-                    id="btnConfig"
+                    id="btnConfigBig"
                     v-if="ratioMode() === 'big'"
                     @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)"
                     @mouseleave="title = defaultTitle"
@@ -165,7 +165,7 @@
               </v-col>
               <v-col :cols="dimColsBtn()">
                 <v-btn
-                  id="btnCollections"
+                  id="btnCollectionsSmall"
                   v-if="ratioMode() === 'small'"
                   :disabled="engineCrash"
                   :width="width / 2 - 24"
@@ -191,7 +191,7 @@
                   :height="(height - 80) / 2"
                 >
                   <v-btn
-                    id="btnCollections"
+                    id="btnCollectionsMedium"
                     v-if="ratioMode() === 'medium'"
                     :disabled="engineCrash"
                     @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)"
@@ -220,7 +220,7 @@
                     <v-icon :size="width / 20">{{ BTN_IR_COLLECTIONS }}</v-icon>
                   </v-btn>
                   <v-btn
-                    id="btnCollections"
+                    id="btnCollectionsBig"
                     v-if="ratioMode() === 'big'"
                     :disabled="engineCrash"
                     @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)"
@@ -320,12 +320,28 @@ export default {
         }
       }
     },
+    rapporto:function(newVal,oldVal){
+      if(this.ratioMode(newVal)!=this.ratioMode(oldVal)){
+        this.selectMouseDown();
+      }
+    }
   },
   mounted() {
-    this.addMouseOverEvent("btnConfig", this.HINT_CONFIG);
-    this.addMouseOverEvent("btnCollections", this.HINT_COLLECTIONS);
+    this.selectMouseDown()
   },
   methods: {
+    selectMouseDown(){
+      if(this.ratioMode()=="big"){
+        this.addMouseDownEvent("btnConfigBig", this.HINT_CONFIG);
+        this.addMouseDownEvent("btnCollectionsBig", this.HINT_COLLECTIONS);
+      }else if(this.ratioMode()=="medium"){
+        this.addMouseDownEvent("btnConfigMedium", this.HINT_CONFIG);
+        this.addMouseDownEvent("btnCollectionsMedium", this.HINT_COLLECTIONS);
+      }else{
+        this.addMouseDownEvent("btnConfigSmall", this.HINT_CONFIG);
+        this.addMouseDownEvent("btnCollectionsSmall", this.HINT_COLLECTIONS);
+        }
+    },
     dimCols(numCol) {
       if (numCol === 1) {
         if (this.rapporto < 3 / 2) return 12;
@@ -343,9 +359,12 @@ export default {
       if (this.rapporto < 3 / 2) return false;
       else return true;
     },
-    ratioMode() {
-      if (this.rapporto < 3 / 2) return "small";
-      else if (this.rapporto >= 3 / 2 && this.rapporto < 5 / 2) return "medium";
+    ratioMode(valRapporto) {
+      if(valRapporto==null){
+        valRapporto=this.rapporto;
+      }
+      if (valRapporto < 3 / 2) return "small";
+      else if (valRapporto >= 3 / 2 && valRapporto < 5 / 2) return "medium";
       else return "big";
     },
     diffHeightConf() {
@@ -417,7 +436,7 @@ export default {
       this.$emit("upload-config");
     },
 
-    addMouseOverEvent(idElement, message) {
+    addMouseDownEvent(idElement, message) {
       this.$emit("long-click", idElement + "###" + message);
     },
   },

@@ -100,7 +100,7 @@
             <v-row align="center" class="text-center">
               <v-col cols="6">
                 <v-btn
-                  id="btnSave"
+                  id="btnSaveSmall"
                   v-if="ratioMode() === 'small'"
                   :width="(width - 48) / 2"
                   class="tooltip btnstyle"
@@ -125,7 +125,7 @@
                   :height="(height - 80) / 2"
                 >
                   <v-btn
-                    id="btnSave"
+                    id="btnSaveMedium"
                     v-if="ratioMode() === 'medium'"
                     @mouseenter="changeTitle('Save')"
                     @mouseleave="title = defaultTitle"
@@ -150,7 +150,7 @@
                     <v-icon color="white" :size="width / 20">{{ BTN_SAVE }}</v-icon>
                   </v-btn>
                   <v-btn
-                    id="btnSave"
+                    id="btnSaveBig"
                     v-if="ratioMode() === 'big'"
                     :width="width / 6 - 24"
                     x-large
@@ -176,7 +176,7 @@
               </v-col>
               <v-col v-if="ratioMode() === 'small'" cols="6">
                 <v-btn
-                  id="btnBacktrack"
+                  id="btnBacktrackSmall"
                   :width="(width - 48) / 2"
                   color="var(--border-color)"
                   class="tooltip btnstyle"
@@ -201,7 +201,7 @@
               <v-col>
                 <v-sheet :dark="darkMode" :light="!darkMode" :height="(height - 80) / 2">
                   <v-btn
-                    id="btnBacktrack"
+                    id="btnBacktrackMedium"
                     v-if="ratioMode() === 'medium'"
                     @mouseenter="changeTitle('Back Instruction')"
                     @mouseleave="title = defaultTitle"
@@ -226,7 +226,7 @@
                     <v-icon color="white" :size="width / 20">{{ BTN_BACKTRACK }}</v-icon>
                   </v-btn>
                   <v-btn
-                    id="btnBacktrack"
+                    id="btnBacktrackBig"
                     v-if="ratioMode() === 'big'"
                     :width="width / 6 - 24"
                     x-large
@@ -302,12 +302,29 @@ export default {
     BTN_SAVE: icon.RECEIVE.BTN_SAVE,
     BTN_BACKTRACK: icon.RECEIVE.BTN_BACKTRACK,
   }),
-
+  watch:{
+    rapporto:function(newVal,oldVal){
+      if(this.ratioMode(newVal)!=this.ratioMode(oldVal)){
+        this.selectMouseDown();
+      }
+    }
+  },
   mounted() {
-    this.addMouseOverEvent("btnSave", this.HINT_SAVE);
-    this.addMouseOverEvent("btnBacktrack", this.HINT_BACKTRACK);
+    this.selectMouseDown()
   },
   methods: {
+    selectMouseDown(){
+      if(this.ratioMode()=="big"){
+        this.addMouseDownEvent("btnBacktrackBig", this.HINT_BACKTRACK);
+        this.addMouseDownEvent("btnSaveBig", this.HINT_SAVE);
+      }else if(this.ratioMode()=="medium"){
+        this.addMouseDownEvent("btnBacktrackMedium", this.HINT_BACKTRACK);
+        this.addMouseDownEvent("btnSaveMedium", this.HINT_SAVE);
+      }else{
+        this.addMouseDownEvent("btnBacktrackSmall", this.HINT_BACKTRACK);
+        this.addMouseDownEvent("btnSaveSmall", this.HINT_SAVE);
+        }
+    },
     dimCols(numCol) {
       if (numCol === 1) {
         if (this.rapporto < 3 / 2) return 12;
@@ -321,9 +338,12 @@ export default {
       if (this.rapporto < 3 / 2) return false;
       else return true;
     },
-    ratioMode() {
-      if (this.rapporto < 3 / 2) return "small";
-      else if (this.rapporto >= 3 / 2 && this.rapporto < 5 / 2) return "medium";
+    ratioMode(valRapporto) {
+      if(valRapporto==null){
+        valRapporto=this.rapporto;
+      }
+      if (valRapporto < 3 / 2) return "small";
+      else if (valRapporto >= 3 / 2 && valRapporto < 5 / 2) return "medium";
       else return "big";
     },
     diffHeight() {
@@ -362,7 +382,7 @@ export default {
       this.$emit("save-istruction", filename + "##SAVE####" + text);
     },
 
-    addMouseOverEvent(idElement, message) {
+    addMouseDownEvent(idElement, message) {
       this.$emit("long-click", idElement + "###" + message);
     },
   },
