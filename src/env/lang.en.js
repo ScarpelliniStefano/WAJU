@@ -274,7 +274,7 @@ const lang = Object.freeze({
                 RADIO_ORDER_DESCENDENT:'DESCENDENT',
                 BTN_SPAN_ADD_ORDER_FIELDS:' ADD ORDER FIELD',
                 BTN_SPAN_REMOVE_ORDER_FIELDS:' DELETE ORDER FIELD',
-                CHECK_GENERATE_SECTION:'add a generate section?'
+                CHECK_GENERATE_SECTION:'Add a generate section?'
             },
             PARTITION_MATCHING: {
                 TXT_FIELD_MATCHING: 'Field of Matching',
@@ -297,7 +297,7 @@ const lang = Object.freeze({
             UNPACK_CLAUSE: {
                 TXT_CONDITIONS: 'Conditions',
                 TXT_FIELDS_SRC_ARR: 'Source array\'s field',
-                TXT_FIELDS_DEST_ARR: 'Destination array\'s array'
+                TXT_FIELDS_DEST_ARR: 'Destination array\'s field'
             },
             WHERE_CASE: {
                 TXT_COLLECT_CLAUSE: 'Collections clause',
