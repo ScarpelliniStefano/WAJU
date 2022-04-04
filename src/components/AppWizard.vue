@@ -463,9 +463,29 @@ export default {
       }
       this.refresh();
     },
+
+    checkNumFree(){
+      var numTrov=0;
+      let finded=false;
+      while(!finded){
+        for(let i=0;i<this.modulesData.length && !finded;i++){
+          if(this.modulesData[i].index==numTrov){
+            finded=true;
+          }
+        }
+        if(!finded){
+          return numTrov;
+        }else{
+          numTrov=numTrov+1;
+          finded=false;
+        } 
+      }
+    },
+
     setPlus() {
+      var indexNew=this.checkNumFree();
       this.modulesData.push({
-        index: this.modulesData.length,
+        index: indexNew,
         selected: "",
         value: "",
       });
