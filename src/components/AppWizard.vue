@@ -298,10 +298,8 @@ export default {
         this.error = data.data.split("###")[1];
       }
     };
-    this.connectionPage.onerror = (data) => {
-      if (data.data.split("###")[0] === "ERR") {
+    this.connectionPage.onerror = () => {
         this.error = "Error on Local Server"
-      }
     }
   },
   mounted() {
