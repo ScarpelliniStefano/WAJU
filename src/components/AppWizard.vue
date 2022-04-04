@@ -29,11 +29,13 @@
           :dark="darkMode"
           :light="!darkMode"
         >
-          <v-row align="center">
-            <v-col :cols="modulesData.length>1? 11:12" :class="modulesData.length>1? 'pr-0':'pr-3'">
-              <v-sheet height="10px" color="red darken-2" class="drag"/>
+          <v-row align="center" style="max-width: calc(100%)">
+            <v-col cols="1" v-if="modulesData.length > 1" class="px-0">
+              <v-icon class="drag">mdi-menu</v-icon>
+            </v-col>
+            <v-col :cols="modulesData.length > 1 ? 10 : 12" class="px-3">
               <v-select
-                class="mx-0 select-modules"
+                class="mx-0"
                 filled
                 :dark="darkMode"
                 :light="!darkMode"
@@ -42,55 +44,42 @@
                 :label="SEL_TXT_MODULES"
               ></v-select>
             </v-col>
-            <v-divider vertical v-if="modulesData.length > 1"/>
             <v-col cols="1" v-if="modulesData.length > 1" class="px-0">
-              <v-btn
-                color="red darken-2"
-                height="56px"
-                
-                
-                @click="removeAt(modulo.index)"
+              <v-icon color="red darken-2" @click="removeAt(modulo.index)"
+                >mdi-delete</v-icon
               >
-                <v-icon>mdi-delete</v-icon>
-                
-              </v-btn>
             </v-col>
           </v-row>
-          <keep-alive><modules
-            :dark="darkMode"
-            :light="!darkMode"
-            :select="modulo.selected"
-            :maincol="mainColor"
-            :indice="modulo.index"
-            @changeValue="changeValue($event)"
-          ></modules></keep-alive>
-          
+          <keep-alive
+            ><modules
+              :dark="darkMode"
+              :light="!darkMode"
+              :select="modulo.selected"
+              :maincol="mainColor"
+              :indice="modulo.index"
+              @changeValue="changeValue($event)"
+            ></modules
+          ></keep-alive>
         </v-sheet>
-        
       </draggable>
 
-      
-
-      
       <v-btn
         :dark="darkMode"
         :light="!darkMode"
-        
         depressed
         elevation="5"
         raised
         large
         class="tooltip btnstyle"
-        
         style="color: white; background-color: var(--bg-color)"
         @click="setPlus()"
+        :disabled="allSelected()"
       >
         <v-icon color="white">mdi-plus</v-icon>
         <span style="color: white">&nbsp;{{ BTN_SPAN_ADD_MODULE }}</span>
       </v-btn>
       &nbsp;&nbsp;
       <v-btn
-        
         depressed
         elevation="5"
         raised
@@ -98,7 +87,6 @@
         :light="!darkMode"
         large
         class="tooltip btnstyle"
-        
         style="color: white; background-color: var(--bg-color)"
         @click="checkMinus()"
       >
@@ -272,8 +260,10 @@ export default {
   },
   watch: {
     valueString: function (newVal) {
-      if (newVal != "") {
+      if (newVal !== "") {
         this.disabledBtn = false;
+      } else {
+        this.disabledBtn = true
       }
     },
   },
@@ -317,18 +307,32 @@ export default {
     this.addMouseOverEvent("btnReset", this.HINT_RESET);
   },
   methods: {
+    allSelected(){
+      var dis = false
+      this.modulesData.forEach(element => {
+        if (element.selected === ''){
+          dis = true
+        }
+      })
+      return dis
+    },
     removeAt(idx) {
       this.modulesData.splice(this.getIndex(idx), 1);
       this.refresh();
     },
-    getIndex(idx){
-      for(var i = 0; i < this.modulesData.length; i++){
-        if(this.modulesData[i].index === idx){
-          return i
+    getIndex(idx) {
+      for (var i = 0; i < this.modulesData.length; i++) {
+        if (this.modulesData[i].index === idx) {
+          return i;
         }
       }
     },
-    checkMove: function() {
+    checkMove: function () {
+      /*const items = this.modulesData.map(function (item) {
+        return item;
+      });
+      console.log("Sono qui");
+      console.log(items);*/
       //console.log(e);
       //let pastIndex=e.draggedContext.index;
       //let futureIndex=e.draggedContext.futureIndex;
@@ -336,31 +340,28 @@ export default {
       //console.log(this.modulesData);
       //this.refresh();
     },
-    scambia(T,v,n){
-    var x;//variabile ausiliaria
-    x=T[n];
-    //let index=T[v].index;
-    //console.log(index);
-    //console.log(x.index);
-    T[n]=T[v];
-    //console.log(T[n].index);
-    //T[n].index=x.index;
-    //console.log(T[n].index);
-    T[v]=x;
-    //console.log(T[v].index);
-   // T[v].index=index;
-    //console.log(T[v].index);
+    scambia(T, v, n) {
+      var x; //variabile ausiliaria
+      x = T[n];
+      //let index=T[v].index;
+      //console.log(index);
+      //console.log(x.index);
+      T[n] = T[v];
+      //console.log(T[n].index);
+      //T[n].index=x.index;
+      //console.log(T[n].index);
+      T[v] = x;
+      //console.log(T[v].index);
+      // T[v].index=index;
+      //console.log(T[v].index);
     },
     updateItemOrder() {
-      const items = this.modulesData.map(function(item){
+      const items = this.modulesData.map(function (item) {
         return item;
       });
-      console.log('Sono qui')
+      console.log("Sono qui");
       console.log(items);
-      this.modulesData=items;
-      /*for(var i = 0; i < this.modulesData.length; i++){
-        this.modulesData[i].index = i
-      }*/
+      this.modulesData = items;
       this.refresh();
     },
     generatePassword(passwordLength) {
@@ -441,8 +442,7 @@ export default {
       return null;
     },
     changeValue(addText) {
-      console.log(addText)
-      let indiceScript = Number(addText.substring(0, addText.indexOf("##")));
+      let indiceScript = this.getIndex(Number(addText.substring(0, addText.indexOf("##"))));
       this.modulesData[indiceScript].value = addText.substring(
         addText.indexOf("##") + 2,
         addText.length
@@ -496,10 +496,10 @@ export default {
 </script>
 
 <style scoped>
-::v-deep .select-modules{
+::v-deep .select-modules {
   max-width: calc(100% - 24px);
 }
-::v-deep .v-input__slot{
+::v-deep .v-input__slot {
   padding-left: 0px;
   padding-right: 0px;
 }
