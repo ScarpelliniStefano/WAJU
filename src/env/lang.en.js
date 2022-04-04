@@ -65,9 +65,9 @@ const lang = Object.freeze({
         
     }),
     PAGE_TREE: Object.freeze({
-        H_TOTAL_ITEM: 'Total item: ',
-        H_INITIAL_DOCUMENT: 'Initial Document: ',
-        H_FINAL_DOCUMENT: 'Final Document: ',
+        H_TOTAL_ITEM: 'Total documents: ',
+        H_INITIAL_DOCUMENT: 'Start Document: ',
+        H_FINAL_DOCUMENT: 'End Document: ',
         SELECT_SIZE: 'Size',
         BTN_SPAN_SAVE_TREE: 'Save Tree...',
         BTN_SPAN_EXPAND: 'Expand',
