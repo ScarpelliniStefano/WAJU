@@ -36,7 +36,6 @@
             <v-col :cols="modulesData.length > 1 ? 10 : 12" class="px-3">
               <v-select
                 class="mx-0"
-                filled
                 :dark="darkMode"
                 :light="!darkMode"
                 v-model="modulo.selected"
@@ -299,6 +298,11 @@ export default {
         this.error = data.data.split("###")[1];
       }
     };
+    this.connectionPage.onerror = (data) => {
+      if (data.data.split("###")[0] === "ERR") {
+        this.error = "Error on Local Server"
+      }
+    }
   },
   mounted() {
     console.log(this.$route.query.id);

@@ -99,8 +99,11 @@ wss.on('connection', function connection(ws) {
             });
         } else if (command == "CHANGE_COLOR") {
             wss.clients.forEach((client) => {
-                if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    client.send(data);
+                const arrClientData = String(client.protocol).split('###')
+                if(arrClientData.length > 1 && client !== ws && client.readyState === WebSocket.OPEN){
+                    if(String(ws.protocol).split('###')[0] === arrClientData[0]){
+                        client.send(data);
+                    }
                 }
             });
         }
@@ -108,6 +111,7 @@ wss.on('connection', function connection(ws) {
     });
 
 });
+
 const fsExtra = require('fs-extra');
 //const { use } = require("vue/types/umd");
 process.on('SIGINT', function () {
