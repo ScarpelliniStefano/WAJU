@@ -61,6 +61,7 @@
                   elevation="5"
                   raised
                   @click="openWizard()"
+                  v-on:mousedown="addMouseDownEventWizard()"
                 >
                   <v-icon>{{ BTN_WIZARD }}</v-icon>
                   <span>{{ BTN_SPAN_WIZARD }}</span>
@@ -93,6 +94,7 @@
                     depressed
                     elevation="5"
                     @click="sendMessageArr()"
+                    @mousedown="addMouseDownEventExecute()"
                   >
                     <v-icon color="white" :size="width / 15">{{ BTN_EXECUTE }}</v-icon>
                   </v-btn>
@@ -116,6 +118,7 @@
                     depressed
                     elevation="5"
                     @click="sendMessageArr()"
+                    @mousedown="addMouseDownEventExecute()"
                   >
                     <v-icon color="white">{{ BTN_EXECUTE }}</v-icon>
                     <span>{{ BTN_SPAN_EXECUTE }}</span>
@@ -137,6 +140,7 @@
                   elevation="5"
                   raised
                   @click="sendMessageArr()"
+                  @mousedown="addMouseDownEventExecute()"
                 >
                   <v-icon color="white">{{ BTN_EXECUTE }}</v-icon>
                   <span style="color: white">{{ BTN_SPAN_EXECUTE }}</span>
@@ -167,6 +171,7 @@
                     depressed
                     elevation="5"
                     @click="openWizard()"
+                    @mousedown="addMouseDownEventWizard()"
                   >
                     <v-icon color="white" :size="width / 20">{{ BTN_WIZARD }}</v-icon>
                   </v-btn>
@@ -188,6 +193,7 @@
                     depressed
                     elevation="5"
                     @click="openWizard()"
+                    @mousedown="addMouseDownEventWizard()"
                   >
                     <v-icon color="white">{{ BTN_WIZARD }}</v-icon>
                     <span>{{ BTN_SPAN_WIZARD }}</span>
@@ -214,6 +220,9 @@ export default {
       exec: false,
       defaultTitle: "Command",
       title: "Command",
+      //ADD
+      timerId: null,
+      isLongClick: false,
 
       //LABEL
       TITLE: lang.SEND_COMP.TITLE,
@@ -252,8 +261,6 @@ export default {
   },
   mounted() {
     this.textSend = this.textShare;
-    this.addMouseOverEvent("btnExecute", this.HINT_EXECUTE);
-    this.addMouseOverEvent("btnWizard", this.HINT_WIZARD);
   },
   methods: {
     dimCols(numCol) {
@@ -325,11 +332,19 @@ export default {
       });
       this.exec = false;
     },
+    //UPDATE
     openWizard() {
-      this.$emit("open-wizard");
+      if(!this.isLongClick){
+        clearTimeout(this.timerId)
+        this.$emit("open-wizard");
+      }
     },
+    //UPDATE
     sendMessageArr() {
-      this.$emit("click-send", this.textSend);
+      if(!this.isLongClick){
+        clearTimeout(this.timerId)
+        this.$emit("click-send", this.textSend);
+      }
     },
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
@@ -344,10 +359,26 @@ export default {
     closeWindow() {
       this.$emit("close-send");
     },
-
-    addMouseOverEvent(idElement, message) {
-      this.$emit("long-click", idElement + "###" + message);
+    //ADD NEW
+    addMouseDownEventExecute() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction('btnExecute',this.HINT_EXECUTE);
+      };
+      this.timerId = setTimeout(fn, 500);
     },
+    addMouseDownEventWizard() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction('btnWizard',this.HINT_WIZARD);
+      };
+      this.timerId = setTimeout(fn, 500);
+    },
+    longClickFunction(id,msg){
+      this.isLongClick = true
+      clearTimeout(this.timerId)
+      this.$emit("long-click", id + "###" + msg);
+    }
   },
 };
 </script>

@@ -16,7 +16,13 @@
     <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" lg="12" xl="12">
-          <v-sheet rounded elevation="10" width="100%" :dark="darkMode" :light="!darkMode">
+          <v-sheet
+            rounded
+            elevation="10"
+            width="100%"
+            :dark="darkMode"
+            :light="!darkMode"
+          >
             <center>
               <h1>{{ this.title }}</h1>
             </center>
@@ -34,8 +40,9 @@
               <v-spacer></v-spacer>
               <v-col cols="1">
                 <v-select
-                  :disabled="valTotal===0"
-                  :dark="darkMode" :light="!darkMode"
+                  :disabled="valTotal === 0"
+                  :dark="darkMode"
+                  :light="!darkMode"
                   v-model="size"
                   :items="itemsSize"
                   :label="SELECT_SIZE"
@@ -47,13 +54,15 @@
             <v-row align="center" class="text-center">
               <v-col cols="3" class="pl-9">
                 <v-btn
-                  :disabled="valTotal===0"
-                  :dark="darkMode" :light="!darkMode"
+                  :disabled="valTotal === 0"
+                  :dark="darkMode"
+                  :light="!darkMode"
                   id="btnSave"
                   color="var(--border-color)"
                   elevation="2"
-                  style="border-radius: 4px;"
+                  style="border-radius: 4px"
                   @click="download()"
+                  @mousedown="addMouseDownEventSave()"
                   width="100%"
                 >
                   <v-icon color="white">{{ BTN_SAVE }}</v-icon>
@@ -62,7 +71,8 @@
               </v-col>
               <v-col cols="6">
                 <v-pagination
-                  :dark="darkMode" :light="!darkMode"
+                  :dark="darkMode"
+                  :light="!darkMode"
                   v-model="page"
                   :length="pageCount"
                   :total-visible="7"
@@ -73,13 +83,15 @@
               </v-col>
               <v-col cols="3" class="pr-9">
                 <v-btn
-                  :disabled="valTotal===0"
-                  :dark="darkMode" :light="!darkMode"
+                  :disabled="valTotal === 0"
+                  :dark="darkMode"
+                  :light="!darkMode"
                   id="btnExpand"
                   color="var(--border-color)"
                   elevation="2"
-                  style="border-radius: 4px;"
+                  style="border-radius: 4px"
                   @click="setDepth()"
+                  @mousedown="addMouseDownEventExpand()"
                   width="100%"
                 >
                   <v-icon color="white">{{ BTN_EXPAND }}</v-icon>
@@ -91,8 +103,9 @@
         </v-col>
         <v-col cols="12" sm="12" md="12" lg="12" xl="12">
           <v-sheet
-            v-if="valTotal!==0"
-            :dark="darkMode" :light="!darkMode"
+            v-if="valTotal !== 0"
+            :dark="darkMode"
+            :light="!darkMode"
             rounded
             min-height="350px"
             height="calc(55vh)"
@@ -116,7 +129,8 @@
 
       <template v-slot:action="{ attrs }">
         <v-btn
-          :dark="darkMode" :light="!darkMode"
+          :dark="darkMode"
+          :light="!darkMode"
           color="var(--border-color)"
           text
           v-bind="attrs"
@@ -180,16 +194,15 @@ export default {
 
       //longClick
       isLongClick: false,
-      timerId: "",
+      timerId: null,
       lblPopup: "",
       wizardAlert: false,
     };
   },
   watch: {
     size: function (newVal) {
-      if (this.page * newVal > this.valTotal)
-      {
-        this.page = 1
+      if (this.page * newVal > this.valTotal) {
+        this.page = 1;
       } else {
         this.changeDimensions();
       }
@@ -279,8 +292,8 @@ export default {
       this.sendMessage();
     },
     calculatePageSize() {
-      if(this.valTotal === 0){
-        this.pageCount = 1
+      if (this.valTotal === 0) {
+        this.pageCount = 1;
       } else if (this.valTotal % this.size != 0) {
         this.pageCount = Number(Math.floor(this.valTotal / this.size + 1));
       } else {
@@ -342,7 +355,7 @@ export default {
         this.connectionPage.onopen = () => {
           this.sendMessage();
         };
-        let jsonData = null
+        let jsonData = null;
         this.connectionPage.onmessage = (message) => {
           if (message == "SERVER CLOSED") {
             this.error = "server save/open closed";
@@ -415,7 +428,9 @@ export default {
             encodeURIComponent(
               '{ \n "documents" : \n ' +
                 //latinize(String(JSON.stringify(this.textIRTreeCol, null, "\t")).replace('Â','').replace('Â',''))
-                (String(JSON.stringify(this.textIRTreeCol, null, "\t")).replace('Â','').replace('Â','')) +
+                String(JSON.stringify(this.textIRTreeCol, null, "\t"))
+                  .replace("Â", "")
+                  .replace("Â", "") +
                 "\n}"
             )
         );
@@ -430,25 +445,31 @@ export default {
       }
     },
 
-    addMouseOverEvent(idElement, message) {
-      document.getElementById(idElement).onmousedown = (args) => {
-        this.isLongClick = false;
-        this.timerId = setTimeout(() => fn.apply(null, [args]), 500);
-      };
-
+    addMouseDownEventSave() {
+      this.isLongClick = false;
       var fn = () => {
-        this.wizardAlert = false;
-        this.lblPopup = message;
-        this.wizardAlert = true;
-        this.isLongClick = true;
+        this.longClickFunction(this.HINT_SAVE);
       };
+      this.timerId = setTimeout(fn, 500);
+    },
+    addMouseDownEventExpand() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction(this.HINT_EXPAND);
+      };
+      this.timerId = setTimeout(fn, 500);
+    },
+    longClickFunction(msg) {
+      this.isLongClick = true;
+      clearTimeout(this.timerId);
+      this.wizardAlert = true;
+      this.lblPopup = msg;
     },
   },
 };
 </script>
 
 <style scoped>
-
 .label {
   color: white;
   padding: 8px;
@@ -696,7 +717,6 @@ div.boxInfo {
 </style>
 
 <style scoped>
-
 .tooltip .tooltiptext {
   visibility: hidden;
   background-color: white;

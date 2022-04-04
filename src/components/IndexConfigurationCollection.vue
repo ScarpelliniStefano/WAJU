@@ -93,7 +93,7 @@
             <v-row align="center">
               <v-col :cols="dimColsBtn()">
                 <v-btn
-                  id="btnConfigSmall"
+                  id="btnConfig"
                   v-if="ratioMode() === 'small'"
                   :width="width / 2 - 24"
                   class="tooltip btnstyle"
@@ -104,6 +104,7 @@
                   elevation="5"
                   raised
                   @click="setConf()"
+                  @mousedown="addMouseDownEventConfig()"
                 >
                   <v-icon small>{{ BTN_CONFIGURATION }}</v-icon>
                   <span>{{ BTN_SPAN_CONFIG_SHORT }}</span>
@@ -114,7 +115,7 @@
                   :height="(height - 80) / 2"
                 >
                   <v-btn
-                    id="btnConfigMedium"
+                    id="btnConfig"
                     v-if="ratioMode() === 'medium'"
                     @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)"
                     @mouseleave="title = defaultTitle"
@@ -134,11 +135,12 @@
                     elevation="5"
                     raised
                     @click="setConf()"
+                    @mousedown="addMouseDownEventConfig()"
                   >
                     <v-icon :size="width / 20">{{ BTN_CONFIGURATION }}</v-icon>
                   </v-btn>
                   <v-btn
-                    id="btnConfigBig"
+                    id="btnConfig"
                     v-if="ratioMode() === 'big'"
                     @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)"
                     @mouseleave="title = defaultTitle"
@@ -157,6 +159,7 @@
                     elevation="5"
                     raised
                     @click="setConf()"
+                    @mousedown="addMouseDownEventConfig()"
                   >
                     <v-icon small>{{ BTN_CONFIGURATION }}</v-icon>
                     <span>{{ BTN_SPAN_CONFIG_SHORT }}</span>
@@ -165,7 +168,7 @@
               </v-col>
               <v-col :cols="dimColsBtn()">
                 <v-btn
-                  id="btnCollectionsSmall"
+                  id="btnCollections"
                   v-if="ratioMode() === 'small'"
                   :disabled="engineCrash"
                   :width="width / 2 - 24"
@@ -181,6 +184,7 @@
                     setIR();
                     $emit('click-ir');
                   "
+                  @mousedown="addMouseDownEventCollection()"
                 >
                   <v-icon small>{{ BTN_IR_COLLECTIONS }}</v-icon>
                   <span>{{ BTN_SPAN_IR_REQUEST }}</span>
@@ -191,7 +195,7 @@
                   :height="(height - 80) / 2"
                 >
                   <v-btn
-                    id="btnCollectionsMedium"
+                    id="btnCollections"
                     v-if="ratioMode() === 'medium'"
                     :disabled="engineCrash"
                     @mouseenter="changeTitle(BTN_SPAN_COLL_FULL)"
@@ -216,11 +220,12 @@
                       setIR();
                       $emit('click-ir');
                     "
+                    @mousedown="addMouseDownEventCollection()"
                   >
                     <v-icon :size="width / 20">{{ BTN_IR_COLLECTIONS }}</v-icon>
                   </v-btn>
                   <v-btn
-                    id="btnCollectionsBig"
+                    id="btnCollections"
                     v-if="ratioMode() === 'big'"
                     :disabled="engineCrash"
                     @mouseenter="changeTitle(BTN_SPAN_CONFIG_FULL)"
@@ -244,6 +249,7 @@
                       setIR();
                       $emit('click-ir');
                     "
+                    @mousedown="addMouseDownEventCollection()"
                   >
                     <v-icon small>{{ BTN_IR_COLLECTIONS }}</v-icon>
                     <span>{{ BTN_SPAN_COLL_SHORT }}</span>
@@ -290,6 +296,8 @@ export default {
     listEmpty: true,
     defaultTitle: "Configuration",
     title: "Configuration",
+    isLongClick: false,
+    timerIdData: null,
 
     //LABEL
     TITLE: lang.CONFIG_COLL_COMP.CONFIG.TITLE,
@@ -320,28 +328,10 @@ export default {
         }
       }
     },
-    rapporto:function(newVal,oldVal){
-      if(this.ratioMode(newVal)!=this.ratioMode(oldVal)){
-        this.selectMouseDown();
-      }
-    }
   },
   mounted() {
-    this.selectMouseDown()
   },
   methods: {
-    selectMouseDown(){
-      if(this.ratioMode()=="big"){
-        this.addMouseDownEvent("btnConfigBig", this.HINT_CONFIG);
-        this.addMouseDownEvent("btnCollectionsBig", this.HINT_COLLECTIONS);
-      }else if(this.ratioMode()=="medium"){
-        this.addMouseDownEvent("btnConfigMedium", this.HINT_CONFIG);
-        this.addMouseDownEvent("btnCollectionsMedium", this.HINT_COLLECTIONS);
-      }else{
-        this.addMouseDownEvent("btnConfigSmall", this.HINT_CONFIG);
-        this.addMouseDownEvent("btnCollectionsSmall", this.HINT_COLLECTIONS);
-        }
-    },
     dimCols(numCol) {
       if (numCol === 1) {
         if (this.rapporto < 3 / 2) return 12;
@@ -408,8 +398,8 @@ export default {
       this.$emit("file-upload-index", filetext);
     },
     setConf() {
-      if (!this.longClicked) {
-        clearTimeout(this.timerId);
+      if (!this.isLongClick) {
+        clearTimeout(this.timerIdData);
         if (!this.conf) {
           (this.conf = true), (this.ispectstate = false);
           this.title = "Configuration";
@@ -420,8 +410,8 @@ export default {
       }
     },
     setIR() {
-      if (!this.longClicked) {
-        clearTimeout(this.timerId);
+      if (!this.isLongClick) {
+        clearTimeout(this.timerIdData);
         if (!this.ispectstate) {
           (this.conf = false), (this.ispectstate = true);
           this.title = "IR Collection";
@@ -436,9 +426,25 @@ export default {
       this.$emit("upload-config");
     },
 
-    addMouseDownEvent(idElement, message) {
-      this.$emit("long-click", idElement + "###" + message);
+    addMouseDownEventConfig() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction('btnConfig',this.HINT_CONFIG);
+      };
+      this.timerIdData = setTimeout(fn, 500);
     },
+    addMouseDownEventCollection() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction('btnCollection',this.HINT_COLLECTIONS);
+      };
+      this.timerIdData = setTimeout(fn, 500);
+    },
+    longClickFunction(id,msg){
+      this.isLongClick = true
+      clearTimeout(this.timerIdData)
+      this.$emit("long-click", id + "###" + msg);
+    }
   },
 };
 </script>

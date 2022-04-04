@@ -100,7 +100,7 @@
             <v-row align="center" class="text-center">
               <v-col cols="6">
                 <v-btn
-                  id="btnSaveSmall"
+                  id="btnSave"
                   v-if="ratioMode() === 'small'"
                   :width="(width - 48) / 2"
                   class="tooltip btnstyle"
@@ -112,6 +112,7 @@
                   raised
                   :disabled="this.recArr.length == 0"
                   @click="download('script', recText)"
+                  @mousedown="addMouseDownEventSave()"
                 >
                   <v-icon color="white">{{ BTN_SAVE }}</v-icon>
                   <span v-if="this.recArr.length == 0" style="color: gray">{{
@@ -125,7 +126,7 @@
                   :height="(height - 80) / 2"
                 >
                   <v-btn
-                    id="btnSaveMedium"
+                    id="btnSave"
                     v-if="ratioMode() === 'medium'"
                     @mouseenter="changeTitle('Save')"
                     @mouseleave="title = defaultTitle"
@@ -146,11 +147,12 @@
                     elevation="5"
                     :disabled="this.recArr.length == 0"
                     @click="download('script', recText)"
+                    @mousedown="addMouseDownEventSave()"
                   >
                     <v-icon color="white" :size="width / 20">{{ BTN_SAVE }}</v-icon>
                   </v-btn>
                   <v-btn
-                    id="btnSaveBig"
+                    id="btnSave"
                     v-if="ratioMode() === 'big'"
                     :width="width / 6 - 24"
                     x-large
@@ -168,6 +170,7 @@
                     elevation="5"
                     :disabled="this.recArr.length == 0"
                     @click="download('script', recText)"
+                    @mousedown="addMouseDownEventSave()"
                   >
                     <v-icon>{{ BTN_SAVE }}</v-icon>
                     <span>{{ BTN_SPAN_SAVE }}</span>
@@ -176,7 +179,7 @@
               </v-col>
               <v-col v-if="ratioMode() === 'small'" cols="6">
                 <v-btn
-                  id="btnBacktrackSmall"
+                  id="btnBacktrack"
                   :width="(width - 48) / 2"
                   color="var(--border-color)"
                   class="tooltip btnstyle"
@@ -187,7 +190,8 @@
                   elevation="5"
                   raised
                   :disabled="this.recArr.length == 0 || !this.reconnectSended"
-                  @click="$emit('click-back-index')"
+                  @click="backtrack()"
+                  @mousedown="addMouseDownEventBacktrack()"
                 >
                   <v-icon color="white">{{ BTN_BACKTRACK }}</v-icon>
                   <span v-if="this.recArr.length == 0" style="color: gray">{{
@@ -201,7 +205,7 @@
               <v-col>
                 <v-sheet :dark="darkMode" :light="!darkMode" :height="(height - 80) / 2">
                   <v-btn
-                    id="btnBacktrackMedium"
+                    id="btnBacktrack"
                     v-if="ratioMode() === 'medium'"
                     @mouseenter="changeTitle('Back Instruction')"
                     @mouseleave="title = defaultTitle"
@@ -221,12 +225,13 @@
                     depressed
                     elevation="5"
                     :disabled="this.recArr.length == 0 || !this.reconnectSended"
-                    @click="$emit('click-back-index')"
+                    @click="backtrack()"
+                    @mousedown="addMouseDownEventBacktrack()"
                   >
                     <v-icon color="white" :size="width / 20">{{ BTN_BACKTRACK }}</v-icon>
                   </v-btn>
                   <v-btn
-                    id="btnBacktrackBig"
+                    id="btnBacktrack"
                     v-if="ratioMode() === 'big'"
                     :width="width / 6 - 24"
                     x-large
@@ -243,7 +248,8 @@
                     depressed
                     elevation="5"
                     :disabled="this.recArr.length == 0 || !this.reconnectSended"
-                    @click="$emit('click-back-index')"
+                    @click="backtrack()"
+                    @mousedown="addMouseDownEventBacktrack()"
                   >
                     <v-icon>{{ BTN_BACKTRACK }}</v-icon>
                     <span>{{ BTN_SPAN_BACKTRACK_UNDO }}</span>
@@ -289,6 +295,7 @@ export default {
         title: "Response",
       },
     ],
+    isLongClick: false,
 
     //LABEL
     TITLE: lang.RECEIVE_COMP.TITLE,
@@ -303,28 +310,11 @@ export default {
     BTN_BACKTRACK: icon.RECEIVE.BTN_BACKTRACK,
   }),
   watch:{
-    rapporto:function(newVal,oldVal){
-      if(this.ratioMode(newVal)!=this.ratioMode(oldVal)){
-        this.selectMouseDown();
-      }
-    }
   },
   mounted() {
     this.selectMouseDown()
   },
   methods: {
-    selectMouseDown(){
-      if(this.ratioMode()=="big"){
-        this.addMouseDownEvent("btnBacktrackBig", this.HINT_BACKTRACK);
-        this.addMouseDownEvent("btnSaveBig", this.HINT_SAVE);
-      }else if(this.ratioMode()=="medium"){
-        this.addMouseDownEvent("btnBacktrackMedium", this.HINT_BACKTRACK);
-        this.addMouseDownEvent("btnSaveMedium", this.HINT_SAVE);
-      }else{
-        this.addMouseDownEvent("btnBacktrackSmall", this.HINT_BACKTRACK);
-        this.addMouseDownEvent("btnSaveSmall", this.HINT_SAVE);
-        }
-    },
     dimCols(numCol) {
       if (numCol === 1) {
         if (this.rapporto < 3 / 2) return 12;
@@ -338,12 +328,9 @@ export default {
       if (this.rapporto < 3 / 2) return false;
       else return true;
     },
-    ratioMode(valRapporto) {
-      if(valRapporto==null){
-        valRapporto=this.rapporto;
-      }
-      if (valRapporto < 3 / 2) return "small";
-      else if (valRapporto >= 3 / 2 && valRapporto < 5 / 2) return "medium";
+    ratioMode() {
+      if (this.rapporto < 3 / 2) return "small";
+      else if (this.rapporto >= 3 / 2 && this.rapporto < 5 / 2) return "medium";
       else return "big";
     },
     diffHeight() {
@@ -378,13 +365,38 @@ export default {
     isEnabled() {
       return this.isDisabled;
     },
+    backtrack(){
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        this.$emit('click-back-index')
+      }
+    },
     download(filename, text) {
-      this.$emit("save-istruction", filename + "##SAVE####" + text);
+      if(!this.isLongClick){
+        clearTimeout(this.timerId);
+        this.$emit("save-istruction", filename + "##SAVE####" + text);
+      }
     },
 
-    addMouseDownEvent(idElement, message) {
-      this.$emit("long-click", idElement + "###" + message);
+    addMouseDownEventSave() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction('btnSave',this.HINT_SAVE);
+      };
+      this.timerId = setTimeout(fn, 500);
     },
+    addMouseDownEventBacktrack() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction('btnBacktrack',this.HINT_BACKTRACK);
+      };
+      this.timerId = setTimeout(fn, 500);
+    },
+    longClickFunction(id,msg){
+      this.isLongClick = true
+      clearTimeout(this.timerId)
+      this.$emit("long-click", id + "###" + msg);
+    }
   },
 };
 </script>

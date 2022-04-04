@@ -17,7 +17,6 @@
         group="modules"
         @end="updateItemOrder"
         v-bind="dragOptions"
-        :move="checkMove"
         handle=".drag"
       >
         <v-sheet
@@ -119,6 +118,7 @@
         id="btnReset"
         style="color: white; background-color: var(--bg-color)"
         @click="transferMessage('RESET')"
+        @mousedown="addMouseDownEventReset()"
       >
         <v-icon color="white">mdi-send</v-icon>
         <span style="color: white">&nbsp;{{ BTN_SPAN_RESET_SEND }}</span> </v-btn
@@ -138,6 +138,7 @@
         width="220px"
         style="color: white; background-color: var(--bg-color)"
         @click="transferMessage('APPEND')"
+        @mousedown="addMouseDownEventAppend()"
       >
         <v-icon color="white">mdi-send</v-icon>
         <span style="color: white">&nbsp;{{ BTN_SPAN_APPEND }}</span>
@@ -246,7 +247,7 @@ export default {
 
     //longClick
     isLongClick: false,
-    timerId: "",
+    timerId: null,
     lblPopup: "",
     wizardAlert: false,
 
@@ -303,10 +304,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.query.id);
     this.numberWizard = this.$route.query.id;
-    this.addMouseOverEvent("btnAppend", this.HINT_APPEND);
-    this.addMouseOverEvent("btnReset", this.HINT_RESET);
   },
   methods: {
     allSelected(){
@@ -328,34 +326,6 @@ export default {
           return i;
         }
       }
-    },
-    checkMove: function () {
-      /*const items = this.modulesData.map(function (item) {
-        return item;
-      });
-      console.log("Sono qui");
-      console.log(items);*/
-      //console.log(e);
-      //let pastIndex=e.draggedContext.index;
-      //let futureIndex=e.draggedContext.futureIndex;
-      //this.scambia(this.modulesData,pastIndex,futureIndex);
-      //console.log(this.modulesData);
-      //this.refresh();
-    },
-    scambia(T, v, n) {
-      var x; //variabile ausiliaria
-      x = T[n];
-      //let index=T[v].index;
-      //console.log(index);
-      //console.log(x.index);
-      T[n] = T[v];
-      //console.log(T[n].index);
-      //T[n].index=x.index;
-      //console.log(T[n].index);
-      T[v] = x;
-      //console.log(T[v].index);
-      // T[v].index=index;
-      //console.log(T[v].index);
     },
     updateItemOrder() {
       const items = this.modulesData.map(function (item) {
@@ -499,20 +469,26 @@ export default {
         );
       clearTimeout(this.timerId);
     },
-    addMouseOverEvent(idElement, message) {
-      document.getElementById(idElement).onmousedown = (args) => {
-        this.isLongClick = false;
-        this.timerId = setTimeout(() => fn.apply(null, [args]), 500);
+    addMouseDownEventReset() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction(this.HINT_RESET);
       };
-
-      var fn = (args) => {
-        console.log("onmousedown args", args);
-        this.wizardAlert = false;
-        this.lblPopup = message;
-        this.wizardAlert = true;
-        this.isLongClick = true;
-      };
+      this.timerId = setTimeout(fn, 500);
     },
+    addMouseDownEventAppend() {
+      this.isLongClick = false;
+      var fn = () => {
+        this.longClickFunction(this.HINT_APPEND);
+      };
+      this.timerId = setTimeout(fn, 500);
+    },
+    longClickFunction(msg){
+      this.isLongClick = true
+      clearTimeout(this.timerId)
+      this.wizardAlert = true
+      this.lblPopup = msg
+    }
   },
 };
 </script>
