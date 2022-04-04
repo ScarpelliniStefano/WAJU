@@ -516,6 +516,10 @@ export default {
 </script>
 
 <style scoped>
+
+.drag{
+  cursor:move
+}
 ::v-deep .select-modules {
   max-width: calc(100% - 24px);
 }
