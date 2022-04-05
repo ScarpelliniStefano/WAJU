@@ -510,24 +510,11 @@ class LogMessage {
 }
 
 //var sended = false;
-var connected = false;
-var preDone = false;
-var firstTimeError = false;
+
 
 export var connect = () => {};
 export var disconnect = () => {};
-export var setConnected = () => {
-  connected = !connected;
-};
-export var isConnected = () => {
-  return connected;
-};
-export var setPreDone = () => {
-  preDone = !preDone;
-};
-export var isPreDone = () => {
-  return preDone;
-};
+
 
 import BarRec from "./IndexReceive.vue";
 import BarSend from "./IndexSend.vue";
@@ -578,6 +565,8 @@ export default {
 
       tip: "",
       firstDialog: true,
+
+      firstTimeError: false,
 
       showWizard: false,
       textWizard: "",
@@ -680,12 +669,12 @@ export default {
       arrayLog: {
         logs: [],
         newLogs: 0,
-        logs_tab_two: [],
-        newLogsTabTwo: 0,
-        logs_tab_three: [],
-        newLogsTabThree: 0,
-        logs_tab_four: [],
-        newLogsTabFour: 0,
+        logs_engine: [],
+        newLogsEngine: 0,
+        logs_parser: [],
+        newLogsParser: 0,
+        logs_io: [],
+        newLogsIO: 0,
         tabActive: null,
         newMessages: 0,
       },
@@ -722,29 +711,29 @@ export default {
           }
           this.arrayLog.logs.push(l);
           break;
-        case "Tab_2":
-          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_tab_two.length + 1);
-          if (this.arrayLog.tabActive !== "Tab_2" || !this.log.selected) {
-            this.arrayLog.newLogsTabTwo += 1;
+        case "Engine":
+          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_engine.length + 1);
+          if (this.arrayLog.tabActive !== "Engine" || !this.log.selected) {
+            this.arrayLog.newLogsEngine += 1;
             this.arrayLog.newMessages += 1;
           }
-          this.arrayLog.logs_tab_two.push(l);
+          this.arrayLog.logs_engine.push(l);
           break;
-        case "Tab_3":
-          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_tab_three.length + 1);
-          if (this.arrayLog.tabActive !== "Tab_3" || !this.log.selected) {
-            this.arrayLog.newLogsTabThree += 1;
+        case "Parser":
+          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_parser.length + 1);
+          if (this.arrayLog.tabActive !== "Parser" || !this.log.selected) {
+            this.arrayLog.newLogsParser += 1;
             this.arrayLog.newMessages += 1;
           }
-          this.arrayLog.logs_tab_three.push(l);
+          this.arrayLog.logs_parser.push(l);
           break;
-        case "Tab_4":
-          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_tab_four.length + 1);
-          if (this.arrayLog.tabActive !== "Tab_4" || !this.log.selected) {
-            this.arrayLog.newLogsTabFour += 1;
+        case "IO":
+          l = new LogMessage(Msg, tMsg, this.arrayLog.logs_io.length + 1);
+          if (this.arrayLog.tabActive !== "IO" || !this.log.selected) {
+            this.arrayLog.newLogsIO += 1;
             this.arrayLog.newMessages += 1;
           }
-          this.arrayLog.logs_tab_four.push(l);
+          this.arrayLog.logs_io.push(l);
           break;
         default:
           l = new LogMessage(Msg, tMsg, this.arrayLog.logs.length + 1);
@@ -762,17 +751,17 @@ export default {
           this.arrayLog.newMessages -= this.arrayLog.newLogs;
           this.arrayLog.newLogs = 0;
           break;
-        case "Tab_2":
-          this.arrayLog.newMessages -= this.arrayLog.newLogsTabTwo;
-          this.arrayLog.newLogsTabTwo = 0;
+        case "Engine":
+          this.arrayLog.newMessages -= this.arrayLog.newLogsEngine;
+          this.arrayLog.newLogsEngine = 0;
           break;
-        case "Tab_3":
-          this.arrayLog.newMessages -= this.arrayLog.newLogsTabThree;
-          this.arrayLog.newLogsTabThree = 0;
+        case "Parser":
+          this.arrayLog.newMessages -= this.arrayLog.newLogsParser;
+          this.arrayLog.newLogsParser = 0;
           break;
-        case "Tab_4":
-          this.arrayLog.newMessages -= this.arrayLog.newLogsTabFour;
-          this.arrayLog.newLogsTabFour = 0;
+        case "IO":
+          this.arrayLog.newMessages -= this.arrayLog.newLogsIO;
+          this.arrayLog.newLogsIO = 0;
           break;
       }
     },
@@ -825,6 +814,46 @@ export default {
           this.changeErrLog(
             "#@ERR-LOGS@#" + timeString(text.substring(startE, endE)) + "#@END-ERR-LOGS@#"
           );
+        } else if (text.includes("##BEGIN-PARSER-ERROR##")) {
+          const startE = text.indexOf("##BEGIN-PARSER-ERROR##") + "##BEGIN-PARSER-ERROR##".length;
+          const endE = text.lastIndexOf("##END-PARSER-ERROR##");
+          let textToWrite=text.substring(startE, endE).split("##END SUB-MESSAGE##");
+          this.arrayLog.logs_parser=[];
+          textToWrite.forEach((element)=>{
+            this.changeErrLog(
+            "#@ERR-LOGS@#" +
+              timeString(element) +
+              "#@END-ERR-LOGS@#",
+            "Parser"
+          );
+          })
+          
+        } else if (text.includes("##BEGIN-IO-WARNING##")) {
+          const startE = text.indexOf("##BEGIN-IO-WARNING##") + "##BEGIN-IO-WARNING##".length;
+          const endE = text.lastIndexOf("##END-IO-WARNING##");
+          let textToWrite=text.substring(startE, endE).split("##END SUB-WARNING##");
+          textToWrite.forEach((element)=>{
+            this.changeWarnLog(
+            "#@LOGS@#" +
+              timeString(element) +
+              "#@END-LOGS@#",
+            "IO"
+          );
+          })
+          
+        } else if (text.includes("##BEGIN-WARNING-MESSAGE##")) {
+          const startE = text.indexOf("##BEGIN-WARNING-MESSAGE##") + "##BEGIN-WARNING-MESSAGE##".length;
+          const endE = text.lastIndexOf("##END-WARNING-MESSAGE##");
+          let textToWrite=text.substring(startE, endE).split("##END SUB-WARNING##");
+          textToWrite.forEach((element)=>{
+            this.changeWarnLog(
+            "#@LOGS@#" +
+              timeString(element) +
+              "#@END-LOGS@#",
+            "Engine"
+          );
+          })
+          
         } else if (text.includes("##ACK##")) {
           this.arrRec.pop();
           this.changeLog(
@@ -874,7 +903,7 @@ export default {
             text.indexOf("##BEGIN-SERVER-CONF##") + "##BEGIN-SERVER-CONF##".length + 1;
           const endE = text.lastIndexOf("##END-SERVER-CONF##");
           this.changeConfig(text.substring(startE, endE));
-          firstTimeError = false;
+          this.firstTimeError = false;
           this.isCrashed = false;
           this.changeLog(
             "#@LOGS@#" +
@@ -882,42 +911,33 @@ export default {
               "#@END-LOGS@#",
             "Default"
           );
-          if (!isPreDone()) {
-            //disconnect();
-            setPreDone();
-          }
         }
       };
 
-      this.connection.onopen = () => {
-        if (!isConnected()) {
-          setConnected();
-        }
-      };
-
+      
       this.connection.onclose = () => {
-        if (isConnected() && !firstTimeError) {
-          setConnected();
+        if (!this.firstTimeError) {
           this.changeErrLog(
             "#@ERR-LOGS@#" +
               timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) +
               "\n#@END-ERR-LOGS@#"
           );
-          firstTimeError = true;
+          this.firstTimeError = true;
           this.isCrashed = true;
           this.isReconnectedAndSended = false;
         }
       };
 
-      this.connection.onerror = () => {
-        if (isConnected) {
-          this.changeConfig("Configurazione non presente");
-          /*this.changeErrLog(
+      this.connection.onerror = (message) => {
+        if (!this.firstTimeError) {
+          this.changeErrLog(
             "#@ERR-LOGS@#" +
-              timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) +
+              timeString(message) +
               "\n#@END-ERR-LOGS@#"
-          );*/
-          setConnected();
+          );
+          this.firstTimeError = true;
+          this.isCrashed = true;
+          this.isReconnectedAndSended = false;
         }
       };
     },
@@ -1150,11 +1170,11 @@ export default {
       var arrTest = textReceived.split("##END INSTRUCTION###");
       this.textRec="";
       arrTest.forEach((element) => {
-        //if (element.startsWith("\n")) {
-        //element = element.slice(1, element.length);
-        //}
         if (!element.startsWith("\n")) {
           element = "\n" + element;
+        }
+        if (element.startsWith("\n")) {
+          element = element.slice(1, element.length);
         }
         if (element.endsWith("\n")) {
           element = element.slice(0, element.length - 1);
@@ -1244,6 +1264,7 @@ export default {
         }
         this.counterRec += 1;
       });
+      console.log(arrIstr);
       this.textRec= this.textRec.slice(1, this.textRec.length-1);
       return arrIstr;
     },
@@ -1557,6 +1578,12 @@ export default {
       this.newLog(textToChange.substring(startE, endE), "ERR", cat);
       this.received.textLog += textToChange.substring(startE, endE);
       alert(textToChange.substring(startE, endE));
+    },
+    changeWarnLog(textToChange, cat) {
+      const startE = textToChange.indexOf("#@WARN-LOGS@#") + "#@WARN-LOGS@#".length;
+      const endE = textToChange.lastIndexOf("#@END-WARN-LOGS@#");
+      this.newLog(textToChange.substring(startE, endE), "WARN", cat);
+      this.received.textLog += textToChange.substring(startE, endE);
     },
     changeLog(textToChange, cat) {
       const startE = textToChange.indexOf("#@LOGS@#") + "#@LOGS@#".length;

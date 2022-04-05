@@ -45,16 +45,16 @@
         <v-tabs color="var(--border-color)" v-model="tab" class="mb-3">
           <v-tabs-slider></v-tabs-slider>
           <v-tab>
-            <v-badge color="red darken-2" :content="arrayLog.newLogs" :value="arrayLog.newLogs">Main</v-badge>
+            <v-badge color="red darken-2" :content="arrayLog.newLogs" :value="arrayLog.newLogs">{{FIRST_LOG}}</v-badge>
           </v-tab>
           <v-tab>
-            <v-badge color="red darken-2" :content="arrayLog.newLogsTabTwo" :value="arrayLog.newLogsTabTwo">Log Tab 2</v-badge>
+            <v-badge color="red darken-2" :content="arrayLog.newLogsEngine" :value="arrayLog.newLogsEngine">{{SECOND_LOG}}</v-badge>
           </v-tab>
           <v-tab>
-            <v-badge color="red darken-2" :content="arrayLog.newLogsTabThree" :value="arrayLog.newLogsTabThree">Log Tab 3</v-badge>
+            <v-badge color="red darken-2" :content="arrayLog.newLogsParser" :value="arrayLog.newLogsParser">{{THIRD_LOG}}</v-badge>
           </v-tab>
           <v-tab>
-            <v-badge color="red darken-2" :content="arrayLog.newLogsTabFour" :value="arrayLog.newLogsTabFour">Log Tab 4</v-badge>
+            <v-badge color="red darken-2" :content="arrayLog.newLogsIO" :value="arrayLog.newLogsIO">{{FOURTH_LOG}}</v-badge>
           </v-tab>
         </v-tabs>
         <v-row class="py-0" align="center">
@@ -91,7 +91,7 @@
               </ul>
 
               <ul
-                v-if="category === 'Tab_2'"
+                v-if="category === 'Engine'"
                 readonly
                 style="font-size: 16px"
                 height="100%"
@@ -99,14 +99,17 @@
                 label="Logs"
                 id="ul_send"
               >
-                <li :key="log.id" v-for="log in arrayLog.logs_tab_two">
+                <li :key="log.id" v-for="log in arrayLog.logs_engine">
                   <p
                     v-if="log.type === 'LOG'"
                     style="font-family: Consolas; color: var(--border-color)"
                   >
                     {{ log.message }}
                   </p>
-                  <p v-if="log.type !== 'LOG'" style="font-family: Consolas; color: red">
+                  <p v-if="log.type === 'ERR'" style="font-family: Consolas; color: red">
+                    {{ log.message }}
+                  </p>
+                  <p v-if="log.type === 'WARN'" style="font-family: Consolas; color: orange">
                     {{ log.message }}
                   </p>
                   <v-divider></v-divider>
@@ -114,7 +117,7 @@
               </ul>
 
               <ul
-                v-if="category === 'Tab_3'"
+                v-if="category === 'Parser'"
                 readonly
                 style="font-size: 16px"
                 height="100%"
@@ -122,14 +125,9 @@
                 label="Logs"
                 id="ul_send"
               >
-                <li :key="log.id" v-for="log in arrayLog.logs_tab_three">
-                  <p
-                    v-if="log.type === 'LOG'"
-                    style="font-family: Consolas; color: var(--border-color)"
-                  >
-                    {{ log.message }}
-                  </p>
-                  <p v-if="log.type !== 'LOG'" style="font-family: Consolas; color: red">
+                <li :key="log.id" v-for="log in arrayLog.logs_parser">
+                  
+                  <p style="font-family: Consolas; color: red">
                     {{ log.message }}
                   </p>
                   <v-divider></v-divider>
@@ -137,7 +135,7 @@
               </ul>
 
               <ul
-                v-if="category === 'Tab_4'"
+                v-if="category === 'IO'"
                 readonly
                 style="font-size: 16px"
                 height="100%"
@@ -145,14 +143,17 @@
                 label="Logs"
                 id="ul_send"
               >
-                <li :key="log.id" v-for="log in arrayLog.logs_tab_four">
+                <li :key="log.id" v-for="log in arrayLog.logs_io">
                   <p
                     v-if="log.type === 'LOG'"
                     style="font-family: Consolas; color: var(--border-color)"
                   >
                     {{ log.message }}
                   </p>
-                  <p v-if="log.type !== 'LOG'" style="font-family: Consolas; color: red">
+                  <p v-if="log.type === 'WARN'" style="font-family: Consolas; color: orange">
+                    {{ log.message }}
+                  </p>
+                  <p v-if="log.type === 'ERR'" style="font-family: Consolas; color: red">
                     {{ log.message }}
                   </p>
                   <v-divider></v-divider>
@@ -190,6 +191,10 @@ export default {
     tab: null,
     //LABEL
     TITLE: lang.LOG_COMP.TITLE,
+    FIRST_LOG: lang.LOG_COMP.FIRST_LOG,
+    SECOND_LOG: lang.LOG_COMP.SECOND_LOG,
+    THIRD_LOG: lang.LOG_COMP.THIRD_LOG,
+    FOURTH_LOG: lang.LOG_COMP.FOURTH_LOG
   }),
   created() {},
   mounted() {},
@@ -201,13 +206,13 @@ export default {
           this.changeCategory('Default')
           break
         case 1:
-          this.changeCategory('Tab_2')
+          this.changeCategory('Engine')
           break
         case 2:
-          this.changeCategory('Tab_3')
+          this.changeCategory('Parser')
           break
         case 3:
-          this.changeCategory('Tab_4')
+          this.changeCategory('IO')
           break
       }
     },

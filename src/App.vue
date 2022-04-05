@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { connect, isPreDone } from "./components/AppIndex.vue";
 
 export default {
   name: "App",
@@ -18,9 +17,6 @@ export default {
 
   created() {
     document.title = "Loading JcoUIWeb...";
-    if (!isPreDone()) {
-      connect();
-    }
   },
 };
 </script>

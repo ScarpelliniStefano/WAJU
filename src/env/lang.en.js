@@ -32,7 +32,11 @@ const lang = Object.freeze({
         HINT_COLLECTIONS: 'View all collections saved with possibility to navigate them',
     }),
     LOG_COMP: Object.freeze({
-        TITLE: 'Log'
+        TITLE: 'Log',
+        FIRST_LOG: 'MAIN',
+        SECOND_LOG: 'ENGINE',
+        THIRD_LOG: 'PARSING ERR.',
+        FOURTH_LOG: 'I/O',
     }),
     INDEX: Object.freeze({
         TITLE: 'JcoUIWeb',

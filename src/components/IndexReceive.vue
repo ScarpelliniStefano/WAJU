@@ -64,19 +64,17 @@
                     :headers="recHeaders"
                     item-key="name"
                     show-expand
+                    
                   >
                     <template v-slot:expanded-item="{ headers, item }">
                       <td :colspan="headers.length">
-                        <pre
+                        <p
                           style="
-                            padding-bottom: 8px;
-                            padding-top: 8px;
-                            margin-bottom: 0px;
-                            margin-top: -1.5em;
+                            white-space: pre-wrap;
                           "
                         >
                           {{ item.value }}
-                        </pre>
+                        </p>
                       </td>
                     </template>
                   </v-data-table>
@@ -309,10 +307,6 @@ export default {
     BTN_SAVE: icon.RECEIVE.BTN_SAVE,
     BTN_BACKTRACK: icon.RECEIVE.BTN_BACKTRACK,
   }),
-  watch:{
-  },
-  mounted() {
-  },
   methods: {
     dimCols(numCol) {
       if (numCol === 1) {
