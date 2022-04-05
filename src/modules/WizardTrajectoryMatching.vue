@@ -7,11 +7,13 @@
                 <v-col><v-text-field :rules="[rules.counterColl]" v-if="collect.collection!=''" :label="`${TXT_ALIAS+collect.index}`" v-model="collect.alias"/></v-col>
             </v-row>
             <br>
-            <v-container fluid>
-            <v-row v-for="collect in collectionsPartitions" :key="collect.index">
+            <v-container>
+            <v-container v-for="collect in collectionsPartitions" :key="collect.index" fluid>
+            <v-row >
                 <trajectory-partition :mytrajectoryPartIndex="collect.index" @changeValueTrajectory="changeTextTrajectory($event)"/>
             </v-row>
-            <br>
+            <br v-if="collect.index != Object.keys(collectionsPartitions).length - 1"/>
+            </v-container>
             <v-btn
                 tile fab depressed elevation="5" raised
                 dark

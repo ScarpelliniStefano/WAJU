@@ -1500,7 +1500,7 @@ export default {
       );
       let routeData = this.$router.resolve({
         name: "StaticTree",
-        query: { id: millis },
+        query: { id: millis, idUser: this.randomNumber },
       });
       setTimeout(function () {
         window.open(routeData.href, "_blank");

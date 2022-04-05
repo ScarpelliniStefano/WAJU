@@ -18,7 +18,12 @@ wss.on('connection', function connection(ws) {
             }
         });
         if(isThereHome){
-            console.log(`Wizard ID: [${arrData[1]}] User ID: [${arrData[0]}] connected`);
+            if(arrData[1].length === 20) {
+                console.log(`Wizard ID: [${arrData[1]}] User ID: [${arrData[0]}] connected`);
+            } else {
+                console.log(`Tree ID: [${arrData[1]}] User ID: [${arrData[0]}] connected`);
+            }
+            
         } else {
             ws.send('CLOSE_HOME###Homepage was closed.');
         }
@@ -64,7 +69,7 @@ wss.on('connection', function connection(ws) {
             let title = data.split('###')[1];
             let page = Number(data.split('###')[2].split(',')[0]);
             let size = Number(data.split('###')[2].split(',')[1]);
-            fs.readFileSync(`./src/temp/${title}.txt`, (error, dataRes) => {
+            fs.readFile(`./src/temp/${title}.txt`, (error, dataRes) => {
                 if (error) {
                     console.error(error);
                     return;

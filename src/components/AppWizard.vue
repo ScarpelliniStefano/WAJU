@@ -29,9 +29,6 @@
           :light="!darkMode"
         >
           <v-row align="center" style="max-width: calc(100%)">
-            <v-col cols="1" v-if="modulesData.length > 1" class="px-0">
-              <v-icon class="drag">mdi-menu</v-icon>
-            </v-col>
             <v-col :cols="modulesData.length > 1 ? 10 : 12" class="px-3">
               <v-select
                 class="mx-0"
@@ -46,6 +43,9 @@
               <v-icon color="red darken-2" @click="removeAt(modulo.index)"
                 >mdi-delete</v-icon
               >
+            </v-col>
+            <v-col cols="1" v-if="modulesData.length > 1" class="px-0">
+              <v-icon class="drag">mdi-menu</v-icon>
             </v-col>
           </v-row>
           <keep-alive

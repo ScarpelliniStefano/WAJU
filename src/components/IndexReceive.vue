@@ -312,7 +312,6 @@ export default {
   watch:{
   },
   mounted() {
-    this.selectMouseDown()
   },
   methods: {
     dimCols(numCol) {

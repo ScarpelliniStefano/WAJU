@@ -3,7 +3,9 @@
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="200"></v-progress-circular>
     </v-overlay>
-    <v-alert
+    
+    <v-container fluid>
+      <v-alert
       v-if="this.error !== ''"
       border="bottom"
       close-text="Close Alert"
@@ -13,7 +15,6 @@
     >
       {{ this.error }}
     </v-alert>
-    <v-container>
       <v-row>
         <v-col cols="12" sm="12" md="12" lg="12" xl="12">
           <v-sheet
@@ -252,8 +253,6 @@ export default {
   },
   mounted() {
     this.setConnection();
-    this.addMouseOverEvent("btnExpand", this.HINT_EXPAND);
-    this.addMouseOverEvent("btnSave", this.HINT_SAVE);
   },
   methods: {
     changeColor() {
@@ -344,7 +343,7 @@ export default {
     setConnection() {
       if (localStorage.getItem("textTree_" + this.$route.query.id)) {
         this.connectionPage = new WebSocket(
-          "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
+          "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER, this.$route.query.idUser + '###' + this.$route.query.id
         );
         if (this.connectionPage.readyState != 1) {
           this.overlay = false;
@@ -357,6 +356,7 @@ export default {
         };
         let jsonData = null;
         this.connectionPage.onmessage = (message) => {
+          console.log('sono qui')
           if (message == "SERVER CLOSED") {
             this.error = "server save/open closed";
           } else if (message.data.split("###")[0] == "CHANGE_COLOR") {
@@ -397,7 +397,7 @@ export default {
               this.valInitial + 1,
               this.darkMode
             );
-            document.querySelector("#treeViewer").innerHTML = "";
+            document.getElementById("treeViewer").innerHTML = "";
             jsonview.render(this.tree, document.querySelector("#treeViewer"));
             jsonview.expandDepth(this.tree, this.numDepth);
             this.textIRTreeCol = jsonData.tree;
