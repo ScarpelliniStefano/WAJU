@@ -41,6 +41,7 @@
               :height="height - diffHeight()"
               no-resize
               v-model="textSend"
+              @keydown="sendMessageKeyboard($event)"
             ></v-textarea>
           </v-col>
           <v-divider v-if="dividerBool()" vertical></v-divider>
@@ -301,6 +302,12 @@ export default {
             this.textSend += "\n" + textWizard.replace(/(<([^>]+)>)/gi, "\n");
           }
         }
+      }
+    },
+    sendMessageKeyboard(event){
+      // CTRL + invio combo
+      if (event.ctrlKey && event.key === "Enter") {
+        this.sendMessageArr();
       }
     },
     changeTitle(tip) {

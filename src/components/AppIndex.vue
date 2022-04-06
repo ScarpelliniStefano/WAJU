@@ -818,14 +818,17 @@ export default {
         } else if (text.includes("##BEGIN-PARSER-ERROR##")) {
           const startE = text.indexOf("##BEGIN-PARSER-ERROR##") + "##BEGIN-PARSER-ERROR##".length;
           const endE = text.lastIndexOf("##END-PARSER-ERROR##");
-          let textToWrite=text.substring(startE, endE).split("##END SUB-MESSAGE##");
+          let textToWrite=text.substring(startE, endE).split(/##END SUB-MESSAGE##[\n]?/g).filter(elem => elem!=="");
+          
+          console.log(text.substring(startE, endE))
+          console.log(textToWrite)
           this.arrayLog.logs_parser=[];
           textToWrite.forEach((element)=>{
             this.changeErrLog(
             "#@ERR-LOGS@#" +
               timeString(element) +
               "#@END-ERR-LOGS@#",
-            "Parser"
+            "Parser",false
           );
           })
           
@@ -1574,12 +1577,12 @@ export default {
         }
       };
     },
-    changeErrLog(textToChange, cat) {
+    changeErrLog(textToChange, cat,alert) {
       const startE = textToChange.indexOf("#@ERR-LOGS@#") + "#@ERR-LOGS@#".length;
       const endE = textToChange.lastIndexOf("#@END-ERR-LOGS@#");
       this.newLog(textToChange.substring(startE, endE), "ERR", cat);
       this.received.textLog += textToChange.substring(startE, endE);
-      alert(textToChange.substring(startE, endE));
+      if(alert || alert===null) alert(textToChange.substring(startE, endE));
     },
     changeWarnLog(textToChange, cat) {
       const startE = textToChange.indexOf("#@WARN-LOGS@#") + "#@WARN-LOGS@#".length;
