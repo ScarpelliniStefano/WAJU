@@ -664,6 +664,7 @@ export default {
       timerId: -1,
       lblPopup: "",
       wizardAlertHint: false,
+      chooseTitle:'',
 
       //Array Log
       arrayLog: {
@@ -870,7 +871,7 @@ export default {
             "#@TREE-DRAW@#" + text.substring(startE, endE) + "#@END-TREE-DRAW@#"
           );
           this.changeLog(
-            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.TREE_OPENED) + "#@END-LOGS@#",
+            "#@LOGS@#" + timeString(`Collection [${this.chooseTitle}] opened`) + "#@END-LOGS@#",
             "Default"
           );
         } else if (text.includes("##BEGIN-IR-LIST##")) {
@@ -1463,6 +1464,7 @@ export default {
         let startE = textToChange.indexOf("#@TREE-DRAW@#") + "#@TREE-DRAW@#".length;
         let endE = textToChange.indexOf("###");
         let title = textToChange.substring(startE, endE);
+        this.chooseTitle=title;
         if (title == "Filter") title = "Temporary Collection";
         startE = endE + '  { "documents" : '.length;
         endE = textToChange.lastIndexOf("#@END-TREE-DRAW@#") - 3;

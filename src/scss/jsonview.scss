@@ -75,4 +75,16 @@
 		border-width: 5px 0 5px 6px;
 		border-color: transparent transparent transparent #808080;
 	}
+
+	:root.theme-light {
+		--string-color: #f92020;
+		--number-color: #2084f9;
+		--boolean-color: #20f995;
+	}
+	
+	:root.theme-dark {
+		--string-color: #FB5858;
+		--number-color: #2084f9;
+		--boolean-color: #20f995;
+	}
 }
