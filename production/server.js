@@ -2,10 +2,22 @@ const express = require('express');
 const history = require('connect-history-api-fallback');
 const app = express();
 const WebSocket = require("ws");
+const fs = require('fs');
+const path = require('path');
+var dir = './tmp';
+fs.readdir(dir, (err, files) => {
+    if (err) throw err;
+
+    for (const file of files) {
+        fs.unlink(`${dir}/${file}`, err => {
+            if (err) throw err;
+        });
+    }
+});
 const wss = new WebSocket.Server({ port: 3000 });
 let users = new Map();
-var dir = './tmp';
-const fs = require('fs');
+
+
 
 //Web Server
 const staticFileMiddleware = express.static('dist');
@@ -81,7 +93,7 @@ wss.on('connection', function connection(ws) {
         if (command == "SAVE") {
             var title = data.split('###')[1];
             var text = data.split('###')[2];
-            fs.writeFile(`./src/temp/${title}.txt`, text, error => {
+            fs.writeFile(`${dir}/${title}.txt`, text, error => {
                 if (error) {
                     console.error(error);
                     return;
@@ -91,7 +103,7 @@ wss.on('connection', function connection(ws) {
             let title = data.split('###')[1];
             let page = Number(data.split('###')[2].split(',')[0]);
             let size = Number(data.split('###')[2].split(',')[1]);
-            fs.readFile(`./src/temp/${title}.txt`, (error, dataRes) => {
+            fs.readFile(`${dir}/${title}.txt`, (error, dataRes) => {
                 if (error) {
                     console.error(error);
                     return;
@@ -117,7 +129,7 @@ wss.on('connection', function connection(ws) {
             })
         } else if (command == "DELETE") {
             let title = data.split('###')[1];
-            fs.unlink(`./tmp/${title}.txt`);
+            fs.unlink(`${dir}/${title}.txt`);
         } else if (command == "WIZARD") {
             wss.clients.forEach((client) => {
                 if (client !== ws && client.readyState === WebSocket.OPEN) {
