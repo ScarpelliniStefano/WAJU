@@ -95,7 +95,7 @@ wss.on('connection', function connection(ws) {
             })
         } else if (command == "DELETE") {
             let title = data.split('###')[1];
-            fs.unlink(`./tmp/${title}.txt`);
+            fs.unlink(`./src/temp/${title}.txt`);
         } else if (command == "WIZARD") {
             wss.clients.forEach((client) => {
                 if (client !== ws && client.readyState === WebSocket.OPEN) {

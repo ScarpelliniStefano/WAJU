@@ -57,7 +57,7 @@ const lang = Object.freeze({
         },
         LOG_MESSAGES: {
             BACKTRACK_DONE: 'Backtrack Done',
-            TREE_OPENED: 'Tree Opened',
+            TREE_OPENED: 'Collection [${title}] opened',
             IR_LIST_UPDATED: 'IR List Updated',
             JOB_DONE: 'Job Done',
             CONNECTION_ENGINE_CRASHED: 'Connection with Engine Crashed.',

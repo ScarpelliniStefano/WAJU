@@ -874,7 +874,7 @@ export default {
             "#@TREE-DRAW@#" + text.substring(startE, endE) + "#@END-TREE-DRAW@#"
           );
           this.changeLog(
-            "#@LOGS@#" + timeString(`Collection [${this.chooseTitle}] opened`) + "#@END-LOGS@#",
+            "#@LOGS@#" + timeString(lang.INDEX.LOG_MESSAGES.TREE_OPENED.replace("${title}",this.chooseTitle)) + "#@END-LOGS@#",
             "Default"
           );
         } else if (text.includes("##BEGIN-IR-LIST##")) {
