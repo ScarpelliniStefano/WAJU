@@ -2,7 +2,16 @@ const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port: 3000 });
 let users = new Map();
 const fs = require('fs');
+const dir="./src/temp/";
+fs.readdir(dir, (err, files) => {
+    if (err) throw err;
 
+    for (const file of files) {
+        fs.unlink(`${dir}/${file}`, err => {
+            if (err) throw err;
+        });
+    }
+});
 console.log("started on port 3000")
 
 wss.on('connection', function connection(ws) {
