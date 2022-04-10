@@ -200,7 +200,7 @@ export default {
   mounted() {},
   watch: {
     tab: function (newVal) {
-      console.log(this.arrayLog)
+      //console.log(this.arrayLog)
       switch(newVal){
         case 0:
           this.changeCategory('Default')

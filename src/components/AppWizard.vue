@@ -292,7 +292,7 @@ export default {
       this.$route.query.id + "###" + this.randomNumber
     );
     this.connectionPage.onmessage = (data) => {
-      console.log(data.data);
+      //console.log(data.data);
       if (data.data.split("###")[0] === "CHANGE_COLOR") {
         this.changeColor();
       } else if (data.data.split("###")[0] === "CLOSE_HOME") {
@@ -331,8 +331,8 @@ export default {
       const items = this.modulesData.map(function (item) {
         return item;
       });
-      console.log("Sono qui");
-      console.log(items);
+      //console.log("Sono qui");
+      //console.log(items);
       this.modulesData = items;
       this.refresh();
     },
@@ -371,7 +371,7 @@ export default {
       if (!this.mainColor) {
         this.mainColor = "document-color";
       }
-      console.log(this.mainColor);
+      //console.log(this.mainColor);
       document.documentElement.classList.add(this.mainColor);
 
       this.themeColor = this.getCookie("theme-color");

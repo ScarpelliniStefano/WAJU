@@ -303,7 +303,7 @@ export default {
                         if(this.setCompNumSpfunct) this.stringVett[1]+=", "+this.idSpFunct+":"+this.numSpFunct;
                         this.stringVett[1]+=") ";
                     }else if(newVal=='INCLUDED'){
-                        console.log('hi')
+                        //console.log('hi')
                         this.stringVett[1]+=" ("+this.leftRightSpFunct+") ";
                     }
                 }

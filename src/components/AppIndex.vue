@@ -820,8 +820,8 @@ export default {
           const endE = text.lastIndexOf("##END-PARSER-ERROR##");
           let textToWrite=text.substring(startE, endE).split(/##END SUB-MESSAGE##[\n]?/g).filter(elem => elem!=="");
           
-          console.log(text.substring(startE, endE))
-          console.log(textToWrite)
+          //console.log(text.substring(startE, endE))
+          //console.log(textToWrite)
           this.arrayLog.logs_parser=[];
           textToWrite.forEach((element)=>{
             this.changeErrLog(
@@ -1268,7 +1268,7 @@ export default {
         }
         this.counterRec += 1;
       });
-      console.log(arrIstr);
+      //console.log(arrIstr);
       this.textRec= this.textRec.slice(1, this.textRec.length-1);
       return arrIstr;
     },
