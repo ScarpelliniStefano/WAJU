@@ -104,7 +104,7 @@
         </v-col>
         <v-col cols="12" sm="12" md="12" lg="12" xl="12">
           <v-sheet
-            v-if="valTotal !== 0"
+            
             :dark="darkMode"
             :light="!darkMode"
             rounded
@@ -211,16 +211,8 @@ export default {
     page: function () {
       this.changeDimensions();
     },
-    textIRTreeCol: function (newVal, oldVal) {
-      if (newVal != oldVal) {
-        if ((newVal == "" || newVal == undefined) && this.error == "") {
-          this.textTreeEmpty = true;
-          this.overlay = true;
-        } else {
-          this.textTreeEmpty = false;
+    textIRTreeCol: function () {
           this.overlay = false;
-        }
-      }
     },
   },
   computed: {
@@ -342,8 +334,9 @@ export default {
     },
     setConnection() {
       if (localStorage.getItem("textTree_" + this.$route.query.id)) {
+        //const ip="localhost";
         this.connectionPage = new WebSocket(
-          "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER, this.$route.query.idUser + '###' + this.$route.query.id
+          "ws://" + window.location.hostname +":"+process.env.VUE_APP_WEB_SOCKET_SERVER_PORT, this.$route.query.idUser + '###' + this.$route.query.id
         );
         if (this.connectionPage.readyState != 1) {
           this.overlay = false;
@@ -392,11 +385,14 @@ export default {
               if (this.valTotal < 25) this.size = this.valTotal;
               else this.size = 25;
             }
+            this.overlay=false;
+            console.log(this.overlay)
             this.tree = jsonview.createWithInitial(
               jsonData.tree,
               this.valInitial + 1,
               this.darkMode
             );
+            
             document.getElementById("treeViewer").innerHTML = "";
             jsonview.render(this.tree, document.querySelector("#treeViewer"));
             jsonview.expandDepth(this.tree, this.numDepth);

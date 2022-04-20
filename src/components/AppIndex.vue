@@ -522,6 +522,7 @@ import BottomBar from "./IndexConfigurationCollection.vue";
 import BarLog from "./IndexLog.vue";
 import icon from "../env/icon";
 
+
 export default {
   name: "IndexPage",
 
@@ -893,6 +894,7 @@ export default {
           const startP =
             text.indexOf("##BEGIN-PROCESS##") + "##BEGIN-PROCESS##".length + 1;
           const endP = text.indexOf("##END-PROCESS##");
+          
           this.textRec = text.substring(startP, endP);
           if (text.substring(startP, endP).length > 0) {
             this.textToCommand = text.substring(startP, endP);
@@ -1182,7 +1184,7 @@ export default {
         }
         if (element.endsWith("\n")) {
           element = element.slice(0, element.length - 1);
-          this.textRec+= element.slice(0, element.length - 1)+";";
+          this.textRec+= element.slice(0, element.length - 1)+";\n";
         }
         if (element.match(/GET COLLECTION/gi)) {
           arrIstr.push({
@@ -1268,8 +1270,7 @@ export default {
         }
         this.counterRec += 1;
       });
-      //console.log(arrIstr);
-      this.textRec= this.textRec.slice(1, this.textRec.length-1);
+       console.log(this.textRec)
       return arrIstr;
     },
 
@@ -1433,7 +1434,7 @@ export default {
     setCookie(name, value, daysToLive) {
       var cookie = name + "=" + encodeURIComponent(value);
       if (typeof daysToLive === "number") {
-        cookie += ";secure; max-age=" + daysToLive * 24 * 60 * 60;
+        cookie += ";SameSite=Lax; max-age=" + daysToLive * 24 * 60 * 60;
         document.cookie = cookie;
       }
     },
@@ -1533,12 +1534,14 @@ export default {
       }, 1000);
       //};
     },
-
+    
     startServer() {
-      this.randomNumber = this.generatePassword(50);
 
+      //const localIpAddress=require("local-ip-address");
+
+      this.randomNumber = this.generatePassword(50);
       this.connectionPage = new WebSocket(
-        "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER,
+        "ws://" + window.location.hostname +":"+process.env.VUE_APP_WEB_SOCKET_SERVER_PORT,
         this.randomNumber
       );
       this.connectionPage.onopen = () => {

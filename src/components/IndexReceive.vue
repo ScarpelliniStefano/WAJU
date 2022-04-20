@@ -367,6 +367,7 @@ export default {
     download(filename, text) {
       if(!this.isLongClick){
         clearTimeout(this.timerId);
+        console.log(text)
         this.$emit("save-istruction", filename + "##SAVE####" + text);
       }
     },

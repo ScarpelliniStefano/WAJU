@@ -287,8 +287,9 @@ export default {
 
     document.title = this.LBL_TITLE;
     this.changeColor();
+    //const ip="localhost";
     this.connectionPage = new WebSocket(
-      "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER,
+      "ws://" + window.location.hostname +":"+process.env.VUE_APP_WEB_SOCKET_SERVER_PORT,
       this.$route.query.id + "###" + this.randomNumber
     );
     this.connectionPage.onmessage = (data) => {
