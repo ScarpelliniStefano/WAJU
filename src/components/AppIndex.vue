@@ -1173,6 +1173,7 @@ export default {
       this.counterRec = 0;
       var arrTest = textReceived.split(/"##END INSTRUCTION###"[\n]?/g).filter(elem => elem!=="");
       this.textRec="";
+      let justWarnNewIR=false;
       arrTest.forEach((element) => {
         if (!element.startsWith("\n")) {
           element = "\n" + element;
@@ -1194,18 +1195,21 @@ export default {
             name: this.counterRec + 1 + ". SAVE AS",
             value: element,
           });
-          this.changeLog(
-            "#@LOGS@#" +
-              timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
-              "#@END-LOGS@#",
-            "Default"
-          );
-        } else if (element.match(/SPATIAL JOIN OF COLLECTIONS/gi)) {
+          if(!justWarnNewIR){
+            this.changeLog(
+              "#@LOGS@#" +
+                timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
+                "#@END-LOGS@#",
+              "Default"
+            );
+            justWarnNewIR=true;
+          }
+        } /*else if (element.match(/SPATIAL JOIN OF COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". SPATIAL JOIN OF COLLECTIONS",
             value: element,
           });
-        } else if (element.match(/JOIN OF COLLECTIONS/gi)) {
+        } */else if (element.match(/JOIN OF COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". JOIN OF COLLECTIONS",
             value: element,
