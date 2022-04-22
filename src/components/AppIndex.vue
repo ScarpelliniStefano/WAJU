@@ -836,7 +836,7 @@ export default {
         } else if (text.includes("##BEGIN-IO-WARNING##")) {
           const startE = text.indexOf("##BEGIN-IO-WARNING##") + "##BEGIN-IO-WARNING##".length;
           const endE = text.lastIndexOf("##END-IO-WARNING##");
-          let textToWrite=text.substring(startE, endE).split("##END SUB-WARNING##");
+          let textToWrite=text.substring(startE, endE).split(/##END SUB-WARNING##[\n]?/g).filter(elem => elem!=="");
           textToWrite.forEach((element)=>{
             this.changeWarnLog(
             "#@LOGS@#" +
@@ -849,7 +849,7 @@ export default {
         } else if (text.includes("##BEGIN-WARNING-MESSAGE##")) {
           const startE = text.indexOf("##BEGIN-WARNING-MESSAGE##") + "##BEGIN-WARNING-MESSAGE##".length;
           const endE = text.lastIndexOf("##END-WARNING-MESSAGE##");
-          let textToWrite=text.substring(startE, endE).split("##END SUB-WARNING##");
+          let textToWrite=text.substring(startE, endE).split(/##END SUB-WARNING##[\n]?/g).filter(elem => elem!=="");
           textToWrite.forEach((element)=>{
             this.changeWarnLog(
             "#@LOGS@#" +
@@ -897,8 +897,8 @@ export default {
           
           this.textRec = text.substring(startP, endP);
           if (text.substring(startP, endP).length > 0) {
-            this.textToCommand = text.substring(startP, endP);
-            this.arrRec = this.fromTextRecToArrRec(text.substring(startP, endP));
+            this.textToCommand = this.textRec;
+            this.arrRec = this.fromTextRecToArrRec(this.textRec);
             if(!this.rec.selected) this.rec.newMessages = true
             this.sendIRList();
           }
@@ -922,13 +922,12 @@ export default {
 
       
       this.connection.onclose = () => {
-        if (!this.firstTimeError) {
+        if (!this.isCrashed) {
           this.changeErrLog(
             "#@ERR-LOGS@#" +
               timeString(lang.INDEX.LOG_MESSAGES.CONNECTION_ENGINE_CRASHED) +
               "\n#@END-ERR-LOGS@#"
           );
-          this.firstTimeError = true;
           this.isCrashed = true;
           this.isReconnectedAndSended = false;
         }
@@ -942,7 +941,6 @@ export default {
               "\n#@END-ERR-LOGS@#"
           );
           this.firstTimeError = true;
-          this.isCrashed = true;
           this.isReconnectedAndSended = false;
         }
       };
@@ -1173,7 +1171,7 @@ export default {
     fromTextRecToArrRec(textReceived) {
       var arrIstr = [];
       this.counterRec = 0;
-      var arrTest = textReceived.split("##END INSTRUCTION###");
+      var arrTest = textReceived.split(/"##END INSTRUCTION###"[\n]?/g).filter(elem => elem!=="");
       this.textRec="";
       arrTest.forEach((element) => {
         if (!element.startsWith("\n")) {
