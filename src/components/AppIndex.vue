@@ -1562,9 +1562,9 @@ export default {
       };
       this.connectionPage.onclose = () => {
         this.changeErrLog(
-          "#@LOGS@#" +
+          "#@ERR-LOGS@#" +
             timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_DISCONNECTED) +
-            "#@END-LOGS@#",
+            "#@END-ERR-LOGS@#",
           "Default"
         );
         this.isWebCrashed=true;
