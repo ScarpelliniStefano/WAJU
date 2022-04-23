@@ -48,7 +48,7 @@
                   </v-list-item-content>
                   <v-list-item-action>
                     <v-btn
-                      :disabled="!reconnectSended"
+                      :disabled="!reconnectSended || isWebCrashed"
                       icon
                       outlined
                       @click="
@@ -281,6 +281,7 @@ export default {
     longClicked: Boolean,
     timerId: Number,
     engineCrash:Boolean,
+    serviceCrash:Boolean,
     reconnectSended:Boolean
   },
   data: () => ({

@@ -51,6 +51,7 @@
                 <v-btn
                   id="btnWizard"
                   v-if="ratioMode() === 'small'"
+                  :disabled="isWebCrashed"
                   :dark="darkMode" :light="!darkMode"
                   :width="(width - 48) / 2"
                   color="var(--border-color)"
@@ -154,6 +155,7 @@
                   <v-btn
                     id="btnWizard"
                     v-if="ratioMode() === 'medium'"
+                    :disabled="isWebCrashed"
                     @mouseenter="changeTitle('Wizard')"
                     @mouseleave="title = defaultTitle"
                     :width="width / 6 - 24"
@@ -178,6 +180,7 @@
                   </v-btn>
                   <v-btn
                     id="btnWizard"
+                    :disabled="isWebCrashed"
                     v-if="ratioMode() === 'big'"
                     :width="width / 6 - 24"
                     x-large
@@ -247,7 +250,8 @@ export default {
     darkMode: Boolean,
     outlined: Boolean,
     textShare: String,
-    engineCrash:Boolean
+    engineCrash:Boolean,
+    serviceCrash:Boolean
   },
   watch: {
     textRec: function (newVal) {

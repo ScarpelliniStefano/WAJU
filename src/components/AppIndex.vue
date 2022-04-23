@@ -266,6 +266,7 @@
         :disable="disBtn"
         :randomNumberString="randomNumber"
         :engineCrash="isCrashed"
+        :serviceCrash="isWebCrashed"
         @click-send="sendMsg($event)"
         @long-click="longClickEvent($event)"
         @open-wizard="openWizard()"
@@ -336,6 +337,7 @@
         :timerId="timerId"
         :longClicked="isLongClick"
         :engineCrash="isCrashed"
+        :serviceCrash="isWebCrashed"
         :reconnectSended="isReconnectedAndSended"
         @file-upload-index="sendConfigFile($event)"
         @click-ir="sendIRList()"
@@ -411,6 +413,7 @@
             :randomNumberString="randomNumber"
             :darkMode="darkMode"
             :engineCrash="isCrashed"
+            :serviceCrash="isWebCrashed"
             @click-send="sendMsg($event)"
             @long-click="longClickEvent($event)"
             @open-wizard="openWizard()"
@@ -464,6 +467,7 @@
             :timerId="timerId"
             :longClicked="isLongClick"
             :engineCrash="isCrashed"
+            :serviceCrash="isWebCrashed"
             :reconnectSended="isReconnectedAndSended"
             @file-upload-index="sendConfigFile($event)"
             @click-ir="sendIRList()"
@@ -540,6 +544,7 @@ export default {
       connection: null,
       connectionPage: null,
       isCrashed: false,
+      isWebCrashed:false,
       isReconnectedAndSended: false,
       textRec: "",
       arrRec: [],
@@ -1171,7 +1176,7 @@ export default {
     fromTextRecToArrRec(textReceived) {
       var arrIstr = [];
       this.counterRec = 0;
-      var arrTest = textReceived.split(/"##END INSTRUCTION###"[\n]?/g).filter(elem => elem!=="");
+      var arrTest = textReceived.split(/##END INSTRUCTION###[\n]?/g).filter(elem => elem!=="");
       this.textRec="";
       let justWarnNewIR=false;
       arrTest.forEach((element) => {
@@ -1553,14 +1558,16 @@ export default {
             "#@END-LOGS@#",
           "Default"
         );
+        this.isWebCrashed=false;
       };
       this.connectionPage.onclose = () => {
-        this.changeLog(
+        this.changeErrLog(
           "#@LOGS@#" +
             timeString(lang.INDEX.LOG_MESSAGES.WEB_SOCKET_SERVER_DISCONNECTED) +
             "#@END-LOGS@#",
           "Default"
         );
+        this.isWebCrashed=true;
       };
       this.connectionPage.onerror = () => {
         this.changeErrLog(
