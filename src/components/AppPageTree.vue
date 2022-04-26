@@ -329,11 +329,11 @@ export default {
       return null;
     },
     maxDimSize() {
-      if (this.valTotal > 1000) return 1000;
+      if (this.valTotal > 200) return 200;
       else return this.valTotal;
     },
     setConnection() {
-      if (localStorage.getItem("textTree_" + this.$route.query.id)) {
+      if (sessionStorage.getItem("textTree_" + this.$route.query.id)) {
         //const ip="localhost";
         this.connectionPage = new WebSocket(
           "ws://" + window.location.hostname +":"+process.env.VUE_APP_WEB_SOCKET_SERVER_PORT, this.$route.query.idUser + '###' + this.$route.query.id
@@ -386,7 +386,6 @@ export default {
               else this.size = 25;
             }
             this.overlay=false;
-            console.log(this.overlay)
             this.tree = jsonview.createWithInitial(
               jsonData.tree,
               this.valInitial + 1,

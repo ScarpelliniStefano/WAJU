@@ -1277,7 +1277,6 @@ export default {
         }
         this.counterRec += 1;
       });
-       console.log(this.textRec)
       return arrIstr;
     },
 
@@ -1528,7 +1527,7 @@ export default {
           })
       );
       this.received.errorConfig = "";
-      localStorage.setItem(
+      sessionStorage.setItem(
         "textTree_" + millis,
         JSON.stringify({ datetime: dateGen.toISOString(), name: title })
       );
@@ -1545,7 +1544,7 @@ export default {
     startServer() {
 
       //const localIpAddress=require("local-ip-address");
-
+      
       this.randomNumber = this.generatePassword(50);
       this.connectionPage = new WebSocket(
         "ws://" + window.location.hostname +":"+process.env.VUE_APP_WEB_SOCKET_SERVER_PORT,
