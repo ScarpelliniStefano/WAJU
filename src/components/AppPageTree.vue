@@ -223,50 +223,21 @@ export default {
   created() {
     document.title = this.title + "- JCOUI Web";
 
-    this.themeColor = this.getCookie("theme-color");
-    if (this.themeColor === null) {
-      this.themeColor = "theme-light";
-      this.setCookie("theme-color", "theme-light", 30);
-      this.darkMode = false;
-    }
-    if (this.themeColor === "theme-light") {
-      this.darkMode = false;
-    } else if (this.themeColor === "theme-dark") {
-      this.darkMode = true;
-    }
-    document.documentElement.classList.add(this.themeColor);
-
-    this.mainColor = this.getCookie("main-color");
-    if (!this.mainColor) {
-      this.mainColor = "black";
-      this.setCookie("main-color", "document-color", 30);
-    }
-    document.documentElement.classList.add(this.mainColor);
+    this.changeColor()
   },
   mounted() {
     this.setConnection();
   },
   methods: {
     changeColor() {
-      document.documentElement.classList.remove(this.mainColor);
+      if(document.documentElement.classList.contains(this.mainColor))
+        document.documentElement.classList.remove(this.mainColor);
       this.mainColor = this.getCookie("main-color");
       if (!this.mainColor) {
         this.mainColor = "document-color";
       }
       document.documentElement.classList.add(this.mainColor);
-
-      this.themeColor = this.getCookie("theme-color");
-      if (this.themeColor === null) {
-        this.themeColor = "theme-light";
-        this.setCookie("theme-color", "theme-light", 30);
-        this.darkMode = false;
-      }
-      if (this.themeColor === "theme-light") {
-        this.darkMode = false;
-      } else if (this.themeColor === "theme-dark") {
-        this.darkMode = true;
-      }
-      document.documentElement.classList.add(this.themeColor);
+      this.setTheme();
     },
     sendMessage() {
       this.connectionPage.send(
@@ -291,15 +262,21 @@ export default {
         this.pageCount = Number((this.valTotal / this.size).toFixed());
       }
     },
-    setMainColor(color) {
-      document.documentElement.classList.replace(this.mainColor, color);
-      this.mainColor = color;
-      this.setCookie("main-color", color, 30);
-    },
-    setThemeColor(theme) {
-      document.documentElement.classList.replace(this.themeColor, theme);
-      this.themeColor = theme;
-      this.setCookie("theme-color", theme, 30);
+    setTheme() {
+      if(document.documentElement.classList.contains(this.themeColor))
+        document.documentElement.classList.remove(this.themeColor);
+      this.themeColor = this.getCookie("theme-color");
+      if (this.themeColor === null) {
+        this.themeColor = "theme-light";
+        this.setCookie("theme-color", "theme-light", 30);
+        this.darkMode = false;
+      }
+      if (this.themeColor === "theme-light") {
+        this.darkMode = false;
+      } else if (this.themeColor === "theme-dark") {
+        this.darkMode = true;
+      }
+      document.documentElement.classList.add(this.themeColor);
     },
 
     setCookie(name, value, daysToLive) {

@@ -3,17 +3,17 @@
         <get-coll @changeValue="changeValue($event)" v-if="this.valueString=='GET COLLECTION'"/>
         <get-dict @changeValue="changeValue($event)" v-if="this.valueString=='GET DICTIONARY'"/>
         <save-as @changeValue="changeValue($event)" v-if="this.valueString=='SAVE AS'"/>
-        <merge-coll :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='MERGE COLLECTIONS'"/>
+        <merge-coll @changeValue="changeValue($event)" v-if="this.valueString=='MERGE COLLECTIONS'"/>
         <intersect-coll @changeValue="changeValue($event)" v-if="this.valueString=='INTERSECT COLLECTIONS'"/>
         <subtract-coll @changeValue="changeValue($event)" v-if="this.valueString=='SUBTRACT COLLECTIONS'"/>
-        <use-db :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='USE DB'"/>
-        <filter-clause :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='FILTER'"/>
-        <expand-clause :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='EXPAND'"/>
-        <group-clause :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='GROUP'"/>
-        <join-coll-clause :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='JOIN OF COLLECTIONS'"/>
-        <create-fuzzy-op :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='CREATE FUZZY OPERATOR'"/>
-        <create-javascript-function :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='CREATE JAVASCRIPT FUNCTION'"/>
-        <trajectory-match :maincol="maincol" @changeValue="changeValue($event)" v-if="this.valueString=='TRAJECTORY MATCHING'"/>
+        <use-db @changeValue="changeValue($event)" v-if="this.valueString=='USE DB'"/>
+        <filter-clause @changeValue="changeValue($event)" v-if="this.valueString=='FILTER'"/>
+        <expand-clause @changeValue="changeValue($event)" v-if="this.valueString=='EXPAND'"/>
+        <group-clause @changeValue="changeValue($event)" v-if="this.valueString=='GROUP'"/>
+        <join-coll-clause @changeValue="changeValue($event)" v-if="this.valueString=='JOIN OF COLLECTIONS'"/>
+        <create-fuzzy-op @changeValue="changeValue($event)" v-if="this.valueString=='CREATE FUZZY OPERATOR'"/>
+        <create-javascript-function @changeValue="changeValue($event)" v-if="this.valueString=='CREATE JAVASCRIPT FUNCTION'"/>
+        <trajectory-match @changeValue="changeValue($event)" v-if="this.valueString=='TRAJECTORY MATCHING'"/>
     </v-sheet>
 </template>
 

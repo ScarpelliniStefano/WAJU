@@ -39,15 +39,15 @@
 	}
 
 	.json-number {
-		color: #2084f9;
+		color: var(--number-color)
 	}
 
 	.json-string {
-		color: #f92020;
+		color: var(--string-color);
 	}
 
 	.json-boolean {
-		color: #20f995;
+		color: var(--boolean-color);
 	}
 
 	.json-size {
@@ -76,15 +76,17 @@
 		border-color: transparent transparent transparent #808080;
 	}
 
-	:root.theme-light {
-		--string-color: #f92020;
+	
+}
+
+:root.theme-light {
+		--string-color: #11bb6c;
 		--number-color: #2084f9;
-		--boolean-color: #20f995;
+		--boolean-color: #f92020;
 	}
 	
-	:root.theme-dark {
-		--string-color: #FB5858;
-		--number-color: #2084f9;
-		--boolean-color: #20f995;
-	}
+:root.theme-dark {
+	--string-color: #92fecc;
+	--number-color: #5aa3f6;
+	--boolean-color: #FB5858;
 }

@@ -116,9 +116,6 @@ function createNodeElement(node) {
         size: getSizeString(node),
       })
     }
-      
-      
-    
     const caretEl = el.querySelector('.' + classes.CARET_ICON);
     node.dispose = listen(caretEl, 'click', () => toggleNode(node));
   } else {
@@ -241,18 +238,12 @@ export function create(jsonData) {
 /**
  * Create tree
  * @param {object | string} jsonData 
+ * @param {number} valInit
  * @return {object}
  */
  export function createWithInitial(jsonData,valInit) {
-  const parsedData = getJsonObject(jsonData);
   initialVal=valInit;
-  const rootNode = createNode({
-    value: parsedData,
-    key: 'Documents',
-    type: getDataType(parsedData),
-  });
-  createSubnode(parsedData, rootNode);
-  return rootNode;
+  return create(jsonData);
 }
 
 /**
