@@ -84,8 +84,22 @@ wss.on('connection', function connection(ws) {
                     return;
                 }
                 let textStr = new TextDecoder().decode(new Uint8Array(dataRes));
-                let jsonData = JSON.parse(textStr);
-                let total = Object.keys(JSON.parse(jsonData.tree)).length;
+                let jsonData = JSON.parse(
+                                        textStr.replace(/Ã/gi, "&agrave;")
+                                        )
+                let total = 0;
+                try{
+                    total=Object.keys(JSON.parse(jsonData.tree)).length;
+                }catch(error){
+                    console.error(error)
+                    wss.clients.forEach((client) => {
+                        if (client === ws && client.readyState === WebSocket.OPEN) {
+                            client.send("ERROR_PARSE###"+error);
+                        }
+                    });
+                    return;
+                }
+                
                 if (page * size > total) {
                     page = 0
                 }

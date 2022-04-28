@@ -309,6 +309,27 @@ export default {
       if (this.valTotal > 200) return 200;
       else return this.valTotal;
     },
+    generateListSizePages(){
+      this.itemsSize = [5];
+      if (this.valTotal > 5) {
+        this.itemsSize.push(10);
+      }
+      if (this.valTotal > 10) {
+        this.itemsSize.push(15);
+      }
+      if (this.valTotal > 15) {
+        this.itemsSize.push(25);
+      }
+      if (this.valTotal > 25) {
+        this.itemsSize.push(50);
+      }
+      if (this.valTotal > 50) {
+        this.itemsSize.push(100);
+      }
+      if (this.valTotal > 100) {
+        this.itemsSize.push(200);
+      }
+    },
     setConnection() {
       if (sessionStorage.getItem("textTree_" + this.$route.query.id)) {
         //const ip="localhost";
@@ -326,35 +347,20 @@ export default {
         };
         let jsonData = null;
         this.connectionPage.onmessage = (message) => {
-          //console.log('sono qui')
+          console.log(message)
           if (message == "SERVER CLOSED") {
             this.error = "server save/open closed";
           } else if (message.data.split("###")[0] == "CHANGE_COLOR") {
             this.changeColor();
+          }
+          else if (message.data.split("###")[0] == "ERROR_PARSE") {
+            this.error=message.data.split("###")[1];
           } else {
             jsonData = JSON.parse(message.data);
             this.datetime = jsonData.datetime;
             this.title = jsonData.name;
             this.valTotal = jsonData.tot;
-            this.itemsSize = [5];
-            if (this.valTotal > 5) {
-              this.itemsSize.push(10);
-            }
-            if (this.valTotal > 10) {
-              this.itemsSize.push(15);
-            }
-            if (this.valTotal > 15) {
-              this.itemsSize.push(25);
-            }
-            if (this.valTotal > 25) {
-              this.itemsSize.push(50);
-            }
-            if (this.valTotal > 50) {
-              this.itemsSize.push(100);
-            }
-            if (this.valTotal > 100) {
-              this.itemsSize.push(200);
-            }
+            this.generateListSizePages();
             this.valInitial = jsonData.initial;
             this.valFinal = jsonData.final;
             if (!this.mounted) {
@@ -401,8 +407,7 @@ export default {
               '{ \n "documents" : \n ' +
                 //latinize(String(JSON.stringify(this.textIRTreeCol, null, "\t")).replace('Â','').replace('Â',''))
                 String(JSON.stringify(this.textIRTreeCol, null, "\t"))
-                  .replace("Â", "")
-                  .replace("Â", "") +
+                  .replace("Ã", "&agrave;") +
                 "\n}"
             )
         );
