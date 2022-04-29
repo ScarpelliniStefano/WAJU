@@ -309,13 +309,12 @@ export default {
   },
   methods: {
     allSelected(){
-      var dis = false
       this.modulesData.forEach(element => {
         if (element.selected === ''){
-          dis = true
+          return true
         }
       })
-      return dis
+      return false
     },
     removeAt(idx) {
       this.modulesData.splice(this.getIndex(idx), 1);

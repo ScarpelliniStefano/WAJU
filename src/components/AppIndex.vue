@@ -351,6 +351,7 @@
         @long-click="longClickEvent($event)"
         :bottomText="received"
         :arrayLog="arrayLog"
+        :tempPresent="tempPresent"
       >
       </bottom-bar>
     </VueDragResize>
@@ -480,6 +481,7 @@
             @close-btm="hideSheet('btm')"
             :bottomText="received"
             :arrayLog="arrayLog"
+            :tempPresent="tempPresent"
           >
           </bottom-bar>
         </v-col>
@@ -544,7 +546,7 @@ export default {
       connection: null,
       connectionPage: null,
       isCrashed: false,
-      isWebCrashed:false,
+      isWebCrashed: false,
       isReconnectedAndSended: false,
       textRec: "",
       arrRec: [],
@@ -618,6 +620,7 @@ export default {
         //Aggiunta per questioni legate al passaggio da visualizzazione pc a quella tablet
         widthSm: 500,
         heightSm: 400,
+        tempPresent:false,
       },
 
       log: {
@@ -1200,6 +1203,7 @@ export default {
             name: this.counterRec + 1 + ". SAVE AS",
             value: element,
           });
+          this.tempPresent=true;
           if(!justWarnNewIR){
             this.changeLog(
               "#@LOGS@#" +
@@ -1224,6 +1228,16 @@ export default {
             name: this.counterRec + 1 + ". FILTER",
             value: element,
           });
+          this.tempPresent=true;
+          if(!justWarnNewIR){
+            this.changeLog(
+              "#@LOGS@#" +
+                timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
+                "#@END-LOGS@#",
+              "Default"
+            );
+            justWarnNewIR=true;
+          }
         } else if (element.match(/GROUP/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". GROUP",
@@ -1234,6 +1248,16 @@ export default {
             name: this.counterRec + 1 + ". EXPAND",
             value: element,
           });
+          this.tempPresent=true;
+          if(!justWarnNewIR){
+            this.changeLog(
+              "#@LOGS@#" +
+                timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
+                "#@END-LOGS@#",
+              "Default"
+            );
+            justWarnNewIR=true;
+          }
         } else if (element.match(/MERGE COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". MERGE COLLECTIONS",

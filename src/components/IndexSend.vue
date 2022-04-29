@@ -51,7 +51,7 @@
                 <v-btn
                   id="btnWizard"
                   v-if="ratioMode() === 'small'"
-                  :disabled="isWebCrashed"
+                  :disabled="this.serviceCrash"
                   :dark="darkMode" :light="!darkMode"
                   :width="(width - 48) / 2"
                   color="var(--border-color)"
@@ -155,7 +155,7 @@
                   <v-btn
                     id="btnWizard"
                     v-if="ratioMode() === 'medium'"
-                    :disabled="isWebCrashed"
+                    :disabled="this.serviceCrash"
                     @mouseenter="changeTitle('Wizard')"
                     @mouseleave="title = defaultTitle"
                     :width="width / 6 - 24"
@@ -180,7 +180,7 @@
                   </v-btn>
                   <v-btn
                     id="btnWizard"
-                    :disabled="isWebCrashed"
+                    :disabled="this.serviceCrash"
                     v-if="ratioMode() === 'big'"
                     :width="width / 6 - 24"
                     x-large
