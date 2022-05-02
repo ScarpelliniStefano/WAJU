@@ -75,9 +75,9 @@
               height="32px"
               :disabled="
                 !this.irPressed ||
-                this.bottomText.listIRCol.length < 1 ||
-                this.bottomText.listIRCol == undefined ||
-                !reconnectSended || serviceCrash || !tempPresent
+                (this.bottomText.listIRCol.length < 1 ||
+                this.bottomText.listIRCol == undefined ) && !tempPresent
+                || !reconnectSended || serviceCrash
               "
               @click="
                 numDepth = 1;

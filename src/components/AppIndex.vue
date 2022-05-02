@@ -351,7 +351,7 @@
         @long-click="longClickEvent($event)"
         :bottomText="received"
         :arrayLog="arrayLog"
-        :tempPresent="tempPresent"
+        :tempPresent="btm.tempPresent"
       >
       </bottom-bar>
     </VueDragResize>
@@ -481,7 +481,7 @@
             @close-btm="hideSheet('btm')"
             :bottomText="received"
             :arrayLog="arrayLog"
-            :tempPresent="tempPresent"
+            :tempPresent="btm.tempPresent"
           >
           </bottom-bar>
         </v-col>
@@ -1203,7 +1203,7 @@ export default {
             name: this.counterRec + 1 + ". SAVE AS",
             value: element,
           });
-          this.tempPresent=true;
+          this.btm.tempPresent=true;
           if(!justWarnNewIR){
             this.changeLog(
               "#@LOGS@#" +
@@ -1228,7 +1228,7 @@ export default {
             name: this.counterRec + 1 + ". FILTER",
             value: element,
           });
-          this.tempPresent=true;
+          this.btm.tempPresent=true;
           if(!justWarnNewIR){
             this.changeLog(
               "#@LOGS@#" +
@@ -1248,7 +1248,7 @@ export default {
             name: this.counterRec + 1 + ". EXPAND",
             value: element,
           });
-          this.tempPresent=true;
+          this.btm.tempPresent=true;
           if(!justWarnNewIR){
             this.changeLog(
               "#@LOGS@#" +
