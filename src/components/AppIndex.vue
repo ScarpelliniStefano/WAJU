@@ -1499,7 +1499,7 @@ export default {
         let endE = textToChange.indexOf("###");
         let title = textToChange.substring(startE, endE);
         this.chooseTitle=title;
-        if (title == "Filter") title = "Temporary Collection";
+        if (title == "~~CurrentDoc~Alias~~") title = "Temporary Collection";
         startE = endE + '  { "documents" : '.length;
         endE = textToChange.lastIndexOf("#@END-TREE-DRAW@#") - 3;
         let textConv = textToChange.substring(startE, endE);

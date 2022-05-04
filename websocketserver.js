@@ -84,11 +84,12 @@ wss.on('connection', function connection(ws) {
                     return;
                 }
                 let textStr = new TextDecoder().decode(new Uint8Array(dataRes));
-                let jsonData = JSON.parse(
-                                        textStr.replace(/Ã/gi, "&agrave;")
-                                        )
+                var jsonData;
                 let total = 0;
                 try{
+                    jsonData = JSON.parse(
+                        textStr.replace(/Ã/gi, "&agrave;")
+                        )
                     total=Object.keys(JSON.parse(jsonData.tree)).length;
                 }catch(error){
                     console.error(error)
