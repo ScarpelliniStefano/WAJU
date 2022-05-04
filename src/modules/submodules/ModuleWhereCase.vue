@@ -64,6 +64,10 @@ export default {
         },
     },
     methods:{
+        /**
+         * Riscrittura dell'array alla modifica di una where cause
+         * @param {String} vettStringPart Array delle where clause
+         */
         refreshArr(vettString){
             this.valueString=this.mywhereIndex+"##\nWHERE ";
             if(vettString[0].value!="")
@@ -72,6 +76,10 @@ export default {
                 this.valueString+=vettString[1].value + " ";
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Assegnamento di un testo della sezione di generazione
+         * @param {String} textToChange Valore da modificare
+         */
         changeText(textToChange){
             this.generateSection=textToChange;
         }

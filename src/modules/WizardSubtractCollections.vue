@@ -45,6 +45,10 @@ export default {
       }
     },
     methods:{
+        /**
+         * Riscrittura dell'istruzione dopo modifica di una collezione
+         * @param {Number} ind Indice della collezione da modificare
+         */
         changeText(ind){
             let str= this.valueArr[ind];
             str="";
@@ -64,6 +68,11 @@ export default {
             this.valueString+=" ;"
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Riscrittura dell'array alla modifica di una collezione
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterText(value){
             for(let i=0;i<this.valueArr.length;i++){ 
                 this.changeText(i);

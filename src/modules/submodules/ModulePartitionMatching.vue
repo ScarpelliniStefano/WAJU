@@ -89,6 +89,10 @@ export default {
 
     },
     methods:{
+        /**
+         * Riscrittura dell'array di matching
+         * @returns true
+         */
         refreshStringMatch(){
             this.valueStringMatching=this.mypartmatchIndex+"##\nMATCHING ";
             if(this.fieldMatch!="")

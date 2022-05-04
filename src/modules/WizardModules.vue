@@ -131,6 +131,10 @@ export default {
         }
     },
     methods:{
+        /**
+         * Invio del segnale di cambio valore
+         * @param {String} addText Testo da cambiare
+         */
         changeValue(addText){
             this.$emit('changeValue', this.indice+"##"+this.valueString+addText);
         }

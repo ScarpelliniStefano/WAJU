@@ -310,7 +310,7 @@ export default {
   methods: {
     /**
      * Ritorna la dimensione delle colonne
-     * @property {Number} numCol Numero di colonne presenti
+     * @param {Number} numCol Numero di colonne presenti
      * @returns Dimensione colonna
      */
     dimCols(numCol) {
@@ -332,7 +332,7 @@ export default {
     },
     /**
      * Ritorna il rapporto
-     * @property {Number} valRapporto Valore del rapporto
+     * @param {Number} valRapporto Valore del rapporto
      * @returns Rapporto
      */
     ratioMode() {
@@ -350,14 +350,14 @@ export default {
     },
     /**
      * Cambia il titolo con un suggerimento aggiuntivo
-     * @property {String} tip Suggerimento
+     * @param {String} tip Suggerimento
      */
     changeTitle(tip) {
       this.title = this.defaultTitle + " - " + tip;
     },
     /**
      * Ottiene il valore del cookie considerato
-     * @property {String} name Nome del cookie selezionato
+     * @param {String} name Nome del cookie selezionato
      */
     getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array
@@ -422,8 +422,8 @@ export default {
     },
     /**
      * Apre un suggerimento sulla base di una pressione duratura
-     * @property {String} id Identificativo del compomente premuto
-     * @property {String} msg Avviso o suggerimento da mostrare
+     * @param {String} id Identificativo del compomente premuto
+     * @param {String} msg Avviso o suggerimento da mostrare
      */
     longClickFunction(id,msg){
       this.isLongClick = true

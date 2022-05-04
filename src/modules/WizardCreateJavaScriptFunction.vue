@@ -105,6 +105,10 @@ export default {
         },
     },
     methods:{
+        /**
+         * Riscrittura dell'array alla modifica di un testo
+         * @param {String} vettString Array delle varie stringhe
+         */
         refreshArr(vettString){
             this.valueString="";
             this.valueString+=" "+this.idJSFunct + " ";
@@ -116,12 +120,18 @@ export default {
             this.valueString+=";";
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Rimozione di un parametro
+         */
         checkMinusParam(){
             if(this.parameterList.length>1){
                 this.parameterList.pop()
             }
             this.counterParam(this.parameterList);
         },
+        /**
+         * Introduzione di un nuovo parametro
+         */
         setPlusParam(){
             if(this.parameterList[this.parameterList.length-1].idParam!=''
                 && this.parameterList[this.parameterList.length-1].typeParam!=''){
@@ -132,6 +142,11 @@ export default {
                 })
             }
         },
+        /**
+         * Riscrittura dell'array alla modifica di un parametro
+         * @param {String} value parametro
+         * @returns lunghezza valore passato
+         */
         counterParam(value){
             this.stringVett[0]='';
             this.parameterList.forEach(element=>{

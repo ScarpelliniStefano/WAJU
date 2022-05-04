@@ -270,7 +270,7 @@ export default {
   methods: {
     /**
      * Ritorna la dimensione delle colonne
-     * @property {Number} numCol Numero di colonne presenti
+     * @param {Number} numCol Numero di colonne presenti
      * @returns Dimensione colonna
      */
     dimCols(numCol) {
@@ -292,7 +292,7 @@ export default {
     },
     /**
      * Ritorna il rapporto
-     * @property {Number} valRapporto Valore del rapporto
+     * @param {Number} valRapporto Valore del rapporto
      * @returns Rapporto
      */
     ratioMode() {
@@ -310,7 +310,7 @@ export default {
     },
     /**
      * Modifica il valore dell'area di testo
-     * @property {String} value Testo contenente il messaggio e la modalità di passaggio delle informazioni
+     * @param {String} value Testo contenente il messaggio e la modalità di passaggio delle informazioni
      */
     changeText(value) {
       
@@ -332,7 +332,7 @@ export default {
     },
     /**
      * Invia il messaggio tramite combinazione di tasti
-     * @property {KeyboardEvent} event Evento di pressione dei tasti
+     * @param {KeyboardEvent} event Evento di pressione dei tasti
      */
     sendMessageKeyboard(event){
       // CTRL + invio combo
@@ -342,7 +342,7 @@ export default {
     },
     /**
      * Cancella il testo contenuto nel componente di esecuzione
-     * @property {String} newVal valore del testo ricevuto
+     * @param {String} newVal valore del testo ricevuto
      */
     removeOk(newVal) {
       this.exec = true;
@@ -391,7 +391,7 @@ export default {
     },
     /**
      * Ottiene il valore del cookie considerato
-     * @property {String} name Nome del cookie selezionato
+     * @param {String} name Nome del cookie selezionato
      */
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
@@ -431,8 +431,8 @@ export default {
     },
     /**
      * Apre un suggerimento sulla base di una pressione duratura
-     * @property {String} id Identificativo del compomente premuto
-     * @property {String} msg Avviso o suggerimento da mostrare
+     * @param {String} id Identificativo del compomente premuto
+     * @param {String} msg Avviso o suggerimento da mostrare
      */
     longClickFunction(id,msg){
       this.isLongClick = true

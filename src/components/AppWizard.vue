@@ -322,7 +322,7 @@ export default {
     },
     /**
      * Rimuove un elemento dall'array dei moduli
-     * @property {Number} idx Indice identificativo del componente
+     * @param {Number} idx Indice identificativo del componente
      */
     removeAt(idx) {
       this.modulesData.splice(this.getIndex(idx), 1);
@@ -330,7 +330,7 @@ export default {
     },
     /**
      * Ottiene l'indice dell'array dato l'indice identificativo
-     * @property {Number} idx Indice identificativo del componente
+     * @param {Number} idx Indice identificativo del componente
      * @returns Indice dell'array
      */
     getIndex(idx) {
@@ -352,7 +352,7 @@ export default {
     },
     /**
      * Genera un codice
-     * @property {Number} passwordLength Lunghezza del codice da generare.
+     * @param {Number} passwordLength Lunghezza del codice da generare.
      * @returns Codice generato
      */
     generatePassword(passwordLength) {
@@ -373,7 +373,7 @@ export default {
     },
     /**
      * Mischia l'array contenente vari caratteri
-     * @property {Array} array Array con i caratteri
+     * @param {Array} array Array con i caratteri
      * @returns Array mischiato
      */
     shuffleArray(array) {
@@ -418,9 +418,9 @@ export default {
     },
     /**
      * Imposta un generico cookie
-     * @property {String} name Nome del cookie
-     * @property {String} value Valore del cookie inserito
-     * @property {Number} daysToLive Giorni di mantenimento del cookie
+     * @param {String} name Nome del cookie
+     * @param {String} value Valore del cookie inserito
+     * @param {Number} daysToLive Giorni di mantenimento del cookie
      */
     setCookie(name, value, daysToLive) {
       // Encode value in order to escape semicolons, commas, and whitespace
@@ -434,7 +434,7 @@ export default {
     },
     /**
      * Ottiene il valore del cookie considerato
-     * @property {String} name Nome del cookie selezionato
+     * @param {String} name Nome del cookie selezionato
      */
     getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array
@@ -454,7 +454,7 @@ export default {
     },
     /**
      * Aggiorna il valore delle istruzioni create
-     * @property {String} addText Nuovo valore del modulo modificato
+     * @param {String} addText Nuovo valore del modulo modificato
      */
     changeValue(addText) {
       let indiceScript = this.getIndex(Number(addText.substring(0, addText.indexOf("##"))));
@@ -518,7 +518,7 @@ export default {
     },
     /**
      * Trasferisce il messaggio all'interfaccia principale
-     * @property {String} type Tipo di aggiunta del messaggio
+     * @param {String} type Tipo di aggiunta del messaggio
      */
     transferMessage(type) {
       if (!this.isLongClick)
@@ -549,7 +549,7 @@ export default {
     },
     /**
      * Apre un suggerimento sulla base di una pressione duratura
-     * @property {String} msg Avviso o suggerimento da mostrare
+     * @param {String} msg Avviso o suggerimento da mostrare
      */
     longClickFunction(msg){
       this.isLongClick = true

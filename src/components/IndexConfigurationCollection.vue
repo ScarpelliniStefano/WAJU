@@ -336,7 +336,7 @@ export default {
   methods: {
     /**
      * Ritorna la dimensione delle colonne
-     * @property {Number} numCol Numero di colonne presenti
+     * @param {Number} numCol Numero di colonne presenti
      * @returns Dimensione colonna
      */
     dimCols(numCol) {
@@ -366,7 +366,7 @@ export default {
     },
     /**
      * Ritorna il rapporto
-     * @property {Number} valRapporto Valore del rapporto
+     * @param {Number} valRapporto Valore del rapporto
      * @returns Rapporto
      */
     ratioMode(valRapporto) {
@@ -395,7 +395,7 @@ export default {
     },
     /**
      * Aggiunge un suggerimento nel titolo del componente
-     * @property {String} tip Suggerimento del componente selezionato
+     * @param {String} tip Suggerimento del componente selezionato
      */
     changeTitle(tip) {
       if (tip !== this.textButton) {
@@ -404,7 +404,7 @@ export default {
     },
     /**
      * Ottiene il valore del cookie considerato
-     * @property {String} name Nome del cookie selezionato
+     * @param {String} name Nome del cookie selezionato
      */
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
@@ -439,7 +439,7 @@ export default {
     },
     /**
      * Invia il testo della configurazione
-     * @property {String} filetext Configurazione
+     * @param {String} filetext Configurazione
      */
     sendFileConf(filetext) {
       this.$emit("file-upload-index", filetext);
@@ -503,8 +503,8 @@ export default {
     },
     /**
      * Apre un suggerimento sulla base di una pressione duratura
-     * @property {String} id Identificativo del compomente premuto
-     * @property {String} msg Avviso o suggerimento da mostrare
+     * @param {String} id Identificativo del compomente premuto
+     * @param {String} msg Avviso o suggerimento da mostrare
      */
     longClickFunction(id,msg){
       this.isLongClick = true

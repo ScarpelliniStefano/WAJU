@@ -150,6 +150,10 @@ export default {
         },
     },
     methods:{
+        /**
+         * Riscrittura dell'array alla modifica di un testo
+         * @param {String} vettString Array delle varie stringhe
+         */
         refreshArr(vettString){
             this.valueString="";
             this.valueString+=" "+this.idFuzzyOp + " ";
@@ -163,12 +167,18 @@ export default {
             this.valueString+=";";
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Rimozione di un parametro
+         */
         checkMinusParam(){
             if(this.parameterList.length>1){
                 this.parameterList.pop()
             }
             this.counterParam(this.parameterList);
         },
+        /**
+         * Introduzione di un nuovo parametro
+         */
         setPlusParam(){
             if(this.parameterList[this.parameterList.length-1].idParam!=''
                 && this.parameterList[this.parameterList.length-1].typeParam!=''){
@@ -179,12 +189,18 @@ export default {
                 })
             }
         },
+        /**
+         * Rimozione di una polilinea
+         */
         checkMinusPolyline(){
             if(this.polylineList.length>1){
                 this.polylineList.pop()
             }
             this.counterPoly(this.polylineList);
         },
+        /**
+         * Introduzione di una nuova polilinea
+         */
         setPlusPolyline(){
             if(this.polylineList[this.polylineList.length-1].firstNum!=''
                 && this.polylineList[this.polylineList.length-1].secondNum!=''){
@@ -195,6 +211,11 @@ export default {
                 })
             }
         },
+        /**
+         * Riscrittura dell'array alla modifica di un parametro
+         * @param {String} value parametro
+         * @returns lunghezza valore passato
+         */
         counterParam(value){
             this.stringVett[0]='';
             this.parameterList.forEach(element=>{
@@ -204,6 +225,11 @@ export default {
             this.refreshArr(this.stringVett);
             return value.length>-1;
         },
+        /**
+         * Riscrittura dell'array alla modifica di un polilinea
+         * @param {String} value polilinea
+         * @returns lunghezza valore passato
+         */
         counterPoly(value){
             this.stringVett[2]='';
             this.polylineList.forEach(element=>{

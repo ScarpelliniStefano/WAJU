@@ -117,6 +117,9 @@ export default {
         }
     },
     methods:{
+        /**
+         * Rimozione di una partizione
+         */
         checkMinus(){
             if(this.collectionsPartitions.length>1){
                 this.collectionsPartitions.pop()
@@ -124,6 +127,9 @@ export default {
             }
             this.counterText(this.valueArr.length);
         },
+        /**
+         * Introduzione di una nuova partizione
+         */
         setPlus(){
             if(this.collectionsPartitions[this.collectionsPartitions.length-1].stringa!=''){
                 this.collectionsPartitions.push({
@@ -133,6 +139,10 @@ export default {
                 this.valueArr.push('');
             }
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di un valore
+         * @param {String} str Stringa con partizione da modificare
+         */
         changeText(str){
             let id=Number(str.split("##")[0])-1;
             this.collectionsPartitions[id].stringa=str;
@@ -160,6 +170,11 @@ export default {
             }
             this.$emit('changeValue', this.valueString+" ;");
         },
+        /**
+         * Riscrittura dell'array alla modifica di un partizione
+         * @param {String} value partizione
+         * @returns lunghezza valore passato
+         */
         counterText(value){
             for(let i=0;i<this.valueArr.length;i++){ 
                 this.changeText(this.collectionsPartitions[i].stringa);

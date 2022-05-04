@@ -61,6 +61,10 @@ export default {
         },
     },
     methods:{
+        /**
+         * Riscrittura dell'array alla modifica di un unpack
+         * @param {String} vettStringPart Array delle unpack
+         */
         refreshArr(vettString){
             this.valueString=this.myunpackIndex+"##\nUNPACK ";
             if(vettString[0]!="")

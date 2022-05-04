@@ -119,6 +119,9 @@ export default {
         }
     },
     methods:{
+        /**
+         * Rimozione di una clausola where
+         */
         checkMinus(){
             if(this.collectionsWhere.length>1){
                 this.collectionsWhere.pop()
@@ -126,6 +129,9 @@ export default {
             }
             this.counterText(this.valueArr.length);
         },
+        /**
+         * Introduzione di una clausola where
+         */
         setPlus(){
             if(this.collectionsWhere[this.collectionsWhere.length-1].stringa!=''){
                 this.collectionsWhere.push({
@@ -135,6 +141,10 @@ export default {
                 this.valueArr.push('');
             }
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di una clausola where
+         * @param {String} str Indice della clausola da modificare
+         */
         changeText(str){
             let id=Number(str.split("##")[0])-1;
             this.collectionsWhere[id].stringa=str;
@@ -164,6 +174,11 @@ export default {
             }
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Riscrittura dell'array alla modifica di una clausola
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterText(value){
             for(let i=0;i<this.valueArr.length;i++){ 
                 this.changeText(this.collectionsWhere[i].stringa);

@@ -385,6 +385,10 @@ export default {
         },
     },
     methods:{
+        /**
+         * Riscrittura dell'array alla modifica di un testo
+         * @param {String} vettString Array delle varie stringhe
+         */
         refreshArr(vettString){
             this.valueString="";
             if(vettString[0]!="")
@@ -404,6 +408,10 @@ export default {
             this.valueString+=";";
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di una collezione
+         * @param {Number} ind Indice della collezione da modificare
+         */
         changeText(ind){
             let str= this.valueArr[ind];
             str="";
@@ -424,16 +432,26 @@ export default {
             this.stringVett[0]=valTempString;
             this.refreshArr(this.stringVett);
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di una stringa
+         * @param {String} string Stringa da modificare
+         */
         changeValue(string){
             this.stringVett[4]=string.split("#$#")[0];
             this.refreshArr(this.stringVett);
         },
+        /**
+         * Rimozione di un fuzzy set
+         */
         checkMinus(){
             if(this.fieldsAddColl.length>1){
                 this.fieldsAddColl.pop()
             }
             this.counterText(this.fieldsAddColl);
         },
+        /**
+         * Introduzione di un fuzzy set
+         */
         setPlus(){
             if(this.fieldsAddColl[this.fieldsAddColl.length-1].nonFuzzyF!=''
                 && this.fieldsAddColl[this.fieldsAddColl.length-1].fieldRef!=''){
@@ -444,6 +462,11 @@ export default {
                 })
             }
         },
+        /**
+         * Riscrittura dell'array alla modifica di un fuzzy set
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterText(value){
             this.stringVett[2]='';
             this.fieldsAddColl.forEach(element=>{
@@ -453,6 +476,11 @@ export default {
             this.refreshArr(this.stringVett);
             return value.length>-1;
         },
+        /**
+         * Riscrittura dell'array alla modifica di una collezione
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterTextColl(value){
             for(let i=0;i<this.valueArr.length;i++){ 
                 this.changeText(i);

@@ -41,6 +41,10 @@ export default {
         }
     },
     methods:{
+        /**
+         * Riscrittura dell'istruzione dopo modifica di un valore
+         * @param {String} string Stringa con collezione da modificare
+         */
         changeValue(string){
             let valueCopy=this.valueString;
             if(valueCopy.includes("REMOVE DUPLICATES;")){

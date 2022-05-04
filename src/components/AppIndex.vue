@@ -712,9 +712,9 @@ export default {
   methods: {
     /**
      * Genera un messaggio di log
-     * @property {String} Msg Messaggio in arrivo
-     * @property {String} tMsg Tipo di messaggio
-     * @property {String} cMsg Categoria del messaggio 
+     * @param {String} Msg Messaggio in arrivo
+     * @param {String} tMsg Tipo di messaggio
+     * @param {String} cMsg Categoria del messaggio 
      */
     newLog(Msg, tMsg, cMsg) {
       var l = null;
@@ -762,7 +762,7 @@ export default {
     },
     /**
      * Resetta il contatore dei nuomi messaggi di log
-     * @property {String} cat Categoria dei messaggi aperti
+     * @param {String} cat Categoria dei messaggi aperti
      */
     resetCounter(cat) {
       this.arrayLog.tabActive = (cat === undefined) | null ? "Default" : cat;
@@ -787,8 +787,8 @@ export default {
     },
     /**
      * Cambia ordine dei componenti sull'asse z
-     * @property {String} comp Componente cliccato
-     * @property {Boolean} actv Verifica che lo strumento sia stato abilitato o disabilitato
+     * @param {String} comp Componente cliccato
+     * @param {Boolean} actv Verifica che lo strumento sia stato abilitato o disabilitato
      */
     changeOrder(comp, actv) {
       var orderComponent = new Map();
@@ -1048,7 +1048,7 @@ export default {
     },
     /**
      * Cambia l'icona della tab.
-     * @property {Boolean} newVal Verifica che sia stato inserito un nuovo valore
+     * @param {Boolean} newVal Verifica che sia stato inserito un nuovo valore
      */
     changeIcon(newVal) {
       var link =
@@ -1126,7 +1126,7 @@ export default {
     },
     /**
      * Copia il testo scritto nell'area di testo della scheda di esecuzione.
-     * @property {String} text Testo scritto
+     * @param {String} text Testo scritto
      */
     shareText(text) {
       this.send.textShare = text;
@@ -1163,7 +1163,7 @@ export default {
     },
     /**
      * Mostra il componente selezionato
-     * @property {String} component Componente selezionato
+     * @param {String} component Componente selezionato
      */
     showSheet(component) {
       switch (component) {
@@ -1192,7 +1192,7 @@ export default {
     },
     /**
      * Nasconde il componente selezionato
-     * @property {String} component Componente selezionato
+     * @param {String} component Componente selezionato
      */
     hideSheet(component) {
       switch (component) {
@@ -1219,7 +1219,7 @@ export default {
     },
     /**
      * Genera un codice
-     * @property {Number} passwordLength Lunghezza del codice da generare.
+     * @param {Number} passwordLength Lunghezza del codice da generare.
      * @returns Codice generato
      */
     generatePassword(passwordLength) {
@@ -1240,7 +1240,7 @@ export default {
     },
     /**
      * Mischia l'array contenente vari caratteri
-     * @property {Array} array Array con i caratteri
+     * @param {Array} array Array con i caratteri
      * @returns Array mischiato
      */
     shuffleArray(array) {
@@ -1254,7 +1254,7 @@ export default {
     },
     /**
      * Genera un array di istruzioni da un testo.
-     * @property {String} textReceived Testo con le istruzioni.
+     * @param {String} textReceived Testo con le istruzioni.
      * @returns Array con le istruzioni.
      */
     fromTextRecToArrRec(textReceived) {
@@ -1386,17 +1386,17 @@ export default {
     },
     /**
      * Richiama la funzione changeOrder
-     * @property {String} tipo Componente selezionato
+     * @param {String} tipo Componente selezionato
      */
     setZ(tipo) {
       this.changeOrder(tipo, true);
     },
     /**
      * Imposta gli attributi di Rec in modo sincrono nella fase di resize
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
-     * @property {Number} width Largezza componente
-     * @property {Number} height Altezza componente
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
+     * @param {Number} width Largezza componente
+     * @param {Number} height Altezza componente
      */
     onResizeStopRec(handle, x, y, width, height) {
       // eslint-disable-line no-unused-vars
@@ -1408,8 +1408,8 @@ export default {
     },
     /**
      * Imposta gli attributi di Rec in modo sincrono nella fase di drag
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
      */
     onDragStopRec(x, y) {
       this.rec.posx = x;
@@ -1418,8 +1418,8 @@ export default {
     },
     /**
      * Imposta gli attributi di Rec in modo sincrono nelle fasi di resize e drag
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
      */
     onModRec(x, y) {
       if (x < 4) {
@@ -1440,10 +1440,10 @@ export default {
     },
     /**
      * Imposta gli attributi di Send in modo sincrono nella fase di resize
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
-     * @property {Number} width Largezza componente
-     * @property {Number} height Altezza componente
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
+     * @param {Number} width Largezza componente
+     * @param {Number} height Altezza componente
      */
     onResizeStopSend(handle, x, y, width, height) {
       // eslint-disable-line no-unused-vars
@@ -1455,8 +1455,8 @@ export default {
     },
     /**
      * Imposta gli attributi di Send in modo sincrono nella fase di drag
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
      */
     onDragStopSend(x, y) {
       this.send.posx = x;
@@ -1465,8 +1465,8 @@ export default {
     },
     /**
      * Imposta gli attributi di Send in modo sincrono nelle fasi di resize e drag
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
      */
     onModSend(x, y) {
       if (x < 4) {
@@ -1487,10 +1487,10 @@ export default {
     },
     /**
      * Imposta gli attributi di Btm in modo sincrono nella fase di resize
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
-     * @property {Number} width Largezza componente
-     * @property {Number} height Altezza componente
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
+     * @param {Number} width Largezza componente
+     * @param {Number} height Altezza componente
      */
     onResizeStopBtm(handle, x, y, width, height) {
       // eslint-disable-line no-unused-vars
@@ -1502,8 +1502,8 @@ export default {
     },
     /**
      * Imposta gli attributi di Btm in modo sincrono nella fase di drag
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
      */
     onDragStopBtm(x, y) {
       this.btm.posx = x;
@@ -1512,8 +1512,8 @@ export default {
     },
     /**
      * Imposta gli attributi di Btm in modo sincrono nelle fasi di resize e drag
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
      */
     onModBtm(x, y) {
       if (x < 4) {
@@ -1534,10 +1534,10 @@ export default {
     },
     /**
      * Imposta gli attributi di Log in modo sincrono nella fase di resize
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
-     * @property {Number} width Largezza componente
-     * @property {Number} height Altezza componente
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
+     * @param {Number} width Largezza componente
+     * @param {Number} height Altezza componente
      */
     onResizeStopLog(handle, x, y, width, height) {
       this.log.posx = x;
@@ -1548,8 +1548,8 @@ export default {
     },
     /**
      * Imposta gli attributi di Log in modo sincrono nella fase di drag
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
      */
     onDragStopLog(x, y) {
       this.log.posx = x;
@@ -1558,8 +1558,8 @@ export default {
     },
     /**
      * Imposta gli attributi di Log in modo sincrono nelle fasi di resize e drag
-     * @property {Number} x Posizione relativa all'esse x
-     * @property {Number} y Posizione relativa all'esse y
+     * @param {Number} x Posizione relativa all'esse x
+     * @param {Number} y Posizione relativa all'esse y
      */
     onModLog(x, y) {
       if (x < 4) {
@@ -1586,7 +1586,7 @@ export default {
     },
     /**
      * Imposta il colore principale del documento HTML
-     * @property {String} color Colore selezionato 
+     * @param {String} color Colore selezionato 
      */
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color);
@@ -1596,7 +1596,7 @@ export default {
     },
     /**
      * Imposta il tema principale del documento HTML
-     * @property {String} theme Tema selezionato
+     * @param {String} theme Tema selezionato
      */
     setThemeColor(theme) {
       document.documentElement.classList.replace(this.themeColor, theme);
@@ -1611,9 +1611,9 @@ export default {
     },
     /**
      * Imposta un generico cookie
-     * @property {String} name Nome del cookie
-     * @property {String} value Valore del cookie inserito
-     * @property {Number} daysToLive Giorni di mantenimento del cookie
+     * @param {String} name Nome del cookie
+     * @param {String} value Valore del cookie inserito
+     * @param {Number} daysToLive Giorni di mantenimento del cookie
      */
     setCookie(name, value, daysToLive) {
       var cookie = name + "=" + encodeURIComponent(value);
@@ -1624,7 +1624,7 @@ export default {
     },
     /**
      * Ottiene il valore del cookie considerato
-     * @property {String} name Nome del cookie selezionato
+     * @param {String} name Nome del cookie selezionato
      */
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
@@ -1638,7 +1638,7 @@ export default {
     },
     /**
      * Cambia la configurazione in ingresso
-     * @property {String} textToChange Configurazione
+     * @param {String} textToChange Configurazione
      */
     changeConfig(textToChange) {
       if (textToChange.startsWith("{")) {
@@ -1651,7 +1651,7 @@ export default {
     },
     /**
      * Cambia la collezione del documento
-     * @property {String} textToChange Collezione
+     * @param {String} textToChange Collezione
      */
     changeIRTree(textToChange) {
       if (textToChange.startsWith("{")) {
@@ -1675,7 +1675,7 @@ export default {
     },
     /**
      * Cambia la lista delle collezioni
-     * @property {String} textToChange Lista delle collezioni
+     * @param {String} textToChange Lista delle collezioni
      */
     changeIRList(textToChange) {
       if (textToChange.startsWith("{")) {
@@ -1693,8 +1693,8 @@ export default {
     },
     /**
      * Genera la pagina per la visione della collezione
-     * @property {String} title Titolo della collezione
-     * @property {String} textToSend Collezione
+     * @param {String} title Titolo della collezione
+     * @param {String} textToSend Collezione
      */
     generatePage(title, textToSend) {
       let dateGen = new Date();
@@ -1775,9 +1775,9 @@ export default {
     },
     /**
      * Inserisce un nuovo messaggio di log relativo ad un errore
-     * @property {String} textToChange Testo del messaggio
-     * @property {String} cat Categoria del messaggio
-     * @property {Boolean} alert Abilita un alert
+     * @param {String} textToChange Testo del messaggio
+     * @param {String} cat Categoria del messaggio
+     * @param {Boolean} alert Abilita un alert
      */
     changeErrLog(textToChange, cat,alert) {
       const startE = textToChange.indexOf("#@ERR-LOGS@#") + "#@ERR-LOGS@#".length;
@@ -1788,8 +1788,8 @@ export default {
     },
     /**
      * Inserisce un nuovo messaggio di log relativo ad un warn
-     * @property {String} textToChange Testo del messaggio
-     * @property {String} cat Categoria del messaggio
+     * @param {String} textToChange Testo del messaggio
+     * @param {String} cat Categoria del messaggio
      */
     changeWarnLog(textToChange, cat) {
       const startE = textToChange.indexOf("#@WARN-LOGS@#") + "#@WARN-LOGS@#".length;
@@ -1799,8 +1799,8 @@ export default {
     },
     /**
      * Inserisce un nuovo messaggio di log
-     * @property {String} textToChange Testo del messaggio
-     * @property {String} cat Categoria del messaggio
+     * @param {String} textToChange Testo del messaggio
+     * @param {String} cat Categoria del messaggio
      */
     changeLog(textToChange, cat) {
       const startE = textToChange.indexOf("#@LOGS@#") + "#@LOGS@#".length;
@@ -1810,7 +1810,7 @@ export default {
     },
     /**
      * Invia una richiesta di configurazione
-     * @property {String} textSend NUova configurazione
+     * @param {String} textSend NUova configurazione
      */
     sendConfigFile(textSend) {
       if (textSend.length > 0) {
@@ -1848,7 +1848,7 @@ export default {
     },
     /**
      * Invia l'istruzione per ottenere la collezione selezionata
-     * @property {String} selectedItem Collezione selezionata
+     * @param {String} selectedItem Collezione selezionata
      */
     sendIRSelCol(selectedItem) {
       if (selectedItem != "") {
@@ -1885,7 +1885,7 @@ export default {
     },
     /**
      * Salva le istruzioni eseguite
-     * @property {String} textToSave Istruzioni da salvare
+     * @param {String} textToSave Istruzioni da salvare
      */
     saveIstructions(textToSave) {
       if (!this.isLongClick) {
@@ -1909,7 +1909,7 @@ export default {
     },
     /**
      * Invia un messaggio all'Engine
-     * @property {String} textSend Istruzioni da eseguire
+     * @param {String} textSend Istruzioni da eseguire
      */
     sendMsg(textSend) {
       if (!this.isLongClick) {
@@ -1923,7 +1923,7 @@ export default {
     
     /**
      * Apre un suggerimento sulla base di una pressione duratura
-     * @property {String} stringMessage Avviso o suggerimento da mostrare
+     * @param {String} stringMessage Avviso o suggerimento da mostrare
      */
     longClickEvent(stringMessage) {
       let message = stringMessage.split("###")[1];

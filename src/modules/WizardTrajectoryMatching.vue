@@ -131,6 +131,9 @@ export default {
         }
     },
     methods:{
+        /**
+         * Rimozione di una partizione
+         */
         checkMinus(){
             if(this.collectionsPartitions.length>1){
                 this.collectionsPartitions.pop()
@@ -138,6 +141,9 @@ export default {
             }
             this.counterTextTrajectory(this.valueArrTra.length);
         },
+        /**
+         * Introduzione di una nuova partizione
+         */
         setPlus(){
             if(this.collectionsPartitions[this.collectionsPartitions.length-1].stringa!=''){
                 this.collectionsPartitions.push({
@@ -147,6 +153,10 @@ export default {
                 this.valueArrTra.push('');
             }
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di una traiettoria
+         * @param {String} ind Indice della traiettoria da modificare
+         */
         changeTextTrajectory(str){
             let id=Number(str.split("##")[0].substring(0,str.split("##")[0].length-4))-1;
             this.collectionsPartitions[id].stringa=str;
@@ -154,6 +164,11 @@ export default {
             this.valueArrTra[id]=this.valueArrTra[id].substring(0,this.valueArrTra[id].length-1);
             this.counterTextTrajectory(str.length)
         },
+        /**
+         * Riscrittura dell'array alla modifica di una traiettoria
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterTextTrajectory(value){
             this.stringVett[1]=''
             this.valueArrTra.forEach(element=>{
@@ -163,6 +178,10 @@ export default {
             this.refreshArr(this.stringVett);
             return value.length>-1;
         },
+        /**
+         * Riscrittura dell'array alla modifica di un testo
+         * @param {String} vettString Array delle varie stringhe
+         */
         refreshArr(vettString){
             this.valueString=" ";
             if(vettString[0]!="")
@@ -174,6 +193,10 @@ export default {
             this.valueString+=";";
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di una collezione
+         * @param {Number} ind Indice della collezione da modificare
+         */
         changeText(ind){
             let str= this.valueArr[ind];
             str="";
@@ -194,6 +217,11 @@ export default {
             this.stringVett[0]=valTempString;
             this.refreshArr(this.stringVett);
         },
+        /**
+         * Riscrittura dell'array alla modifica di una collezione
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterTextColl(value){
             for(let i=0;i<this.valueArr.length;i++){ 
                 this.changeText(i);

@@ -227,7 +227,7 @@ export default {
     },
     /**
      * Cambia la categoria con quella selezionata
-     * @property {String} cat Categoria dei messaggi
+     * @param {String} cat Categoria dei messaggi
      */
     changeCategory(cat) {
       this.category = cat;

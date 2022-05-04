@@ -193,6 +193,9 @@ export default {
         }
     },
     methods:{
+        /**
+         * Riscrittura dell'array
+         */
         refreshArr(vettString){
             this.valueString=this.mypartitionIndex+"##\nPARTITION ";
             if(vettString[0]!="")
@@ -209,6 +212,9 @@ export default {
                 this.valueString+=vettString[4] + " ";
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Introduzione di un source field
+         */
         setPlusFieldRef(){
             if(this.fieldRefSource[this.fieldRefSource.length-1].sourceFields!=''){
                 this.fieldRefSource.push({
@@ -217,6 +223,9 @@ export default {
                 })
             }
         },
+        /**
+         * Introduzione di un ordine di un campo
+         */
         setPlusFieldOrd(){
             if(this.fieldRefOrd[this.fieldRefOrd.length-1].fieldsOrder!='' 
                 && this.fieldRefOrd[this.fieldRefOrd.length-1].order!=''){
@@ -227,18 +236,29 @@ export default {
                 })
             }
         },
+        /**
+         * Rimozione di un source field
+         */
         checkMinusFieldRef(){
             if(this.fieldRefSource.length>1){
                 this.fieldRefSource.pop()
             }
             this.counterTextSource(this.valueString.length);
         },
+        /**
+         * Rimozione di un order di un campo
+         */
         checkMinusFieldOrd(){
             if(this.fieldRefOrd.length>1){
                 this.fieldRefOrd.pop()
             }
             this.counterTextOrd(this.valueString.length);
         },
+        /**
+         * Riscrittura dell'array alla modifica di un campo source
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterTextSource(value){
             this.stringVett[1]='';
             this.fieldRefSource.forEach(element => {
@@ -248,6 +268,11 @@ export default {
             this.refreshArr(this.stringVett);
             return value.length>-1;
         },
+        /**
+         * Riscrittura dell'array alla modifica di un order di un campo
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterTextOrd(value){
             
             this.stringVett[3]='';
@@ -258,6 +283,10 @@ export default {
             this.refreshArr(this.stringVett);
             return value.length>-1;
         },
+        /**
+         * Assegnamento di un testo della sezione di generazione
+         * @param {String} textToChange Valore da modificare
+         */
         changeText(textToChange){
             this.generateSection=textToChange;
         }

@@ -349,6 +349,10 @@ export default {
         },
     },
     methods:{
+        /**
+         * Riscrittura dell'array alla modifica di un testo
+         * @param {String} vettString Array delle varie stringhe
+         */
         refreshArr(vettString){
             this.valueString="\nGENERATE ";
             if(vettString[0].value!=""){
@@ -363,12 +367,18 @@ export default {
                 this.valueString+="\n"+vettString[4].value + " ";
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Rimozione di un fuzzy set
+         */
         checkMinus(){
             if(this.collectionsFuzzy.length>1){
                 this.collectionsFuzzy.pop()
             }
             this.changeArrCollFuzzy();
         },
+        /**
+         * Introduzione di un fuzzy set
+         */
         setPlus(){
             if(this.collectionsFuzzy[this.collectionsFuzzy.length-1].idFuzzyInstr!=''
                 && this.collectionsFuzzy[this.collectionsFuzzy.length-1].fuzzyInstr!=''){
@@ -380,12 +390,18 @@ export default {
                 this.changeArrCollFuzzy();
             }
         },
+        /**
+         * Rimozione di una alpha collection
+         */
         checkMinusA(){
             if(this.collectionsAlpha.length>1){
                 this.collectionsAlpha.pop()
             }
             this.refreshStringColl();
         },
+        /**
+         * Introduzione di una alpha collection
+         */
         setPlusA(){
             if(this.collectionsAlpha[this.collectionsAlpha.length-1].idAlpha!=''
                 && this.collectionsAlpha[this.collectionsAlpha.length-1].numericIstr!=''){
@@ -397,6 +413,9 @@ export default {
                 this.refreshStringColl();
             }
         },
+        /**
+         * Riscrittura dell'array
+         */
         refreshStringColl(){
             this.stringVett[2].value="";
             this.stringVett[2].value+="ALPHACUT ";
@@ -406,14 +425,27 @@ export default {
             this.stringVett[2].value=this.stringVett[2].value.substring(0,this.stringVett[2].value.length-2);
             this.refreshArr(this.stringVett)
         },
+        /**
+         * Riscrittura dell'array alla modifica di un fuzzy set
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterText(value){
             this.changeArrCollFuzzy();
             return value.length>-1;
         },
+        /**
+         * Riscrittura dell'array alla modifica di una alpha collection
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterTextA(value){
             this.refreshStringColl();
             return value.length>-1;
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di un fuzzy set
+         */
         changeArrCollFuzzy(){
             this.stringVett[1].value="";
             this.stringVett[1].value+="CHECK FOR "
@@ -423,6 +455,9 @@ export default {
             this.stringVett[1].value=this.stringVett[1].value.substring(0,this.stringVett[1].value.length-2);
             this.refreshArr(this.stringVett)
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di un keep drop fuzzy
+         */
         changeTextKeepDropFuzzy(valueString){
             this.stringVett[3].value=valueString;
             this.refreshArr(this.stringVett)

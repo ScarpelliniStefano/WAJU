@@ -116,6 +116,9 @@ export default {
         }
     },
     methods:{
+        /**
+         * Rimozione di un collection unpack
+         */
         checkMinus(){
             if(this.collectionsUnpack.length>1){
                 this.collectionsUnpack.pop()
@@ -123,6 +126,9 @@ export default {
             }
             this.counterText(this.valueArr.length);
         },
+        /**
+         * Introduzione di una nuova collection unpack
+         */
         setPlus(){
             if(this.collectionsUnpack[this.collectionsUnpack.length-1].stringa!=''){
                 this.collectionsUnpack.push({
@@ -132,6 +138,10 @@ export default {
                 this.valueArr.push('');
             }
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di un valore
+         * @param {String} str Stringa con collezione da modificare
+         */
         changeText(str){
             let id=Number(str.split("##")[0])-1;
             this.collectionsUnpack[id].stringa=str;
@@ -159,6 +169,11 @@ export default {
             }
             this.$emit('changeValue', this.valueString+" ;");
         },
+        /**
+         * Riscrittura dell'array alla modifica di una collection
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterText(value){
             for(let i=0;i<this.valueArr.length;i++){ 
                 this.changeText(this.collectionsUnpack[i].stringa);

@@ -109,6 +109,9 @@ export default {
         }
     },
     methods: {
+        /**
+         * Rimozione di una collezione
+         */
         checkMinus() {
             if (this.collections.length > 1) {
                 this.collections.pop()
@@ -117,15 +120,26 @@ export default {
 
             this.counterText(this.collections.length);
         },
+        /**
+         * Ricerca se esiste una collezione con indice specificato
+         * @param {Number} index Indice da ricercare
+         */
         checkLast(index) {
             return index == this.collections[this.collections.length - 1].index;
         },
+        /**
+         * Rimozione di una collezione con indice specificato
+         * @param {Number} index Indice da ricercare
+         */
         checkMinusCopy(index) {
             if (this.collections.length > 1) {
                 delDoubleArrayViaIndex(this.collections, this.valueArr, index);
             }
             this.counterText(this.collections.length);
         },
+        /**
+         * Introduzione di una nuova collezione
+         */
         setPlus() {
             if (this.collections[this.collections.length - 1].collection != '') {
                 this.collections.push({
@@ -136,6 +150,10 @@ export default {
                 this.valueArr.push('')
             }
         },
+        /**
+         * Riscrittura dell'istruzione dopo modifica di una collezione
+         * @param {Number} ind Indice della collezione da modificare
+         */
         changeText(ind) {
             let str = this.valueArr[ind];
             str = "";
@@ -161,6 +179,11 @@ export default {
             this.valueString += " ;"
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * Riscrittura dell'array alla modifica di un valore
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterText(value) {
             for (let i = 0; i < this.valueArr.length; i++) {
                 this.changeText(i);

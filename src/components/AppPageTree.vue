@@ -295,9 +295,9 @@ export default {
     },
     /**
      * Imposta un generico cookie
-     * @property {String} name Nome del cookie
-     * @property {String} value Valore del cookie inserito
-     * @property {Number} daysToLive Giorni di mantenimento del cookie
+     * @param {String} name Nome del cookie
+     * @param {String} value Valore del cookie inserito
+     * @param {Number} daysToLive Giorni di mantenimento del cookie
      */
     setCookie(name, value, daysToLive) {
       // Encode value in order to escape semicolons, commas, and whitespace
@@ -311,7 +311,7 @@ export default {
     },
     /**
      * Ottiene il valore del cookie considerato
-     * @property {String} name Nome del cookie selezionato
+     * @param {String} name Nome del cookie selezionato
      */
     getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array
@@ -483,7 +483,7 @@ export default {
     },
     /**
      * Apre un suggerimento sulla base di una pressione duratura
-     * @property {String} msg Avviso o suggerimento da mostrare
+     * @param {String} msg Avviso o suggerimento da mostrare
      */
     longClickFunction(msg) {
       this.isLongClick = true;

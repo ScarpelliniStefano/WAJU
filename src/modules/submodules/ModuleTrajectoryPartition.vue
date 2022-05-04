@@ -85,6 +85,10 @@ export default {
 
     },
     methods:{
+        /**
+         * Riscrittura dell'array alla modifica di una partizione
+         * @param {String} vettStringPart Array delle trajectory partition 
+         */
         refreshArrPart(vettStringPart){
             this.valueStringPart=this.mytrajectoryPartIndex+"##\nPARTITION ";
             if(vettStringPart[0]!="")
@@ -94,6 +98,9 @@ export default {
             
             this.$emit('changeValueTrajectory', this.valueStringPart);
         },
+        /**
+         * Rimozione di una partition matching
+         */
         checkMinusPartMatch(){
             if(this.collectionsPartMatch.length>1){
                 this.collectionsPartMatch.pop()
@@ -101,6 +108,9 @@ export default {
             }
             this.counterTextMatch(this.valueArrPartMatch.length);
         },
+        /**
+         * Introduzione di una partition matching
+         */
         setPlusPartMatch(){
             if(this.collectionsPartMatch[this.collectionsPartMatch.length-1].stringaPM!=''){
                 this.collectionsPartMatch.push({
@@ -110,12 +120,21 @@ export default {
                 this.valueArrPartMatch.push('');
             }
         },
+        /**
+         * Modifica di una partition matching
+         * @param {String} str Stringa contenente le modifiche
+         */
         changeTextMatch(str){
             let id=Number(str.split("##")[0].substring(0,str.split("##")[0].length-2))-1;
             this.collectionsPartMatch[id].stringaPM=str; 
             this.valueArrPartMatch[id]=str.split("##")[1];
             this.counterTextMatch(this.valueArrPartMatch.length);
         },
+        /**
+         * Riscrittura dell'array alla modifica di un partition matching
+         * @param {String} value Valore da modificare
+         * @returns lunghezza valore passato
+         */
         counterTextMatch(value){
             this.stringVettPart[1]=''
             this.valueArrPartMatch.forEach(element=>{
