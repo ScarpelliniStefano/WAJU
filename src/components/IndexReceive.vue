@@ -308,6 +308,11 @@ export default {
     BTN_BACKTRACK: icon.RECEIVE.BTN_BACKTRACK,
   }),
   methods: {
+    /**
+     * Ritorna la dimensione delle colonne
+     * @property {Number} numCol Numero di colonne presenti
+     * @returns Dimensione colonna
+     */
     dimCols(numCol) {
       if (numCol === 1) {
         if (this.rapporto < 3 / 2) return 12;
@@ -317,22 +322,43 @@ export default {
         else return 2;
       }
     },
+    /**
+     * Indica se è presente un divisiore
+     * @returns true/false
+     */
     dividerBool() {
       if (this.rapporto < 3 / 2) return false;
       else return true;
     },
+    /**
+     * Ritorna il rapporto
+     * @property {Number} valRapporto Valore del rapporto
+     * @returns Rapporto
+     */
     ratioMode() {
       if (this.rapporto < 3 / 2) return "small";
       else if (this.rapporto >= 3 / 2 && this.rapporto < 5 / 2) return "medium";
       else return "big";
     },
+    /**
+     * Ritorna l'altezza del componente
+     * @returns Altezza componente
+     */
     diffHeight() {
       if (this.rapporto < 3 / 2) return 189.6;
       else return 109.6;
     },
+    /**
+     * Cambia il titolo con un suggerimento aggiuntivo
+     * @property {String} tip Suggerimento
+     */
     changeTitle(tip) {
       this.title = this.defaultTitle + " - " + tip;
     },
+    /**
+     * Ottiene il valore del cookie considerato
+     * @property {String} name Nome del cookie selezionato
+     */
     getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array
       var cookieArr = document.cookie.split(";");
@@ -349,21 +375,24 @@ export default {
       // Return null if not found
       return null;
     },
+    /**
+     * Invia un segnale per la chiusura della scheda
+     */
     closeWindow() {
       this.$emit("close-rec");
     },
-    Enabled() {
-      this.isDisabled = true;
-    },
-    isEnabled() {
-      return this.isDisabled;
-    },
+    /**
+     * Invia un segnale di backtrack
+     */
     backtrack(){
       if(!this.isLongClick){
         clearTimeout(this.timerId);
         this.$emit('click-back-index')
       }
     },
+    /**
+     * Invia un segnale per il download delle istruzioni
+     */
     download(filename, text) {
       if(!this.isLongClick){
         clearTimeout(this.timerId);
@@ -371,7 +400,9 @@ export default {
         this.$emit("save-istruction", filename + "##SAVE####" + text);
       }
     },
-
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Save
+     */
     addMouseDownEventSave() {
       this.isLongClick = false;
       var fn = () => {
@@ -379,6 +410,9 @@ export default {
       };
       this.timerId = setTimeout(fn, 500);
     },
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante BackTrack
+     */
     addMouseDownEventBacktrack() {
       this.isLongClick = false;
       var fn = () => {
@@ -386,6 +420,11 @@ export default {
       };
       this.timerId = setTimeout(fn, 500);
     },
+    /**
+     * Apre un suggerimento sulla base di una pressione duratura
+     * @property {String} id Identificativo del compomente premuto
+     * @property {String} msg Avviso o suggerimento da mostrare
+     */
     longClickFunction(id,msg){
       this.isLongClick = true
       clearTimeout(this.timerId)

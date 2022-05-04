@@ -334,6 +334,11 @@ export default {
   mounted() {
   },
   methods: {
+    /**
+     * Ritorna la dimensione delle colonne
+     * @property {Number} numCol Numero di colonne presenti
+     * @returns Dimensione colonna
+     */
     dimCols(numCol) {
       if (numCol === 1) {
         if (this.rapporto < 3 / 2) return 12;
@@ -343,14 +348,27 @@ export default {
         else return 2;
       }
     },
+    /**
+     * Ritorna la dimensione dei pulsanti basandosi sul rapporto
+     * @returns Dimensione del pulsante
+     */
     dimColsBtn() {
       if (this.rapporto < 3 / 2) return 6;
       else return 12;
     },
+    /**
+     * Indica se è presente un divisiore
+     * @returns true/false
+     */
     dividerBool() {
       if (this.rapporto < 3 / 2) return false;
       else return true;
     },
+    /**
+     * Ritorna il rapporto
+     * @property {Number} valRapporto Valore del rapporto
+     * @returns Rapporto
+     */
     ratioMode(valRapporto) {
       if(valRapporto==null){
         valRapporto=this.rapporto;
@@ -359,19 +377,35 @@ export default {
       else if (valRapporto >= 3 / 2 && valRapporto < 5 / 2) return "medium";
       else return "big";
     },
+    /**
+     * Ritorna l'altezza del componente di configurazione
+     * @returns Altezza componente
+     */
     diffHeightConf() {
       if (this.rapporto < 3 / 2) return 176;
       else return 96;
     },
+    /**
+     * Ritorna l'altezza del componente delle collezioni
+     * @returns Altezza componente
+     */
     diffHeightColl() {
       if (this.rapporto < 3 / 2) return 168;
       else return 88;
     },
+    /**
+     * Aggiunge un suggerimento nel titolo del componente
+     * @property {String} tip Suggerimento del componente selezionato
+     */
     changeTitle(tip) {
       if (tip !== this.textButton) {
         this.title = this.defaultTitle + " > " + tip;
       }
     },
+    /**
+     * Ottiene il valore del cookie considerato
+     * @property {String} name Nome del cookie selezionato
+     */
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
       for (var i = 0; i < cookieArr.length; i++) {
@@ -382,9 +416,16 @@ export default {
       }
       return null;
     },
+    /**
+     * Invia un segnale per la chiusura della scheda
+     */
     closeWindow() {
       this.$emit("close-btm");
     },
+    /**
+     * @async
+     * Carica in modo asincrono il file delle configurazioni
+     */
     async loadFile() {
       var file = document.getElementById("file_config").files[0];
       if (file) {
@@ -396,9 +437,16 @@ export default {
         };
       }
     },
+    /**
+     * Invia il testo della configurazione
+     * @property {String} filetext Configurazione
+     */
     sendFileConf(filetext) {
       this.$emit("file-upload-index", filetext);
     },
+    /**
+     * Seleziona il componente di configurazione
+     */
     setConf() {
       if (!this.isLongClick) {
         clearTimeout(this.timerIdData);
@@ -411,6 +459,9 @@ export default {
         }
       }
     },
+    /**
+     * Seleziona il componente delle collezioni
+     */
     setIR() {
       if (!this.isLongClick) {
         clearTimeout(this.timerIdData);
@@ -423,11 +474,16 @@ export default {
         }
       }
     },
+    /**
+     * Carica la configurazione
+     */
     uploadConf() {
       this.setConf();
       this.$emit("upload-config");
     },
-
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Config
+     */
     addMouseDownEventConfig() {
       this.isLongClick = false;
       var fn = () => {
@@ -435,6 +491,9 @@ export default {
       };
       this.timerIdData = setTimeout(fn, 500);
     },
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Collection
+     */
     addMouseDownEventCollection() {
       this.isLongClick = false;
       var fn = () => {
@@ -442,6 +501,11 @@ export default {
       };
       this.timerIdData = setTimeout(fn, 500);
     },
+    /**
+     * Apre un suggerimento sulla base di una pressione duratura
+     * @property {String} id Identificativo del compomente premuto
+     * @property {String} msg Avviso o suggerimento da mostrare
+     */
     longClickFunction(id,msg){
       this.isLongClick = true
       clearTimeout(this.timerIdData)

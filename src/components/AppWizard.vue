@@ -308,6 +308,10 @@ export default {
     this.numberWizard = this.$route.query.id;
   },
   methods: {
+    /**
+     * Verifica che i moduli non siano vuoti
+     * @returns true/false
+     */
     allSelected(){
       this.modulesData.forEach(element => {
         if (element.selected === ''){
@@ -316,10 +320,19 @@ export default {
       })
       return false
     },
+    /**
+     * Rimuove un elemento dall'array dei moduli
+     * @property {Number} idx Indice identificativo del componente
+     */
     removeAt(idx) {
       this.modulesData.splice(this.getIndex(idx), 1);
       this.refresh();
     },
+    /**
+     * Ottiene l'indice dell'array dato l'indice identificativo
+     * @property {Number} idx Indice identificativo del componente
+     * @returns Indice dell'array
+     */
     getIndex(idx) {
       for (var i = 0; i < this.modulesData.length; i++) {
         if (this.modulesData[i].index === idx) {
@@ -327,15 +340,21 @@ export default {
         }
       }
     },
+    /**
+     * Rimappa l'array di elementi
+     */
     updateItemOrder() {
       const items = this.modulesData.map(function (item) {
         return item;
       });
-      //console.log("Sono qui");
-      //console.log(items);
       this.modulesData = items;
       this.refresh();
     },
+    /**
+     * Genera un codice
+     * @property {Number} passwordLength Lunghezza del codice da generare.
+     * @returns Codice generato
+     */
     generatePassword(passwordLength) {
       var numberChars = "0123456789";
       var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -352,6 +371,11 @@ export default {
         })
       ).join("");
     },
+    /**
+     * Mischia l'array contenente vari caratteri
+     * @property {Array} array Array con i caratteri
+     * @returns Array mischiato
+     */
     shuffleArray(array) {
       for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -361,17 +385,22 @@ export default {
       }
       return array;
     },
+    /**
+     * Imposta a falso la condizione di primo avvio
+     */
     setFirstDialogWizard() {
       this.firstDialogWizard = false;
       this.setCookie("firstDialogWizard", "false", 30);
     },
+    /**
+     * Cambia il colore dei componenti della pagina
+     */
     changeColor() {
       document.documentElement.classList.remove(this.mainColor);
       this.mainColor = this.getCookie("main-color");
       if (!this.mainColor) {
         this.mainColor = "document-color";
       }
-      //console.log(this.mainColor);
       document.documentElement.classList.add(this.mainColor);
 
       this.themeColor = this.getCookie("theme-color");
@@ -387,6 +416,12 @@ export default {
       }
       document.documentElement.classList.add(this.themeColor);
     },
+    /**
+     * Imposta un generico cookie
+     * @property {String} name Nome del cookie
+     * @property {String} value Valore del cookie inserito
+     * @property {Number} daysToLive Giorni di mantenimento del cookie
+     */
     setCookie(name, value, daysToLive) {
       // Encode value in order to escape semicolons, commas, and whitespace
       var cookie = name + "=" + encodeURIComponent(value);
@@ -397,6 +432,10 @@ export default {
         document.cookie = cookie;
       }
     },
+    /**
+     * Ottiene il valore del cookie considerato
+     * @property {String} name Nome del cookie selezionato
+     */
     getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array
       var cookieArr = document.cookie.split(";");
@@ -413,6 +452,10 @@ export default {
       // Return null if not found
       return null;
     },
+    /**
+     * Aggiorna il valore delle istruzioni create
+     * @property {String} addText Nuovo valore del modulo modificato
+     */
     changeValue(addText) {
       let indiceScript = this.getIndex(Number(addText.substring(0, addText.indexOf("##"))));
       this.modulesData[indiceScript].value = addText.substring(
@@ -421,6 +464,9 @@ export default {
       );
       this.refresh();
     },
+    /**
+     * Aggiorna i testi presenti
+     */
     refresh() {
       this.valueString = "";
       this.modulesData.forEach((element) => {
@@ -429,13 +475,19 @@ export default {
         }
       });
     },
+    /**
+     * Toglie l'ultimo modulo inserito
+     */
     checkMinus() {
       if (this.modulesData.length > 1) {
         this.modulesData.pop();
       }
       this.refresh();
     },
-
+    /**
+     * Ricerca l'indice più basso come valore a disposizione
+     * @returns Indice minimo disponibile
+     */
     checkNumFree(){
       var numTrov=0;
       let finded=false;
@@ -453,7 +505,9 @@ export default {
         } 
       }
     },
-
+    /**
+     * Aggiunge un nuovo modulo
+     */
     setPlus() {
       var indexNew=this.checkNumFree();
       this.modulesData.push({
@@ -462,6 +516,10 @@ export default {
         value: "",
       });
     },
+    /**
+     * Trasferisce il messaggio all'interfaccia principale
+     * @property {String} type Tipo di aggiunta del messaggio
+     */
     transferMessage(type) {
       if (!this.isLongClick)
         this.connectionPage.send(
@@ -469,6 +527,9 @@ export default {
         );
       clearTimeout(this.timerId);
     },
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Reset
+     */
     addMouseDownEventReset() {
       this.isLongClick = false;
       var fn = () => {
@@ -476,6 +537,9 @@ export default {
       };
       this.timerId = setTimeout(fn, 500);
     },
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Append
+     */
     addMouseDownEventAppend() {
       this.isLongClick = false;
       var fn = () => {
@@ -483,6 +547,10 @@ export default {
       };
       this.timerId = setTimeout(fn, 500);
     },
+    /**
+     * Apre un suggerimento sulla base di una pressione duratura
+     * @property {String} msg Avviso o suggerimento da mostrare
+     */
     longClickFunction(msg){
       this.isLongClick = true
       clearTimeout(this.timerId)

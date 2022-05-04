@@ -229,6 +229,9 @@ export default {
     this.setConnection();
   },
   methods: {
+    /**
+     * Cambia il colore dei componenti della pagina
+     */
     changeColor() {
       if(document.documentElement.classList.contains(this.mainColor))
         document.documentElement.classList.remove(this.mainColor);
@@ -239,6 +242,9 @@ export default {
       document.documentElement.classList.add(this.mainColor);
       this.setTheme();
     },
+    /**
+     * Invia un messaggio di apertura della collezione
+     */
     sendMessage() {
       this.connectionPage.send(
         "OPEN###" +
@@ -250,9 +256,15 @@ export default {
           this.size
       );
     },
+    /**
+     * Richiama sendMessage()
+     */
     changeDimensions() {
       this.sendMessage();
     },
+    /**
+     * Calcola il numero di pagine sulla base della dimensione
+     */
     calculatePageSize() {
       if (this.valTotal === 0) {
         this.pageCount = 1;
@@ -262,6 +274,9 @@ export default {
         this.pageCount = Number((this.valTotal / this.size).toFixed());
       }
     },
+    /**
+     * Imposta il tema
+     */
     setTheme() {
       if(document.documentElement.classList.contains(this.themeColor))
         document.documentElement.classList.remove(this.themeColor);
@@ -278,7 +293,12 @@ export default {
       }
       document.documentElement.classList.add(this.themeColor);
     },
-
+    /**
+     * Imposta un generico cookie
+     * @property {String} name Nome del cookie
+     * @property {String} value Valore del cookie inserito
+     * @property {Number} daysToLive Giorni di mantenimento del cookie
+     */
     setCookie(name, value, daysToLive) {
       // Encode value in order to escape semicolons, commas, and whitespace
       var cookie = name + "=" + encodeURIComponent(value);
@@ -289,6 +309,10 @@ export default {
         document.cookie = cookie;
       }
     },
+    /**
+     * Ottiene il valore del cookie considerato
+     * @property {String} name Nome del cookie selezionato
+     */
     getCookie(name) {
       // Split cookie string and get all individual name=value pairs in an array
       var cookieArr = document.cookie.split(";");
@@ -305,10 +329,17 @@ export default {
       // Return null if not found
       return null;
     },
+    /**
+     * Decide la dimensione massima
+     * @returns Valore massimo
+     */
     maxDimSize() {
       if (this.valTotal > 200) return 200;
       else return this.valTotal;
     },
+    /**
+     * Genera l'elenco delle possibili dimensioni
+     */
     generateListSizePages(){
       this.itemsSize = [5];
       if (this.valTotal > 5) {
@@ -330,6 +361,9 @@ export default {
         this.itemsSize.push(200);
       }
     },
+    /**
+     * Imposta la connessione con il servizio
+     */
     setConnection() {
       if (sessionStorage.getItem("textTree_" + this.$route.query.id)) {
         //const ip="localhost";
@@ -385,6 +419,9 @@ export default {
         };
       }
     },
+    /**
+     * Imposta la profondità di espansione dell'albero
+     */
     setDepth() {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
@@ -396,6 +433,9 @@ export default {
         this.numDepth = this.numDepth < 2 ? 10 : 1;
       }
     },
+    /**
+     * Salva l'albero in formato JSON
+     */
     download() {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
@@ -421,7 +461,9 @@ export default {
         document.body.removeChild(element);
       }
     },
-
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Save
+     */
     addMouseDownEventSave() {
       this.isLongClick = false;
       var fn = () => {
@@ -429,6 +471,9 @@ export default {
       };
       this.timerId = setTimeout(fn, 500);
     },
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Expand
+     */
     addMouseDownEventExpand() {
       this.isLongClick = false;
       var fn = () => {
@@ -436,6 +481,10 @@ export default {
       };
       this.timerId = setTimeout(fn, 500);
     },
+    /**
+     * Apre un suggerimento sulla base di una pressione duratura
+     * @property {String} msg Avviso o suggerimento da mostrare
+     */
     longClickFunction(msg) {
       this.isLongClick = true;
       clearTimeout(this.timerId);

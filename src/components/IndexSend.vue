@@ -268,6 +268,11 @@ export default {
     this.textSend = this.textShare;
   },
   methods: {
+    /**
+     * Ritorna la dimensione delle colonne
+     * @property {Number} numCol Numero di colonne presenti
+     * @returns Dimensione colonna
+     */
     dimCols(numCol) {
       if (numCol === 1) {
         if (this.rapporto < 3 / 2) return 12;
@@ -277,19 +282,36 @@ export default {
         else return 2;
       }
     },
+    /**
+     * Indica se è presente un divisiore
+     * @returns true/false
+     */
     dividerBool() {
       if (this.rapporto < 3 / 2) return false;
       else return true;
     },
+    /**
+     * Ritorna il rapporto
+     * @property {Number} valRapporto Valore del rapporto
+     * @returns Rapporto
+     */
     ratioMode() {
       if (this.rapporto < 3 / 2) return "small";
       else if (this.rapporto >= 3 / 2 && this.rapporto < 5 / 2) return "medium";
       else return "big";
     },
+    /**
+     * Ritorna l'altezza del componente
+     * @returns Altezza componente
+     */
     diffHeight() {
       if (this.rapporto < 3 / 2) return 136;
       else return 56;
     },
+    /**
+     * Modifica il valore dell'area di testo
+     * @property {String} value Testo contenente il messaggio e la modalità di passaggio delle informazioni
+     */
     changeText(value) {
       
       if (value.includes('##END INSTRUCTION###')) {
@@ -308,16 +330,20 @@ export default {
         }
       }
     },
+    /**
+     * Invia il messaggio tramite combinazione di tasti
+     * @property {KeyboardEvent} event Evento di pressione dei tasti
+     */
     sendMessageKeyboard(event){
       // CTRL + invio combo
       if (event.ctrlKey && event.key === "Enter") {
         this.sendMessageArr();
       }
     },
-    changeTitle(tip) {
-      this.title = this.defaultTitle + " - " + tip;
-    },
-    //Da sistemare
+    /**
+     * Cancella il testo contenuto nel componente di esecuzione
+     * @property {String} newVal valore del testo ricevuto
+     */
     removeOk(newVal) {
       this.exec = true;
       //Parole della risposta assegnata
@@ -343,20 +369,30 @@ export default {
       });
       this.exec = false;
     },
-    //UPDATE
+    
+    /**
+     * Invio dell'evento di apertura wizard
+     */
     openWizard() {
       if(!this.isLongClick){
         clearTimeout(this.timerId)
         this.$emit("open-wizard");
       }
     },
-    //UPDATE
+    
+    /**
+     * Invio dell'evento di invio 
+     */
     sendMessageArr() {
       if(!this.isLongClick){
         clearTimeout(this.timerId)
         this.$emit("click-send", this.textSend);
       }
     },
+    /**
+     * Ottiene il valore del cookie considerato
+     * @property {String} name Nome del cookie selezionato
+     */
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
       for (var i = 0; i < cookieArr.length; i++) {
@@ -367,10 +403,15 @@ export default {
       }
       return null;
     },
+    /**
+     * Invia un segnale per la chiusura della scheda
+     */
     closeWindow() {
       this.$emit("close-send");
     },
-    //ADD NEW
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Execute
+     */
     addMouseDownEventExecute() {
       this.isLongClick = false;
       var fn = () => {
@@ -378,6 +419,9 @@ export default {
       };
       this.timerId = setTimeout(fn, 500);
     },
+    /**
+     * Inizializza un evento legato alla pressione prolungata del pulsante Wizard
+     */
     addMouseDownEventWizard() {
       this.isLongClick = false;
       var fn = () => {
@@ -385,6 +429,11 @@ export default {
       };
       this.timerId = setTimeout(fn, 500);
     },
+    /**
+     * Apre un suggerimento sulla base di una pressione duratura
+     * @property {String} id Identificativo del compomente premuto
+     * @property {String} msg Avviso o suggerimento da mostrare
+     */
     longClickFunction(id,msg){
       this.isLongClick = true
       clearTimeout(this.timerId)

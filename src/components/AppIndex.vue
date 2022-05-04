@@ -710,6 +710,12 @@ export default {
     this.setConnection();
   },
   methods: {
+    /**
+     * Genera un messaggio di log
+     * @property {String} Msg Messaggio in arrivo
+     * @property {String} tMsg Tipo di messaggio
+     * @property {String} cMsg Categoria del messaggio 
+     */
     newLog(Msg, tMsg, cMsg) {
       var l = null;
       switch (cMsg) {
@@ -754,6 +760,10 @@ export default {
           this.arrayLog.logs.push(l);
       }
     },
+    /**
+     * Resetta il contatore dei nuomi messaggi di log
+     * @property {String} cat Categoria dei messaggi aperti
+     */
     resetCounter(cat) {
       this.arrayLog.tabActive = (cat === undefined) | null ? "Default" : cat;
       switch (cat) {
@@ -775,6 +785,11 @@ export default {
           break;
       }
     },
+    /**
+     * Cambia ordine dei componenti sull'asse z
+     * @property {String} comp Componente cliccato
+     * @property {Boolean} actv Verifica che lo strumento sia stato abilitato o disabilitato
+     */
     changeOrder(comp, actv) {
       var orderComponent = new Map();
       orderComponent.set("send", this.send.posz);
@@ -812,10 +827,16 @@ export default {
       this.setCookie("btm-z", this.btm.posz, 30);
       this.setCookie("log-z", this.log.posz, 30);
     },
+    /**
+     * Imposta la connessione con Engine
+     */
     setConnection() {
       this.connection = new ReconnectingWebSocket(
         "ws://" + process.env.VUE_APP_ENGINE_SERVER
       );
+      /**
+       * Elenco di azioni che effettua quando si riceve un messaggio
+       */
       this.connection.onmessage = (message) => {
         const text = message.data;
         if (text.includes("##BEGIN-ERROR##")) {
@@ -928,7 +949,9 @@ export default {
         }
       };
 
-      
+      /**
+       * Azione che si effettua quando si chiude la connessione
+       */
       this.connection.onclose = () => {
         if (!this.isCrashed) {
           this.changeErrLog(
@@ -940,7 +963,9 @@ export default {
           this.isReconnectedAndSended = false;
         }
       };
-
+      /**
+       * Azione che si effettua quando si è in presenza di un errore
+       */
       this.connection.onerror = (message) => {
         if (!this.firstTimeError) {
           this.changeErrLog(
@@ -953,6 +978,10 @@ export default {
         }
       };
     },
+    /**
+     * @deprecated
+     * Ottiene il browser su cui si sta eseguendo l'applicativo
+     */
     getBrowser() {
       let userAgent = navigator.userAgent;
       if (userAgent.match(/chrome|chromium|crios/i)) {
@@ -969,6 +998,9 @@ export default {
         this.browserName = "No browser detection";
       }
     },
+    /**
+     * Inizializza le dimensioni iniziali delle schede in caso di modalità Portable
+     */
     setStartWidth() {
       if (window.innerWidth < 960 && window.innerWidth >= 700) {
         this.send.widthSm = window.innerWidth - 12;
@@ -977,12 +1009,18 @@ export default {
         this.btm.widthSm = window.innerWidth - 12;
       }
     },
+    /**
+     * Inizializza il form di introduzione, nel caso di primo avvio
+     */
     setDialog() {
       if (!this.getCookie("firstDialog")) {
         this.setCookie("firstDialog", "true", 30);
       }
       this.firstDialog = this.getCookie("firstDialog") === "true";
     },
+    /**
+     * Inizializza il colore dei componenti
+     */
     setColor() {
       this.mainColor = this.getCookie("main-color");
       if (!this.mainColor) {
@@ -991,6 +1029,9 @@ export default {
       }
       document.documentElement.classList.add(this.mainColor);
     },
+    /**
+     * Inizializza il tema dell'applicativo
+     */
     setTheme() {
       this.themeColor = this.getCookie("theme-color");
       if (this.themeColor === null) {
@@ -1005,6 +1046,10 @@ export default {
       }
       document.documentElement.classList.add(this.themeColor);
     },
+    /**
+     * Cambia l'icona della tab.
+     * @property {Boolean} newVal Verifica che sia stato inserito un nuovo valore
+     */
     changeIcon(newVal) {
       var link =
         document.querySelector("link[rel*='icon']") || document.createElement("link");
@@ -1016,6 +1061,9 @@ export default {
       }
       document.getElementsByTagName("head")[0].appendChild(link);
     },
+    /**
+     * Inizializza tutti gli attributi dei singoli componenti mediante cookies.
+     */
     loadSettings() {
       this.btm.posx =
         this.getCookie("btm-x") === null ? 4 : parseInt(this.getCookie("btm-x"));
@@ -1069,13 +1117,23 @@ export default {
       this.log.posz =
         this.getCookie("log-z") === null ? 0 : parseInt(this.getCookie("log-z"));
     },
+    /**
+     * Imposta a falso la condizione di primo avvio
+     */
     setFirstDialog() {
       this.firstDialog = false;
       this.setCookie("firstDialog", "false", 30);
     },
+    /**
+     * Copia il testo scritto nell'area di testo della scheda di esecuzione.
+     * @property {String} text Testo scritto
+     */
     shareText(text) {
       this.send.textShare = text;
     },
+    /**
+     * Imposta i limiti della pagina
+     */
     setPositions() {
       if (this.send.posx + this.send.width > document.documentElement.clientWidth) {
         if (document.documentElement.clientWidth - this.send.width - 5 > 4) {
@@ -1103,6 +1161,10 @@ export default {
 
       this.setStartWidth();
     },
+    /**
+     * Mostra il componente selezionato
+     * @property {String} component Componente selezionato
+     */
     showSheet(component) {
       switch (component) {
         case "send":
@@ -1128,6 +1190,10 @@ export default {
       }
       this.changeOrder(component, true);
     },
+    /**
+     * Nasconde il componente selezionato
+     * @property {String} component Componente selezionato
+     */
     hideSheet(component) {
       switch (component) {
         case "send":
@@ -1151,6 +1217,11 @@ export default {
       }
       this.changeOrder(component, false);
     },
+    /**
+     * Genera un codice
+     * @property {Number} passwordLength Lunghezza del codice da generare.
+     * @returns Codice generato
+     */
     generatePassword(passwordLength) {
       var numberChars = "0123456789";
       var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -1167,6 +1238,11 @@ export default {
         })
       ).join("");
     },
+    /**
+     * Mischia l'array contenente vari caratteri
+     * @property {Array} array Array con i caratteri
+     * @returns Array mischiato
+     */
     shuffleArray(array) {
       for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -1176,6 +1252,11 @@ export default {
       }
       return array;
     },
+    /**
+     * Genera un array di istruzioni da un testo.
+     * @property {String} textReceived Testo con le istruzioni.
+     * @returns Array con le istruzioni.
+     */
     fromTextRecToArrRec(textReceived) {
       var arrIstr = [];
       this.counterRec = 0;
@@ -1303,11 +1384,20 @@ export default {
       });
       return arrIstr;
     },
-
+    /**
+     * Richiama la funzione changeOrder
+     * @property {String} tipo Componente selezionato
+     */
     setZ(tipo) {
       this.changeOrder(tipo, true);
     },
-
+    /**
+     * Imposta gli attributi di Rec in modo sincrono nella fase di resize
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     * @property {Number} width Largezza componente
+     * @property {Number} height Altezza componente
+     */
     onResizeStopRec(handle, x, y, width, height) {
       // eslint-disable-line no-unused-vars
       this.rec.posx = x;
@@ -1316,11 +1406,21 @@ export default {
       this.rec.height = height;
       this.setZ("rec");
     },
+    /**
+     * Imposta gli attributi di Rec in modo sincrono nella fase di drag
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     */
     onDragStopRec(x, y) {
       this.rec.posx = x;
       this.rec.posy = y;
       this.setZ("rec");
     },
+    /**
+     * Imposta gli attributi di Rec in modo sincrono nelle fasi di resize e drag
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     */
     onModRec(x, y) {
       if (x < 4) {
         this.rec.posx = 4;
@@ -1338,7 +1438,13 @@ export default {
       this.setCookie("rec-w", this.rec.width, 30);
       this.setCookie("rec-h", this.rec.height, 30);
     },
-
+    /**
+     * Imposta gli attributi di Send in modo sincrono nella fase di resize
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     * @property {Number} width Largezza componente
+     * @property {Number} height Altezza componente
+     */
     onResizeStopSend(handle, x, y, width, height) {
       // eslint-disable-line no-unused-vars
       this.send.posx = x;
@@ -1347,11 +1453,21 @@ export default {
       this.send.height = height;
       this.setZ("send");
     },
+    /**
+     * Imposta gli attributi di Send in modo sincrono nella fase di drag
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     */
     onDragStopSend(x, y) {
       this.send.posx = x;
       this.send.posy = y;
       this.setZ("send");
     },
+    /**
+     * Imposta gli attributi di Send in modo sincrono nelle fasi di resize e drag
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     */
     onModSend(x, y) {
       if (x < 4) {
         this.send.posx = 4;
@@ -1369,7 +1485,13 @@ export default {
       this.setCookie("send-w", this.send.width, 30);
       this.setCookie("send-h", this.send.height, 30);
     },
-
+    /**
+     * Imposta gli attributi di Btm in modo sincrono nella fase di resize
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     * @property {Number} width Largezza componente
+     * @property {Number} height Altezza componente
+     */
     onResizeStopBtm(handle, x, y, width, height) {
       // eslint-disable-line no-unused-vars
       this.btm.posx = x;
@@ -1378,11 +1500,21 @@ export default {
       this.btm.height = height;
       this.setZ("btm");
     },
+    /**
+     * Imposta gli attributi di Btm in modo sincrono nella fase di drag
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     */
     onDragStopBtm(x, y) {
       this.btm.posx = x;
       this.btm.posy = y;
       this.setZ("btm");
     },
+    /**
+     * Imposta gli attributi di Btm in modo sincrono nelle fasi di resize e drag
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     */
     onModBtm(x, y) {
       if (x < 4) {
         this.btm.posx = 4;
@@ -1400,7 +1532,13 @@ export default {
       this.setCookie("btm-w", this.btm.width, 30);
       this.setCookie("btm-h", this.btm.height, 30);
     },
-
+    /**
+     * Imposta gli attributi di Log in modo sincrono nella fase di resize
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     * @property {Number} width Largezza componente
+     * @property {Number} height Altezza componente
+     */
     onResizeStopLog(handle, x, y, width, height) {
       this.log.posx = x;
       this.log.posy = y;
@@ -1408,11 +1546,21 @@ export default {
       this.log.height = height;
       this.setZ("log");
     },
+    /**
+     * Imposta gli attributi di Log in modo sincrono nella fase di drag
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     */
     onDragStopLog(x, y) {
       this.log.posx = x;
       this.log.posy = y;
       this.setZ("log");
     },
+    /**
+     * Imposta gli attributi di Log in modo sincrono nelle fasi di resize e drag
+     * @property {Number} x Posizione relativa all'esse x
+     * @property {Number} y Posizione relativa all'esse y
+     */
     onModLog(x, y) {
       if (x < 4) {
         this.log.posx = 4;
@@ -1430,26 +1578,26 @@ export default {
       this.setCookie("log-w", this.log.width, 30);
       this.setCookie("log-h", this.log.height, 30);
     },
+    /**
+     * Invia un messaggio per segnalare il cambio di colore
+     */
     signalChangeColor() {
-      /*this.connectionPage = new WebSocket(
-        "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
-      );
-      this.connectionPage.onerror = () => {
-        this.received.errorConfig = "no server available";
-      };
-      this.connectionPage.onclose = () => {
-        this.received.errorConfig = "server save/open closed";
-      };
-      this.connectionPage.onopen = () => {*/
       this.connectionPage.send("CHANGE_COLOR###" + this.mainColor);
-      //};
     },
+    /**
+     * Imposta il colore principale del documento HTML
+     * @property {String} color Colore selezionato 
+     */
     setMainColor(color) {
       document.documentElement.classList.replace(this.mainColor, color);
       this.mainColor = color;
       this.setCookie("main-color", color, 30);
       this.signalChangeColor();
     },
+    /**
+     * Imposta il tema principale del documento HTML
+     * @property {String} theme Tema selezionato
+     */
     setThemeColor(theme) {
       document.documentElement.classList.replace(this.themeColor, theme);
       this.themeColor = theme;
@@ -1461,6 +1609,12 @@ export default {
       this.setCookie("theme-color", theme, 30);
       this.signalChangeColor();
     },
+    /**
+     * Imposta un generico cookie
+     * @property {String} name Nome del cookie
+     * @property {String} value Valore del cookie inserito
+     * @property {Number} daysToLive Giorni di mantenimento del cookie
+     */
     setCookie(name, value, daysToLive) {
       var cookie = name + "=" + encodeURIComponent(value);
       if (typeof daysToLive === "number") {
@@ -1468,6 +1622,10 @@ export default {
         document.cookie = cookie;
       }
     },
+    /**
+     * Ottiene il valore del cookie considerato
+     * @property {String} name Nome del cookie selezionato
+     */
     getCookie(name) {
       var cookieArr = document.cookie.split(";");
       for (var i = 0; i < cookieArr.length; i++) {
@@ -1478,7 +1636,10 @@ export default {
       }
       return null;
     },
-
+    /**
+     * Cambia la configurazione in ingresso
+     * @property {String} textToChange Configurazione
+     */
     changeConfig(textToChange) {
       if (textToChange.startsWith("{")) {
         var parseJSON = JSON.parse(textToChange);
@@ -1488,7 +1649,10 @@ export default {
         this.received.textConf = textToChange;
       }
     },
-
+    /**
+     * Cambia la collezione del documento
+     * @property {String} textToChange Collezione
+     */
     changeIRTree(textToChange) {
       if (textToChange.startsWith("{")) {
         var parseJSON = JSON.parse(textToChange);
@@ -1509,7 +1673,10 @@ export default {
         this.generatePage(title, textConv);
       }
     },
-
+    /**
+     * Cambia la lista delle collezioni
+     * @property {String} textToChange Lista delle collezioni
+     */
     changeIRList(textToChange) {
       if (textToChange.startsWith("{")) {
         var parseJSON = JSON.parse(textToChange);
@@ -1524,21 +1691,15 @@ export default {
         for (var i in json_data) this.received.listIRCol.push(json_data[i]);
       }
     },
-
+    /**
+     * Genera la pagina per la visione della collezione
+     * @property {String} title Titolo della collezione
+     * @property {String} textToSend Collezione
+     */
     generatePage(title, textToSend) {
       let dateGen = new Date();
       let millis = dateGen.getTime();
-      /*this.connectionPage = new WebSocket(
-        "ws://" + process.env.VUE_APP_WEB_SOCKET_SERVER
-      );
-      this.connectionPage.onerror = () => {
-        this.received.errorConfig = "no server available";
-      };
-      this.connectionPage.onclose = () => {
-        this.received.errorConfig = "server save/open closed";
-      };
-      this.connectionPage.onopen = () => {
-        console.log(this.connectionPage.readyState);*/
+  
       this.connectionPage.send(
         "SAVE###" +
           "textTree_" +
@@ -1564,10 +1725,10 @@ export default {
       }, 1000);
       //};
     },
-    
+    /**
+     * Inizializza la connessione con il servizio
+     */
     startServer() {
-
-      //const localIpAddress=require("local-ip-address");
       
       this.randomNumber = this.generatePassword(50);
       this.connectionPage = new WebSocket(
@@ -1612,6 +1773,12 @@ export default {
         }
       };
     },
+    /**
+     * Inserisce un nuovo messaggio di log relativo ad un errore
+     * @property {String} textToChange Testo del messaggio
+     * @property {String} cat Categoria del messaggio
+     * @property {Boolean} alert Abilita un alert
+     */
     changeErrLog(textToChange, cat,alert) {
       const startE = textToChange.indexOf("#@ERR-LOGS@#") + "#@ERR-LOGS@#".length;
       const endE = textToChange.lastIndexOf("#@END-ERR-LOGS@#");
@@ -1619,146 +1786,89 @@ export default {
       this.received.textLog += textToChange.substring(startE, endE);
       if(alert || alert===null) alert(textToChange.substring(startE, endE));
     },
+    /**
+     * Inserisce un nuovo messaggio di log relativo ad un warn
+     * @property {String} textToChange Testo del messaggio
+     * @property {String} cat Categoria del messaggio
+     */
     changeWarnLog(textToChange, cat) {
       const startE = textToChange.indexOf("#@WARN-LOGS@#") + "#@WARN-LOGS@#".length;
       const endE = textToChange.lastIndexOf("#@END-WARN-LOGS@#");
       this.newLog(textToChange.substring(startE, endE), "WARN", cat);
       this.received.textLog += textToChange.substring(startE, endE);
     },
+    /**
+     * Inserisce un nuovo messaggio di log
+     * @property {String} textToChange Testo del messaggio
+     * @property {String} cat Categoria del messaggio
+     */
     changeLog(textToChange, cat) {
       const startE = textToChange.indexOf("#@LOGS@#") + "#@LOGS@#".length;
       const endE = textToChange.lastIndexOf("#@END-LOGS@#");
       this.newLog(textToChange.substring(startE, endE), "LOG", cat);
       this.received.textLog += textToChange.substring(startE, endE);
     },
+    /**
+     * Invia una richiesta di configurazione
+     * @property {String} textSend NUova configurazione
+     */
     sendConfigFile(textSend) {
       if (textSend.length > 0) {
         this.connection.send(
           "##ADD-SERVER-CONF##\n" + textSend + "\n##ADD-SERVER-CONF##"
         );
       }
-      /*if (isPreDone() && textSend.length > 0) {
-        if (isConnected()) {
-          console.log("onopen send");
-          console.log("Sending data");
-          this.connection.send(
-            "##ADD-SERVER-CONF##\n" + textSend + "\n##ADD-SERVER-CONF##"
-          );
-          sended = true;
-        } else {
-          this.connection.close();
-          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
-          if (!sended) {
-            this.connection.onopen = () => {
-              console.log("onopen send");
-              console.log("Sending data");
-              this.connection.send(
-                "##ADD-SERVER-CONF##\n" + textSend + "\n##ADD-SERVER-CONF##"
-              );
-              sended = true;
-            };
-          }
-        }
-      }*/
     },
+    /**
+     * Apre una finestra di caricamento per una nuova configurazione
+     */
     uploadConfig() {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
         document.getElementById("file_config").click();
       }
     },
+    /**
+     * Invia l'istruzione di BackTrack
+     */
     sendBck() {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
         this.connection.send("##BACKTRACK##");
       }
-      /*if (isPreDone() && !this.isLongClick) {
-        clearTimeout(this.timerId);
-        if (isConnected()) {
-          this.connection.send("##BACKTRACK##");
-          sended = true;
-        } else {
-          this.connection.close();
-          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
-          if (!sended) {
-            this.connection.onopen = () => {
-              this.connection.send("##BACKTRACK##");
-              sended = true;
-            };
-          }
-        }
-      }*/
     },
+    /**
+     * Invia l'istruzione per ottenere la collezione temporanea
+     */
     sendIRTempCol() {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
         this.connection.send("##GET-TEMPORARY-COLLECTION##");
       }
-      /*if (isPreDone() && !this.isLongClick) {
-        clearTimeout(this.timerId);
-        if (isConnected()) {
-          this.connection.send("##GET-TEMPORARY-COLLECTION##");
-          sended = true;
-        } else {
-          this.connection.close();
-          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
-          if (!sended) {
-            this.connection.onopen = () => {
-              this.connection.send("##GET-TEMPORARY-COLLECTION##");
-              sended = true;
-            };
-          }
-        }
-      }*/
     },
+    /**
+     * Invia l'istruzione per ottenere la collezione selezionata
+     * @property {String} selectedItem Collezione selezionata
+     */
     sendIRSelCol(selectedItem) {
       if (selectedItem != "") {
         this.connection.send(
           "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
         );
       }
-      /*if (isPreDone() && selectedItem != "") {
-        if (isConnected()) {
-          this.connection.send(
-            "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
-          );
-          sended = true;
-        } else {
-          this.connection.close();
-          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
-          if (!sended) {
-            this.connection.onopen = () => {
-              this.connection.send(
-                "##GET-IR-COLLECTION##\n" + selectedItem + "\n##END-IR-COLLECTION##"
-              );
-              sended = true;
-            };
-          }
-        }
-      }*/
     },
+    /**
+     * Invia l'istruzione per ottenere la lista delle collezioni
+     */
     sendIRList() {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
         this.connection.send("##GET-IR-LIST##");
       }
-      /*if (isPreDone() && !this.isLongClick) {
-        clearTimeout(this.timerId);
-        if (isConnected()) {
-          this.connection.send("##GET-IR-LIST##");
-          sended = true;
-        } else {
-          this.connection.close();
-          this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
-          if (!sended) {
-            this.connection.onopen = () => {
-              this.connection.send("##GET-IR-LIST##");
-              sended = true;
-            };
-          }
-        }
-      }*/
     },
+    /**
+     * Apre lo strumento di wizard in una nuova tab
+     */
     openWizard() {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
@@ -1773,7 +1883,10 @@ export default {
         }, 50);
       }
     },
-
+    /**
+     * Salva le istruzioni eseguite
+     * @property {String} textToSave Istruzioni da salvare
+     */
     saveIstructions(textToSave) {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
@@ -1794,6 +1907,10 @@ export default {
         document.body.removeChild(element);
       }
     },
+    /**
+     * Invia un messaggio all'Engine
+     * @property {String} textSend Istruzioni da eseguire
+     */
     sendMsg(textSend) {
       if (!this.isLongClick) {
         clearTimeout(this.timerId);
@@ -1801,31 +1918,13 @@ export default {
           this.connection.send("##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##");
           this.isReconnectedAndSended = true;
         }
-        /*if (isPreDone() && textSend.length > 0) {
-          if (isConnected()) {
-            console.log("onopen send");
-            console.log("Sending data");
-            this.connection.send("##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##");
-            sended = true;
-          } else {
-            this.connection.close();
-            this.connection = new WebSocket("ws://" + process.env.VUE_APP_ENGINE_SERVER);
-            if (!sended) {
-              this.connection.onopen = () => {
-                console.log("onopen send");
-                console.log("Sending data");
-                this.connection.send(
-                  "##BEGIN-PROCESS##\n" + textSend + "\n##END-PROCESS##"
-                );
-                sended = true;
-              };
-            }
-          }
-        }*/
       }
     },
     
-
+    /**
+     * Apre un suggerimento sulla base di una pressione duratura
+     * @property {String} stringMessage Avviso o suggerimento da mostrare
+     */
     longClickEvent(stringMessage) {
       let message = stringMessage.split("###")[1];
       this.wizardAlertHint = false;

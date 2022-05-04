@@ -5,6 +5,8 @@
   "scripts": {
     "servevuepage": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "styleguide": "vue-styleguidist server",
+    "styleguide:build": "vue-styleguidist build",
     "startvuepage": "vue-cli-service serve --open",
     "start": "concurrently \"npm run startvuepage\" \"node websocketserver.js\"",
     "serve": "concurrently \"npm run servevuepage\" \"node websocketserver.js\"",
@@ -28,7 +30,6 @@
     "vue-native-websocket": "^2.0.15",
     "vue-native-websocket-es5": "^2.0.14",
     "vue-router": "^3.2.0",
-    "vue-styleguidist": "^4.44.22",
     "vuedraggable": "^2.24.3",
     "vuetify": "^2.5.10",
     "vuex": "^3.4.0"
@@ -47,6 +48,7 @@
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-mdb": "~2.1.0",
     "vue-cli-plugin-vuetify": "~2.4.3",
+    "vue-styleguidist": "^4.45.0",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
   }

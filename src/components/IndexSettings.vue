@@ -82,9 +82,15 @@ export default {
     darkMode: Boolean,
   },
   methods: {
+    /**
+     * Invia un segnale per cambiare il colore principale dei componenti
+     */
     setMainColor(color) {
       this.$emit("set-main-color", color);
     },
+    /**
+     * Invia un segnale per cambiare il tema principale dei componenti
+     */
     setThemeColor(theme) {
       this.$emit("set-theme-color", theme);
     },

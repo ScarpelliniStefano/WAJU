@@ -219,9 +219,16 @@ export default {
     
   },
   methods: {
+    /**
+     * Invia un segnale per la chiusura della scheda di log
+     */
     closeWindow() {
       this.$emit("close-log");
     },
+    /**
+     * Cambia la categoria con quella selezionata
+     * @property {String} cat Categoria dei messaggi
+     */
     changeCategory(cat) {
       this.category = cat;
       this.$emit('resetCounter', cat)
