@@ -38,6 +38,11 @@ export default {
       }
     },
     watch:{
+        /**
+         * WATCH: modifica della checkbox relativa alla collezione proveniente dal web
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         fromWeb:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal)
@@ -51,12 +56,22 @@ export default {
                 this.$emit('changeValue', this.valueString);
             }
         },
+        /**
+         * WATCH: modifica dell'url della collezione proveniente dal web
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         url:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.valueString=" FROM WEB "+newVal+" ;";
                 this.$emit('changeValue', this.valueString);
             }
         },
+        /**
+         * WATCH: modifica del nome della collezione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         collection:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.db!="" && newVal!="")
@@ -66,6 +81,11 @@ export default {
                 this.$emit('changeValue', this.valueString);
             }
         },
+        /**
+         * WATCH: modifica del db di provenienza della collezione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         db:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!="")

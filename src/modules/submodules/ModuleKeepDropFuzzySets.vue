@@ -61,6 +61,11 @@ export default {
     },
     
     watch:{
+        /**
+         * WATCH: modifica del testo del fuzzy set
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         radioFS:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!="KEEPING FUZZY SETS" || newVal!="DROPPING FUZZY SETS"){
@@ -69,6 +74,11 @@ export default {
                 }
             }
         },
+        /**
+         * WATCH: modifica del testo della radioOption del fuzzy set
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         textRadio:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.radioFS=="KEEPING FUZZY SETS" || this.radioFS=="DROPPING FUZZY SETS"){

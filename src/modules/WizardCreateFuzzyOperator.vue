@@ -125,16 +125,31 @@ export default {
     
     
      watch:{
+         /**
+         * WATCH: modifica dell'identificativo dell'operatore fuzzy
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         idFuzzyOp:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della presenza delle precondizioni
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         precondition:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica del testo delle precondizioni
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         preconditionText:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){
@@ -143,6 +158,11 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della espressione della funzione js
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         jfExpression:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);

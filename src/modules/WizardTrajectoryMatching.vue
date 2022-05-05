@@ -124,6 +124,11 @@ export default {
     
     
      watch:{
+        /**
+         * WATCH: modifica della groupOption relativa a keep other/drop other
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         radioGroup:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);

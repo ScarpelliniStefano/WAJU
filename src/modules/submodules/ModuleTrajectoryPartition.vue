@@ -74,7 +74,11 @@ export default {
     },
     
      watch:{
-        
+        /**
+         * WATCH: modifica della condizione or della partizione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         orCondPart:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVettPart[0]=newVal;

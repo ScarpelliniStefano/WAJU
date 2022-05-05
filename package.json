@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "servevuepage": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "styleguide": "vue-styleguidist server",
-    "styleguide:build": "vue-styleguidist build",
-    "startvuepage": "vue-cli-service serve --open",
-    "start": "concurrently \"npm run startvuepage\" \"node websocketserver.js\"",
     "serve": "concurrently \"npm run servevuepage\" \"node websocketserver.js\"",
-    "startdebug": "node --inspect ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve"
+    "build": "vue-cli-service build",
+    "servevuepage": "vue-cli-service serve",
+    "start": "concurrently \"npm run startvuepage\" \"node websocketserver.js\"",
+    "startdebug": "node --inspect ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve",
+    "startvuepage": "vue-cli-service serve --open",
+    "styleguide": "vue-cli-service styleguidist",
+    "styleguide:build": "vue-cli-service styleguidist:build"
   },
   "dependencies": {
     "@pgrabovets/json-view": "git+https://github.com/ScarpelliniStefano/json-view.git",
@@ -47,6 +47,7 @@
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-mdb": "~2.1.0",
+    "vue-cli-plugin-styleguidist": "~4.45.0",
     "vue-cli-plugin-vuetify": "~2.4.3",
     "vue-styleguidist": "^4.45.0",
     "vue-template-compiler": "^2.6.11",

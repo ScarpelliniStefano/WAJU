@@ -40,19 +40,33 @@ export default {
     },
     
      watch:{
-        
+        /**
+         * WATCH: modifica della condizione or
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         orCond:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVett[0]=newVal;
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica dei campi sorgente
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         sourceFields:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVett[1]=newVal;
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica dei campi destinazione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         destFields:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVett[2]=newVal;

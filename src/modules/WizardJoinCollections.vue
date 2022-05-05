@@ -247,36 +247,71 @@ export default {
     
     
      watch:{
+         /**
+         * WATCH: modifica del valore della set geometry
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         setGeometryVal:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della presenza della set geometry
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         setGeometry:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della checkbox di rimozione duplicati
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         removeDup:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della checkbox relativa alla case clause
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         caseClauseSel:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della checkbox relativa all'aggiunta di campi
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         addFields:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della checkbox relativa al setting dei fuzzy sets
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         setFuzzySets:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica del testo dei settings dei fuzzy sets
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         setFuzzySetsText:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){
@@ -285,11 +320,21 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della checkbox della funzione spaziale
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         spatialFunct:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica del tipo della funzione spaziale
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         spatialFunctText:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){
@@ -303,14 +348,17 @@ export default {
                         if(this.setCompNumSpfunct) this.stringVett[1]+=", "+this.idSpFunct+":"+this.numSpFunct;
                         this.stringVett[1]+=") ";
                     }else if(newVal=='INCLUDED'){
-                        //console.log('hi')
                         this.stringVett[1]+=" ("+this.leftRightSpFunct+") ";
                     }
                 }
                 this.refreshArr(this.stringVett);
             }
         },
-        
+        /**
+         * WATCH: modifica dell'identificativo della funzione spaziale in caso di "distance", "area" o "orientation"
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         idSpFunct:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){
@@ -329,6 +377,11 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica del selettore di "left" o "right" per la funzione spaziale in caso di "orientation" o "included"
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         leftRightSpFunct:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){
@@ -347,13 +400,18 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della scelta per la funzione spaziale in caso di "distance" o "area" se è presente checkbox di set component number spatial function
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         choiceSpFunct:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){
                     this.stringVett[1]=this.spatialFunctText;
                     if(this.spatialFunctText=='DISTANCE'|| this.spatialFunctText=='AREA'){
                         this.stringVett[1]+=" ("+this.idSpFunct+") ";
-                        if(this.setCompNumSpfunct) this.stringVett[1]+=this.choiceSpFunct+" "+this.numSpFunct;
+                        if(this.setCompNumSpfunct) this.stringVett[1]+=newVal+" "+this.numSpFunct;
                     }else if(this.spatialFunctText=='ORIENTATION'){
                         this.stringVett[1]+=" ("+this.leftRightSpFunct+" ";
                         if(this.setCompNumSpfunct) this.stringVett[1]+=", "+this.idSpFunct+":"+this.numSpFunct;
@@ -365,6 +423,11 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della scelta per la funzione spaziale in caso di "distance", "area" o "orientation" se è presente checkbox di set component number spatial function
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         numSpFunct:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){

@@ -213,6 +213,11 @@ export default {
     },
     
      watch:{
+         /**
+         * WATCH: modifica presenza keep/drop fuzzy
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         keepDropFuzzy:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal)
@@ -220,6 +225,11 @@ export default {
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica generate geometry
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         setGeometry:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){
@@ -245,6 +255,11 @@ export default {
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica set geometry settings
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         setGeometrySetting:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
@@ -267,6 +282,11 @@ export default {
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica del primo campo testo della group option relativa a set geometry
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         textRadioBtn1:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
@@ -289,6 +309,11 @@ export default {
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica del secondo campo testo della group option relativa a set geometry
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         textRadioBtn2:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.setGeometry=='SETTING GEOMETRY' && newVal!=""){
@@ -311,7 +336,11 @@ export default {
             }
             this.refreshArr(this.stringVett);
         },
-        
+        /**
+         * WATCH: modifica della presenza del fuzzy check
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         fuzzyCheck:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal){
@@ -322,6 +351,11 @@ export default {
             }
             
         },
+        /**
+         * WATCH: modifica della presenza di un alpha cut
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         alphaCut:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal){
@@ -331,6 +365,11 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della presenza di una build action
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         buildAction:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal){
@@ -339,6 +378,11 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica del testo della build action
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         textBuild:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!='' && this.buildAction){

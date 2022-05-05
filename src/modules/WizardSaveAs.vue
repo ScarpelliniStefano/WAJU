@@ -35,6 +35,11 @@ export default {
       }
     },
     watch:{
+        /**
+         * WATCH: modifica della checkbox di salvataggio in un database o meno della collezione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         saveInDB:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal){
@@ -44,6 +49,11 @@ export default {
                 
             }
         },
+        /**
+         * WATCH: modifica dell'alias della collezione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         alias:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.valueString="";
@@ -56,6 +66,11 @@ export default {
                 this.$emit('changeValue', this.valueString);
             }
         },
+        /**
+         * WATCH: modifica del nome della collezione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         collection:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.valueString="";
@@ -68,6 +83,11 @@ export default {
                 this.$emit('changeValue', this.valueString);
             }
         },
+        /**
+         * WATCH: modifica del db di provenienza della collezione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         db:function(newVal,oldVal){
            if(newVal!=oldVal){
                this.valueString="";

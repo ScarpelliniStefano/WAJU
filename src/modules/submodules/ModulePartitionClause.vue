@@ -146,33 +146,62 @@ export default {
     },
     
      watch:{
-        
+        /**
+         * WATCH: modifica della condizione or di una where
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         orCond:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVett[0]=newVal;
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica dei campi sorgente
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         sourceFields:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVett[1]=newVal;
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica dei campi destinazione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         destFields:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVett[2]=newVal;
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica di una group option relativa al drop
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         dropGroup:function(newVal,oldVal){
             if(newVal!=oldVal)
                 this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica del slettore di ordinamento
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         orderSelection:function(newVal,oldVal){
             if(newVal!=oldVal)
                 this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica della presenza di una sezione di generazione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         generateSect:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal)
@@ -182,6 +211,11 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della sezione di generazione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         generateSection:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.generateSection && newVal!="")

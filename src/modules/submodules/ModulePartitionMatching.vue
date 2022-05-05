@@ -70,17 +70,31 @@ export default {
     },
     
      watch:{
-        
+        /**
+         * WATCH: modifica della clausola where
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         whereMatching:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshStringMatch();
             }
         },
+        /**
+         * WATCH: modifica della presenza di aggiunta a un input
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         addingToInput:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshStringMatch();
             }
         },
+        /**
+         * WATCH: modifica della minima similarità
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         minSimilarity:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshStringMatch();

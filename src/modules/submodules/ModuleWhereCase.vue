@@ -38,12 +38,22 @@ export default {
     },
     
      watch:{
+         /**
+         * WATCH: modifica della clausola where
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         whereClause:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.stringVett[0].value=newVal;
             }
             this.refreshArr(this.stringVett);
         },
+        /**
+         * WATCH: modifica della presenza della sezione di generazione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         generateSect:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(!newVal)
@@ -53,6 +63,11 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della sezione di generazione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         generateSection:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(this.generateSection && newVal!="")

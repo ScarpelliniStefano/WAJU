@@ -71,6 +71,11 @@ export default {
     },
 
     watch: {
+        /**
+         * WATCH: modifica della checkbox di uso del default server
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         defaultServer: function (newVal, oldVal) {
             if (newVal != oldVal) {
                 if (newVal) {
@@ -86,6 +91,11 @@ export default {
             }
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * WATCH: modifica del testo del server da utilizzare come data storage
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         server: function (newVal, oldVal) {
             if (newVal != oldVal) {
                 this.valueString = this.valueString.substring(0, this.valueString.indexOf("ON") + 2);
@@ -96,6 +106,11 @@ export default {
             }
             this.$emit('changeValue', this.valueString);
         },
+        /**
+         * WATCH: modifica del testo della stringa di connessione
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         connString: function (newVal, oldVal) {
             if (newVal != oldVal) {
                 this.valueString = this.valueString.substring(0, this.valueString.indexOf("ON") + 2);

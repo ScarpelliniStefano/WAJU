@@ -29,6 +29,11 @@ export default {
     },
     
     watch:{
+        /**
+         * WATCH: modifica della checkbox relativa alla rimozione dei duplicati
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         removeDup:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal){

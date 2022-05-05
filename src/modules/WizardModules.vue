@@ -78,6 +78,11 @@ export default {
         trajectoryMatch
     },
     watch:{
+        /**
+         * WATCH: modifica del valore selezionato come tipo di modulo
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         select:function(newVal, oldVal){
             if(newVal!=oldVal){
                 switch (newVal) {

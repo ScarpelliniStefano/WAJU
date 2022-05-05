@@ -80,16 +80,31 @@ export default {
     
     
      watch:{
+         /**
+         * WATCH: modifica dell'identificativo della funzione javascript
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         idJSFunct:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica della presenza delle precondizioni
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         precondition:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica del testo delle precondizioni
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         preconditionText:function(newVal,oldVal){
             if(newVal!=oldVal){
                 if(newVal!=""){
@@ -98,6 +113,11 @@ export default {
                 this.refreshArr(this.stringVett);
             }
         },
+        /**
+         * WATCH: modifica del corpo della funzione javascript
+         * @param {String} newVal Nuovo valore
+         * @param {String} oldVal Vecchio valore
+         */
         jsBody:function(newVal,oldVal){
             if(newVal!=oldVal){
                 this.refreshArr(this.stringVett);
