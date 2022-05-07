@@ -350,7 +350,6 @@
         @save-status="saveStatus($event)"
         @long-click="longClickEvent($event)"
         :bottomText="received"
-        :arrayLog="arrayLog"
         :tempPresent="btm.tempPresent"
       >
       </bottom-bar>
@@ -480,7 +479,6 @@
             @set-z-click="setZ"
             @close-btm="hideSheet('btm')"
             :bottomText="received"
-            :arrayLog="arrayLog"
             :tempPresent="btm.tempPresent"
           >
           </bottom-bar>
@@ -621,6 +619,7 @@ export default {
         widthSm: 500,
         heightSm: 400,
         tempPresent:false,
+        justWarnNewIR:false
       },
 
       log: {
@@ -1253,6 +1252,21 @@ export default {
       return array;
     },
     /**
+     * Abilita il pulsante di temporary collection.
+     */
+    enableTempBtm(){
+      this.btm.tempPresent=true;
+      if(!this.btm.justWarnNewIR){
+        this.changeLog(
+          "#@LOGS@#" +
+            timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
+            "#@END-LOGS@#",
+          "Default"
+        );
+        this.btm.justWarnNewIR=true;
+      }
+    },
+    /**
      * Genera un array di istruzioni da un testo.
      * @param {String} textReceived Testo con le istruzioni.
      * @returns Array con le istruzioni.
@@ -1262,7 +1276,7 @@ export default {
       this.counterRec = 0;
       var arrTest = textReceived.split(/##END INSTRUCTION###[\n]?/g).filter(elem => elem!=="");
       this.textRec="";
-      let justWarnNewIR=false;
+      this.btm.justWarnNewIR=false;
       arrTest.forEach((element) => {
         if (!element.startsWith("\n")) {
           element = "\n" + element;
@@ -1279,21 +1293,13 @@ export default {
             name: this.counterRec + 1 + ". GET COLLECTION",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/SAVE AS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". SAVE AS",
             value: element,
           });
-          this.btm.tempPresent=true;
-          if(!justWarnNewIR){
-            this.changeLog(
-              "#@LOGS@#" +
-                timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
-                "#@END-LOGS@#",
-              "Default"
-            );
-            justWarnNewIR=true;
-          }
+          this.enableTempBtm()
         } /*else if (element.match(/SPATIAL JOIN OF COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". SPATIAL JOIN OF COLLECTIONS",
@@ -1304,56 +1310,43 @@ export default {
             name: this.counterRec + 1 + ". JOIN OF COLLECTIONS",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/FILTER/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". FILTER",
             value: element,
           });
-          this.btm.tempPresent=true;
-          if(!justWarnNewIR){
-            this.changeLog(
-              "#@LOGS@#" +
-                timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
-                "#@END-LOGS@#",
-              "Default"
-            );
-            justWarnNewIR=true;
-          }
+          this.enableTempBtm()
         } else if (element.match(/GROUP/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". GROUP",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/EXPAND/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". EXPAND",
             value: element,
           });
-          this.btm.tempPresent=true;
-          if(!justWarnNewIR){
-            this.changeLog(
-              "#@LOGS@#" +
-                timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
-                "#@END-LOGS@#",
-              "Default"
-            );
-            justWarnNewIR=true;
-          }
+          this.enableTempBtm()
         } else if (element.match(/MERGE COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". MERGE COLLECTIONS",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/INTERSECT COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". INTERSECT COLLECTIONS",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/SUBTRACT COLLECTIONS/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". SUBTRACT COLLECTIONS",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/USE DB/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". USE DB",
@@ -1364,21 +1357,25 @@ export default {
             name: this.counterRec + 1 + ". TRAJECTORY MATCHING",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/CREATE_FO/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". CREATE FUZZY OPERATOR",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/CREATE_JF/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". CREATE JAVASCRIPT FUNCTION",
             value: element,
           });
+          this.enableTempBtm()
         } else if (element.match(/GET DICTIONARY/gi)) {
           arrIstr.push({
             name: this.counterRec + 1 + ". GET DICTIONARY",
             value: element,
           });
+          this.enableTempBtm()
         }
         this.counterRec += 1;
       });
