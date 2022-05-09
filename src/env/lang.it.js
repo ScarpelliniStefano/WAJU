@@ -54,6 +54,7 @@ const lang = Object.freeze({
             BACKTRACK_DONE: 'Annullamento eseguito',
             TREE_OPENED: 'Albero aperto',
             IR_LIST_UPDATED: 'Lista collezioni IR aggiornata',
+            TEMP_UPDATED: 'Collezione temporanea modificata',
             JOB_DONE: 'Comando eseguito',
             CONNECTION_ENGINE_CRASHED: 'Connessione con Engine fallita',
             WEB_SOCKET_SERVER_CONNECTED: 'Connesso con Web Socket Server',
