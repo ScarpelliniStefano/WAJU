@@ -619,7 +619,8 @@ export default {
         widthSm: 500,
         heightSm: 400,
         tempPresent:false,
-        justWarnNewIR:false
+        justWarnNewIR:false,
+        justWarnTC:false
       },
 
       log: {
@@ -928,7 +929,6 @@ export default {
             this.textToCommand = this.textRec;
             this.arrRec = this.fromTextRecToArrRec(this.textRec);
             if(!this.rec.selected) this.rec.newMessages = true
-            this.sendIRList();
           }
           this.disBtn = false;
           //disconnect();
@@ -966,7 +966,7 @@ export default {
        * Azione che si effettua quando si è in presenza di un errore
        */
       this.connection.onerror = (message) => {
-        if (!this.firstTimeError) {
+        if (!this.firstTimeError && !this.isCrashed) {
           this.changeErrLog(
             "#@ERR-LOGS@#" +
               timeString(message) +
@@ -1256,18 +1256,20 @@ export default {
      * @param {Boolean} IRChange segnala se inserire anche log di aggiornamento ir list.
      */
     signalIRAndTempChange(IRChange=false){
-      if(!this.btm.justWarnNewIR){
-        let stringLog=''
-        if(IRChange){
-          stringLog=lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED +
-                        ", " +
-                        lang.INDEX.LOG_MESSAGES.TEMP_UPDATED
-        }else{
-          stringLog=lang.INDEX.LOG_MESSAGES.TEMP_UPDATED
-        }
+      if(!this.btm.justWarnTC){
         this.changeLog(
           "#@LOGS@#" +
-            timeString(stringLog) +
+            timeString(lang.INDEX.LOG_MESSAGES.TEMP_UPDATED) +
+            "#@END-LOGS@#",
+          "Default"
+        );
+        this.btm.justWarnTC=true;
+      }
+      if(!this.btm.justWarnNewIR && IRChange){
+        this.sendIRList()
+        this.changeLog(
+          "#@LOGS@#" +
+            timeString(lang.INDEX.LOG_MESSAGES.IR_LIST_UPDATED) +
             "#@END-LOGS@#",
           "Default"
         );
@@ -1285,6 +1287,7 @@ export default {
       var arrTest = textReceived.split(/##END INSTRUCTION###[\n]?/g).filter(elem => elem!=="");
       this.textRec="";
       this.btm.justWarnNewIR=false;
+      this.btm.justWarnTC=false;
       this.btm.tempPresent=true;
       arrTest.forEach((element) => {
         if (!element.startsWith("\n")) {
