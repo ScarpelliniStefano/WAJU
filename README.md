@@ -1,6 +1,6 @@
-# JcoUIWeb
+# WAJU
 <p align="center">
-  <img alt="logo" src="https://github.com/ScarpelliniStefano/WAJU/blob/main/icon_jcoui.png" width="30%"/>
+  <img alt="logo" src="https://github.com/ScarpelliniStefano/WAJU/blob/main/logo.png" width="30%"/>
   
 </p>
 
