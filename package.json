@@ -1,6 +1,6 @@
 {
-  "name": "jcoui_web",
-  "version": "0.1.0",
+  "name": "waju",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "concurrently \"npm run servevuepage\" \"node websocketserver.js\"",

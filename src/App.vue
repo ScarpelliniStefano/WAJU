@@ -16,7 +16,7 @@ export default {
   }),
 
   created() {
-    document.title = "Loading JcoUIWeb...";
+    document.title = "Loading WAJU...";
   },
 };
 </script>

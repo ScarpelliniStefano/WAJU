@@ -39,7 +39,7 @@ const lang = Object.freeze({
         FOURTH_LOG: 'I/O',
     }),
     INDEX: Object.freeze({
-        TITLE: 'JcoUIWeb',
+        TITLE: 'WAJU',
         TIP_SETTINGS: 'Settings',
         TIP_CONFIG_COLL: 'Config. & Collection',
         TIP_LOG: 'Log',
@@ -53,7 +53,7 @@ const lang = Object.freeze({
             DIALOG_TEXT_THIRD: '3. Wizard will be open in a new Tab.',
             DIALOG_TEXT_FOURTH: '4. Every collection will be open in a new Tab.',
             DIALOG_TEXT_FIFTH: '5. From the width of 700px to 960px, tablet mode starts. In this mode, order of components are: [1] Execute & Wizard [2] Log [3] Save & Back [4] Configurations/Collections', 
-            DIALOG_COOKIES: 'By clicking “OK”, you agree to JcoUIWeb using cookies to personalize content.'
+            DIALOG_COOKIES: 'By clicking “OK”, you agree to WAJU using cookies to personalize content.'
         },
         LOG_MESSAGES: {
             BACKTRACK_DONE: 'Backtrack Done',
@@ -310,7 +310,7 @@ const lang = Object.freeze({
             }
         },
         SPECIFICATION:{  
-            LBL_TITLE:'Wizard - JCOUI Web',
+            LBL_TITLE:'Wizard - WAJU',
             SEL_TXT_MODULES:'Modules',
             SELECTOR:{
                 SEL_GET_COLL:'GET A COLLECTION',
