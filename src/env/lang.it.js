@@ -35,7 +35,7 @@ const lang = Object.freeze({
         TITLE: 'Log'
     }),
     INDEX: Object.freeze({
-        TITLE: 'JCOUIweb',
+        TITLE: 'WAJU',
         TIP_SETTINGS: 'Impostazioni',
         TIP_CONFIG_COLL: 'Config. & Collezioni',
         TIP_LOG: 'Log',
@@ -304,7 +304,7 @@ const lang = Object.freeze({
             }
         },
         SPECIFICATION:{  
-            LBL_TITLE:'Wizard - JCOUI Web',
+            LBL_TITLE:'Wizard - WAJU',
             SEL_TXT_MODULES:'Modules',
             SELECTOR:{
                 SEL_GET_COLL:'GET A COLLECTION',
