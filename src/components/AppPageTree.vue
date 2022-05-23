@@ -381,7 +381,6 @@ export default {
         };
         let jsonData = null;
         this.connectionPage.onmessage = (message) => {
-          console.log(message)
           if (message == "SERVER CLOSED") {
             this.error = "server save/open closed";
           } else if (message.data.split("###")[0] == "CHANGE_COLOR") {
