@@ -338,9 +338,8 @@ export default {
     setComponent(){
       this.conf = this.getCookie("btm-config") === null ? true : this.getCookie("btm-config") === "true";
       if(!this.conf){
-        this.ispectstate = true;
+        this.setIR()
       }
-      this.setCookie("btm-config",this.conf,30)
     },
     /**
      * Imposta un generico cookie
