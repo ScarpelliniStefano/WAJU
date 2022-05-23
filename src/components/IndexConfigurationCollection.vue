@@ -332,8 +332,29 @@ export default {
     },
   },
   mounted() {
+    this.setComponent()
   },
   methods: {
+    setComponent(){
+      this.conf = this.getCookie("btm-config") === null ? true : this.getCookie("btm-config") === "true";
+      if(!this.conf){
+        this.ispectstate = true;
+      }
+      this.setCookie("btm-config",this.conf,30)
+    },
+    /**
+     * Imposta un generico cookie
+     * @param {String} name Nome del cookie
+     * @param {String} value Valore del cookie inserito
+     * @param {Number} daysToLive Giorni di mantenimento del cookie
+     */
+    setCookie(name, value, daysToLive) {
+      var cookie = name + "=" + encodeURIComponent(value);
+      if (typeof daysToLive === "number") {
+        cookie += ";SameSite=Lax; max-age=" + daysToLive * 24 * 60 * 60;
+        document.cookie = cookie;
+      }
+    },
     /**
      * Ritorna la dimensione delle colonne
      * @param {Number} numCol Numero di colonne presenti
@@ -456,6 +477,7 @@ export default {
           this.defaultTitle = "Configuration";
           this.TITLE = lang.CONFIG_COLL_COMP.CONFIG.TITLE;
           this.textButton = "Configuration";
+          this.setCookie("btm-config",this.conf,30)
         }
       }
     },
@@ -471,6 +493,7 @@ export default {
           this.defaultTitle = "IR Collection";
           this.TITLE = lang.CONFIG_COLL_COMP.COLLECTION.TITLE;
           this.textButton = "IR Collection";
+          this.setCookie("btm-config",this.conf,30)
         }
       }
     },
