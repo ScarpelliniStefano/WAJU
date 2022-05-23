@@ -221,7 +221,7 @@ export default {
     },
   },
   created() {
-    document.title = this.title + "- JCOUI Web";
+    document.title = this.title + "- WAJU";
 
     this.changeColor()
   },
@@ -414,7 +414,7 @@ export default {
             jsonview.expandDepth(this.tree, this.numDepth);
             this.textIRTreeCol = jsonData.tree;
             this.calculatePageSize();
-            document.title = this.title + " | JCOUI Web";
+            document.title = this.title + " | WAJU";
           }
         };
       }
